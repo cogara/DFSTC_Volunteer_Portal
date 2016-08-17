@@ -92,7 +92,6 @@ app.use(bodyParser.json());
 //ROUTES
 app.use('/', index);
 app.post('/register', function(request, response) {
-  console.log(request.body);
   let email = request.body.email;
   let password = request.body.password;
   let user = new User({
