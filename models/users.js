@@ -10,8 +10,8 @@ var userSchema = new Schema(
     company:[String],
     organization:[String],
     volunteer:Boolean,
-    isAdmin:Boolean,
-    isTrainee:Boolean
+    isAdmin:{type:Boolean, Default:false},
+    isTrainee:{type:Boolean, Default:true}
   }
 );
 
