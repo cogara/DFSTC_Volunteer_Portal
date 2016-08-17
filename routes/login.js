@@ -1,0 +1,22 @@
+const router = require('express').Router();
+const path = require('path');
+const passport = require('passport');
+
+router.post('/', passport.authenticate('local', {
+    successRedirect: 'login/success',
+    failureRedirect: 'login/failure'
+    // failureFlash: true
+  })
+);
+
+router.get('/success', function(request, response) {
+  console.log('user logged in', request.user);
+  response.send(request.user);
+})
+
+router.get('/failure', function(request, response) {
+  console.log('login failed');
+  response.sendStatus(403);
+})
+
+module.exports = router;

@@ -11,6 +11,9 @@ const env = require('dotenv').config();
 //ROUTE AND MODEL IMPORTS
 const User = require('./models/user.js');
 const index = require('./routes/index.js');
+const register = require('./routes/register.js');
+const login = require('./routes/login.js');
+const api = require('./routes/api.js');
 
 //DECLARE SERVER APP
 const app = express();
@@ -72,10 +75,9 @@ passport.deserializeUser(function(id, done) {
     if(err) {
       return done(err);
     }
-    //determine what info is passed in the request.user object - removed password
-    let userInfo = {};
-    userInfo.email = user.email;
-    userInfo.id = user.id;
+    //determine what info is passed in the request.user object - set password field to null.
+    let userInfo = user;
+    userInfo.password = null;
     done(null, userInfo);
   })
 })
@@ -90,37 +92,11 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 //ROUTES
-app.use('/', index);
-app.post('/register', function(request, response) {
-  let email = request.body.email;
-  let password = request.body.password;
-  let user = new User({
-    email: email,
-    password: password
-  });
-  user.save(function(err) {
-    if(err) {
-      console.log(err);
-    }
-    response.sendStatus(200);
-  })
-})
-app.post('/login', passport.authenticate('local', {
-    successRedirect: '/success',
-    failureRedirect: '/failure',
-    failureFlash: true
-  })
-);
 
-app.get('/success', function(request, response) {
-  console.log(request.user);
-  response.sendStatus(200);
-})
-
-app.get('/failure', function(request, response) {
-  console.log(request.flash());
-  response.sendStatus(403);
-})
+app.use('/register', register);
+app.use('/login', login);
+app.use('/api', api);
+app.use('*', index);
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, function() {

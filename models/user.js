@@ -7,19 +7,20 @@ let UserSchema = new Schema(
   {
     email: {type: String, unique: true},
     password: String,
-    firstName:String,
-    lastName:String,
-    phoneNumber:String,
-    company:[String],
-    organization:[String],
-    isVolunteer: {type:Boolean, Default:false},
-    isAdmin: {type:Boolean, Default:false},
-    isTrainee: {type:Boolean, Default:true}
+    firstName: String,
+    lastName: String,
+    phoneNumber: String,
+    company: String,
+    organization: String,
+    isVolunteer: {type: Boolean, default: false},
+    isAdmin: {type: Boolean, default: false},
+    isTrainee: {type: Boolean, default: true}
   }
 );
 
 UserSchema.pre('save', function(next) {
   let user = this;
+
   if(user.isModified('password')) {
     bcrypt.hash(user.password, SALT_WORK_FACTOR, function(err, hash) {
       if(err) {

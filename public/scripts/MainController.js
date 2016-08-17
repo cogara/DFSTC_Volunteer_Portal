@@ -1,24 +1,28 @@
 angular.module('DfstcSchedulingApp').controller('MainController', MainController);
 
-function MainController($http) {
+function MainController($http, UserService) {
   let vm = this;
   vm.login = login;
   vm.register = register;
 
   function register() {
-    let data = {};
-    data.email = vm.regEmail;
-    data.password = vm.regPassword;
-    $http.post('/register', data).then(function(response) {
-      console.log(response.data);
-    })
+    UserService.register(vm.registerUser).then(function() {
+      UserService.login(vm.registerUser).then(function(response) {
+        vm.user = response;
+      })
+    });
   }
+
   function login() {
-    let data = {};
-    data.email = vm.email;
-    data.password = vm.password;
-    $http.post('/login', data).then(function(response) {
-      console.log(response.data);
-    })
+    UserService.login(vm.loginUser).then(function(response) {
+      vm.user = response;
+    });
   }
-}
+
+  //checks if user is currently logged in on page load
+  UserService.checkAuth().then(function(response) {
+    // console.log(response);
+    vm.user = response;
+  });
+
+} //end Main Controller
