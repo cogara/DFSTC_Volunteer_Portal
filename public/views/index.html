@@ -5,20 +5,31 @@
     <script src="/vendor/angular/angular.min.js" charset="utf-8"></script>
     <script src="/scripts/module.js" charset="utf-8"></script>
     <script src="/scripts/MainController.js" charset="utf-8"></script>
+    <script src="/scripts/UserService.js" charset="utf-8"></script>
     <title></title>
   </head>
   <body ng-controller="MainController as main">
     <h1>Hello!</h1>
+    <!-- <h5>{{main.currentUser}}</h5> -->
+    <h5>Logged In: {{main.user.email}}</h5>
+    <ul ng-if="main.user.isAdmin">
+      <li ng-repeat="(key, value) in main.user">{{key}}: {{value}}</li>
+    </ul>
+    <ul ng-if="main.user.isTrainee">
+      <li ng-repeat="(key, value) in main.user">{{key}}: {{value}}</li>
+    </ul>
     <h3>Register</h3>
     <form>
-      <input type="text" ng-model="main.regEmail" />
-      <input type="text" ng-model="main.regPassword" />
+      <input type="text" ng-model="main.registerUser.email" />
+      <input type="text" ng-model="main.registerUser.password" />
+      Admin: <input type="checkbox" ng-model="main.registerUser.isAdmin">
+      Trainee: <input type="checkbox" ng-model="main.registerUser.isTrainee">
       <button ng-click="main.register()">register</button>
     </form>
     <h3>Login</h3>
     <form>
-      <input type="text" ng-model="main.email" />
-      <input type="text" ng-model="main.password" />
+      <input type="text" ng-model="main.loginUser.email" />
+      <input type="text" ng-model="main.loginUser.password" />
       <button ng-click="main.login()">login</button>
     </form>
   </body>
