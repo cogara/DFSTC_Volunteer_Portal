@@ -25,18 +25,46 @@ MongoDB.once('open', function() {
   console.log('MongoDB Connetion Open!');
 })
 
-//static and config
+//passport and session config
 app.use(session({
   secret: process.env.SECRET,
   key: 'user',
   cookie: {maxAge: 24 * 60 * 60 * 1000, secure: false}
 }));
+passport.use('local', new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password'
+  },
+  function(email, password, done) {
+    User.findByEmail(email, function(err, user) {
+      if(err) {
+        return done(err);
+      }
+      if(!user) {
+        return done(null, false, {message: 'Incorrect email and password'})
+      }
+      User.passwordCheck(user.email, password, function(err, isMatch) {
+        if(err) {
+          return done(err)
+        }
+        if(isMatch) {
+          return done(null, user);
+        } else {
+          return done(null, false, {message: 'Incorrect email and password'});
+        }
+      });
+    });
+  }
+));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+//static and server config
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 
 
