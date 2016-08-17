@@ -1,22 +1,41 @@
+//Node Module Imports
 const express = require('express');
-const jsonwebtoken = require('jsonwebtoken');
-const expressJwt = require('express-jwt');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+const session = require('express-session');
+const LocalStrategy = require('passport-local').Strategy;
 
+//route and models imports
 const index = require('./routes/index.js');
-const register = require('./routes/register.js');
 
+//declare server app
 const app = express();
 
-mongoose.connect(config.database);
+//mongo connection
+const MongoURI = 'mongodb://localhost:27017/dfstc'
+const MongoDB = mongoose.connect(MongoURI).connection;
+
+MongoDB.on('error', function(err) {
+  console.log('MongoDB Connection Error:', err);
+})
+
+MongoDB.once('open', function() {
+  console.log('MongoDB Connetion Open!');
+})
+
+//static and config
+app.use(session({
+  secret: process.env.SECRET,
+  key: 'user',
+  cookie: {maxAge: 24 * 60 * 60 * 1000, secure: false}
+}));
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use('/', index);
-app.use('/register', register);
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, function() {
