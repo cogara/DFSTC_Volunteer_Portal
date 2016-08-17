@@ -9,5 +9,17 @@
   </head>
   <body ng-controller="MainController as main">
     <h1>Hello!</h1>
+    <h3>Register</h3>
+    <form>
+      <input type="text" ng-model="main.regEmail" />
+      <input type="text" ng-model="main.regPassword" />
+      <button ng-click="main.register()">register</button>
+    </form>
+    <h3>Login</h3>
+    <form>
+      <input type="text" ng-model="main.email" />
+      <input type="text" ng-model="main.password" />
+      <button ng-click="main.login()">login</button>
+    </form>
   </body>
 </html>
