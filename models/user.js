@@ -13,6 +13,7 @@ let UserSchema = new Schema(
     address:{
       address1:String,
       address2:String,
+      state:String,
       city:String,
       zip:String
     },
@@ -21,7 +22,9 @@ let UserSchema = new Schema(
     isVolunteer: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
     isTrainee: {type: Boolean, default: true},
-    isAvail:Object
+    isAvail:Object,
+
+    potentialPos:Object
   }
 );
 
