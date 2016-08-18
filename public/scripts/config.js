@@ -21,6 +21,5 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: '../views/dashboard.html'
     });
 
-
     $locationProvider.html5Mode(true);
 }
