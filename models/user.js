@@ -10,11 +10,21 @@ let UserSchema = new Schema(
     firstName: String,
     lastName: String,
     phoneNumber: String,
+    address:{
+      address1:String,
+      address2:String,
+      state:String,
+      city:String,
+      zip:String
+    },
     company: String,
-    organization: String,
+    organization: Object,
     isVolunteer: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
-    isTrainee: {type: Boolean, default: true}
+    isTrainee: {type: Boolean, default: true},
+    isAvail:Object,
+
+    potentialPos:Object
   }
 );
 
