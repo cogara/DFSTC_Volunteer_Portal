@@ -4,6 +4,7 @@ const User = require('../models/user.js');
 
 router.post('/', function(request, response) {
   let info = request.body;
+  console.log('POST router register', info);
   User.findOne({email: info.email}, function(err, exists) {
     if(exists) {
       response.send({message: 'Email Already Exists'});

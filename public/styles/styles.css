@@ -1,0 +1,22 @@
+.calendar {
+  display: inline-block;
+  height: 200px;
+  width: 60%;
+  margin-left: 50px;
+  float: left;
+  border: 1px solid rgba(255,0,0,.5);
+}
+
+.sidebar {
+  display: inline-block;
+  float: right;
+  width: 20%;
+  height: 200px;
+  margin-right: 50px;
+  border: 1px solid rgba(0,255,0,.5);
+}
+
+.clear {
+  /*float: left;*/
+  clear: both;
+}

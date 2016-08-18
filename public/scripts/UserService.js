@@ -11,6 +11,7 @@ function UserService($http) {
   }
 
   function register(user) {
+    console.log(user);
     return $http.post('/register', user);
   }
 

@@ -9,23 +9,24 @@ function MainController($http, $state, UserService) {
   function register() {
     UserService.register(vm.registerUser).then(function() {
       UserService.login(vm.registerUser).then(function(response) {
-        vm.user = response;
+        vm.currentUser = response;
+        $state.go('dashboard')
       })
     });
   }
 
   function login() {
     UserService.login(vm.loginUser).then(function(response) {
-      vm.user = response;
+      vm.currentUser = response;
       $state.go('dashboard');
     }, function(){
-      vm.user = null;
+      vm.currentUser = null;
     });
   }
 
   function logout() {
     UserService.logout().then(function(response) {
-      vm.user = null;
+      vm.currentUser = null;
       $state.go('/');
     })
   }
@@ -33,8 +34,8 @@ function MainController($http, $state, UserService) {
   //checks if user is currently logged in on page load
   UserService.checkLoggedIn().then(function(response) {
     console.log(response);
-    vm.user = response;
-    if(vm.user) {
+    vm.currentUser = response;
+    if(vm.currentUser) {
       $state.go('dashboard');
     }
   });
