@@ -11,62 +11,99 @@
     <hr />
     <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
       <h3 class="center-block">Register to Volunteer</h3>
-      <input type="text" class="form-control" placeholder="E-mail Address" />
-      <input type="text" class="form-control" placeholder="Password" />
+      <input type="text" class="form-control" ng-model="email" placeholder="E-mail Address" />
+      <input type="text" class="form-control" ng-model="password" placeholder="Password" />
       <br />
-      <input type="text" class="form-control" placeholder="First Name" />
-      <input type="text" class="form-control" placeholder="Last Name" />
+      <input type="text" class="form-control" ng-model="firstName" placeholder="First Name" />
+      <input type="text" class="form-control" ng-model="lastName" placeholder="Last Name" />
       <br />
-      <input type="text" class="form-control" placeholder="Phone Number" />
+      <input type="text" class="form-control" ng-model="phoneNumber" placeholder="Phone Number" />
       <br />
-      <input type="text" class="form-control" placeholder="Address Line 1" />
-      <input type="text" class="form-control" placeholder="Address Line 2" />
-      <input type="text" class="form-control" placeholder="City" />
-      <input type="text" class="form-control" placeholder="State" />
-      <input type="text" class="form-control" placeholder="Zip Code" />
+      <input type="text" class="form-control" ng-model="addressOne" placeholder="Address Line 1" />
+      <input type="text" class="form-control" ng-model="addressTwo" placeholder="Address Line 2" />
+      <input type="text" class="form-control" ng-model="city" placeholder="City" />
+      <input type="text" class="form-control" ng-model="state" placeholder="State" />
+      <input type="text" class="form-control" ng-model="zipcode" placeholder="Zip Code" />
       <br />
       <div class="checkbox panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
         <label>Volunteer Positions Interested In:</label>
         <br />
-        <input type="checkbox" />Image Coach
+        <input type="checkbox" ng-model="imageCoach" />Image Coach
         <br />
-        <input type="checkbox" />Career Coach
+        <input type="checkbox" ng-model="careerCoach" />Career Coach
         <br />
-        <input type="checkbox" />Clothing Sorter
+        <input type="checkbox" ng-model="clothingSorter" />Clothing Sorter
         <br />
-        <input type="checkbox" />Clothing Organizer
+        <input type="checkbox" ng-model="clothingOrganizer"  />Clothing Organizer
         <br />
-        <input type="checkbox" />Front Desk Volunteer
+        <input type="checkbox" ng-model="frontDesk" />Front Desk Volunteer
         <br />
-        <input type="checkbox" />Clothing Sale Volunteer
+        <input type="checkbox" ng-model="clothingSale" />Clothing Sale Volunteer
         <br />
-        <input type="checkbox" />Clothing Sale Captain
+        <input type="checkbox" ng-model="clothingSaleCaptain" />Clothing Sale Captain
         <br />
-        <input type="checkbox" />Career Advocate
+        <input type="checkbox" ng-model="careerAdvocate" />Career Advocate
         <br />
-        <input type="checkbox" />Professional Intelligence Mentor
+        <input type="checkbox" ng-model="intelligenceMentor" />Professional Intelligence Mentor
         <br />
-        <input type="checkbox" />Professional Intelligence Muse
+        <input type="checkbox" ng-model="intelligenceMuse" />Professional Intelligence Muse
         <br />
-        <input type="checkbox" />Community Ambassador
+        <input type="checkbox" ng-model="communityAmbassador" />Community Ambassador
         <br />
-        <input type="checkbox" />Client Even Set Up Volunteer
+        <input type="checkbox" ng-model="eventSetUp" />Client Event Set Up Volunteer
         <br />
-        <input type="checkbox" />Event Photographer
+        <input type="checkbox" ng-model="photographer" />Event Photographer
         <br />
-        <input type="checkbox" />Graphic Designer
+        <input type="checkbox" ng-model="graphicDesigner" />Graphic Designer
       </div>
+      <br />
+      <div class="col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
+      <p>
+        <em>Please select your availability:</em>
+      </p>
+    </div>
       <table class="table table-hover">
-        <th>Please Select Your Availability</th>
-        <hr />
-        <label>Morning</label>
-        <hr />
-        <label>Afternoon</label>
-        <hr />
-        <label>Evenings</label>
+  <tr>
+    <th>Time of Day</th>
+    <th>Monday</th>
+    <th>Tuesday</th>
+    <th>Wednesday</th>
+    <th>Thursday</th>
+    <th>Friday</th>
+    <th>Saturday</th>
+  </tr>
+  <tr>
+    <td>Morning</td>
+    <td><input type="checkbox" ng-model="mondayMorning" /></td>
+    <td><input type="checkbox" ng-model="tuesdayMorning" /></td>
+    <td><input type="checkbox" ng-model="wednesdayMorning" /></td>
+    <td><input type="checkbox" ng-model="thursdayMorning" /></td>
+    <td><input type="checkbox" ng-model="fridayMorning" /></td>
+    <td><input type="checkbox" ng-model="saturdayMorning" /></td>
+  </tr>
+  <tr>
+    <td>Afternoon</td>
+    <td><input type="checkbox" ng-model="mondayAfternoon" /></td>
+    <td><input type="checkbox" ng-model="tuesdayAfternoon" /></td>
+    <td><input type="checkbox" ng-model="wednesdayAfternoon" /></td>
+    <td><input type="checkbox" ng-model="thursdayAfternoon" /></td>
+    <td><input type="checkbox" ng-model="fridayAfternoon" /></td>
+    <td><input type="checkbox" ng-model="saturdayAfternoon" /></td>
+  </tr>
+  <tr>
+    <td>Evening</td>
+    <td><input type="checkbox" ng-model="mondayEvening"  /></td>
+    <td><input type="checkbox" ng-model="tuesdayEvening" /></td>
+    <td><input type="checkbox" ng-model="wednesdayEvening" /></td>
+    <td><input type="checkbox" ng-model="thursdayEvening" /></td>
+    <td><input type="checkbox" ng-model="fridayEvening" /></td>
+    <td><input type="checkbox" ng-model="saturdayEvening" /></td>
+  </tr>
       </table>
+      <input type="text" class="form-control" ng-model="companies" placeholder="Companies" />
+      <input type="text" class="form-control" ng-model="groups" placeholder="Group Name" />
 
-
+      <button class="center-block btn btn-default" ng-click="register()" >Register Now!</button>
 
 
 
