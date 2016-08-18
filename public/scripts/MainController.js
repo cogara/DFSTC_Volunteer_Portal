@@ -16,6 +16,8 @@ function MainController($http, UserService) {
   function login() {
     UserService.login(vm.loginUser).then(function(response) {
       vm.user = response;
+    }, function(){
+      vm.user = null;
     });
   }
 

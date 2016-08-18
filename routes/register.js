@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const path = require('path');
+const User = require('../models/user.js');
 
-router.post('/register', function(request, response) {
+router.post('/', function(request, response) {
   let info = request.body;
   User.findOne({email: info.email}, function(err, exists) {
     if(exists) {

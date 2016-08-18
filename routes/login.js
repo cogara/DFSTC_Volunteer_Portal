@@ -16,6 +16,7 @@ router.get('/success', function(request, response) {
 
 router.get('/failure', function(request, response) {
   console.log('login failed');
+  request.logout();
   response.sendStatus(403);
 })
 
