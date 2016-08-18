@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
 
-let UserSchema = new Schema(
+var UserSchema = new Schema(
   {
     email: {type: String, unique: true},
     password: String,
@@ -29,7 +29,7 @@ let UserSchema = new Schema(
 );
 
 UserSchema.pre('save', function(next) {
-  let user = this;
+  var user = this;
 
   if(user.isModified('password')) {
     bcrypt.hash(user.password, SALT_WORK_FACTOR, function(err, hash) {

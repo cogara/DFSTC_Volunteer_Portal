@@ -1,7 +1,7 @@
 angular.module('DfstcSchedulingApp').controller('MainController', MainController);
 
 function MainController($http, $state, UserService) {
-  let vm = this;
+  var vm = this;
   vm.login = login;
   vm.register = register;
   vm.logout = logout;

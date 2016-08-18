@@ -76,7 +76,7 @@ passport.deserializeUser(function(id, done) {
       return done(err);
     }
     //determine what info is passed in the request.user object - set password field to null.
-    let userInfo = user;
+    var userInfo = user;
     userInfo.password = null;
     done(null, userInfo);
   })
