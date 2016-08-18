@@ -1,1 +1,1 @@
-angular.module('DfstcSchedulingApp', []);
+angular.module('DfstcSchedulingApp', ['ui.router']);

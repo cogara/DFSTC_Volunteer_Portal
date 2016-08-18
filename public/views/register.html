@@ -1,0 +1,11 @@
+<h3>Register</h3>
+<form>
+  <input type="text" ng-model="main.registerUser.email" />
+  <input type="text" ng-model="main.registerUser.password" />
+  Admin: <input type="checkbox" ng-model="main.registerUser.isAdmin">
+  Trainee: <input type="checkbox" ng-model="main.registerUser.isTrainee">
+  Volunteer: <input type="checkbox" ng-model="main.registerUser.isVolunteer">
+  <button ng-click="main.register()">register</button>
+</form>
+
+  <a ui-sref="index">Back</a>

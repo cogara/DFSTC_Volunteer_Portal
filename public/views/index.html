@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html ng-app="DfstcSchedulingApp">
   <head>
+    <base href="/">
     <meta charset="utf-8">
     <script src="/vendor/angular/angular.min.js" charset="utf-8"></script>
+    <script src="/vendor/angular-ui-router/release/angular-ui-router.min.js" charset="utf-8"></script>
     <script src="/scripts/module.js" charset="utf-8"></script>
+    <script src="/scripts/config.js" charset="utf-8"></script>
     <script src="/scripts/MainController.js" charset="utf-8"></script>
     <script src="/scripts/UserService.js" charset="utf-8"></script>
     <title></title>
   </head>
   <body ng-controller="MainController as main">
-    <h1>Hello!</h1>
     <!-- <h5>{{main.currentUser}}</h5> -->
+    <button ng-click="main.logout()">Logout</button>
+    <div ui-view></div>
+
     <h5>Logged In: {{main.user.email}}</h5>
     <ul>
       <li ng-if="main.user.isAdmin">only shows for admin</li>
@@ -18,20 +23,7 @@
       <li ng-if="main.user.isVolunteer">Only shows for Volunteer</li>
       <li ng-repeat="(key, value) in main.user">{{key}}: {{value}}</li>
     </ul>
-    <h3>Register</h3>
-    <form>
-      <input type="text" ng-model="main.registerUser.email" />
-      <input type="text" ng-model="main.registerUser.password" />
-      Admin: <input type="checkbox" ng-model="main.registerUser.isAdmin">
-      Trainee: <input type="checkbox" ng-model="main.registerUser.isTrainee">
-      Volunteer: <input type="checkbox" ng-model="main.registerUser.isVolunteer">
-      <button ng-click="main.register()">register</button>
-    </form>
-    <h3>Login</h3>
-    <form>
-      <input type="text" ng-model="main.loginUser.email" />
-      <input type="text" ng-model="main.loginUser.password" />
-      <button ng-click="main.login()">login</button>
-    </form>
+
+
   </body>
 </html>

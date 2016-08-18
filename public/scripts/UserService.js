@@ -2,8 +2,8 @@ angular.module('DfstcSchedulingApp').factory('UserService', UserService);
 
 function UserService($http) {
 
-  function checkAuth() {
-    return $http.get('/api/checkAuth').then(function(response) {
+  function checkLoggedIn() {
+    return $http.get('/api/checkLoggedIn').then(function(response) {
       if(response.data._id) {
         return response.data;
       }
@@ -21,10 +21,15 @@ function UserService($http) {
     })
   }
 
+  function logout() {
+    return $http.get('/logout');
+  }
+
   return {
-    checkAuth: checkAuth,
+    checkLoggedIn: checkLoggedIn,
     register: register,
-    login: login
+    login: login,
+    logout: logout
   }
 
 }// end UserService

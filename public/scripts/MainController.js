@@ -1,9 +1,10 @@
 angular.module('DfstcSchedulingApp').controller('MainController', MainController);
 
-function MainController($http, UserService) {
+function MainController($http, $state, UserService) {
   let vm = this;
   vm.login = login;
   vm.register = register;
+  vm.logout = logout;
 
   function register() {
     UserService.register(vm.registerUser).then(function() {
@@ -16,13 +17,21 @@ function MainController($http, UserService) {
   function login() {
     UserService.login(vm.loginUser).then(function(response) {
       vm.user = response;
+      $state.go('dashboard');
     }, function(){
       vm.user = null;
     });
   }
 
+  function logout() {
+    UserService.logout().then(function(response) {
+      vm.user = null;
+      $state.go('index');
+    })
+  }
+
   //checks if user is currently logged in on page load
-  UserService.checkAuth().then(function(response) {
+  UserService.checkLoggedIn().then(function(response) {
     // console.log(response);
     vm.user = response;
   });

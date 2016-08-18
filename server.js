@@ -95,6 +95,10 @@ app.use(bodyParser.json());
 
 app.use('/register', register);
 app.use('/login', login);
+app.get('/logout', function(request, response) {
+  request.logout();
+  response.sendStatus(200);
+})
 app.use('/api', api);
 app.use('*', index);
 
