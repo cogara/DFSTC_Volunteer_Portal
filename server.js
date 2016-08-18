@@ -7,6 +7,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const LocalStrategy = require('passport-local').Strategy;
 const env = require('dotenv').config();
+const moment = require('moment');
 
 //ROUTE AND MODEL IMPORTS
 const User = require('./models/user.js');
@@ -104,6 +105,9 @@ app.get('/logout', function(request, response) {
 // })
 app.use('/api', api);
 app.use('*', index);
+
+
+moment().format();
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, function() {
