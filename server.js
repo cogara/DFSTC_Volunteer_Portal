@@ -9,6 +9,8 @@ const env = require('dotenv').config();
 
 //route and models imports
 const index = require('./routes/index.js');
+const appointment = require('./routes/appointmentRoute');
+
 
 //declare server app
 const app = express();
@@ -69,6 +71,7 @@ app.use(bodyParser.json());
 
 
 app.use('/', index);
+app.use('/api/appointment', appointment);
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, function() {
