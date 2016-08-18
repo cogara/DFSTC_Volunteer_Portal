@@ -15,6 +15,7 @@ function UserService($http) {
   }
 
   function login(user) {
+    console.log(user);
     return $http.post('/login', user).then(function(response) {
       console.log('UserService', response.data);
       return response.data;
