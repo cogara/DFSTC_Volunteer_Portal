@@ -27,7 +27,7 @@ router.get('/volunteers', function(request, response) {
 router.put('/volunteer/:id', function(request, response) {
   console.log(request.params);
 
-  User.findByIdAndUpdate({_id: request.params.id}, request.body, function(err, volunteer) {
+  User.findByIdAndUpdate({_id: request.params.id}, {$set: request.body}, function(err, volunteer) {
     if(err){
       console.log(err);
       response.sendStatus(500);

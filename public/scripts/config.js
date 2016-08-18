@@ -20,7 +20,26 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/admin',
       templateUrl: '../views/admin.html',
       controller: 'AdminController',
-      controllerAs: 'admin'
+      controllerAs: 'admin',
+      resolve: {
+        adminAuth: function(UserService, $state) {
+          return UserService.checkLoggedIn().then(function(response) {
+            console.log('Checking admin', response);
+            if(!response) {
+                console.log('not admin');
+                $state.go('/');
+                return false;
+            } else if(!response.isAdmin) {
+                console.log('not admin');
+                $state.go('dashboard');
+                return false;
+            } else {
+              console.log('is admin');
+              return true;
+            }
+          });
+        }
+      }
     });
 
     $locationProvider.html5Mode(true);

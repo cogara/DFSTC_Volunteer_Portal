@@ -4,13 +4,20 @@ function AdminService($http) {
 
   function getVolunteers() {
     return $http.get('/api/volunteers').then(function(response) {
-      console.log('Volunteer List:', response.data);
       return response.data;
     })
   }
 
   function editVolunteer(volunteer) {
-    return $http.put('/api/volunteer/' + volunteer._id, volunteer);
+    var editVolunteer = {};
+    for (var key in volunteer) {
+      if (!(key==='password')) {
+        console.log(key);
+        editVolunteer[key] = volunteer[key];
+      }
+    }
+    console.log(editVolunteer);
+    return $http.put('/api/volunteer/' + volunteer._id, editVolunteer);
   }
 
   return {
