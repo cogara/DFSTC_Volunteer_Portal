@@ -26,14 +26,17 @@ function MainController($http, $state, UserService) {
   function logout() {
     UserService.logout().then(function(response) {
       vm.user = null;
-      $state.go('index');
+      $state.go('/');
     })
   }
 
   //checks if user is currently logged in on page load
   UserService.checkLoggedIn().then(function(response) {
-    // console.log(response);
+    console.log(response);
     vm.user = response;
+    if(vm.user) {
+      $state.go('dashboard.nested');
+    }
   });
 
 } //end Main Controller
