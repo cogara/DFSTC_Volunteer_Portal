@@ -1,10 +1,10 @@
 angular.module('DfstcSchedulingApp').config(uiRouter);
 
 function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
-  $urlRouterProvider.otherwise('index');
+  $urlRouterProvider.otherwise('/');
 
   $stateProvider
-    .state('index', {
+    .state('/', {
       url: '/',
       templateUrl: '../views/landingPage.html'
     })
@@ -20,7 +20,6 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/dashboard',
       templateUrl: '../views/dashboard.html'
     })
-    ;
 
     $locationProvider.html5Mode(true);
 }

@@ -3,6 +3,7 @@
   <head>
     <base href="/">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="/styles/styles.css">
     <script src="/vendor/angular/angular.min.js" charset="utf-8"></script>
     <script src="/vendor/angular-ui-router/release/angular-ui-router.min.js" charset="utf-8"></script>
     <script src="/scripts/module.js" charset="utf-8"></script>
@@ -13,16 +14,25 @@
   </head>
   <body ng-controller="MainController as main">
     <!-- <h5>{{main.currentUser}}</h5> -->
-    <button ng-click="main.logout()">Logout</button>
-    <div ui-view></div>
 
-    <h5>Logged In: {{main.user.email}}</h5>
-    <ul>
-      <li ng-if="main.user.isAdmin">only shows for admin</li>
-      <li ng-if="main.user.isTrainee">Only shows for Trainee</li>
-      <li ng-if="main.user.isVolunteer">Only shows for Volunteer</li>
-      <li ng-repeat="(key, value) in main.user">{{key}}: {{value}}</li>
-    </ul>
+
+    <button ng-click="main.logout()">Logout</button>
+
+
+    <div style="border: 1px solid blue" ui-view>
+
+    </div>
+
+
+    <!-- <div class="clear">
+      <h5>Logged In: {{main.user.email}}</h5>
+      <ul>
+        <li ng-if="main.user.isAdmin">only shows for admin</li>
+        <li ng-if="main.user.isTrainee">Only shows for Trainee</li>
+        <li ng-if="main.user.isVolunteer">Only shows for Volunteer</li>
+        <li ng-repeat="(key, value) in main.user">{{key}}: {{value}}</li>
+      </ul>
+    </div> -->
 
 
   </body>
