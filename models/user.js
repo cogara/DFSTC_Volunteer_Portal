@@ -10,7 +10,12 @@ let UserSchema = new Schema(
     firstName: String,
     lastName: String,
     phoneNumber: String,
-    address:Object,
+    address:{
+      address1:String,
+      address2:String,
+      city:String,
+      zip:String
+    },
     company: String,
     organization: Object,
     isVolunteer: {type: Boolean, default: false},
