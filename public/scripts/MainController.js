@@ -35,7 +35,7 @@ function MainController($http, $state, UserService) {
     console.log(response);
     vm.user = response;
     if(vm.user) {
-      $state.go('dashboard.nested');
+      $state.go('dashboard');
     }
   });
 

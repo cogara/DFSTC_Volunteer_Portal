@@ -3,9 +3,12 @@
   <head>
     <base href="/">
     <meta charset="utf-8">
-    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap-theme.min.css">
+    <!-- <link rel="stylesheet" href="/styles/styles.css"> -->
     <script src="/vendor/angular/angular.min.js" charset="utf-8"></script>
     <script src="/vendor/angular-ui-router/release/angular-ui-router.min.js" charset="utf-8"></script>
+    <!-- <script src="/vendor/bootstrap.min.js" charset="utf-8"></script> -->
     <script src="/scripts/module.js" charset="utf-8"></script>
     <script src="/scripts/config.js" charset="utf-8"></script>
     <script src="/scripts/MainController.js" charset="utf-8"></script>
@@ -16,14 +19,15 @@
     <!-- <h5>{{main.currentUser}}</h5> -->
 
 
-    <button ng-click="main.logout()">Logout</button>
 
 
-    <div style="border: 1px solid blue" ui-view>
+
+    <div ui-view>
 
     </div>
-
-
+    <div ng-if="main.user" style="clear: both; text-align: center">
+      <button ng-click="main.logout()">Logout</button>
+    </div>
     <!-- <div class="clear">
       <h5>Logged In: {{main.user.email}}</h5>
       <ul>
