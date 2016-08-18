@@ -8,10 +8,6 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/',
       templateUrl: '../views/landingPage.html'
     })
-    .state('login', {
-      url: '/login',
-      templateUrl: '../views/login.html'
-    })
     .state('register', {
       url: '/register',
       templateUrl: '../views/register.html'
