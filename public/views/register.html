@@ -5,14 +5,20 @@
 </div>
 <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
   <h3 class="center-block">Register to Volunteer</h3>
+  <label>E-mail address (this will be your login username):</label>
   <input type="text" class="form-control" ng-model="main.registerUser.email" placeholder="E-mail Address" />
+  <label>Choose a password:</label>
   <input type="text" class="form-control" ng-model="main.registerUser.password" placeholder="Password" />
   <br />
+  <label>First Name:</label>
   <input type="text" class="form-control" ng-model="main.registerUser.firstName" placeholder="First Name" />
+  <label>Last Name:</label>
   <input type="text" class="form-control" ng-model="main.registerUser.lastName" placeholder="Last Name" />
   <br />
+  <label>Phone Number with Area Code:</label>
   <input type="text" class="form-control" ng-model="main.registerUser.phoneNumber" placeholder="Phone Number" />
   <br />
+  <label>Address:</label>
   <input type="text" class="form-control" ng-model="main.registerUser.address.addressOne" placeholder="Address Line 1" />
   <input type="text" class="form-control" ng-model="main.registerUser.address.addressTwo" placeholder="Address Line 2" />
   <input type="text" class="form-control" ng-model="main.registerUser.address.city" placeholder="City" />
@@ -20,7 +26,7 @@
   <input type="text" class="form-control" ng-model="main.registerUser.address.zipcode" placeholder="Zip Code" />
   <br />
   <div class="checkbox panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
-    <label>Volunteer Positions Interested In:</label>
+    <label>Volunteer positions you are interested in:</label>
     <br />
     <input type="checkbox" ng-model="main.registerUser.volunteerOpportunities.imageCoach" />Image Coach
     <br />
@@ -94,7 +100,9 @@
       <td><input type="checkbox" ng-model="main.registerUser.isAvail.saturday.evening" /></td>
     </tr>
   </table>
+  <label>Company you are employed by:</label>
   <input type="text" class="form-control" ng-model="main.registerUser.companies" placeholder="Companies" />
+  <label>Volunteer groups you belong to:</label>
   <input type="text" class="form-control" ng-model="main.registerUser.groups" placeholder="Group Name" />
 
   <button class="center-block btn btn-default" ng-click="main.register()" >Register Now!</button>
