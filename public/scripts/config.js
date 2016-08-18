@@ -15,6 +15,12 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('dashboard', {
       url: '/dashboard',
       templateUrl: '../views/dashboard.html'
+    })
+    .state('dashboard.admin', {
+      url: '/admin',
+      templateUrl: '../views/admin.html',
+      controller: 'AdminController',
+      controllerAs: 'admin'
     });
 
     $locationProvider.html5Mode(true);
