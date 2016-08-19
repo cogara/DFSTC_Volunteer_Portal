@@ -8,7 +8,9 @@ var appointmentSchema = new Schema(
     startTime: Date,
     endTime: Date,
     volunteerSlots: Number,
-    clientSlots: Object,
+    volunteers: Object,
+    clientSlots: Number,
+    clients: Object,
 
     // this object will have a value for each client to indicate appointment type - e.g.
     // {
