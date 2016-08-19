@@ -31,30 +31,30 @@ function DashboardController($http, $state, UserService) {
           draggable: true,
           resizable: true,
           actions: actions
-        }, {
-          title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
-          color: { // can also be calendarConfig.colorTypes.warning for shortcuts to the deprecated event types
-      primary: '#e3bc08', // the primary event color (should be darker than secondary)
-      secondary: '#fdf1ba' // the secondary event color (should be lighter than primary)
-    },
-          startsAt: moment().subtract(1, 'day').toDate(),
-          endsAt: moment().add(5, 'days').toDate(),
-          draggable: true,
-          resizable: true,
-          actions: actions
-        }, {
-          title: 'This is a really long event title that occurs on every year',
-          color: { // can also be calendarConfig.colorTypes.warning for shortcuts to the deprecated event types
-      primary: '#e3bc08', // the primary event color (should be darker than secondary)
-      secondary: '#fdf1ba' // the secondary event color (should be lighter than primary)
-    },
-          startsAt: moment().startOf('day').add(7, 'hours').toDate(),
-          endsAt: moment().startOf('day').add(19, 'hours').toDate(),
-          recursOn: 'year',
-          draggable: true,
-          resizable: true,
-          actions: actions
-        }
+        }//, {
+    //       title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
+    //       color: { // can also be calendarConfig.colorTypes.warning for shortcuts to the deprecated event types
+    //   primary: '#e3bc08', // the primary event color (should be darker than secondary)
+    //   secondary: '#fdf1ba' // the secondary event color (should be lighter than primary)
+    // },
+    //       startsAt: moment().subtract(1, 'day').toDate(),
+    //       endsAt: moment().add(5, 'days').toDate(),
+    //       draggable: true,
+    //       resizable: true,
+    //       actions: actions
+    //     }, {
+    //       title: 'This is a really long event title that occurs on every year',
+    //       color: { // can also be calendarConfig.colorTypes.warning for shortcuts to the deprecated event types
+    //   primary: '#e3bc08', // the primary event color (should be darker than secondary)
+    //   secondary: '#fdf1ba' // the secondary event color (should be lighter than primary)
+    // },
+    //       startsAt: moment().startOf('day').add(7, 'hours').toDate(),
+    //       endsAt: moment().startOf('day').add(19, 'hours').toDate(),
+    //       recursOn: 'year',
+    //       draggable: true,
+    //       resizable: true,
+    //       actions: actions
+    //     }
       ];
 
       vm.isCellOpen = true;
