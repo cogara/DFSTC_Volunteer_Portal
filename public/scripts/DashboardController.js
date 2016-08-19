@@ -71,19 +71,19 @@ function DashboardController($http, $state, UserService) {
       };
 
       vm.eventClicked = function(event) {
-        alert.show('Clicked', event);
+      //  alert.show('Clicked', event);
       };
 
       vm.eventEdited = function(event) {
-        alert.show('Edited', event);
+      //  alert.show('Edited', event);
       };
 
       vm.eventDeleted = function(event) {
-        alert.show('Deleted', event);
+      //  alert.show('Deleted', event);
       };
 
       vm.eventTimesChanged = function(event) {
-        alert.show('Dropped or resized', event);
+      //  alert.show('Dropped or resized', event);
       };
 
       vm.toggle = function($event, field, event) {
