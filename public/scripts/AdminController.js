@@ -1,7 +1,8 @@
 angular.module('DfstcSchedulingApp').controller('AdminController', AdminController);
 
-function AdminController($http, $state, UserService, AdminService) {
+function AdminController($http, $state, UserService, AdminService, volunteerList) {
   var vm = this;
+  vm.volunteers = volunteerList;
   vm.getVolunteers = getVolunteers;
   vm.editVolunteer = editVolunteer;
   vm.viewVolunteer = viewVolunteer;
@@ -9,9 +10,7 @@ function AdminController($http, $state, UserService, AdminService) {
 
 
   function getVolunteers() {
-    console.log('Button Click, get volunteers');
     AdminService.getVolunteers().then(function(response) {
-      console.log('Admin Controller:', response);
       vm.volunteers = response;
     })
   }

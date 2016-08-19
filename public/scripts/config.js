@@ -24,6 +24,8 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('dashboard', {
       url: '/dashboard',
       templateUrl: '../views/dashboard.html',
+      controller: 'DashboardController',
+      controllerAs: 'dash',
       resolve: {
         userCheck: function(UserService, $state) {
           UserService.checkLoggedIn().then(function(response) {
@@ -50,6 +52,9 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
               $state.go('dashboard');
             }
           });
+        },
+        volunteerList: function(AdminService) {
+          return AdminService.getVolunteers();
         }
       }
     });
