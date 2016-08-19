@@ -16,24 +16,27 @@
     <script src="/scripts/config.js" charset="utf-8"></script>
     <script src="/scripts/MainController.js" charset="utf-8"></script>
     <script src="/scripts/UserService.js" charset="utf-8"></script>
+    <script src="/scripts/AdminController.js" charset="utf-8"></script>
+    <script src="/scripts/AdminService.js" charset="utf-8"></script>
+    <script src="/scripts/DashboardController.js" charset="utf-8"></script>
     <title>Dress For Success Twin Cities</title>
   </head>
   <body ng-controller="MainController as main">
     <!-- <h5>{{main.currentUser}}</h5> -->
+    <button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin">Admin Control</button>
 
     <div ui-view>
 
     </div>
 
     <div ng-if="main.currentUser" style="clear: both; text-align: center">
-      <button ng-click="main.logout()">Logout</button>
+      <button class="clear" ng-click="main.logout()">Logout</button>
     </div>
     <div class="clear">
-      <h5>Logged In: <span ng-if="main.currentUser">{{main.currentUser.email}}</span><span ng-if="!main.currentUser">None</span></h5>
-      <ul>
-        <li ng-if="main.currentUser.isAdmin">only shows for admin</li>
-        <li ng-if="main.currentUser.isTrainee">Only shows for Trainee</li>
-        <li ng-if="main.currentUser.isVolunteer">Only shows for Volunteer</li>
-        <li ng-repeat="(key, value) in main.currentUser">{{key}}: {{value}}</li>
+      <h5>(for testing) Logged In: <span ng-if="main.currentUser">{{main.currentUser.email}}</span><span ng-if="!main.currentUser">None</span></h5>
+      <ul>Role:
+        <li ng-if="main.currentUser.isAdmin">Admin</li>
+        <li ng-if="main.currentUser.isTrainee">Trainee</li>
+        <li ng-if="main.currentUser.isVolunteer">Volunteer</li>
       </ul>
     </div>

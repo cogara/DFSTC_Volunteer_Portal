@@ -35,9 +35,6 @@ function MainController($http, $state, UserService) {
   UserService.checkLoggedIn().then(function(response) {
     console.log(response);
     vm.currentUser = response;
-    if(vm.currentUser) {
-      $state.go('dashboard');
-    }
   });
 
 } //end Main Controller

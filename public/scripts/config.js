@@ -6,11 +6,16 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
   $stateProvider
     .state('/', {
       url: '/',
-      templateUrl: '../views/landingPage.html'
-    })
-    .state('login', {
-      url: '/login',
-      templateUrl: '../views/login.html'
+      templateUrl: '../views/landingPage.html',
+      resolve: {
+        userCheck: function(UserService, $state) {
+          UserService.checkLoggedIn().then(function(response) {
+            if(response) {
+              $state.go('dashboard')
+            }
+          })
+        }
+      }
     })
     .state('register', {
       url: '/register',
@@ -18,7 +23,40 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('dashboard', {
       url: '/dashboard',
-      templateUrl: '../views/dashboard.html'
+      templateUrl: '../views/dashboard.html',
+      controller: 'DashboardController',
+      controllerAs: 'dash',
+      resolve: {
+        userCheck: function(UserService, $state) {
+          UserService.checkLoggedIn().then(function(response) {
+            if(!response) {
+              $state.go('/');
+            }
+          });
+        }
+      }
+    })
+    .state('admin', {
+      url: '/admin',
+      templateUrl: '../views/admin.html',
+      controller: 'AdminController',
+      controllerAs: 'admin',
+      resolve: {
+        userCheck: function(UserService, $state) {
+          UserService.checkLoggedIn().then(function(response) {
+            if(!response) {
+              //user not logged in, send to login
+              $state.go('/');
+            } else if(!response.isAdmin) {
+              //user not admin, send to dashboard
+              $state.go('dashboard');
+            }
+          });
+        },
+        volunteerList: function(AdminService) {
+          return AdminService.getVolunteers();
+        }
+      }
     });
 
     $locationProvider.html5Mode(true);

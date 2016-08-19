@@ -5,12 +5,11 @@ const passport = require('passport');
 router.post('/', passport.authenticate('local', {
     successRedirect: 'login/success',
     failureRedirect: 'login/failure'
-    // failureFlash: true
   })
 );
 
 router.get('/success', function(request, response) {
-  console.log('user logged in', request.user);
+  console.log('~' + request.user.email + '~', 'logged in at', new Date());
   response.send(request.user);
 })
 

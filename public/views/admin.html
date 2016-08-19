@@ -1,0 +1,42 @@
+<button class="btn btn-default" ui-sref="dashboard">back to dashboard</button>
+<h1>Admin Controls</h1>
+
+Control shit here.
+
+<div ui-view></div>
+
+<button ng-click="admin.getVolunteers()">Get Vol</button>
+
+<div class="volunteers">
+  <ul>
+    <li ng-repeat="volunteer in admin.volunteers">{{::volunteer.firstName}} {{::volunteer.lastName}}
+      <ul>
+        <li ng-if="volunteer.email">Email: {{::volunteer.email}}</li>
+        <li ng-if="volunteer.phoneNumber">Phone: {{::volunteer.phoneNumber}}</li>
+        <li ng-if="volunteer.volunteerOpportunities">Opportunities: {{::volunteer.volunteerOpportunities}}</li>
+        <li ng-if="volunteer.isAvail">Availability: {{::volunteer.isAvail}}</li>
+        <li ng-if="volunteer.address">Address:
+          <ul>
+              <li>Street: {{volunteer.address.addressOne}}<br />
+                  {{volunteer.address.addressTwo}}
+              </li>
+              <li>City: {{volunteer.address.city}}</li>
+              <li>State: {{volunteer.address.state}}</li>
+              <li>Zip: {{volunteer.address.zip}}</li>
+          </ul>
+        </li>
+      </ul>
+      <button ng-click="admin.viewVolunteer(volunteer)">View</button>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <button ng-click="admin.editVolunteer()">Edit Volunteer</button><br />
+  Email: <input ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.email"><br />
+  Phone: <input ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.phoneNumber"><br />
+  First Name: <input ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.firstName"><br />
+  Last Name: <input ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.lastName"><br />
+  Company: <input ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.company"><br />
+  <button ng-click="admin.saveEdit()">Save Edits</button>
+</div>
