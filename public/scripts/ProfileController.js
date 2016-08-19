@@ -5,7 +5,9 @@ function ProfileController($http, $state, $modalInstance, UserService, profile) 
 
   vm.cancel = cancel;
   vm.saveProfile = saveProfile;
+  vm.editProfile = editProfile;
   vm.profile = profile;
+  vm.isEditing = false;
   console.log(profile);
 
   function saveProfile(profile) {
@@ -17,6 +19,10 @@ function ProfileController($http, $state, $modalInstance, UserService, profile) 
   function cancel() {
     console.log('close plz');
     $modalInstance.dismiss();
+  }
+
+  function editProfile() {
+    vm.isEditing = true;
   }
 
 

@@ -28,11 +28,12 @@ function DashboardController($http, $state, $modal, UserService) {
       //do function to save new profile info
       return UserService.editProfile(profile).then(function() {
         console.log('promise?');
-        
+
       });
 
       console.log(profile);
     });
+  
   };
 
 
