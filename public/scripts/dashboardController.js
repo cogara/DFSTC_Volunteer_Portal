@@ -1,7 +1,6 @@
-angular.module('DfstcSchedulingApp').controller('dashboardController', function(){
+angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
 
+function DashboardController($http, $state, UserService) {
   var vm = this;
 
-vm.calenderView = "month"
-
-};
+} //end DashboardController
