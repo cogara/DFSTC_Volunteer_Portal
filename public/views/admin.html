@@ -5,27 +5,30 @@ Control shit here.
 
 <div ui-view></div>
 
-<button ng-click="admin.getVolunteers()">Get Vol</button>
-
 <div class="volunteers">
   <ul>
-    <li ng-repeat="volunteer in admin.volunteers">{{::volunteer.firstName}} {{::volunteer.lastName}}
-      <ul>
-        <li ng-if="volunteer.email">Email: {{::volunteer.email}}</li>
-        <li ng-if="volunteer.phoneNumber">Phone: {{::volunteer.phoneNumber}}</li>
-        <li ng-if="volunteer.volunteerOpportunities">Opportunities: {{::volunteer.volunteerOpportunities}}</li>
-        <li ng-if="volunteer.isAvail">Availability: {{::volunteer.isAvail}}</li>
-        <li ng-if="volunteer.address">Address:
-          <ul>
-              <li>Street: {{volunteer.address.addressOne}}<br />
-                  {{volunteer.address.addressTwo}}
-              </li>
-              <li>City: {{volunteer.address.city}}</li>
-              <li>State: {{volunteer.address.state}}</li>
-              <li>Zip: {{volunteer.address.zip}}</li>
-          </ul>
-        </li>
-      </ul>
+    <li class"volunteer-info" ng-repeat="volunteer in admin.volunteers">
+      <div class="row">
+        <div class="col-xs-3 col-xs-offset-2 volunteer-meta volunteer-name">{{::volunteer.firstName}} {{::volunteer.lastName}}</div>
+        <div class="col-xs-3 volunteer-meta volunteer-email">Email: {{::volunteer.email}}</div>
+        <div class="col-xs-2 volunteer-meta volunteer-phone">Phone: {{::volunteer.phoneNumber}}</div>
+      </div>
+      <div class="row">
+        <ul class="col-xs-8 col-xs-offset-2 volunteer-sub-data">
+          <li ng-if="volunteer.volunteerOpportunities">Opportunities: {{::volunteer.volunteerOpportunities}}</li>
+          <li ng-if="volunteer.isAvail">Availability: {{::volunteer.isAvail}}</li>
+          <li ng-if="volunteer.address">Address:
+            <ul>
+                <li>Street: {{volunteer.address.addressOne}}<br />
+                    {{volunteer.address.addressTwo}}
+                </li>
+                <li>City: {{volunteer.address.city}}</li>
+                <li>State: {{volunteer.address.state}}</li>
+                <li>Zip: {{volunteer.address.zip}}</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
       <button ng-click="admin.viewVolunteer(volunteer)">View</button>
     </li>
   </ul>

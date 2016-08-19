@@ -1,3 +1,5 @@
+<button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin">Admin Control</button>
+<button ng-if="main.currentUser" class="btn btn-default" ng-click="dash.openProfile()">Profile</button>
 <h1>Dashboard!</h1>
 <div class="calendar">
 
@@ -15,8 +17,4 @@
       cell-modifier="dash.modifyCell(calendarCell)">
     </mwl-calendar>
 
-</div>
-
-  <div class="sidebar">sidebar</div>
-  <div class="clear"></div>
 </div>

@@ -30,3 +30,17 @@
 input:disabled {
   border-color: transparent;
 }
+
+.volunteer-info {
+  border: 1px solid green;
+  width: 100%;
+}
+
+.volunteer-meta {
+  padding: 5px;
+  border: 1px solid green;
+}
+
+.volunteer-sub-data {
+  border: 1px solid blue;
+}
