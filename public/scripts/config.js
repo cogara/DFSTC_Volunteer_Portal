@@ -14,13 +14,36 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('dashboard', {
       url: '/dashboard',
-      templateUrl: '../views/dashboard.html'
+      templateUrl: '../views/dashboard.html',
+      resolve: {
+        checkLoggedIn: function(UserService, $state) {
+          return UserService.checkLoggedIn().then(function(response) {
+            if(!response) {
+                $state.go('/');
+                return false;
+            }
+          });
+        }
+      }
     })
     .state('dashboard.admin', {
       url: '/admin',
       templateUrl: '../views/admin.html',
       controller: 'AdminController',
-      controllerAs: 'admin'
+      controllerAs: 'admin',
+      resolve: {
+        checkAdmin: function(UserService, $state) {
+          return UserService.checkLoggedIn().then(function(response) {
+            if(!response) {
+                $state.go('/');
+                return false;
+            } else if(!response.isAdmin) {
+                $state.go('dashboard');
+                return false;
+            }
+          });
+        }
+      }
     });
 
     $locationProvider.html5Mode(true);
