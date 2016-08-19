@@ -11,12 +11,12 @@ function DashboardController($http, $state, UserService) {
       var actions = [{
         label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
         onClick: function(args) {
-          alert.show('Edited', args.calendarEvent);
+          //alert.show('Edited', args.calendarEvent);
         }
       }, {
         label: '<i class=\'glyphicon glyphicon-remove\'></i>',
         onClick: function(args) {
-          alert.show('Deleted', args.calendarEvent);
+          //alert.show('Deleted', args.calendarEvent);
         }
       }];
       vm.events = [
