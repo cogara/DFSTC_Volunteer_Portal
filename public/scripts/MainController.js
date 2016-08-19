@@ -6,6 +6,11 @@ function MainController($http, $state, UserService) {
   vm.register = register;
   vm.logout = logout;
 
+  //temp for QOL
+  vm.loginUser = {};
+  vm.loginUser.email = 'test';
+  vm.loginUser.password = 'test';
+
   function register() {
     UserService.register(vm.registerUser).then(function() {
       UserService.login(vm.registerUser).then(function(response) {
