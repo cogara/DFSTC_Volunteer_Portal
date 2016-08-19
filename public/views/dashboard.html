@@ -1,5 +1,128 @@
 <button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin">Admin Control</button>
-<button ng-if="main.currentUser" class="btn btn-default" ng-click="dash.openProfile()">Profile</button>
+<button ng-if="main.currentUser" class="btn btn-default" ng-click="dash.openProfile(main.currentUser._id)">Profile</button>
+
+
+<!-- Profile Modal -->
+<script type="text/ng-template" id="myModalContent.html">
+  <div class="modal-header">
+      <h3 class="modal-title">Profile</h3>
+  </div>
+  <div class="row">
+    <div class="modal-body">
+        <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
+          <h3 class="center-block">Register to Volunteer</h3>
+          <label>E-mail address (this will be your login username):</label>
+          <input type="text" class="form-control" ng-model="prof.profile.email" placeholder="E-mail Address" />
+          <label>Choose a password:</label>
+          <input type="password" class="form-control" ng-model="prof.profile.password" placeholder="Password" />
+          <br />
+          <label>First Name:</label>
+          <input type="text" class="form-control" ng-model="prof.profile.firstName" placeholder="First Name" />
+          <label>Last Name:</label>
+          <input type="text" class="form-control" ng-model="prof.profile.lastName" placeholder="Last Name" />
+          <br />
+          <label>Phone Number with Area Code:</label>
+          <input type="text" class="form-control" ng-model="prof.profile.phoneNumber" placeholder="Phone Number" />
+          <br />
+          <label>Address:</label>
+          <input type="text" class="form-control" ng-model="prof.profile.address.addressOne" placeholder="Address Line 1" />
+          <input type="text" class="form-control" ng-model="prof.profile.address.addressTwo" placeholder="Address Line 2" />
+          <input type="text" class="form-control" ng-model="prof.profile.address.city" placeholder="City" />
+          <input type="text" class="form-control" ng-model="prof.profile.address.state" placeholder="State" />
+          <input type="text" class="form-control" ng-model="prof.profile.address.zip" placeholder="Zip Code" />
+          <br />
+          <div class="checkbox panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
+            <label>Volunteer positions you are interested in:</label>
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.imageCoach" />Image Coach
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.careerCoach" />Career Coach
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.clothingSorter" />Clothing Sorter
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.clothingOrganizer"  />Clothing Organizer
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.frontDesk" />Front Desk Volunteer
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.clothingSale" />Clothing Sale Volunteer
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.clothingSaleCaptain" />Clothing Sale Captain
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.careerAdvocate" />Career Advocate
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.intelligenceMentor" />Professional Intelligence Mentor
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.intelligenceMuse" />Professional Intelligence Muse
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.communityAmbassador" />Community Ambassador
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.eventSetUp" />Client Event Set Up Volunteer
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.photographer" />Event Photographer
+            <br />
+            <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.graphicDesigner" />Graphic Designer
+          </div>
+          <br />
+          <div class="col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
+            <p>
+              <em>Please select your availability:</em>
+            </p>
+          </div>
+          <table class="table table-hover">
+            <tr>
+              <th>Time of Day</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+            </tr>
+            <tr>
+              <td>Morning</td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.monday.morning" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.tuesday.morning" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.wednesday.morning" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.thursday.morning" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.friday.morning" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.saturday.morning" /></td>
+            </tr>
+            <tr>
+              <td>Afternoon</td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.monday.afternoon" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.tuesday.afternoon" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.wednesday.afternoon" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.thursday.afternoon" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.friday.afternoon" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.saturday.afternoon" /></td>
+            </tr>
+            <tr>
+              <td>Evening</td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.monday.evening"  /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.tuesday.evening" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.wednesday.evening" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.thursday.evening" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.friday.evening" /></td>
+              <td><input type="checkbox" ng-model="prof.profile.isAvail.saturday.evening" /></td>
+            </tr>
+          </table>
+          <label>Company you are employed by:</label>
+          <input type="text" class="form-control" ng-model="prof.profile.companies" placeholder="Companies" />
+          <label>Volunteer groups you belong to:</label>
+          <input type="text" class="form-control" ng-model="prof.profile.groups" placeholder="Group Name" />
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="prof.saveProfile(prof.profile)">Save</button>
+        <button class="btn btn-warning" type="button" ng-click="prof.cancel()">Cancel</button>
+    </div>
+  </div>
+ </script>
+<!-- End Profile Modal -->
+
 
 <h1>dashboard</h1>
 <div class="content">

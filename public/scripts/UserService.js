@@ -23,6 +23,24 @@ function UserService($http) {
     })
   }
 
+  function getProfile(id) {
+    return $http.get('/api/volunteer/' + id).then(function(response) {
+      return response.data;
+    });
+  }
+
+  function editProfile(volunteer) {
+    var editVolunteer = {};
+    for (var key in volunteer) {
+      if (!(key==='password')) {
+        console.log(key);
+        editVolunteer[key] = volunteer[key];
+      }
+    }
+    console.log(editVolunteer);
+    return $http.put('/api/volunteer/' + volunteer._id, editVolunteer);
+  }
+
   function logout() {
     return $http.get('/logout');
   }
@@ -31,7 +49,9 @@ function UserService($http) {
     checkLoggedIn: checkLoggedIn,
     register: register,
     login: login,
-    logout: logout
+    logout: logout,
+    getProfile: getProfile,
+    editProfile: editProfile
   }
 
 }// end UserService

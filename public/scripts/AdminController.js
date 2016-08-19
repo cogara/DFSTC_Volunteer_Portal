@@ -27,7 +27,7 @@ function AdminController($http, $state, UserService, AdminService, volunteerList
   function saveEdit() {
     console.log(vm.editingVolunteer);
     vm.isEditing = false;
-    AdminService.editVolunteer(vm.editingVolunteer).then(getVolunteers);
+    UserService.editProfile(vm.editingVolunteer).then(getVolunteers);
   }
 
 

@@ -37,4 +37,17 @@ router.put('/volunteer/:id', function(request, response) {
   });
 });
 
+router.get('/volunteer/:id', function(request, response) {
+  User.findById(request.params.id, function(err, volunteer) {
+    if(err) {
+      console.log(err);
+      response.sendStatus(500);
+    } else {
+      console.log('Volunteer Info', volunteer);
+      volunteer.password = null;
+      response.send(volunteer);
+    }
+  })
+})
+
 module.exports = router;
