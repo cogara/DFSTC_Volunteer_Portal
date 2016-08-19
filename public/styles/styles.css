@@ -35,15 +35,24 @@ input:disabled {
   list-style-type: none;
 }
 
-.volunteer-info {
-  border: 1px solid green;
-  width: 100%;
+.dropdown-select-all {
+  padding: 0 15px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid rgb(220,220,220);
+}
+
+.dropdown-option {
+  padding: 0 15px;
 }
 
 .info-head {
   text-transform: uppercase;
-  font-size: .95rem;
+  font-size: .9rem;
   color: rgb(150,150,150);
+}
+
+.info-data {
+  font-size: 1.4rem;
 }
 
 .info-head__address {
@@ -56,17 +65,28 @@ input:disabled {
   list-style-type: none;
 }
 
-.volunteer-meta {
-  padding: 10px 0px;
-  border: 1px solid green;
-  /*text-align: center;*/
+.accordion .panel-body, .panel-heading {
+  padding: 3px 0px;
 }
 
-.volunteer-sub-data {
-  border: 1px solid blue;
-  padding: 0 16px;
+.accordion .panel-default>.panel-heading {
+  background-image: none;
+  border-top-left-radius: 0;
 }
 
-ul.volunteers {
+/* Zebra stripe setting on volunteer list in admin panel */
+.accordion .panel-default:nth-child(2n)>.panel-heading {
+  background-color: rgb(230,230,230);
+}
+
+.accordion .panel-group .panel+.panel {
+  margin-top: 0;
+}
+
+.accordion .panel-group .panel {
+  border-radius: 0;
+}
+
+ul.volunteers, ul.volunteer-sub-data {
   padding-left: 16px;
 }
