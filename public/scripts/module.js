@@ -1,1 +1,1 @@
-angular.module('DfstcSchedulingApp', ['ui.router', 'mwl.calendar']);
+angular.module('DfstcSchedulingApp', ['ui.router', 'mwl.calendar', 'ui.bootstrap']);
