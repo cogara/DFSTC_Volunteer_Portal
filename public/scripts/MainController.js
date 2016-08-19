@@ -15,7 +15,6 @@ function MainController($http, $state, UserService) {
     UserService.register(vm.registerUser).then(function() {
       UserService.login(vm.registerUser).then(function(response) {
         vm.currentUser = response;
-        $state.go('dashboard')
       })
     });
   }

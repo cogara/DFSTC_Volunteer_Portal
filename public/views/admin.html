@@ -2,36 +2,67 @@
 <h1>Admin Controls</h1>
 
 Control shit here.
-
 <div ui-view></div>
 
-<div class="volunteers">
-  <ul>
-    <li class"volunteer-info" ng-repeat="volunteer in admin.volunteers">
-      <div class="row">
-        <div class="col-xs-3 col-xs-offset-2 volunteer-meta volunteer-name">{{::volunteer.firstName}} {{::volunteer.lastName}}</div>
-        <div class="col-xs-3 volunteer-meta volunteer-email">Email: {{::volunteer.email}}</div>
-        <div class="col-xs-2 volunteer-meta volunteer-phone">Phone: {{::volunteer.phoneNumber}}</div>
-      </div>
-      <div class="row">
-        <ul class="col-xs-8 col-xs-offset-2 volunteer-sub-data">
-          <li ng-if="volunteer.volunteerOpportunities">Opportunities: {{::volunteer.volunteerOpportunities}}</li>
-          <li ng-if="volunteer.isAvail">Availability: {{::volunteer.isAvail}}</li>
-          <li ng-if="volunteer.address">Address:
-            <ul>
-                <li>Street: {{volunteer.address.addressOne}}<br />
+
+
+<uib-accordion>
+  <div uib-accordion-group class="panel-default" heading="Dynamic Body Content">
+    <p>The body of the uib-accordion group grows to fit the contents</p>
+  </div>
+</uib-accordion>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+  <div class="col-sm-10 col-sm-offset-1">
+    <ul class="volunteers">
+      <li class"volunteer" ng-repeat="volunteer in admin.volunteers">
+        <div class="row" style="border: 1px solid orange">
+          <div class="col-xs-4 volunteer-meta volunteer-name">
+            <div class="col-md-2 info-head">Name:</div>
+            <div class="col-md-10">{{::volunteer.firstName}} {{::volunteer.lastName}}</div>
+          </div>
+          <div class="col-xs-5 volunteer-meta volunteer-email">
+            <div class="col-md-2 info-head">Email: </div>
+            <div class="col-md-10">{{::volunteer.email}}</div>
+          </div>
+          <div class="col-xs-3 volunteer-meta volunteer-phone">
+            <div class="col-md-3 info-head">Phone: </div>
+            <div class="col-md-9">{{::volunteer.phoneNumber}}</div>
+          </div>
+        </div>
+        <div class="row">
+          <ul class="volunteer-sub-data">
+            <div ng-if="volunteer.volunteerOpportunities">Opportunities: {{::volunteer.volunteerOpportunities}}</div>
+            <div ng-if="volunteer.isAvail">Availability: {{::volunteer.isAvail}}</div>
+            <div class="info-head__address" ng-if="volunteer.address">Address:</div>
+            <ul class="info-address">
+                <li>{{volunteer.address.addressOne}}<br />
                     {{volunteer.address.addressTwo}}
                 </li>
-                <li>City: {{volunteer.address.city}}</li>
-                <li>State: {{volunteer.address.state}}</li>
-                <li>Zip: {{volunteer.address.zip}}</li>
+                <li>{{volunteer.address.city}}</li>
+                <li>{{volunteer.address.state}}</li>
+                <li>{{volunteer.address.zip}}</li>
             </ul>
-          </li>
-        </ul>
-      </div>
-      <button ng-click="admin.viewVolunteer(volunteer)">View</button>
-    </li>
-  </ul>
+            <div class="clear"></div>
+            <button ng-click="admin.viewVolunteer(volunteer)">View</button>
+
+          </ul>
+        </div>
+
+      </li>
+    </ul>
+  </div>
 </div>
 
 <div>

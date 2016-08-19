@@ -31,16 +31,42 @@ input:disabled {
   border-color: transparent;
 }
 
+.volunteers > li {
+  list-style-type: none;
+}
+
 .volunteer-info {
   border: 1px solid green;
   width: 100%;
 }
 
+.info-head {
+  text-transform: uppercase;
+  font-size: .95rem;
+  color: rgb(150,150,150);
+}
+
+.info-head__address {
+  float: left;
+}
+
+.info-address {
+  float: left;
+  list-style-position: inside;
+  list-style-type: none;
+}
+
 .volunteer-meta {
-  padding: 5px;
+  padding: 10px 0px;
   border: 1px solid green;
+  /*text-align: center;*/
 }
 
 .volunteer-sub-data {
   border: 1px solid blue;
+  padding: 0 16px;
+}
+
+ul.volunteers {
+  padding-left: 16px;
 }
