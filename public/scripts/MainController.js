@@ -8,7 +8,7 @@ function MainController($http, $state, UserService) {
 
   //temp for QOL
   vm.loginUser = {};
-  vm.loginUser.email = 'test';
+  vm.loginUser.email = 'volunteer';
   vm.loginUser.password = 'test';
 
   function register() {

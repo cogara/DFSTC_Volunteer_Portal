@@ -1,3 +1,6 @@
+<button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin">Admin Control</button>
+<button ng-if="main.currentUser" class="btn btn-default" ng-click="dash.openProfile()">Profile</button>
+
 <h1>dashboard</h1>
 <div class="content">
   <div class="calendar">calendar</div>
