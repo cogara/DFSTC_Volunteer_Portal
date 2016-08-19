@@ -11,10 +11,7 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
         userCheck: function(UserService, $state) {
           UserService.checkLoggedIn().then(function(response) {
             if(response) {
-              console.log('logged in');
               $state.go('dashboard')
-            } else {
-              console.log('not logged in');
             }
           })
         }
@@ -46,9 +43,10 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
         userCheck: function(UserService, $state) {
           UserService.checkLoggedIn().then(function(response) {
             if(!response) {
-              //not logged in, send to login
+              //user not logged in, send to login
               $state.go('/');
             } else if(!response.isAdmin) {
+              //user not admin, send to dashboard
               $state.go('dashboard');
             }
           });

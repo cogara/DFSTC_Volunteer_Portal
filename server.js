@@ -99,9 +99,6 @@ app.get('/logout', function(request, response) {
   request.logout();
   response.sendStatus(200);
 })
-// app.get('/dashboard', function(request, response) {
-//   response.sendStatus(500);
-// })
 app.use('/api', api);
 app.use('*', index);
 

@@ -18,13 +18,12 @@
   float: right;
   right: 0;
   display: inline-block;
-  width: 20%;
+  width: 250px;
   height: 200px;
   border: 1px solid rgba(0,255,0,.5);
 }
 
 .clear {
-  /*float: left;*/
   clear: both;
 }
 
