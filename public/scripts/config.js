@@ -14,7 +14,17 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('dashboard', {
       url: '/dashboard',
-      templateUrl: '../views/dashboard.html'
+      templateUrl: '../views/dashboard.html',
+      resolve: {
+        checkLoggedIn: function(UserService, $state) {
+          return UserService.checkLoggedIn().then(function(response) {
+            if(!response) {
+                $state.go('/');
+                return false;
+            }
+          });
+        }
+      }
     })
     .state('dashboard.admin', {
       url: '/admin',
@@ -22,20 +32,14 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       controller: 'AdminController',
       controllerAs: 'admin',
       resolve: {
-        adminAuth: function(UserService, $state) {
+        checkAdmin: function(UserService, $state) {
           return UserService.checkLoggedIn().then(function(response) {
-            console.log('Checking admin', response);
             if(!response) {
-                console.log('not admin');
                 $state.go('/');
                 return false;
             } else if(!response.isAdmin) {
-                console.log('not admin');
                 $state.go('dashboard');
                 return false;
-            } else {
-              console.log('is admin');
-              return true;
             }
           });
         }
