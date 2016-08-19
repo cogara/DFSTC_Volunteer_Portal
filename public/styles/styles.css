@@ -1,25 +1,30 @@
+.content {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  border: 1px solid yellow;
+}
+
 .calendar {
-  clear: both;
   display: inline-block;
+  float: left;
+  left: 0;
   height: 200px;
   width: 60%;
-  margin-left: 50px;
-  float: left;
   border: 1px solid rgba(255,0,0,.5);
 }
 
 .sidebar {
-  /*clear: both;*/
-  display: inline-block;
   float: right;
+  right: 0;
+  display: inline-block;
   width: 20%;
   height: 200px;
-  margin-right: 50px;
   border: 1px solid rgba(0,255,0,.5);
 }
 
 .clear {
-  float: left;
+  /*float: left;*/
   clear: both;
 }
 

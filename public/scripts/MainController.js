@@ -36,7 +36,7 @@ function MainController($http, $state, UserService) {
     console.log(response);
     vm.currentUser = response;
     if(vm.currentUser) {
-      $state.go('dashboard');
+      // $state.go('dashboard');
     }
   });
 

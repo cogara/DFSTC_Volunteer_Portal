@@ -19,15 +19,15 @@
   </head>
   <body ng-controller="MainController as main">
     <!-- <h5>{{main.currentUser}}</h5> -->
-
+    <button ng-if="main.currentUser.isAdmin" ui-sref="admin">Admin Control</button>
     <div ui-view>
 
     </div>
 
     <div ng-if="main.currentUser" style="clear: both; text-align: center">
-      <button ng-click="main.logout()">Logout</button>
+      <button class="clear" ng-click="main.logout()">Logout</button>
     </div>
-    <div class="clear">
+    <!-- <div class="clear">
       <h5>Logged In: <span ng-if="main.currentUser">{{main.currentUser.email}}</span><span ng-if="!main.currentUser">None</span></h5>
       <ul>
         <li ng-if="main.currentUser.isAdmin">only shows for admin</li>
@@ -35,4 +35,4 @@
         <li ng-if="main.currentUser.isVolunteer">Only shows for Volunteer</li>
         <li ng-repeat="(key, value) in main.currentUser">{{key}}: {{value}}</li>
       </ul>
-    </div>
+    </div> -->

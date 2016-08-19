@@ -6,7 +6,19 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
   $stateProvider
     .state('/', {
       url: '/',
-      templateUrl: '../views/landingPage.html'
+      templateUrl: '../views/landingPage.html',
+      resolve: {
+        userCheck: function(UserService, $state) {
+          UserService.checkLoggedIn().then(function(response) {
+            if(response) {
+              console.log('logged in');
+              $state.go('dashboard')
+            } else {
+              console.log('not logged in');
+            }
+          })
+        }
+      }
     })
     .state('register', {
       url: '/register',
@@ -16,30 +28,28 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/dashboard',
       templateUrl: '../views/dashboard.html',
       resolve: {
-        checkLoggedIn: function(UserService, $state) {
-          return UserService.checkLoggedIn().then(function(response) {
+        userCheck: function(UserService, $state) {
+          UserService.checkLoggedIn().then(function(response) {
             if(!response) {
-                $state.go('/');
-                return false;
+              $state.go('/');
             }
           });
         }
       }
     })
-    .state('dashboard.admin', {
+    .state('admin', {
       url: '/admin',
       templateUrl: '../views/admin.html',
       controller: 'AdminController',
       controllerAs: 'admin',
       resolve: {
-        checkAdmin: function(UserService, $state) {
-          return UserService.checkLoggedIn().then(function(response) {
+        userCheck: function(UserService, $state) {
+          UserService.checkLoggedIn().then(function(response) {
             if(!response) {
-                $state.go('/');
-                return false;
+              //not logged in, send to login
+              $state.go('/');
             } else if(!response.isAdmin) {
-                $state.go('dashboard');
-                return false;
+              $state.go('dashboard');
             }
           });
         }
