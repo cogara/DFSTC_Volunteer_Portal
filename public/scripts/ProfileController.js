@@ -20,7 +20,6 @@ function ProfileController($http, $state, $modalInstance, UserService, profile) 
     $modalInstance.dismiss();
   }
 
-
   $modalInstance.dismiss();
 
   function editProfile() {
