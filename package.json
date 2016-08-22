@@ -8,11 +8,8 @@
     "angular-animate": "^1.5.8",
     "angular-bootstrap": "^0.12.2",
     "angular-bootstrap-calendar": "^0.23.0",
-<<<<<<< HEAD
     "angular-touch": "^1.5.8",
-=======
     "angular-ui-bootstrap": "^2.0.2",
->>>>>>> calendar
     "angular-ui-router": "^0.3.1",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",

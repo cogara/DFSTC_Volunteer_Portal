@@ -14,7 +14,6 @@ function MainController($http, $state, UserService) {
   function register() {
     UserService.register(vm.registerUser).then(function() {
       UserService.login(vm.registerUser).then(function(response) {
-        console.log('registering, go?');
         vm.currentUser = response;
         $state.go('dashboard');
       });
@@ -24,7 +23,6 @@ function MainController($http, $state, UserService) {
   function login() {
     UserService.login(vm.loginUser).then(function(response) {
       vm.currentUser = response;
-      console.log('going to dashboard');
       $state.go('dashboard');
     }, function(){
       vm.currentUser = null;

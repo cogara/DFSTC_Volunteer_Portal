@@ -9,7 +9,7 @@
         "spec": ">=0.23.0 <0.24.0",
         "type": "range"
       },
-      "/Users/tracy/Desktop/Prime/DressForSucess/DFSTC_Volunteer_Portal"
+      "/Users/COGara/Workspace/DFSTC"
     ]
   ],
   "_from": "angular-bootstrap-calendar@>=0.23.0 <0.24.0",
@@ -43,7 +43,7 @@
   "_shasum": "79d87c00c9c324752baac81b8bbb7e9b1e536129",
   "_shrinkwrap": null,
   "_spec": "angular-bootstrap-calendar@^0.23.0",
-  "_where": "/Users/tracy/Desktop/Prime/DressForSucess/DFSTC_Volunteer_Portal",
+  "_where": "/Users/COGara/Workspace/DFSTC",
   "bugs": {
     "url": "https://github.com/mattlewis92/angular-bootstrap-calendar/issues"
   },
