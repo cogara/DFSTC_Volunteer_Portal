@@ -97,8 +97,9 @@ function DashboardController($http, $state, $modal, UserService, AppointmentServ
   vm.toggleMin();
 
   vm.open1 = function() {
-    console.log('Clicke open1');
+    console.log('Clicked open1');
     vm.popup1.opened = true;
+    console.log(vm.popup1);
   };
 
   vm.open2 = function() {
@@ -113,13 +114,9 @@ function DashboardController($http, $state, $modal, UserService, AppointmentServ
   vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   vm.format = vm.formats[0];
   vm.altInputFormats = ['M!/d!/yyyy'];
+  //
+  vm.popup1 = {}
 
-  vm.popup1 = {
-    opened: false
-  }
-
-  vm.popup2 = {
-    opened: false
-  };
+  vm.popup2 = {};
 
 }; //end DashboardController
