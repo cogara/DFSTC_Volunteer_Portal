@@ -9,7 +9,7 @@
       <h3 class="modal-title">Profile</h3>
   </div>
   <div class="row">
-    <div class="modal-body">
+    <div class="modal-body profile">
       <div class="panel panel-default col-sm-10 col-sm-offset-1">
 
         <!-- <h3 class="center-block">Profile</h3> -->
@@ -42,7 +42,7 @@
             <div class="form-group">
               <label class="col-md-3">Phone Number:</label>
               <div class="col-md-9">
-                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.phoneNumber" placeholder="Phone Number" />
+                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.phoneNumber" data-format="+1 (ddd) ddd-dddd" placeholder="Phone Number" />
               </div>
             </div>
             <div class="form-group">
@@ -116,7 +116,7 @@
                 <th>Saturday</th>
               </tr>
               <tr>
-                <td>Morning</td>
+                <td>Morning <em>8am-12pm</em></td>
                 <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.monday.morning" /></td>
                 <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.tuesday.morning" /></td>
                 <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.wednesday.morning" /></td>
@@ -125,7 +125,7 @@
                 <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.saturday.morning" /></td>
               </tr>
               <tr>
-                <td>Afternoon</td>
+                <td>Afternoon <em>12pm-5pm</em></td>
                 <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.monday.afternoon" /></td>
                 <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.tuesday.afternoon" /></td>
                 <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.wednesday.afternoon" /></td>
@@ -134,7 +134,7 @@
                 <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.saturday.afternoon" /></td>
               </tr>
               <tr>
-                <td>Evening</td>
+                <td>Evening <em>5pm-9pm</em></td>
                 <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.monday.evening"  /></td>
                 <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.tuesday.evening" /></td>
                 <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.wednesday.evening" /></td>
@@ -150,9 +150,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-md-3">Organizations Involved In:</label>
+              <label class="col-md-3">Photo:</label>
               <div class="col-md-9">
-                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.groups" placeholder="Group Name" />
+                <input type="file" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.photo" />
               </div>
             </div>
         </form>

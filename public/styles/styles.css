@@ -44,3 +44,7 @@ input:disabled {
 .volunteer-sub-data {
   border: 1px solid blue;
 }
+
+.profile:disabled {
+  border-color: transparent;
+}
