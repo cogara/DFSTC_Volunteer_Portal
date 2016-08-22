@@ -5,10 +5,7 @@ function DashboardController($http, $state, $modal, UserService, AppointmentServ
 
   vm.openProfile = openProfile;
 
-  console.log('hello?');
   function openProfile(id) {
-    console.log('sending id', id);
-
     var modalInstance = $modal.open({
       animation: true,
       templateUrl: 'profileModal.html',
@@ -115,8 +112,12 @@ function DashboardController($http, $state, $modal, UserService, AppointmentServ
   vm.format = vm.formats[0];
   vm.altInputFormats = ['M!/d!/yyyy'];
   //
-  vm.popup1 = {}
+  vm.popup1 = {
+    opened: false
+  }
 
-  vm.popup2 = {};
+  vm.popup2 = {
+    opened: false
+  }
 
 }; //end DashboardController

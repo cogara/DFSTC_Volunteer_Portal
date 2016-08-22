@@ -168,6 +168,7 @@
  </script>
 <!-- End Profile Modal -->
 
+
 <h2 class="text-center">{{ vm.calendarTitle }}</h2>
 
 <div class="row">
@@ -203,10 +204,10 @@
 
   <div class="col-md-6 text-center">
     <div class="btn-group">
-      <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'year'">Year</label>
-      <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'month'">Month</label>
-      <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'week'">Week</label>
-      <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'day'">Day</label>
+      <label class="btn btn-primary" ng-model="dash.calendarView" btn-radio="'year'">Year</label>
+      <label class="btn btn-primary" ng-model="dash.calendarView" btn-radio="'month'">Month</label>
+      <label class="btn btn-primary" ng-model="dash.calendarView" btn-radio="'week'">Week</label>
+      <label class="btn btn-primary" ng-model="dash.calendarView" btn-radio="'day'">Day</label>
     </div>
   </div>
 
@@ -214,18 +215,18 @@
 
 
 <mwl-calendar
-    events="dash.events"
-    view="dash.calendarView"
-    view-title="dash.calendarTitle"
-    view-date="dash.viewDate"
-    on-event-click="dash.eventClicked(calendarEvent)"
-    on-event-times-changed="dash.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-    cell-is-open="dash.isCellOpen"
-    day-view-start="06:00"
-    day-view-end="22:59"
-    day-view-split="30"
-    cell-modifier="dash.modifyCell(calendarCell)">
-  </mwl-calendar>
+  events="dash.events"
+  view="dash.calendarView"
+  view-title="dash.calendarTitle"
+  view-date="dash.viewDate"
+  on-event-click="dash.eventClicked(calendarEvent)"
+  on-event-times-changed="dash.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+  cell-is-open="dash.isCellOpen"
+  day-view-start="06:00"
+  day-view-end="22:59"
+  day-view-split="30"
+  cell-modifier="dash.modifyCell(calendarCell)">
+</mwl-calendar>
 
 <!-- admin add appointment form -->
 <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
@@ -234,19 +235,18 @@
   <input type="text" class="form-control" ng-model="dash.appointment.title" />
 
   <table class="table table-bordered">
-
     <thead>
       <tr>
         <th>Start Time</th>
         <th>End Time</th>
       </tr>
     </thead>
-
     <tbody>
       <tr>
         <td>
           <p class="input-group" style="max-width: 250px">
-            <input type="text"
+            <input
+              type="text"
               class="form-control"
               uib-datepicker-popup="{{dash.format}}"
               ng-model="dash.appointment.startTime"
@@ -265,7 +265,7 @@
             </span>
           </p>
           <div
-            uib-timepicker
+            timepicker
             ng-model="dash.appointment.startTime"
             hour-step="1"
             minute-step="15"
@@ -294,7 +294,7 @@
             </span>
           </p>
           <div
-            uib-timepicker
+            timepicker
             ng-model="dash.appointment.endTime"
             hour-step="1"
             minute-step="15"
