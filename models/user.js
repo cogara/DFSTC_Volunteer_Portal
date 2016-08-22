@@ -18,7 +18,7 @@ var UserSchema = new Schema(
       zip: String
     },
     company: String,
-    organization: Object, //check this
+    organizatiqon: Object, //check this
     isVolunteer: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
     isTrainee: {type: Boolean, default: true},

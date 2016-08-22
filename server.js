@@ -14,6 +14,8 @@ const index = require('./routes/index.js');
 const register = require('./routes/register.js');
 const login = require('./routes/login.js');
 const api = require('./routes/api.js');
+const mailerR = require('./modules/mailerReminder');
+
 
 //DECLARE SERVER APP
 const app = express();
@@ -92,7 +94,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 //ROUTES
-
+app.use('/mail',mailerR);
 app.use('/register', register);
 app.use('/login', login);
 app.get('/logout', function(request, response) {
