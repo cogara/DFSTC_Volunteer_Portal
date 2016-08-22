@@ -6,70 +6,101 @@
 <div class="row accordion">
   <div class="col-sm-10 col-sm-offset-1">
     <div style="border: 1px solid #ddd; padding: 3px 0">
-      <div class="col-xs-4">
-        <div class="dropdown">
-          <button id="dLabel" class="btn btn-default" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Search Volunteer Type
-          <span class="caret"></span>
+      <h4 class="col-xs-12">Search:</h4>
+      <div class="col-xs-12">
+        <div class="btn-group" uib-dropdown auto-close="outsideClick">
+          <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle is-open ng-disabled="disabled">
+            Volunteer Type <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dLabel">
-            <li class="dropdown-select-all"><h5><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.all" ng-click="admin.selectAll()"> Select All </h5></li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.one"> One </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.two"> Two </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.three"> Three </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.four"> four </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.five"> five </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.six"> six </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.seven"> seven </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.eight"> eight </li>
+          <ul class="dropdown-menu search-opp" uib-dropdown-menu aria-labelledby="single-button">
+            <li class="dropdown-select-all">
+              <h5><input type="checkbox" ng-model="admin.search.all" ng-click="admin.searchAllOpp()"> Select All </h5>
+            </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.imageCoach"> Image Coach</li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.careerCoach"> Career Coach </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.clothingSorter"> Clothing Sorter </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.clothingOrganizer"> Clothing Organizer </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.frontDesk"> Front Desk Volunteer </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.clothingSale"> Clothing Sale Volunteer </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.clothingSaleCaptain"> Clothing Sale Captain </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.careerAdvocate"> Career Advocate </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.intelligenceMentor"> Professional Intelligence Mentor </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.intelligenceMuse"> Professional Intelligence Muse </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.communityAmbassador"> Community Ambassador </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.eventSetUp"> Client Event Set Up Volunteer </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.photographer"> Event Photographer </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.graphicDesigner"> Graphic Designer </li>
           </ul>
         </div>
-        Searching Volunteers for:
-        <span class="selected-options" ng-repeat="(option, selected) in admin.options">
-          <span ng-if="selected && (option != 'all')">{{option}}</span>
-        </span>
-      </div>
-
-      <div class="col-xs-8">
-        <div class="dropdown">
-          <button id="dLabel" class="btn btn-default" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Search Volunteer Availability
-          <span class="caret"></span>
+        <!-- <div>
+          Searching Volunteers for:
+          <span class="selected-options" ng-repeat="(option, selected) in admin.search.opportunity">
+            <span ng-if="selected && (option != 'all')">{{option}}</span>
+          </span>
+        </div> -->
+        <div class="btn-group" uib-dropdown auto-close="outsideClick" dropdown-append-to="appendToEl">
+          <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle is-open ng-disabled="disabled">
+            Availability <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dLabel">
-            <li class="dropdown-select-all"><h5><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.all" ng-click="admin.selectAll()"> Select All </h5></li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.one"> One </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.two"> Two </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.three"> Three </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.four"> four </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.five"> five </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.six"> six </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.seven"> seven </li>
-            <li class="dropdown-option"><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="admin.options.eight"> eight </li>
+          <ul class="dropdown-menu search-avail" uib-dropdown-menu aria-labelledby="single-button">
+            <li class="dropdown-select-all">
+              <h5><input type="checkbox" ng-model="admin.search.all" ng-click="admin.searchAllAvail()"> Select All </h5>
+            </li>
+            <li class="search-day"><h6>Monday</h6>
+              <ul>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.monday.morning"> morning </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.monday.afternoon"> afternoon </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.monday.evening"> evening </li>
+              </ul>
+            </li>
+            <li class="search-day"><h6>Tuesday</h6>
+              <ul>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.tuesday.morning"> morning </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.tuesday.afternoon"> afternoon </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.tuesday.evening"> evening </li>
+              </ul>
+            </li>
+            <li class="search-day"><h6>Wednesday</h6>
+              <ul>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.wednesday.morning"> morning </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.wednesday.afternoon"> afternoon </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.wednesday.evening"> evening </li>
+              </ul>
+            </li>
+            <li class="search-day"><h6>Thursday</h6>
+              <ul>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.thursday.morning"> morning </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.thursday.afternoon"> afternoon </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.thursday.evening"> evening </li>
+              </ul>
+            </li>
+            <li class="search-day"><h6>Friday</h6>
+              <ul>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.friday.morning"> morning </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.friday.afternoon"> afternoon </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.friday.evening"> evening </li>
+              </ul>
+            </li>
+            <li class="search-day"><h6>Saturday</h6>
+              <ul>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.saturday.morning"> morning </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.saturday.afternoon"> afternoon </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.saturday.evening"> evening </li>
+              </ul>
+            </li>
           </ul>
         </div>
-        Searching Volunteers for:
-        <span class="selected-options" ng-repeat="(option, selected) in admin.options">
-          <span ng-if="selected && (option != 'all')">{{option}}</span>
-        </span>
       </div>
-
-      <!-- <div> -->
-      <div class="col-xs-4">
-        <input class="col-sm-10 col-sm-offset-2" type="text" placeholder="Search Name">
-      </div>
-      <div class="col-xs-5">
-        <input class="col-sm-10 col-sm-offset-2" type="text" placeholder="Search Email">
-      </div>
-      <div class="col-xs-3">
-        <input class="col-sm-9 col-sm-offset-3" type="text" placeholder="Search Phone Number">
+      <div class="col-xs-12">
+        <input class="col-sm-12" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">
       </div>
       <div class="clear"></div>
-      <!-- </div> -->
     </div>
   </div>
   <uib-accordion class="col-sm-10 col-sm-offset-1">
-    <div uib-accordion-group class="panel-default" ng-repeat="volunteer in admin.volunteers">
+    <div
+      uib-accordion-group class="panel-default"
+      ng-repeat="volunteer in admin.volunteers | filter: admin.search.input | filter: admin.availableFilter | filter: admin.opportunityFilter">
       <uib-accordion-heading>
         <div class="col-xs-4 volunteer-meta volunteer-name">
           <div class="col-md-2 info-head">Name:</div>

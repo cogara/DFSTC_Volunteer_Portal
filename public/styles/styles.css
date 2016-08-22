@@ -102,3 +102,24 @@ ul.volunteers, ul.volunteer-sub-data {
 .profile:disabled {
   border-color: transparent;
 }
+
+.search-avail {
+  width: 400px;
+  padding: 0 15px 10px;
+}
+
+.search-opp {
+  width: 300px;
+  padding: 0 15px 10px;
+}
+
+.search-day {
+  display: inline-block;
+  width: 120px;
+}
+
+.search-day ul {
+  list-style-position: inside;
+  list-style-type: none;
+  padding: 0;
+}
