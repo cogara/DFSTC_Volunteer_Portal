@@ -1,6 +1,6 @@
 angular.module('DfstcSchedulingApp').controller('AdminController', AdminController);
 
-function AdminController($http, $state, $modal, UserService, AdminService, volunteerList) {
+function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList) {
   var vm = this;
   vm.volunteers = volunteerList;
   vm.getVolunteers = getVolunteers;
@@ -59,7 +59,7 @@ function AdminController($http, $state, $modal, UserService, AdminService, volun
   function openProfile(id) {
     console.log('sending id', id);
 
-    var modalInstance = $modal.open({
+    var modalInstance = $uibModal.open({
       animation: true,
       templateUrl: 'adminProfileModal.html',
       controller: 'ProfileController',

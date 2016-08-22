@@ -68,9 +68,9 @@
       <!-- </div> -->
     </div>
   </div>
-  <accordion class="col-sm-10 col-sm-offset-1">
-    <div accordion-group class="panel-default" ng-repeat="volunteer in admin.volunteers">
-      <accordion-heading>
+  <uib-accordion class="col-sm-10 col-sm-offset-1">
+    <div uib-accordion-group class="panel-default" ng-repeat="volunteer in admin.volunteers">
+      <uib-accordion-heading>
         <div class="col-xs-4 volunteer-meta volunteer-name">
           <div class="col-md-2 info-head">Name:</div>
           <div class="col-md-10 info-data">{{::volunteer.firstName}} {{::volunteer.lastName}}</div>
@@ -84,7 +84,7 @@
           <div class="col-md-9 info-data">{{::volunteer.phoneNumber}}</div>
         </div>
         <div class="clear"></div>
-      </accordion-heading>
+      </uib-accordion-heading>
       <div class="col-xs-12">
         <ul class="volunteer-sub-data">
           <div ng-if="volunteer.volunteerOpportunities">Opportunities: {{::volunteer.volunteerOpportunities}}</div>
@@ -103,7 +103,7 @@
         </ul>
       </div>
     </div>
-  </accordion>
+  </uib-accordion>
 </div>
 
 <!-- Profile Modal -->

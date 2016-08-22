@@ -204,13 +204,12 @@
 
   <div class="col-md-6 text-center">
     <div class="btn-group">
-      <label class="btn btn-primary" ng-model="dash.calendarView" btn-radio="'year'">Year</label>
-      <label class="btn btn-primary" ng-model="dash.calendarView" btn-radio="'month'">Month</label>
-      <label class="btn btn-primary" ng-model="dash.calendarView" btn-radio="'week'">Week</label>
-      <label class="btn btn-primary" ng-model="dash.calendarView" btn-radio="'day'">Day</label>
+      <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'year'">Year</label>
+      <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'month'">Month</label>
+      <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'week'">Week</label>
+      <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'day'">Day</label>
     </div>
   </div>
-
 </div>
 
 
@@ -265,7 +264,7 @@
             </span>
           </p>
           <div
-            timepicker
+            uib-timepicker
             ng-model="dash.appointment.startTime"
             hour-step="1"
             minute-step="15"
@@ -294,7 +293,7 @@
             </span>
           </p>
           <div
-            timepicker
+            uib-timepicker
             ng-model="dash.appointment.endTime"
             hour-step="1"
             minute-step="15"

@@ -1,12 +1,12 @@
 angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
 
-function DashboardController($http, $state, $modal, UserService, AppointmentService) {
+function DashboardController($http, $state, $uibModal, UserService, AppointmentService) {
   var vm = this;
 
   vm.openProfile = openProfile;
 
   function openProfile(id) {
-    var modalInstance = $modal.open({
+    var modalInstance = $uibModal.open({
       animation: true,
       templateUrl: 'profileModal.html',
       controller: 'ProfileController',

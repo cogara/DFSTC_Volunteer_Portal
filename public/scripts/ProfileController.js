@@ -1,6 +1,6 @@
 angular.module('DfstcSchedulingApp').controller('ProfileController', ProfileController);
 
-function ProfileController($http, $state, $modalInstance, UserService, profile) {
+function ProfileController($http, $state, $uibModalInstance, UserService, profile) {
   var vm = this;
 
   vm.cancel = cancel;
@@ -12,15 +12,15 @@ function ProfileController($http, $state, $modalInstance, UserService, profile) 
   function saveProfile(profile) {
     //send new profile info to dashboard controller
     console.log('clicked saved');
-    $modalInstance.close(profile);
+    $uibModalInstance.close(profile);
   }
 
   function cancel() {
     console.log('close plz');
-    $modalInstance.dismiss();
+    $uibModalInstance.dismiss();
   }
 
-  $modalInstance.dismiss();
+  $uibModalInstance.dismiss();
 
   function editProfile() {
     if(vm.isEditing){
