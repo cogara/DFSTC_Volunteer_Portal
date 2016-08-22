@@ -3,8 +3,6 @@ angular.module('DfstcSchedulingApp').controller('DashboardController', Dashboard
 function DashboardController($http, $state, UserService) {
   var vm = this;
 
-  var vm = this;
-
       //These variables MUST be set as a minimum for the calendar to work
       vm.calendarView = 'month';
       vm.viewDate = new Date();
@@ -19,77 +17,76 @@ function DashboardController($http, $state, UserService) {
           alert.show('Deleted', args.calendarEvent);
         }
       }];
-      vm.events = [
-        {
-          title: 'An event',
-          color: { // can also be calendarConfig.colorTypes.warning for shortcuts to the deprecated event types
-      primary: '#e3bc08', // the primary event color (should be darker than secondary)
-      secondary: '#fdf1ba' // the secondary event color (should be lighter than primary)
-    },
-          startsAt: moment().startOf('week').subtract(2, 'days').add(8, 'hours').toDate(),
-          endsAt: moment().startOf('week').add(1, 'week').add(9, 'hours').toDate(),
-          draggable: true,
-          resizable: true,
-          actions: actions
-        }//, {
-    //       title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
-    //       color: { // can also be calendarConfig.colorTypes.warning for shortcuts to the deprecated event types
-    //   primary: '#e3bc08', // the primary event color (should be darker than secondary)
-    //   secondary: '#fdf1ba' // the secondary event color (should be lighter than primary)
-    // },
-    //       startsAt: moment().subtract(1, 'day').toDate(),
-    //       endsAt: moment().add(5, 'days').toDate(),
-    //       draggable: true,
-    //       resizable: true,
-    //       actions: actions
-    //     }, {
-    //       title: 'This is a really long event title that occurs on every year',
-    //       color: { // can also be calendarConfig.colorTypes.warning for shortcuts to the deprecated event types
-    //   primary: '#e3bc08', // the primary event color (should be darker than secondary)
-    //   secondary: '#fdf1ba' // the secondary event color (should be lighter than primary)
-    // },
-    //       startsAt: moment().startOf('day').add(7, 'hours').toDate(),
-    //       endsAt: moment().startOf('day').add(19, 'hours').toDate(),
-    //       recursOn: 'year',
-    //       draggable: true,
-    //       resizable: true,
-    //       actions: actions
-    //     }
-      ];
 
-      vm.isCellOpen = true;
+      vm.addAppointment = function(){
+      console.log(vm.appointment);
+      }
 
-      vm.addEvent = function() {
-        vm.events.push({
-          title: 'New event',
-          startsAt: moment().startOf('day').toDate(),
-          endsAt: moment().endOf('day').toDate(),
-          color: calendarConfig.colorTypes.important,
-          draggable: true,
-          resizable: true
-        });
+      vm.appointment={
+        title: "Image Coach Appointment",
+        startTime: '',
+        endTime: '',
+        volunteerSlots: 5,
+        clientSlots: 5,
+        trainingAppointment: false
       };
 
-      vm.eventClicked = function(event) {
-        alert.show('Clicked', event);
+
+
+
+
+      vm.today = function() {
+        vm.dt = new Date();
+      };
+      vm.today();
+
+      vm.clear = function() {
+        vm.dt = null;
       };
 
-      vm.eventEdited = function(event) {
-        alert.show('Edited', event);
+      vm.inlineOptions = {
+        minDate: new Date(),
+        showWeeks: true
       };
 
-      vm.eventDeleted = function(event) {
-        alert.show('Deleted', event);
+      vm.dateOptions = {
+        formatYear: 'yy',
+        maxDate: new Date(2020, 5, 22),
+        minDate: new Date(),
+        startingDay: 0
       };
 
-      vm.eventTimesChanged = function(event) {
-        alert.show('Dropped or resized', event);
+      vm.toggleMin = function() {
+        vm.inlineOptions.minDate = vm.inlineOptions.minDate ? null : new Date();
+        vm.dateOptions.minDate = vm.inlineOptions.minDate;
       };
 
-      vm.toggle = function($event, field, event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        event[field] = !event[field];
+      vm.toggleMin();
+
+      vm.open1 = function() {
+        console.log('Clicke open1');
+        vm.popup1.opened = true;
       };
 
-    }; //end DashboardController
+      vm.open2 = function() {
+        console.log('Clicked open2');
+        vm.popup2.opened = true;
+      };
+
+      vm.setDate = function(year, month, day) {
+        vm.dt = new Date(year, month, day);
+      };
+
+      vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+      vm.format = vm.formats[0];
+      vm.altInputFormats = ['M!/d!/yyyy'];
+
+      vm.popup1 = {
+        opened: false
+      };
+
+      vm.popup2 = {
+        opened: false
+      };
+
+  }; //end DashboardController
