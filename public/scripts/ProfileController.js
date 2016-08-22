@@ -5,8 +5,18 @@ function ProfileController($http, $state, $modalInstance, UserService, profile) 
 
   vm.cancel = cancel;
   vm.saveProfile = saveProfile;
+  vm.editMode = editMode;
   vm.profile = profile;
   console.log(profile);
+
+  function editMode() {
+    if (vm.editingProfile) {
+      vm.editingProfile = false;
+    } else {
+      vm.editingProfile = true;
+    }
+  }
+
 
   function saveProfile(profile) {
     //send new profile info to dashboard controller
@@ -18,6 +28,9 @@ function ProfileController($http, $state, $modalInstance, UserService, profile) 
     console.log('close plz');
     $modalInstance.dismiss();
   }
+
+  //closes all other modals when opening modal
+  $modalInstance.dismiss();
 
 
 } //end ProfileController

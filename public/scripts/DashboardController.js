@@ -11,7 +11,7 @@ function DashboardController($http, $state, $modal, UserService) {
 
     var modalInstance = $modal.open({
       animation: true,
-      templateUrl: 'myModalContent.html',
+      templateUrl: 'profileModal.html',
       controller: 'ProfileController',
       controllerAs: 'prof',
       size: 'lg',
@@ -34,6 +34,8 @@ function DashboardController($http, $state, $modal, UserService) {
       console.log(profile);
     });
   };
+
+
 
 
 

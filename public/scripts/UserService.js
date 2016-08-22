@@ -33,11 +33,9 @@ function UserService($http) {
     var editVolunteer = {};
     for (var key in volunteer) {
       if (!(key==='password')) {
-        console.log(key);
         editVolunteer[key] = volunteer[key];
       }
     }
-    console.log(editVolunteer);
     return $http.put('/api/volunteer/' + volunteer._id, editVolunteer);
   }
 

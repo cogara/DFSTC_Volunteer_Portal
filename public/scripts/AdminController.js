@@ -1,6 +1,6 @@
 angular.module('DfstcSchedulingApp').controller('AdminController', AdminController);
 
-function AdminController($http, $state, UserService, AdminService, volunteerList) {
+function AdminController($http, $state, $modal, UserService, AdminService, volunteerList) {
   var vm = this;
   vm.volunteers = volunteerList;
   vm.getVolunteers = getVolunteers;
@@ -8,6 +8,7 @@ function AdminController($http, $state, UserService, AdminService, volunteerList
   vm.viewVolunteer = viewVolunteer;
   vm.saveEdit = saveEdit;
   vm.selectAll = selectAll;
+  vm.openProfile = openProfile;
 
   // Setting search options
   vm.options = {};
@@ -55,6 +56,34 @@ function AdminController($http, $state, UserService, AdminService, volunteerList
     UserService.editProfile(vm.editingVolunteer).then(getVolunteers);
   }
 
+  function openProfile(id) {
+    console.log('sending id', id);
+
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'adminProfileModal.html',
+      controller: 'ProfileController',
+      controllerAs: 'prof',
+      size: 'lg',
+      resolve: {
+        profile: function (UserService) {
+          return UserService.getProfile(id).then(function(response){
+            return response;
+          });
+        }
+      }
+    });
+
+    modalInstance.result.then(function (profile) {
+      //do function to save new profile info
+      return UserService.editProfile(profile).then(function() {
+        console.log('promise?');
+        getVolunteers();
+      });
+
+      console.log(profile);
+    });
+  };
 
 
 } //end Admin Controller
