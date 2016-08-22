@@ -41,12 +41,12 @@ function DashboardController($http, $state, UserService, AppointmentService) {
       var actions = [{
         label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
         onClick: function(args) {
-          alert.show('Edited', args.calendarEvent);
+          //alert.show('Edited', args.calendarEvent);
         }
       }, {
         label: '<i class=\'glyphicon glyphicon-remove\'></i>',
         onClick: function(args) {
-          alert.show('Deleted', args.calendarEvent);
+          //alert.show('Deleted', args.calendarEvent);
         }
       }];
 
@@ -120,7 +120,6 @@ function DashboardController($http, $state, UserService, AppointmentService) {
 
       vm.popup1 = {
         opened: false
-      };
 
       vm.popup2 = {
         opened: false
