@@ -68,15 +68,10 @@ function DashboardController($http, $state, $modal, UserService, AppointmentServ
     trainingAppointment: false
   };
 
-
-
-
-
-  function today() {
+  vm.today = function() {
     vm.dt = new Date();
-  }
-
-  today();
+  };
+  vm.today();
 
   vm.clear = function() {
     vm.dt = null;
@@ -89,8 +84,7 @@ function DashboardController($http, $state, $modal, UserService, AppointmentServ
 
   vm.dateOptions = {
     formatYear: 'yy',
-    maxDate: new Date((vm.dt.getFullYear()+1), vm.dt.getMonth(), vm.dt.getDate()),
-    // maxDate: '08/22/2017',
+    maxDate: new Date(2020, 5, 22),
     minDate: new Date(),
     startingDay: 0
   };
@@ -102,13 +96,10 @@ function DashboardController($http, $state, $modal, UserService, AppointmentServ
 
   vm.toggleMin();
 
-  function open1() {
-    console.log('Clicked open1');
+  vm.open1 = function() {
+    console.log('Clicke open1');
     vm.popup1.opened = true;
-    console.log(vm.popup1.opened);
-  }
-
-  vm.open1 = open1;
+  };
 
   vm.open2 = function() {
     console.log('Clicked open2');
