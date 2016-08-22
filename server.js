@@ -103,8 +103,7 @@ app.get('/logout', function(request, response) {
 app.use('/api', api);
 app.use('*', index);
 
-
-moment().format();
+app.use('/', index);
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, function() {

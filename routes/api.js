@@ -2,6 +2,8 @@ const router = require('express').Router();
 const path = require('path');
 const User = require('../models/user.js');
 const mongoose = require('mongoose');
+const Appointment = require('../models/appointment');
+
 
 router.get('/checkLoggedIn', function(request, response) {
   if (request.isAuthenticated()) {
@@ -32,6 +34,18 @@ router.put('/volunteer/:id', function(request, response) {
       console.log(err);
       response.sendStatus(500);
     } else {
+      response.sendStatus(200);
+    }
+  });
+});
+
+router.post('/appointment', function(request, response){
+  console.log(request.body);
+  Appointment.create(request.body, function(err){
+    if(err){
+      console.log(err);
+      response.sendStatus(500);
+    }else{
       response.sendStatus(200);
     }
   });
