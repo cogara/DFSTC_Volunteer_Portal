@@ -18,13 +18,15 @@ var UserSchema = new Schema(
       zip: String
     },
     company: String,
-    organization: Object, //check this
     isVolunteer: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
+    isSuperAdmin: {type:Boolean, default: false},
     isTrainee: {type: Boolean, default: true},
     isAvail: Object,
-
-    volunteerOpportunities: Object
+    lastLogin: Date,
+    volunteerOpportunities: Object,
+    photo: {data: Buffer, contentType: String},
+    isActive: Boolean
   }
 );
 

@@ -98,3 +98,7 @@
 ul.volunteers, ul.volunteer-sub-data {
   padding-left: 16px;
 }
+
+.profile:disabled {
+  border-color: transparent;
+}

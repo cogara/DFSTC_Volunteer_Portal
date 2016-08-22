@@ -27,11 +27,8 @@ function DashboardController($http, $state, $modal, UserService) {
     modalInstance.result.then(function (profile) {
       //do function to save new profile info
       return UserService.editProfile(profile).then(function() {
-        console.log('promise?');
         window.location.reload();
       });
-
-      console.log(profile);
     });
   };
 

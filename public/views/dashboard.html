@@ -5,57 +5,54 @@
 <!-- Profile Modal -->
 <script type="text/ng-template" id="profileModal.html">
   <div class="modal-header">
+    <button class="pull-right btn btn-primary" ng-click="prof.editProfile()">Edit Profile</button>
       <h3 class="modal-title">Profile</h3>
   </div>
   <div class="row">
-    <div class="modal-body">
-      <div class="row">
-        <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
-          <img style="width: 100%; max-width: 500px" class="center-block " src="../images/DFS_TwinCities-resized.jpg"/>
-        </div>
-      </div>
-      <hr />
+    <div class="modal-body profile">
       <div class="panel panel-default col-sm-10 col-sm-offset-1">
-        <h3 class="center-block">Register to Volunteer</h3>
+
+        <!-- <h3 class="center-block">Profile</h3> -->
+        <br />
         <form class="form-horizontal">
             <div class="form-group">
               <label class="col-md-3">E-mail address: <span style="display: block; font-size: 1rem; font-weight: normal;">(this will be your login username)</span></label>
               <div class="col-md-9">
-                <input type="text" class="form-control" ng-model="prof.profile.email" placeholder="E-mail Address" />
+                <input type="text" class="form-control" ng-model="prof.profile.email" ng-disabled="!prof.isEditing" placeholder="E-mail Address" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-md-3">Password:</label>
+              <label class="col-md-3">Change Password:</label>
               <div class="col-md-9">
-                <input type="password" class="form-control" ng-model="prof.profile.password" placeholder="Password" />
+                <input type="password" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.password" placeholder="Password" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-md-3">First Name:</label>
               <div class="col-md-9">
-                <input type="text" class="form-control" ng-model="prof.profile.firstName" placeholder="First Name" />
+                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.firstName" placeholder="First Name" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-md-3">Last Name:</label>
               <div class="col-md-9">
-                <input type="text" class="form-control" ng-model="prof.profile.lastName" placeholder="Last Name" />
+                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.lastName" placeholder="Last Name" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-md-3">Phone Number:</label>
               <div class="col-md-9">
-                <input type="text" class="form-control" ng-model="prof.profile.phoneNumber" placeholder="Phone Number" />
+                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.phoneNumber" data-format="+1 (ddd) ddd-dddd" placeholder="Phone Number" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-md-3">Address:</label>
               <div class="col-md-9">
-                <input type="text" class="form-control" ng-model="prof.profile.address.addressOne" placeholder="Address Line 1" />
-                <input type="text" class="form-control" ng-model="prof.profile.address.addressTwo" placeholder="Address Line 2" />
-                <input type="text" class="form-control" ng-model="prof.profile.address.city" placeholder="City" />
-                <input type="text" class="form-control" ng-model="prof.profile.address.state" placeholder="State" />
-                <input type="text" class="form-control" ng-model="prof.profile.address.zip" placeholder="Zip Code" />
+                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.address.addressOne" placeholder="Address Line 1" />
+                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.address.addressTwo" placeholder="Address Line 2" />
+                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.address.city" placeholder="City" />
+                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.address.state" placeholder="State" />
+                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.address.zip" placeholder="Zip Code" />
               </div>
             </div>
             <div class="form-group">
@@ -63,46 +60,46 @@
               <div class="col-md-9">
                 <div class="checkbox panel panel-default col-md-12" style="padding: 10px 30px">
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.imageCoach" /> Image Coach
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.imageCoach" /> Image Coach
                   </div>
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.careerCoach" /> Career Coach
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.careerCoach" /> Career Coach
                   </div>
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.clothingSorter" />Clothing Sorter
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.clothingSorter" />Clothing Sorter
                   </div>
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.clothingOrganizer"  />Clothing Organizer
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.clothingOrganizer"  />Clothing Organizer
                   </div>
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.frontDesk" />Front Desk Volunteer
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.frontDesk" />Front Desk Volunteer
                   </div>
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.clothingSale" />Clothing Sale Volunteer
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.clothingSale" />Clothing Sale Volunteer
                   </div>
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.clothingSaleCaptain" />Clothing Sale Captain
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.clothingSaleCaptain" />Clothing Sale Captain
                   </div>
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.careerAdvocate" />Career Advocate
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.careerAdvocate" />Career Advocate
                   </div>
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.intelligenceMentor" />Professional Intelligence Mentor
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.intelligenceMentor" />Professional Intelligence Mentor
                   </div>
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.intelligenceMuse" />Professional Intelligence Muse
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.intelligenceMuse" />Professional Intelligence Muse
                   </div>
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.communityAmbassador" />Community Ambassador
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.communityAmbassador" />Community Ambassador
                   </div>
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.eventSetUp" />Client Event Set Up Volunteer
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.eventSetUp" />Client Event Set Up Volunteer
                   </div>
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.photographer" />Event Photographer
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.photographer" />Event Photographer
                   </div>
                   <div>
-                    <input type="checkbox" ng-model="prof.profile.volunteerOpportunities.graphicDesigner" />Graphic Designer
+                    <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.graphicDesigner" />Graphic Designer
                   </div>
                 </div>
               </div>
@@ -119,43 +116,43 @@
                 <th>Saturday</th>
               </tr>
               <tr>
-                <td>Morning</td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.monday.morning" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.tuesday.morning" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.wednesday.morning" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.thursday.morning" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.friday.morning" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.saturday.morning" /></td>
+                <td>Morning <em>8am-12pm</em></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.monday.morning" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.tuesday.morning" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.wednesday.morning" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.thursday.morning" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.friday.morning" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.saturday.morning" /></td>
               </tr>
               <tr>
-                <td>Afternoon</td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.monday.afternoon" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.tuesday.afternoon" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.wednesday.afternoon" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.thursday.afternoon" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.friday.afternoon" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.saturday.afternoon" /></td>
+                <td>Afternoon <em>12pm-5pm</em></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.monday.afternoon" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.tuesday.afternoon" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.wednesday.afternoon" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.thursday.afternoon" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.friday.afternoon" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.saturday.afternoon" /></td>
               </tr>
               <tr>
-                <td>Evening</td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.monday.evening"  /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.tuesday.evening" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.wednesday.evening" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.thursday.evening" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.friday.evening" /></td>
-                <td><input type="checkbox" ng-model="prof.profile.isAvail.saturday.evening" /></td>
+                <td>Evening <em>5pm-9pm</em></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.monday.evening"  /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.tuesday.evening" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.wednesday.evening" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.thursday.evening" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.friday.evening" /></td>
+                <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.saturday.evening" /></td>
               </tr>
             </table>
             <div class="form-group">
               <label class="col-md-3">Employer:</label>
               <div class="col-md-9">
-                <input type="text" class="form-control" ng-model="prof.profile.company" placeholder="Company" />
+                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.company" placeholder="Company" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-md-3">Organizations Involved In:</label>
+              <label class="col-md-3">Photo:</label>
               <div class="col-md-9">
-                <input type="text" class="form-control" ng-model="prof.profile.groups" placeholder="Group Name" />
+                <input type="file" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.photo" />
               </div>
             </div>
         </form>
