@@ -22,11 +22,12 @@ function ProfileController($http, $state, $modalInstance, UserService, profile) 
 
 
   $modalInstance.dismiss();
+
   function editProfile() {
-    if(vm.isEditing === false){
-    vm.isEditing = true;}
-    else{
+    if(vm.isEditing){
       vm.isEditing = false;
+    } else {
+      vm.isEditing = true;
     }
   }
 
