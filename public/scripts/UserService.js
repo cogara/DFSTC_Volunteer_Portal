@@ -30,6 +30,7 @@ function UserService($http) {
   }
 
   function editProfile(volunteer) {
+    console.log(volunteer);
     var editVolunteer = {};
     for (var key in volunteer) {
       if (!(key==='password')) {
