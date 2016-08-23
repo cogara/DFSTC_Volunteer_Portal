@@ -23,33 +23,14 @@
 .search-radio-option {
   display: block;
 }
-.calendar {
-  display: inline-block;
-  float: left;
-  left: 0;
-  /*height: 200px;*/
-  width: 60%;
-  border: 1px solid rgba(255,0,0,.5);
-}
 
-.sidebar {
-  float: right;
-  right: 0;
-  display: inline-block;
-  width: 250px;
-  height: 200px;
-  border: 1px solid rgba(0,255,0,.5);
+.sidebar-list {
+  padding-top: 20px;
 }
 
 .clear {
   clear: both;
 }
-
-/*input:disabled {
-  border-color: transparent;
-  background-color: transparent;
-  box-shadow: none;
-}*/
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
   border-color: transparent;
