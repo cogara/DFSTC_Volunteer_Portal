@@ -67,11 +67,12 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     var check = 0;
     for (var opp in vm.search.opportunity) {
       if(vm.search.opportunity[opp]) {
-        check++;
-        console.log('at least one opp selected');
+        check = 1;
       }
-      if(volunteer.volunteerOpportunities[opp] === vm.search.opportunity[opp]) {
-        return true;
+      if(vm.search.opportunity[opp]) {
+        if(volunteer.volunteerOpportunities[opp] === vm.search.opportunity[opp]) {
+          return true;
+        }
       }
     }
     if(check > 0) {
@@ -85,6 +86,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
       for (var key in vm.search.opportunity) {
         vm.search.opportunity[key] = false;
       }
+    vm.oppDropdownOpen = false;
   }
 
   function clearSearchAvail() {
@@ -93,6 +95,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
       vm.search.avail[key].afternoon = false;
       vm.search.avail[key].evening = false;
     }
+    vm.availDropdownOpen = false;
   }
 
   function getVolunteers() {
@@ -102,7 +105,6 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   }
 
   function viewVolunteer(volunteer) {
-    console.log(volunteer);
     vm.editingVolunteer = volunteer;
   }
 
