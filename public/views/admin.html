@@ -28,16 +28,11 @@
             <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.photographer"> Event Photographer </li>
             <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.graphicDesigner"> Graphic Designer </li>
             <li class="dropdown-select-all">
+              <p style="font-size: .8em">Will list all volunteers that match at least one of the opportunities selected</p>
               <h5><button class="btn btn-default" ng-click="admin.clearSearchOpp()">Clear Selections</h5>
             </li>
           </ul>
         </div>
-        <!-- <div>
-          Searching Volunteers for:
-          <span class="selected-options" ng-repeat="(option, selected) in admin.search.opportunity">
-            <span ng-if="selected && (option != 'all')">{{option}}</span>
-          </span>
-        </div> -->
         <div class="btn-group" uib-dropdown auto-close="outsideClick">
           <button id="available-search" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
             Availability <span class="caret"></span>
@@ -86,6 +81,7 @@
               </ul>
             </li>
             <li class="dropdown-select-all">
+              <p style="font-size: .8em">Will list all volunteers that match at least one of the times selected</p>
               <h5><button class="btn btn-default" ng-click="admin.clearSearchAvail()">Clear Selections</h5>
             </li>
           </ul>
