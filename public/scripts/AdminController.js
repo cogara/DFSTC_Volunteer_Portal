@@ -7,22 +7,30 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.editVolunteer = editVolunteer;
   vm.viewVolunteer = viewVolunteer;
   vm.saveEdit = saveEdit;
-  vm.searchAllOpp = searchAllOpp;
-  vm.searchAllAvail = searchAllAvail;
+  vm.clearSearchOpp = clearSearchOpp;
+  vm.clearSearchAvail = clearSearchAvail;
   vm.openProfile = openProfile;
 
   // Setting search options
   vm.search = {};
   vm.search.opportunity = {};
   vm.search.opportunity.all = false;
-  vm.search.opportunity.one = false;
-  vm.search.opportunity.two = false;
-  vm.search.opportunity.three = false;
-  vm.search.opportunity.four = false;
-  vm.search.opportunity.five = false;
-  vm.search.opportunity.six = false;
-  vm.search.opportunity.seven = false;
-  vm.search.opportunity.eight = false;
+  vm.search.opportunity.imageCoach = false;
+  vm.search.opportunity.careerCoach = false;
+  vm.search.opportunity.clothingSorter = false;
+  vm.search.opportunity.clothingOrganizer = false;
+  vm.search.opportunity.frontDesk = false;
+  vm.search.opportunity.clothingSale = false;
+  vm.search.opportunity.clothingSaleCaptain = false;
+  vm.search.opportunity.careerAdvocate = false;
+  vm.search.opportunity.intelligenceMentor = false;
+  vm.search.opportunity.intelligenceMuse = false;
+  vm.search.opportunity.communityAmbassador = false;
+  vm.search.opportunity.eventSetUp = false;
+  vm.search.opportunity.photographer = false;
+  vm.search.opportunity.graphicDesigner = false;
+
+
   vm.search.avail = {};
   vm.search.avail.monday = {};
   vm.search.avail.tuesday = {};
@@ -73,35 +81,17 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     }
   }
 
-  function searchAllOpp() {
-    console.log(vm.search.opportunity.all);
-    if (vm.search.opportunity.all) {
+  function clearSearchOpp() {
       for (var key in vm.search.opportunity) {
         vm.search.opportunity[key] = false;
       }
-    } else {
-      for (var key in vm.search.opportunity) {
-        vm.search.opportunity[key] = true;
-      }
-    }
   }
 
-  function searchAllAvail() {
-    if (vm.search.avail.all) {
-      vm.search.avail.all = false;
-      for (var key in vm.search.avail) {
-        console.log(key);
-        vm.search.avail[key].morning = false;
-        vm.search.avail[key].afternoon = false;
-        vm.search.avail[key].evening = false;
-      }
-    } else {
-      vm.search.avail.all = true;
-      for (var key in vm.search.avail) {
-        vm.search.avail[key].morning = true;
-        vm.search.avail[key].afternoon = true;
-        vm.search.avail[key].evening = true;
-      }
+  function clearSearchAvail() {
+    for (var key in vm.search.avail) {
+      vm.search.avail[key].morning = false;
+      vm.search.avail[key].afternoon = false;
+      vm.search.avail[key].evening = false;
     }
   }
 
