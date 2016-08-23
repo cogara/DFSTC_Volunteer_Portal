@@ -1,4 +1,4 @@
-angular.module('DfstcSchedulingApp').controller('AdminController', AdminController);
+angular.module('DfstcSchedulingApp').controller('AdminController', AdminController).controller('ModalController', ModalController);
 
 function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList) {
   var vm = this;
@@ -10,8 +10,83 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.clearSearchOpp = clearSearchOpp;
   vm.clearSearchAvail = clearSearchAvail;
   vm.openProfile = openProfile;
+  vm.trainingComplete = trainingComplete;
+  vm.toggleActive = toggleActive;
 
-  // Setting search options
+  function toggleActive(volunteer) {
+    UserService.editProfile(volunteer);
+  }
+
+  function getVolunteers() {
+    AdminService.getVolunteers().then(function(response) {
+      vm.volunteers = response;
+    })
+  }
+
+  function viewVolunteer(volunteer) {
+    vm.editingVolunteer = volunteer;
+  }
+
+  function editVolunteer() {
+    vm.isEditing = true;
+  }
+
+  function saveEdit() {
+    console.log(vm.editingVolunteer);
+    vm.isEditing = false;
+    UserService.editProfile(vm.editingVolunteer).then(getVolunteers);
+  }
+
+  function trainingComplete(volunteer) {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'trainingComplete.html',
+      size: 'sm',
+      controller: 'ModalController',
+      controllerAs: 'modal',
+      resolve: {
+        volunteer: function() {
+          return volunteer;
+        }
+      }
+    })
+
+    modalInstance.result.then(function() {
+      console.log(volunteer);
+      volunteer.isTrainee = false;
+      volunteer.isVolunteer = true;
+      UserService.editProfile(volunteer);
+    })
+  }
+
+  function openProfile(id) {
+
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'adminProfileModal.html',
+      controller: 'ProfileController',
+      controllerAs: 'prof',
+      size: 'lg',
+      resolve: {
+        profile: function (UserService) {
+          return UserService.getProfile(id).then(function(response){
+            return response;
+          });
+        }
+      }
+    });
+
+    modalInstance.result.then(function (profile) {
+      //do function to save new profile info
+      return UserService.editProfile(profile).then(function() {
+        console.log('promise?');
+        getVolunteers();
+      });
+
+      console.log(profile);
+    });
+  };
+  // Search volunteer options and filters
   vm.search = {};
   vm.search.opportunity = {};
   vm.search.opportunity.all = false;
@@ -41,6 +116,11 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
 
   vm.availableFilter = availableFilter;
   vm.opportunityFilter = opportunityFilter;
+  vm.roleFilter = roleFilter;
+  vm.statusFilter = statusFilter;
+  vm.search.role = 'all';
+  vm.search.status = 'all';
+
   function availableFilter(volunteer) {
     var check = 0;
     for (var day in vm.search.avail) {
@@ -82,24 +162,40 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     }
   }
 
-  vm.roleFilter = roleFilter;
-  vm.search.role = 'allRoles';
+
   function roleFilter(volunteer) {
     // console.log(vm.search.role);
     var check = 0;
     if(vm.search.role === 'isTrainee') {
       if(volunteer.isTrainee) {
-        console.log('checking trainee');
         return true;
       }
     }
     if(vm.search.role === 'isVolunteer') {
-      console.log('volunteer');
       if(volunteer.isVolunteer) {
         return true;
       }
     }
-    if(vm.search.role === 'allRoles') {
+    if(vm.search.role === 'all') {
+      // console.log('showing all');
+      return true;
+    }
+  }
+
+  function statusFilter(volunteer) {
+    // console.log(vm.search.role);
+    var check = 0;
+    if(vm.search.status === 'true') {
+      if(volunteer.isActive) {
+        return true;
+      }
+    }
+    if(vm.search.status === 'false') {
+      if(!volunteer.isActive) {
+        return true;
+      }
+    }
+    if(vm.search.status === 'all') {
       // console.log('showing all');
       return true;
     }
@@ -120,55 +216,20 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     }
     vm.availDropdownOpen = false;
   }
-
-  function getVolunteers() {
-    AdminService.getVolunteers().then(function(response) {
-      vm.volunteers = response;
-    })
-  }
-
-  function viewVolunteer(volunteer) {
-    vm.editingVolunteer = volunteer;
-  }
-
-  function editVolunteer() {
-    vm.isEditing = true;
-  }
-
-  function saveEdit() {
-    console.log(vm.editingVolunteer);
-    vm.isEditing = false;
-    UserService.editProfile(vm.editingVolunteer).then(getVolunteers);
-  }
-
-  function openProfile(id) {
-    console.log('sending id', id);
-
-    var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: 'adminProfileModal.html',
-      controller: 'ProfileController',
-      controllerAs: 'prof',
-      size: 'lg',
-      resolve: {
-        profile: function (UserService) {
-          return UserService.getProfile(id).then(function(response){
-            return response;
-          });
-        }
-      }
-    });
-
-    modalInstance.result.then(function (profile) {
-      //do function to save new profile info
-      return UserService.editProfile(profile).then(function() {
-        console.log('promise?');
-        getVolunteers();
-      });
-
-      console.log(profile);
-    });
-  };
-
+  //end search filters
 
 } //end Admin Controller
+
+function ModalController($uibModalInstance, volunteer) {
+  var vm = this;
+  vm.volunteer = volunteer;
+  vm.saveTraining = saveTraining;
+  vm.dismissTraining = dismissTraining;
+  function saveTraining() {
+    $uibModalInstance.close();
+  }
+
+  function dismissTraining() {
+    $uibModalInstance.dismiss();
+  }
+}

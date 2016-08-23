@@ -1,7 +1,6 @@
 <button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin">Admin Control</button>
 <button ng-if="main.currentUser" class="btn btn-default" ng-click="dash.openProfile(main.currentUser._id)">Profile</button>
 
-
 <!-- Profile Modal -->
 <script type="text/ng-template" id="profileModal.html">
   <div class="modal-header">
@@ -168,6 +167,20 @@
  </script>
 <!-- End Profile Modal -->
 
+<!-- Add Appt modal -->
+<script type="text/ng-template" id="addAppointmentModal.html">
+  <div class="modal-header">
+
+  </div>
+  <div class="modal-body">
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="appt.saveProfile(prof.profile)">Save</button>
+    <button class="btn btn-warning" type="button" ng-click="appt.cancel()">Cancel</button>
+  </div>
+ </script>
+<!-- end add appt modal -->
 
 <h2 class="text-center">{{ vm.calendarTitle }}</h2>
 

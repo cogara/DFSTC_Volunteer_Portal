@@ -1,4 +1,10 @@
-angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
+angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController).controller('AppointmentController', AppointmentController);
+
+function AppointmentController($uibModalInstance) {
+  var vm = this;
+
+
+}
 
 function DashboardController($http, $state, $uibModal, UserService, AppointmentService) {
   var vm = this;
@@ -29,6 +35,20 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
       });
 
       console.log(profile);
+    });
+  };
+
+  function appointmentModal() {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'appointmentModal.html',
+      controller: 'AppointmentController',
+      controllerAs: 'appt',
+      size: 'lg'
+    });
+
+    modalInstance.result.then(function (profile) {
+
     });
   };
 
