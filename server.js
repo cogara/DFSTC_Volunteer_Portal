@@ -86,8 +86,8 @@ passport.deserializeUser(function(id, done) {
 })
 
 var dateF = new schedule.RecurrenceRule();
-dateF.minute = 57;
-dateF.hour =11;
+dateF.minute = 49;
+dateF.hour =14;
 dateF.dayOfWeek = 2;
 
 console.log(dateF);
