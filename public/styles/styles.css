@@ -9,7 +9,7 @@
   display: inline-block;
   float: left;
   left: 0;
-  height: 200px;
+  /*height: 200px;*/
   width: 60%;
   border: 1px solid rgba(255,0,0,.5);
 }
@@ -27,8 +27,16 @@
   clear: both;
 }
 
-input:disabled {
+/*input:disabled {
   border-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
+}*/
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
 }
 
 .volunteers > li {
@@ -36,9 +44,10 @@ input:disabled {
 }
 
 .dropdown-select-all {
-  padding: 0 15px;
-  margin-bottom: 5px;
-  border-bottom: 1px solid rgb(220,220,220);
+  /*padding: 0 15px;*/
+  margin: 5px auto;
+  text-align: center;
+  border-top: 1px solid rgb(220,220,220);
 }
 
 .dropdown-option {
@@ -52,7 +61,7 @@ input:disabled {
 }
 
 .info-data {
-  font-size: 1.4rem;
+  font-size: .8em;
 }
 
 .info-head__address {
@@ -89,4 +98,29 @@ input:disabled {
 
 ul.volunteers, ul.volunteer-sub-data {
   padding-left: 16px;
+}
+
+.profile:disabled {
+  border-color: transparent;
+}
+
+.search-avail {
+  width: 400px;
+  padding: 10px 15px 0;
+}
+
+.search-opp {
+  width: 300px;
+  padding: 10px 15px 0;
+}
+
+.search-day {
+  display: inline-block;
+  width: 120px;
+}
+
+.search-day ul {
+  list-style-position: inside;
+  list-style-type: none;
+  padding: 0;
 }

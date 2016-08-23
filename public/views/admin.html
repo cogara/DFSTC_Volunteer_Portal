@@ -1,58 +1,111 @@
 <button class="btn btn-default" ui-sref="dashboard">back to dashboard</button>
 <h1>Admin Controls</h1>
 
-Control shit here.
 <div ui-view></div>
-
-
-
 
 <div class="row accordion">
   <div class="col-sm-10 col-sm-offset-1">
     <div style="border: 1px solid #ddd; padding: 3px 0">
+      <h4 class="col-xs-12">Search:</h4>
       <div class="col-xs-12">
-        <div class="dropdown">
-          <button id="dLabel" class="btn btn-default" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Search Volunteer Type
-          <span class="caret"></span>
+        <div class="btn-group" uib-dropdown is-open="admin.oppDropdownOpen" auto-close="outsideClick">
+          <button id="opportunity-search" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+            Volunteer Type <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dLabel">
-            <li class="dropdown-select-all"><h5><input type="checkbox" ng-model="admin.options.all" ng-click="admin.selectAll()"> Select All </h5></li>
-            <li class="dropdown-option"><input type="checkbox" ng-model="admin.options.one"> One </li>
-            <li class="dropdown-option"><input type="checkbox" ng-model="admin.options.two"> Two </li>
-            <li class="dropdown-option"><input type="checkbox" ng-model="admin.options.three"> Three </li>
-            <li class="dropdown-option"><input type="checkbox" ng-model="admin.options.four"> four </li>
-            <li class="dropdown-option"><input type="checkbox" ng-model="admin.options.five"> five </li>
-            <li class="dropdown-option"><input type="checkbox" ng-model="admin.options.six"> six </li>
-            <li class="dropdown-option"><input type="checkbox" ng-model="admin.options.seven"> seven </li>
-            <li class="dropdown-option"><input type="checkbox" ng-model="admin.options.eight"> eight </li>
+          <ul class="dropdown-menu search-opp" uib-dropdown-menu aria-labelledby="single-button">
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.imageCoach"> Image Coach</li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.careerCoach"> Career Coach </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.clothingSorter"> Clothing Sorter </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.clothingOrganizer"> Clothing Organizer </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.frontDesk"> Front Desk Volunteer </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.clothingSale"> Clothing Sale Volunteer </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.clothingSaleCaptain"> Clothing Sale Captain </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.careerAdvocate"> Career Advocate </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.intelligenceMentor"> Professional Intelligence Mentor </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.intelligenceMuse"> Professional Intelligence Muse </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.communityAmbassador"> Community Ambassador </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.eventSetUp"> Client Event Set Up Volunteer </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.photographer"> Event Photographer </li>
+            <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.graphicDesigner"> Graphic Designer </li>
+            <li class="dropdown-select-all">
+              <p style="font-size: .8em">Will list all volunteers that match at least one of the opportunities selected</p>
+              <h5><button class="btn btn-default" ng-click="admin.clearSearchOpp()">Clear Selections</h5>
+            </li>
           </ul>
         </div>
-        Searching Volunteers for:
-        <span class="selected-options" ng-repeat="(option, selected) in admin.options">
-          <span ng-if="selected && (option != 'all')">{{option}}</span>
-        </span>
+        <div class="btn-group" uib-dropdown is-open="admin.availDropdownOpen" auto-close="outsideClick">
+          <button id="available-search" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+            Availability <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu search-avail" uib-dropdown-menu aria-labelledby="single-button">
+            <li class="search-day"><h6>Monday</h6>
+              <ul>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.monday.morning"> morning </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.monday.afternoon"> afternoon </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.monday.evening"> evening </li>
+              </ul>
+            </li>
+            <li class="search-day"><h6>Tuesday</h6>
+              <ul>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.tuesday.morning"> morning </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.tuesday.afternoon"> afternoon </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.tuesday.evening"> evening </li>
+              </ul>
+            </li>
+            <li class="search-day"><h6>Wednesday</h6>
+              <ul>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.wednesday.morning"> morning </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.wednesday.afternoon"> afternoon </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.wednesday.evening"> evening </li>
+              </ul>
+            </li>
+            <li class="search-day"><h6>Thursday</h6>
+              <ul>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.thursday.morning"> morning </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.thursday.afternoon"> afternoon </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.thursday.evening"> evening </li>
+              </ul>
+            </li>
+            <li class="search-day"><h6>Friday</h6>
+              <ul>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.friday.morning"> morning </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.friday.afternoon"> afternoon </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.friday.evening"> evening </li>
+              </ul>
+            </li>
+            <li class="search-day"><h6>Saturday</h6>
+              <ul>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.saturday.morning"> morning </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.saturday.afternoon"> afternoon </li>
+                <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.saturday.evening"> evening </li>
+              </ul>
+            </li>
+            <li class="dropdown-select-all">
+              <p style="font-size: .8em">Will list all volunteers that match at least one of the times selected</p>
+              <h5><button class="btn btn-default" ng-click="admin.clearSearchAvail()">Clear Selections</h5>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <input name="role" type="radio" ng-model="admin.search.role" value="allRoles"> All
+          <input name="role" type="radio" ng-model="admin.search.role" value="isVolunteer"> Volunteer
+          <input name="role" type="radio" ng-model="admin.search.role" value="isTrainee"> Trainee
+        </div>
       </div>
-      <!-- <div> -->
-      <div class="col-xs-4">
-        <input class="col-sm-10 col-sm-offset-2" type="text" placeholder="Search Name">
-      </div>
-      <div class="col-xs-5">
-        <input class="col-sm-10 col-sm-offset-2" type="text" placeholder="Search Email">
-      </div>
-      <div class="col-xs-3">
-        <input class="col-sm-9 col-sm-offset-3" type="text" placeholder="Search Phone Number">
+      <div class="col-xs-12">
+        <input class="col-sm-12" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">
       </div>
       <div class="clear"></div>
-      <!-- </div> -->
     </div>
   </div>
-  <accordion class="col-sm-10 col-sm-offset-1">
-    <div accordion-group class="panel-default" ng-repeat="volunteer in admin.volunteers">
-      <accordion-heading>
+  <uib-accordion class="col-sm-10 col-sm-offset-1">
+    <div
+      uib-accordion-group class="panel-default"
+      ng-repeat="volunteer in admin.volunteers | filter: admin.search.input | filter: admin.roleFilter | filter: admin.availableFilter | filter: admin.opportunityFilter | orderBy: 'lastName'">
+      <uib-accordion-heading>
         <div class="col-xs-4 volunteer-meta volunteer-name">
           <div class="col-md-2 info-head">Name:</div>
-          <div class="col-md-10 info-data">{{::volunteer.firstName}} {{::volunteer.lastName}}</div>
+          <div class="col-md-10 info-data">{{::volunteer.firstName}} {{::volunteer.lastName}} <span ng-if="volunteer.isTrainee" style="color: red"> *trainee</span></div>
         </div>
         <div class="col-xs-5 volunteer-meta volunteer-email">
           <div class="col-md-2 info-head">Email: </div>
@@ -63,7 +116,7 @@ Control shit here.
           <div class="col-md-9 info-data">{{::volunteer.phoneNumber}}</div>
         </div>
         <div class="clear"></div>
-      </accordion-heading>
+      </uib-accordion-heading>
       <div class="col-xs-12">
         <ul class="volunteer-sub-data">
           <div ng-if="volunteer.volunteerOpportunities">Opportunities: {{::volunteer.volunteerOpportunities}}</div>
@@ -78,62 +131,172 @@ Control shit here.
               <li>{{volunteer.address.zip}}</li>
           </ul>
           <div class="clear"></div>
-          <button ng-click="admin.viewVolunteer(volunteer)">View</button>
+          <button ng-click="admin.openProfile(volunteer._id)">View</button>
         </ul>
       </div>
     </div>
-  </accordion>
+  </uib-accordion>
 </div>
-<!-- <div class="row">
-  <div class="col-sm-10 col-sm-offset-1">
-    <ul class="volunteers">
-      <li class"volunteer" ng-repeat="volunteer in admin.volunteers">
-        <div class="row" style="border: 1px solid orange">
-          <div class="col-xs-4 volunteer-meta volunteer-name">
-            <div class="col-md-2 info-head">Name:</div>
-            <div class="col-md-10">{{::volunteer.firstName}} {{::volunteer.lastName}}</div>
-          </div>
-          <div class="col-xs-5 volunteer-meta volunteer-email">
-            <div class="col-md-2 info-head">Email: </div>
-            <div class="col-md-10">{{::volunteer.email}}</div>
-          </div>
-          <div class="col-xs-3 volunteer-meta volunteer-phone">
-            <div class="col-md-3 info-head">Phone: </div>
-            <div class="col-md-9">{{::volunteer.phoneNumber}}</div>
-          </div>
-        </div>
-        <div class="row">
-          <ul class="volunteer-sub-data">
-            <div ng-if="volunteer.volunteerOpportunities">Opportunities: {{::volunteer.volunteerOpportunities}}</div>
-            <div ng-if="volunteer.isAvail">Availability: {{::volunteer.isAvail}}</div>
-            <div class="info-head__address" ng-if="volunteer.address">Address:</div>
-            <ul class="info-address">
-                <li>{{volunteer.address.addressOne}}<br />
-                    {{volunteer.address.addressTwo}}
-                </li>
-                <li>{{volunteer.address.city}}</li>
-                <li>{{volunteer.address.state}}</li>
-                <li>{{volunteer.address.zip}}</li>
-            </ul>
-            <div class="clear"></div>
-            <button ng-click="admin.viewVolunteer(volunteer)">View</button>
 
-          </ul>
-        </div>
-
-      </li>
-    </ul>
+<!-- Profile Modal -->
+<script type="text/ng-template" id="adminProfileModal.html">
+  <div class="modal-header">
+    <button class="pull-right btn btn-primary" ng-click="prof.editProfile()">Edit Profile</button>
+    <h3 style="float: left" class="modal-title">Edit Volunteer - {{prof.profile.firstName}} {{prof.profile.lastName}}</h3>
   </div>
-</div> -->
+  <div class="row">
+    <div class="modal-body">
+      <div class="panel panel-default col-sm-10 col-sm-offset-1" style="padding: 20px">
+        <form class="form-horizontal">
+            <div class="form-group">
+              <label class="col-md-3">E-mail address:</label>
+              <div class="col-md-9">
+                <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.email" placeholder="E-mail Address" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3">First Name:</label>
+              <div class="col-md-9">
+                <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.firstName" placeholder="First Name" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3">Last Name:</label>
+              <div class="col-md-9">
+                <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.lastName" placeholder="Last Name" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3">Phone Number:</label>
+              <div class="col-md-9">
+                <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.phoneNumber" placeholder="Phone Number" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3">Address:</label>
+              <div class="col-md-9">
+                <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.address.addressOne" placeholder="Address Line 1" />
+                <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.address.addressTwo" placeholder="Address Line 2" />
+                <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.address.city" placeholder="City" />
+                <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.address.state" placeholder="State" />
+                <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.address.zip" placeholder="Zip Code" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3">Volunteer positions you are interested in:</label>
+              <div class="col-md-9">
+                <div class="checkbox panel panel-default col-md-12" style="padding: 10px 30px">
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.imageCoach" /> Image Coach
+                  </div>
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.careerCoach" /> Career Coach
+                  </div>
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.clothingSorter" />Clothing Sorter
+                  </div>
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.clothingOrganizer"  />Clothing Organizer
+                  </div>
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.frontDesk" />Front Desk Volunteer
+                  </div>
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.clothingSale" />Clothing Sale Volunteer
+                  </div>
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.clothingSaleCaptain" />Clothing Sale Captain
+                  </div>
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.careerAdvocate" />Career Advocate
+                  </div>
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.intelligenceMentor" />Professional Intelligence Mentor
+                  </div>
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.intelligenceMuse" />Professional Intelligence Muse
+                  </div>
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.communityAmbassador" />Community Ambassador
+                  </div>
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.eventSetUp" />Client Event Set Up Volunteer
+                  </div>
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.photographer" />Event Photographer
+                  </div>
+                  <div>
+                    <input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.volunteerOpportunities.graphicDesigner" />Graphic Designer
+                  </div>
+                </div>
+              </div>
+            </div>
+            <label>Please select your availability:</label>
+            <table class="table table-hover">
+              <tr>
+                <th>Time of Day</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+              </tr>
+              <tr>
+                <td>Morning</td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.monday.morning" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.tuesday.morning" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.wednesday.morning" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.thursday.morning" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.friday.morning" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.saturday.morning" /></td>
+              </tr>
+              <tr>
+                <td>Afternoon</td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.monday.afternoon" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.tuesday.afternoon" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.wednesday.afternoon" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.thursday.afternoon" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.friday.afternoon" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.saturday.afternoon" /></td>
+              </tr>
+              <tr>
+                <td>Evening</td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.monday.evening"  /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.tuesday.evening" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.wednesday.evening" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.thursday.evening" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.friday.evening" /></td>
+                <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.saturday.evening" /></td>
+              </tr>
+            </table>
+            <div class="form-group">
+              <label class="col-md-3">Employer:</label>
+              <div class="col-md-9">
+                <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.company" placeholder="Company" />
+              </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="prof.saveProfile(prof.profile)">Save</button>
+        <button class="btn btn-warning" type="button" ng-click="prof.cancel()">Cancel</button>
+    </div>
+  </div>
+</script>
+<!-- End Profile Modal -->
 
-<div class="row">
+<!-- <div class="row">
   <div class="col-xs-12">
     <button ng-click="admin.editVolunteer()">Edit Volunteer</button><br />
-    Email: <input ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.email"><br />
-    Phone: <input ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.phoneNumber"><br />
-    First Name: <input ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.firstName"><br />
-    Last Name: <input ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.lastName"><br />
-    Company: <input ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.company"><br />
+    Email: <input ng-disabled="!prof.isEditing" ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.email"><br />
+    Phone: <input ng-disabled="!prof.isEditing" ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.phoneNumber"><br />
+    First Name: <input ng-disabled="!prof.isEditing" ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.firstName"><br />
+    Last Name: <input ng-disabled="!prof.isEditing" ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.lastName"><br />
+    Company: <input ng-disabled="!prof.isEditing" ng-disabled="!admin.isEditing" type="text" ng-model="admin.editingVolunteer.company"><br />
   <button ng-click="admin.saveEdit()">Save Edits</button>
   </div>
-</div>
+</div> -->

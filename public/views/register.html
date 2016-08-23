@@ -111,7 +111,7 @@
           <th>Saturday</th>
         </tr>
         <tr>
-          <td>Morning</td>
+          <td>Morning <em>8am-12pm</em></td>
           <td><input type="checkbox" ng-model="main.registerUser.isAvail.monday.morning" /></td>
           <td><input type="checkbox" ng-model="main.registerUser.isAvail.tuesday.morning" /></td>
           <td><input type="checkbox" ng-model="main.registerUser.isAvail.wednesday.morning" /></td>
@@ -120,7 +120,7 @@
           <td><input type="checkbox" ng-model="main.registerUser.isAvail.saturday.morning" /></td>
         </tr>
         <tr>
-          <td>Afternoon</td>
+          <td>Afternoon <em>12pm-5pm</em></td>
           <td><input type="checkbox" ng-model="main.registerUser.isAvail.monday.afternoon" /></td>
           <td><input type="checkbox" ng-model="main.registerUser.isAvail.tuesday.afternoon" /></td>
           <td><input type="checkbox" ng-model="main.registerUser.isAvail.wednesday.afternoon" /></td>
@@ -129,7 +129,7 @@
           <td><input type="checkbox" ng-model="main.registerUser.isAvail.saturday.afternoon" /></td>
         </tr>
         <tr>
-          <td>Evening</td>
+          <td>Evening <em>5pm-9pm</em></td>
           <td><input type="checkbox" ng-model="main.registerUser.isAvail.monday.evening"  /></td>
           <td><input type="checkbox" ng-model="main.registerUser.isAvail.tuesday.evening" /></td>
           <td><input type="checkbox" ng-model="main.registerUser.isAvail.wednesday.evening" /></td>
@@ -145,9 +145,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-md-3">Organizations Involved In:</label>
+        <label class="col-md-3">Please upload a photo of yourself: <br /> <em>Please keep your file under 16MB</em></label>
         <div class="col-md-9">
-          <input type="text" class="form-control" ng-model="main.registerUser.groups" placeholder="Group Name" />
+          <input type="file" class="form-control" ng-model="main.registerUser.photo" />
         </div>
       </div>
     <button class="center-block btn btn-default" ng-click="main.register()" >Register Now!</button>
