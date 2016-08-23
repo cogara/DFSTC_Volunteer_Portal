@@ -100,7 +100,7 @@
       <uib-accordion-heading>
         <div class="col-xs-4 volunteer-meta volunteer-name">
           <div class="col-md-2 info-head">Name:</div>
-          <div class="col-md-10 info-data">{{::volunteer.firstName}} {{::volunteer.lastName}} <span ng-if="volunteer.isTrainee">(trainee)</span></div>
+          <div class="col-md-10 info-data">{{::volunteer.firstName}} {{::volunteer.lastName}} <span ng-if="volunteer.isTrainee" style="color: red"> *trainee</span></div>
         </div>
         <div class="col-xs-5 volunteer-meta volunteer-email">
           <div class="col-md-2 info-head">Email: </div>
