@@ -86,6 +86,11 @@
             </li>
           </ul>
         </div>
+        <div>
+          <input name="role" type="radio" ng-model="admin.search.role" value="allRoles"> All
+          <input name="role" type="radio" ng-model="admin.search.role" value="isVolunteer"> Volunteer
+          <input name="role" type="radio" ng-model="admin.search.role" value="isTrainee"> Trainee
+        </div>
       </div>
       <div class="col-xs-12">
         <input class="col-sm-12" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">
@@ -96,7 +101,7 @@
   <uib-accordion class="col-sm-10 col-sm-offset-1">
     <div
       uib-accordion-group class="panel-default"
-      ng-repeat="volunteer in admin.volunteers | filter: admin.search.input | filter: admin.availableFilter | filter: admin.opportunityFilter | orderBy: 'lastName'">
+      ng-repeat="volunteer in admin.volunteers | filter: admin.search.input | filter: admin.roleFilter | filter: admin.availableFilter | filter: admin.opportunityFilter | orderBy: 'lastName'">
       <uib-accordion-heading>
         <div class="col-xs-4 volunteer-meta volunteer-name">
           <div class="col-md-2 info-head">Name:</div>

@@ -82,6 +82,29 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     }
   }
 
+  vm.roleFilter = roleFilter;
+  vm.search.role = 'allRoles';
+  function roleFilter(volunteer) {
+    // console.log(vm.search.role);
+    var check = 0;
+    if(vm.search.role === 'isTrainee') {
+      if(volunteer.isTrainee) {
+        console.log('checking trainee');
+        return true;
+      }
+    }
+    if(vm.search.role === 'isVolunteer') {
+      console.log('volunteer');
+      if(volunteer.isVolunteer) {
+        return true;
+      }
+    }
+    if(vm.search.role === 'allRoles') {
+      // console.log('showing all');
+      return true;
+    }
+  }
+
   function clearSearchOpp() {
       for (var key in vm.search.opportunity) {
         vm.search.opportunity[key] = false;
