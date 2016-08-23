@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
+const schedule = require('node-schedule');
 const flash = require('connect-flash');
 const LocalStrategy = require('passport-local').Strategy;
 const env = require('dotenv').config();
@@ -84,6 +85,15 @@ passport.deserializeUser(function(id, done) {
   })
 })
 
+var dateF = new schedule.RecurrenceRule();
+dateF.minute = 57;
+dateF.hour =11;
+dateF.dayOfWeek = 2;
+
+console.log(dateF);
+
+schedule.scheduleJob(dateF,mailerR);
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -94,7 +104,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 //ROUTES
-app.use('/mail',mailerR);
+
 app.use('/register', register);
 app.use('/login', login);
 app.get('/logout', function(request, response) {

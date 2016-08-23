@@ -3,9 +3,7 @@ var nodemailer = require('nodemailer');
 
 var user = require('../models/user')
 
-
-
-router.get('/',function(req, res){
+var mailReminder = function(){
   var name = "default";
   user.find({'firstName':'ddd'}, function(err, theName){
      name = theName[0].firstName
@@ -17,7 +15,7 @@ router.get('/',function(req, res){
          pass:'dressForSuccess'
        },
        logger:true,
-       debug:true
+       debug:false
      },{
        // default message
        from: 'Tess Hart <dogs>',
@@ -41,7 +39,7 @@ router.get('/',function(req, res){
 
      // HTML body
      html: '<p><b>Hello</b> to myself </p>' +
-         '<p>Hello '+name+'</p>'
+         '<p>Hello '+name+'</p> New message sent' +new Date()
 
      };
 
@@ -55,7 +53,7 @@ router.get('/',function(req, res){
      console.log('Message sent successfully!');
      console.log('Server responded with "%s"', info.response);
 
-       res.sendStatus(200);
+
   });
 
   //console.log(name.select('firstName'));
@@ -64,6 +62,9 @@ router.get('/',function(req, res){
 
 
   });
-});
+}
 
-module.exports = router;
+
+
+
+  module.exports = mailReminder;
