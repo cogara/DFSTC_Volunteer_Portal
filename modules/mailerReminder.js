@@ -16,70 +16,81 @@ var mailReminder = function(){
   console.log(nextDay);
 
   // queries the server for apponitments between tomorrow and the next day for reminders
-  appointment.find({ "startTime":{ $gte: tomorrow $lt: nextDay} }, function(err,theAppointment){
-    console.log(theAppointment);
+  appointment.find({ "startTime":{ $gte: tomorrow , $lt: nextDay} }, function(err,theAppointment){
+    //console.log(theAppointment);
+    theAppointment.forEach(function(element){
+      //console.log(element.startTime +" Awesome!" );
+      //TODO: fix up mai;l sender
+      mailToUser(element);
+    });
   }
 );
 
 
-  var volunteer = "default";
-  user.find( function(err, theVolenteer){
-     volunteer = theVolenteer[0]
+}
 
-     var transporter = nodemailer.createTransport({
-       service:'Gmail',
-       auth:{
-         user:'dfstc016@gmail.com',
-         pass:'dressForSuccess'
-       },
-       logger:false,
-       debug:false
-     },{
-       // default message
-       from: 'Macho Man Randy S<dogs>',
-         headers: {
-             'X-Laziness-level': 1000 // just an example header, no need to use this
+function mailToUser (apmt){
+
+
+    var volunteer = "default";
+    user.find( function(err, theVolenteer){
+       volunteer = theVolenteer[0]
+
+       var transporter = nodemailer.createTransport({
+         service:'Gmail',
+         auth:{
+           user:'dfstc016@gmail.com',
+           pass:'dressForSuccess'
+         },
+         logger:false,
+         debug:false
+       },{
+         // default message
+         from: 'Macho Man Randy S<dogs>',
+           headers: {
+               'X-Laziness-level': 1000 // just an example header, no need to use this
+           }
+
+       });
+
+      // console.log('SMTP');
+
+       var message = {
+         // Comma separated list of recipients
+       to: '"Richard C" <zerofox16@gmail.com>',
+
+       // Subject of the message
+       subject: 'Nodemailer is unicode friendly ✔', //
+
+       // plaintext body
+       text: 'Hello to myself!',
+
+       // HTML body
+       html: '<p><b>Hello</b> to myself </p>' +
+           '<p>Hello '+volunteer.firstName+'</p> New message sent ' +new Date()+
+           '<p>Appointment time at '+apmt.startTime+' </p>'
+
+       };
+
+       console.log('sending mail');
+       transporter.sendMail(message, function(err, info){
+         if (err) {
+           console.log(err);
+           return;
          }
 
-     });
-
-     console.log('SMTP');
-
-     var message = {
-       // Comma separated list of recipients
-     to: '"Richard C" <zerofox16@gmail.com>',
-
-     // Subject of the message
-     subject: 'Nodemailer is unicode friendly ✔', //
-
-     // plaintext body
-     text: 'Hello to myself!',
-
-     // HTML body
-     html: '<p><b>Hello</b> to myself </p>' +
-         '<p>Hello '+volunteer.firstName+'</p> New message sent' +new Date()
-
-     };
-
-     console.log('sending mail');
-     transporter.sendMail(message, function(err, info){
-       if (err) {
-         console.log(err);
-         return;
-       }
-
-     console.log('Message sent successfully!');
-     console.log('Server responded with "%s"', info.response);
+       console.log('Message sent successfully!');
+       console.log('Server responded with "%s"', info.response);
 
 
-  });
+    });
 
-  //console.log(name.select('firstName'));
+    //console.log(name.select('firstName'));
 
 
 
 
-  });
+    });
 }
 
 
