@@ -38,6 +38,7 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('admin', {
       url: '/admin',
+      abstract: true,
       templateUrl: '../views/admin.html',
       controller: 'AdminController',
       controllerAs: 'admin',
@@ -57,6 +58,14 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
           return AdminService.getVolunteers();
         }
       }
+    })
+    .state('admin.volunteers', {
+      url: '/volunteers',
+      templateUrl: '../views/adminVolunteers.html'
+    })
+    .state('admin.reports', {
+      url:'/reports',
+      templateUrl: '../views/adminReports.html'
     });
 
     $locationProvider.html5Mode(true);

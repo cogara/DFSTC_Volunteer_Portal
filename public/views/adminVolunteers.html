@@ -1,0 +1,184 @@
+<div class="accordion">
+  <!-- Search Options -->
+  <div style="border: 1px solid #ddd; padding: 5px 0 10px">
+    <div class="col-xs-12">
+    <div class="col-sm-4">
+      <h5>Filter Options:</h5>
+      <div class="btn-group" uib-dropdown is-open="admin.oppDropdownOpen" auto-close="outsideClick">
+        <button id="opportunity-search"
+          type="button"
+          ng-class="{'btn-default': !admin.searchOpportunityActive, 'btn-primary': admin.searchOpportunityActive}"
+          class="btn"
+          uib-dropdown-toggle
+          ng-disabled="disabled">
+          Volunteer Type <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu search-opp" uib-dropdown-menu aria-labelledby="single-button">
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.imageCoach"> Image Coach</li>
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.careerCoach"> Career Coach </li>
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.clothingSorter"> Clothing Sorter </li>
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.clothingOrganizer"> Clothing Organizer </li>
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.frontDesk"> Front Desk Volunteer </li>
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.clothingSale"> Clothing Sale Volunteer </li>
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.clothingSaleCaptain"> Clothing Sale Captain </li>
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.careerAdvocate"> Career Advocate </li>
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.intelligenceMentor"> Professional Intelligence Mentor </li>
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.intelligenceMuse"> Professional Intelligence Muse </li>
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.communityAmbassador"> Community Ambassador </li>
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.eventSetUp"> Client Event Set Up Volunteer </li>
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.photographer"> Event Photographer </li>
+          <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.opportunity.graphicDesigner"> Graphic Designer </li>
+          <li class="dropdown-select-all">
+            <p style="font-size: .8em">Will list all volunteers that match at least one of the opportunities selected</p>
+            <h5><button class="btn btn-default" ng-click="admin.clearSearchOpp()">Clear Selections</h5>
+          </li>
+        </ul>
+      </div>
+      <div class="btn-group" uib-dropdown is-open="admin.availDropdownOpen" auto-close="outsideClick">
+        <button
+          id="available-search"
+          type="button"
+          ng-class="{'btn-default': !admin.searchAvailActive, 'btn-primary': admin.searchAvailActive}"
+          class="btn"
+          uib-dropdown-toggle
+          ng-disabled="disabled">
+          Availability <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu search-avail" uib-dropdown-menu aria-labelledby="single-button">
+          <li class="search-day"><h6>Monday</h6>
+            <ul>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.monday.morning"> morning </li>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.monday.afternoon"> afternoon </li>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.monday.evening"> evening </li>
+            </ul>
+          </li>
+          <li class="search-day"><h6>Tuesday</h6>
+            <ul>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.tuesday.morning"> morning </li>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.tuesday.afternoon"> afternoon </li>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.tuesday.evening"> evening </li>
+            </ul>
+          </li>
+          <li class="search-day"><h6>Wednesday</h6>
+            <ul>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.wednesday.morning"> morning </li>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.wednesday.afternoon"> afternoon </li>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.wednesday.evening"> evening </li>
+            </ul>
+          </li>
+          <li class="search-day"><h6>Thursday</h6>
+            <ul>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.thursday.morning"> morning </li>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.thursday.afternoon"> afternoon </li>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.thursday.evening"> evening </li>
+            </ul>
+          </li>
+          <li class="search-day"><h6>Friday</h6>
+            <ul>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.friday.morning"> morning </li>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.friday.afternoon"> afternoon </li>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.friday.evening"> evening </li>
+            </ul>
+          </li>
+          <li class="search-day"><h6>Saturday</h6>
+            <ul>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.saturday.morning"> morning </li>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.saturday.afternoon"> afternoon </li>
+              <li class="dropdown-option"><input type="checkbox" ng-model="admin.search.avail.saturday.evening"> evening </li>
+            </ul>
+          </li>
+          <li class="dropdown-select-all">
+            <p style="font-size: .8em">Will list all volunteers that match all of the times selected</p>
+            <h5><button class="btn btn-default" ng-click="admin.clearSearchAvail()">Clear Selections</h5>
+          </li>
+        </ul>
+      </div>
+      <div class="clear"></div>
+      <div class="search-radio-list">
+        <h6>Role:</h6>
+        <span class="search-radio-option"><input name="role" type="radio" ng-model="admin.search.role" value="all"> All</span>
+        <span class="search-radio-option"><input name="role" type="radio" ng-model="admin.search.role" value="isVolunteer"> Volunteer</span>
+        <span class="search-radio-option"><input name="role" type="radio" ng-model="admin.search.role" value="isTrainee"> Trainee</span>
+      </div>
+      <div class="search-radio-list">
+        <h6>Status:</h6>
+        <span class="search-radio-option"><input name="status" type="radio" ng-model="admin.search.status" value="all"> All</span>
+        <span class="search-radio-option"><input name="status" type="radio" ng-model="admin.search.status" value="true"> Active</span>
+        <span class="search-radio-option"><input name="status" type="radio" ng-model="admin.search.status" value="false"> Inactive</span>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="col-sm-6">
+      <h5>Sort Options:</h5>
+      <button ng-class="{'btn-default': !(admin.sortOrder === 'lastName'), 'btn-primary': (admin.sortOrder === 'lastName')}" class="btn" ng-click="admin.sortBy('lastName')">
+        Name <span class="sortorder" ng-show="(admin.sortOrder === 'lastName')" ng-class="{reverse: !admin.sortReverse}"></span>
+      </button>
+      <button ng-class="{'btn-default': !(admin.sortOrder === '-isActive'), 'btn-primary': (admin.sortOrder === '-isActive')}" class="btn" ng-click="admin.sortBy('-isActive')">
+        Active <span class="sortorder" ng-show="(admin.sortOrder === '-isActive')" ng-class="{reverse: !admin.sortReverse}"></span>
+      </button>
+      <button ng-class="{'btn-default': !(admin.sortOrder === '-isVolunteer'), 'btn-primary': (admin.sortOrder === '-isVolunteer')}" class="btn" ng-click="admin.sortBy('-isVolunteer')">
+        Volunteer/Trainee <span class="sortorder" ng-show="(admin.sortOrder === '-isVolunteer')" ng-class="{reverse: !admin.sortReverse}"></span>
+      </button>
+    </div>
+    <div class="col-sm-2" style="text-align: right;">
+      <h5>Reset Search</h5>
+      <button class="btn btn-default" ng-click="admin.resetSearch()">Clear</button>
+    </div>
+    <div class="col-xs-12">
+      <input class="col-sm-12" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">
+    </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+  <!-- Start volunteer list -->
+
+  <uib-accordion>
+    <div
+      uib-accordion-group class="panel-default"
+      ng-repeat="volunteer in admin.volunteers | orderBy:[admin.sortOrder, admin.sortDefault]:admin.sortReverse | filter: admin.search.input | filter: admin.roleFilter | filter: admin.availableFilter | filter: admin.opportunityFilter | filter: admin.statusFilter">
+      <uib-accordion-heading>
+        <div class="col-xs-4 volunteer-meta volunteer-name">
+          <div class="col-md-2 info-head">Name:</div>
+          <div class="col-md-10 info-data">{{::volunteer.firstName}} {{::volunteer.lastName}}
+            <span ng-if="volunteer.isTrainee" style="color: red"> *trainee</span>
+            <span ng-if="!volunteer.isActive" style="color: red"> *inactive</span>
+          </div>
+        </div>
+        <div class="col-xs-5 volunteer-meta volunteer-email">
+          <div class="col-md-2 info-head">Email: </div>
+          <div class="col-md-10 info-data">{{::volunteer.email}}</div>
+        </div>
+        <div class="col-xs-3 volunteer-meta volunteer-phone">
+          <div class="col-md-3 info-head">Phone: </div>
+          <div class="col-md-9 info-data">{{::volunteer.phoneNumber}}</div>
+        </div>
+        <div class="clear"></div>
+      </uib-accordion-heading>
+      <div class="col-xs-12">
+        <form class="active-switch">
+          Active: <span ng-click="admin.toggleActive(volunteer)"><switch off="No" on="Yes" ng-model="volunteer.isActive" class="green"></switch></span>
+        </form>
+
+        <div class="volunteer-sub-data">
+          <p class="inactive-message" ng-if="!volunteer.isActive">
+            Inactive Reason:
+            <span ng-if="volunteer.inactiveMessage">{{volunteer.inactiveMessage}}</span>
+            <span ng-if="!volunteer.inactiveMessage">N/A</span>
+          </p>
+          <div>Company: {{volunteer.company}}</div>
+          <div class="previous-companies" ng-if="volunteer.pastCompanies.length > 0">Former Companies:
+            <span ng-repeat="company in volunteer.pastCompanies">{{company}}</span>
+          </div>
+          <div>Last Appointment:</div>
+          <div>{{volunteer.isAvail}}</div>
+          <div class="clear"></div>
+          <div class="action-buttons">
+            <button class="btn btn-default" ng-click="admin.openProfile(volunteer._id)">View</button>
+            <button class="btn btn-default" ng-if="volunteer.isTrainee" ng-click="admin.trainingComplete(volunteer)">Training Complete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </uib-accordion> <!-- End Volunteer List -->
+</div>

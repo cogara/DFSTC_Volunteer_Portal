@@ -7,6 +7,7 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
   vm.editAppointment = {};
 
   vm.openProfile = openProfile;
+  vm.appointmentModal = appointmentModal;
 
   function openProfile(id) {
     var modalInstance = $uibModal.open({
@@ -18,6 +19,7 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
       resolve: {
         profile: function (UserService) {
           return UserService.getProfile(id).then(function(response){
+            response.tempCompany = response.company;
             return response;
           });
         }
@@ -34,6 +36,7 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
       console.log(profile);
     });
   };
+
 // start calendar and form settings
   //These variables MUST be set as a minimum for the calendar to work
   vm.calendarView = 'month';
