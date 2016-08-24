@@ -12,6 +12,15 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.openProfile = openProfile;
   vm.trainingComplete = trainingComplete;
   vm.toggleActive = toggleActive;
+  vm.sortBy = sortBy;
+
+  vm.sortDefault = 'lastName';
+  vm.sortOrder = 'lastName'
+  function sortBy(property) {
+    vm.sortReverse = (vm.sortOrder === property) ? !vm.sortReverse : false;
+    vm.sortReverse ? vm.sortDefault = '-lastName' : vm.sortDefault = 'lastName';
+    vm.sortOrder = property;
+  }
 
   function toggleActive(volunteer) {
     UserService.editProfile(volunteer);
@@ -122,32 +131,62 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.search.status = 'all';
 
   function availableFilter(volunteer) {
-    var check = 0;
     for (var day in vm.search.avail) {
       for (var time in vm.search.avail[day]) {
         if(vm.search.avail[day][time]) {
-          check++;
-        }
-        //check to be sure the volunteer avail[day] object even exists, if so, then check search params
-        if(volunteer.isAvail[day] && vm.search.avail[day]) {
-          if(volunteer.isAvail[day][time] === vm.search.avail[day][time]) {
-            return true;
+          vm.searchAvailActive = true;
+          if(!volunteer.isAvail[day]) {
+            return false;
           }
+        } else {
+          vm.searchAvailActive = false;
+          return true;
         }
+
+        // if(vm.search.avail[day][time]) {
+        //   if(volunteer.isAvail[day]) {
+        //     if(!(volunteer.isAvail[day][time] === vm.search.avail[day][time])) {
+        //       console.log(volunteer.email, 'is not available on', day, time);
+        //       vm.searchAvailActive = true;
+        //       return false;
+        //     }
+        //   } else {
+        //     console.log(volunteer.email, 'is not available any time on', day);
+        //     return false;
+        //   }
+        // }
       }
     }
-    if(check > 0) {
-      return false;
-    } else {
-      return true;
-    }
   }
+  // function availableFilter(volunteer) {
+  //   var check = false;
+  //   for (var day in vm.search.avail) {
+  //     for (var time in vm.search.avail[day]) {
+  //       if(vm.search.avail[day][time]) {
+  //         check = true;
+  //       }
+  //       //check to be sure the volunteer avail[day] object even exists, if so, then check search params
+  //       if(volunteer.isAvail[day] && vm.search.avail[day]) {
+  //         if(volunteer.isAvail[day][time] === vm.search.avail[day][time]) {
+  //           return true;
+  //         }
+  //       }
+  //     }
+  //   }
+  //   if(check) {
+  //     vm.searchAvailActive = true;
+  //     return false;
+  //   } else {
+  //     vm.searchAvailActive = false;
+  //     return true;
+  //   }
+  // }
 
   function opportunityFilter(volunteer) {
-    var check = 0;
+    var check = false;
     for (var opp in vm.search.opportunity) {
       if(vm.search.opportunity[opp]) {
-        check = 1;
+        check = true;
       }
       if(vm.search.opportunity[opp]) {
         if(volunteer.volunteerOpportunities[opp] === vm.search.opportunity[opp]) {
@@ -155,9 +194,11 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
         }
       }
     }
-    if(check > 0) {
+    if(check) {
+      vm.searchOpportunityActive = true;
       return false;
     } else {
+      vm.searchOpportunityActive = false;
       return true;
     }
   }

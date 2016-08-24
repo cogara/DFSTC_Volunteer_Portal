@@ -10,9 +10,15 @@
     <div class="col-xs-12">
       <div style="border: 1px solid #ddd; padding: 3px 0">
         <h4 class="col-xs-12">Volunteers:</h4>
-        <div class="col-xs-12">
+        <div class="col-sm-6">
+          <h5>Filter Options:</h5>
           <div class="btn-group" uib-dropdown is-open="admin.oppDropdownOpen" auto-close="outsideClick">
-            <button id="opportunity-search" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+            <button id="opportunity-search"
+              type="button"
+              ng-class="{'btn-default': !admin.searchOpportunityActive, 'btn-primary': admin.searchOpportunityActive}"
+              class="btn"
+              uib-dropdown-toggle
+              ng-disabled="disabled">
               Volunteer Type <span class="caret"></span>
             </button>
             <ul class="dropdown-menu search-opp" uib-dropdown-menu aria-labelledby="single-button">
@@ -37,7 +43,13 @@
             </ul>
           </div>
           <div class="btn-group" uib-dropdown is-open="admin.availDropdownOpen" auto-close="outsideClick">
-            <button id="available-search" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+            <button
+              id="available-search"
+              type="button"
+              ng-class="{'btn-default': !admin.searchAvailActive, 'btn-primary': admin.searchAvailActive}"
+              class="btn"
+              uib-dropdown-toggle
+              ng-disabled="disabled">
               Availability <span class="caret"></span>
             </button>
             <ul class="dropdown-menu search-avail" uib-dropdown-menu aria-labelledby="single-button">
@@ -91,17 +103,30 @@
           </div>
           <div class="clear"></div>
           <div class="search-radio-list">
-            <h5>Role:</h5>
+            <h6>Role:</h6>
             <span class="search-radio-option"><input name="role" type="radio" ng-model="admin.search.role" value="all"> All</span>
             <span class="search-radio-option"><input name="role" type="radio" ng-model="admin.search.role" value="isVolunteer"> Volunteer</span>
             <span class="search-radio-option"><input name="role" type="radio" ng-model="admin.search.role" value="isTrainee"> Trainee</span>
           </div>
           <div class="search-radio-list">
-            <h5>Status:</h5>
+            <h6>Status:</h6>
             <span class="search-radio-option"><input name="status" type="radio" ng-model="admin.search.status" value="all"> All</span>
             <span class="search-radio-option"><input name="status" type="radio" ng-model="admin.search.status" value="true"> Active</span>
             <span class="search-radio-option"><input name="status" type="radio" ng-model="admin.search.status" value="false"> Inactive</span>
           </div>
+          <div class="clear"></div>
+        </div>
+        <div class="col-sm-6">
+          <h5>Sort Options:</h5>
+          <button ng-class="{'btn-default': !(admin.sortOrder === '-isActive'), 'btn-primary': (admin.sortOrder === '-isActive')}" class="btn" ng-click="admin.sortBy('-isActive')">
+            Active <span class="sortorder" ng-show="(admin.sortOrder === '-isActive')" ng-class="{reverse: !admin.sortReverse}"></span>
+          </button>
+          <button ng-class="{'btn-default': !(admin.sortOrder === '-isVolunteer'), 'btn-primary': (admin.sortOrder === '-isVolunteer')}" class="btn" ng-click="admin.sortBy('-isVolunteer')">
+            Volunteer/Trainee <span class="sortorder" ng-show="(admin.sortOrder === '-isVolunteer')" ng-class="{reverse: !admin.sortReverse}"></span>
+          </button>
+          <button ng-class="{'btn-default': !(admin.sortOrder === 'lastName'), 'btn-primary': (admin.sortOrder === 'lastName')}" class="btn" ng-click="admin.sortBy('lastName')">
+            Name <span class="sortorder" ng-show="(admin.sortOrder === 'lastName')" ng-class="{reverse: !admin.sortReverse}"></span>
+          </button>
         </div>
         <div class="col-xs-12">
           <input class="col-sm-12" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">
@@ -111,10 +136,11 @@
     </div> <!-- End Search Options -->
 
     <!-- Start volunteer list -->
+
     <uib-accordion class="col-xs-12">
       <div
         uib-accordion-group class="panel-default"
-        ng-repeat="volunteer in admin.volunteers | filter: admin.search.input | filter: admin.roleFilter | filter: admin.availableFilter | filter: admin.opportunityFilter | filter: admin.statusFilter | orderBy: ['lastName']">
+        ng-repeat="volunteer in admin.volunteers | orderBy:[admin.sortOrder, admin.sortDefault]:admin.sortReverse | filter: admin.search.input | filter: admin.roleFilter | filter: admin.availableFilter | filter: admin.opportunityFilter | filter: admin.statusFilter">
         <uib-accordion-heading>
           <div class="col-xs-4 volunteer-meta volunteer-name">
             <div class="col-md-2 info-head">Name:</div>

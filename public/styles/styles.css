@@ -24,6 +24,13 @@
   display: block;
 }
 
+.sortorder:after {
+  content: '\25b2';
+}
+.sortorder.reverse:after {
+  content: '\25bc';
+}
+
 .sidebar-list {
   padding-top: 20px;
 }

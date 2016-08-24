@@ -10,9 +10,49 @@ function ProfileController($http, $state, $uibModalInstance, UserService, profil
   console.log(profile);
 
   function saveProfile(profile) {
-    //send new profile info to dashboard controller
-    console.log('clicked saved');
-    $uibModalInstance.close(profile);
+    //checks if saved company equals original company, if so, remove tempCompany
+    //and save as normal
+    if(profile.company === profile.tempCompany) {
+      for (var key in profile) {
+        if(key !== 'tempCompany') {
+          $uibModalInstance.close(profile);
+        }
+      }
+    //if different company, push to pastCompanies array
+    } else {
+      var check = false;
+      //checks if user has past companies initialized.
+      if (profile.pastCompanies) {
+        //check for duplicates on previous companies
+        for (var i = 0; i < profile.pastCompanies.length; i++) {
+          //if match, set the check to true that it already exists
+          if(profile.tempCompany === profile.pastCompanies[i]) {
+            check = true;
+          }
+        }
+        //checks if new company matches any previous companies. if so,
+        //remove current company from previousCompanies array
+        for (var i = 0; i < profile.pastCompanies.length; i++) {
+          if(profile.company === profile.pastCompanies[i]) {
+            profile.pastCompanies.splice(i, 1);
+          }
+        }
+        //if not a duplicate, push to pastCompanies array on company change
+        if(!check) {
+          profile.pastCompanies.push(profile.tempCompany);
+        }
+      //if not initalized, create empty array and push to array
+      } else {
+        profile.pastCompanies = [];
+        profile.pastCompanies.push(profile.tempCompany);
+      }
+      //after tests, save new profile removing tempCompany key
+      for (var key in profile) {
+        if(key !== 'tempCompany') {
+          $uibModalInstance.close(profile);
+        }
+      }
+    }
   }
 
   function cancel() {
