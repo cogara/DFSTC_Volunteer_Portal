@@ -27,7 +27,8 @@ var UserSchema = new Schema(
     lastLogin: Date,
     volunteerOpportunities: Object,
     photo: {data: Buffer, contentType: String},
-    isActive: Boolean
+    isActive: {type: Boolean, default: true},
+    inactiveMessage: String
   }
 );
 

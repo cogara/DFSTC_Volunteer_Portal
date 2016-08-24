@@ -17,7 +17,7 @@
     <script src="/vendor/angular-ui-router/release/angular-ui-router.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
     <script src="/vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>
-
+    <script src="/vendor/angular-elastic/elastic.js"></script>
 
     <script src="/scripts/module.js" charset="utf-8"></script>
     <script src="/scripts/config.js" charset="utf-8"></script>
@@ -28,17 +28,27 @@
     <script src="/scripts/AppointmentService.js" charset="utf-8"></script>
     <script src="/scripts/DashboardController.js" charset="utf-8"></script>
     <script src="/scripts/ProfileController.js" charset="utf-8"></script>
+    <script src="/scripts/switch.js" charset="utf-8"></script>
 
     <title>Dress For Success Twin Cities</title>
   </head>
   <body ng-controller="MainController as main">
     <!-- <h5>{{main.currentUser}}</h5> -->
 
-
-
-    <div ui-view>
-
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+        <div class="page-header">
+          <img style="width: 100%; max-width: 500px" class="center-block " src="../images/DFS_TwinCities-resized.jpg"/>
+        </div>
+      </div>
     </div>
+
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+        <div ui-view></div>
+      </div>
+    </div>
+
 
     <div ng-if="main.currentUser" style="clear: both; text-align: center">
       <button class="clear" ng-click="main.logout()">Logout</button>

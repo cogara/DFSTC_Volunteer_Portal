@@ -57,6 +57,10 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
           return AdminService.getVolunteers();
         }
       }
+    })
+    .state('admin.reports', {
+      url:'/reports',
+      templateUrl: '../views/adminReports.html',
     });
 
     $locationProvider.html5Mode(true);

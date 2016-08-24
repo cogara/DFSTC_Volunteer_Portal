@@ -5,33 +5,32 @@
   border: 1px solid yellow;
 }
 
-.calendar {
-  display: inline-block;
-  float: left;
-  left: 0;
-  /*height: 200px;*/
-  width: 60%;
-  border: 1px solid rgba(255,0,0,.5);
+.page-header {
+  margin: 15px 0;
+  padding: 10px 0 30px;
+  border-bottom: 1px solid rgb(220,220,220);
 }
 
-.sidebar {
-  float: right;
-  right: 0;
+.admin-menu {
+  margin: 15px 0;
+}
+
+.search-radio-list {
   display: inline-block;
-  width: 250px;
-  height: 200px;
-  border: 1px solid rgba(0,255,0,.5);
+  float: left;
+  margin: 0 10px 10px 0;
+}
+.search-radio-option {
+  display: block;
+}
+
+.sidebar-list {
+  padding-top: 20px;
 }
 
 .clear {
   clear: both;
 }
-
-/*input:disabled {
-  border-color: transparent;
-  background-color: transparent;
-  box-shadow: none;
-}*/
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
   border-color: transparent;
@@ -96,8 +95,42 @@
   border-radius: 0;
 }
 
-ul.volunteers, ul.volunteer-sub-data {
+.volunteers, .volunteer-sub-data {
   padding-left: 16px;
+}
+
+.inactive-message-input {
+  resize: none;
+  width: 100%;
+  margin: 10px auto 0;
+  padding: 5px 10px;
+  border-color: rgb(225,225,225);
+  border-radius: 5px;
+}
+
+.inactive-message-input:disabled {
+  resize: vertical;
+  border-color: transparent;
+}
+
+.inactive-message {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.action-buttons {
+  text-align: center;
+}
+
+.active-switch {
+  float: right;
+  font-size: .8em;
+}
+.active-switch-modal {
+  float: left;
+  padding: 0 3px;
+  font-size: .8em;
+  clear: both;
 }
 
 .profile:disabled {
@@ -124,3 +157,85 @@ ul.volunteers, ul.volunteer-sub-data {
   list-style-type: none;
   padding: 0;
 }
+
+
+/* SwITCH STYLES */
+
+.switch {
+  background: #fff;
+  border: 1px solid #dfdfdf;
+  position: relative;
+  display: inline-block;
+  box-sizing: content-box;
+  overflow: visible;
+  width: 47px;
+  height: 15px;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: rgb(223, 223, 223) 0px 0px 0px 0px inset;
+  transition: 0.3s ease-out all;
+  -webkit-transition: 0.3s ease-out all;
+  top: 4px;
+}
+/*adding a wide width for larger switch text*/
+.switch.wide {
+  width:80px;
+}
+.switch small {
+  background: #fff;
+  border-radius: 100%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  transition: 0.3s ease-out all;
+  -webkit-transition: 0.3s ease-out all;
+}
+.switch.checked {
+  background: rgb(100, 189, 99);
+  border-color: rgb(100, 189, 99);
+}
+.switch.checked small {
+  left: 32px;
+}
+/*wider switch text moves small further to the right*/
+.switch.wide.checked small {
+  left:52px;
+}
+/*styles for switch-text*/
+.switch .switch-text {
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:10px;
+}
+
+.switch .off {
+  display:block;
+  position: absolute;
+  right: 11%;
+  top: 1px;
+  z-index: 0;
+  color:#A9A9A9;
+}
+
+.switch .on {
+  display:none;
+   z-index: 0;
+  color:#fff;
+  position: absolute;
+  top: 1px;
+  left: 10%;
+}
+
+.switch.checked .off {
+  display:none;
+}
+
+.switch.checked .on {
+  display:block;
+
+}
+/* END SWITCH STYLES */

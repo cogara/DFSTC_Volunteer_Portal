@@ -27,9 +27,15 @@ router.get('/volunteers', function(request, response) {
 })
 
 router.put('/volunteer/:id', function(request, response) {
-  console.log(request.params);
+  var volunteer = request.body;
+  var editVolunteer = {};
+  for (var key in volunteer) {
+    if (!(key==='password')) {
+      editVolunteer[key] = volunteer[key];
+    }
+  }
 
-  User.findByIdAndUpdate({_id: request.params.id}, {$set: request.body}, function(err, volunteer) {
+  User.findByIdAndUpdate({_id: request.params.id}, {$set: editVolunteer}, function(err, volunteer) {
     if(err){
       console.log(err);
       response.sendStatus(500);

@@ -31,13 +31,7 @@ function UserService($http) {
 
   function editProfile(volunteer) {
     console.log(volunteer);
-    var editVolunteer = {};
-    for (var key in volunteer) {
-      if (!(key==='password')) {
-        editVolunteer[key] = volunteer[key];
-      }
-    }
-    return $http.put('/api/volunteer/' + volunteer._id, editVolunteer);
+    return $http.put('/api/volunteer/' + volunteer._id, volunteer);
   }
 
   function logout() {
