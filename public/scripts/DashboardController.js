@@ -1,7 +1,10 @@
 angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
 
-function DashboardController($http, $state, $uibModal, UserService, AppointmentService) {
+function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig) {
   var vm = this;
+
+  vm.showAppointments = AppointmentService.appointments;
+  vm.editAppointment = {};
 
   vm.openProfile = openProfile;
 
@@ -31,35 +34,34 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
       console.log(profile);
     });
   };
-
+// start calendar and form settings
   //These variables MUST be set as a minimum for the calendar to work
   vm.calendarView = 'month';
   vm.viewDate = new Date();
   var actions = [{
     label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
     onClick: function(args) {
-      //alert.show('Edited', args.calendarEvent);
     }
   }, {
     label: '<i class=\'glyphicon glyphicon-remove\'></i>',
     onClick: function(args) {
-      //alert.show('Deleted', args.calendarEvent);
     }
   }];
 
   vm.addAppointment = function(){
-  console.log(vm.appointment);
-  AppointmentService.addAppointment(vm.appointment).then(function(response){
-    console.log('add appointment success', response.data);
-  }, function(response){
-    console.log('add appointment fail', response.data);
-  })
+    console.log(vm.appointment);
+    AppointmentService.addAppointment(vm.appointment).then(function(response){
+      vm.showAppointments.appointments.push(vm.appointment);
+      console.log('add appointment success', response.data);
+    }, function(response){
+      console.log('add appointment fail', response.data);
+    })
   }
 
   vm.appointment={
     title: "Image Coach Appointment",
-    startTime: '',
-    endTime: '',
+    startsAt: '',
+    endsAt: '',
     volunteerSlots: 5,
     clientSlots: 5,
     trainingAppointment: false
@@ -118,6 +120,42 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   vm.popup2 = {
     opened: false
+  }//end calendar and form settings
+
+  vm.addAppointmentModal = function(){
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'addAppointmentModal.html',
+      controller: 'DashboardController',
+      controllerAs: 'dash',
+      size: 'lg'
+    })
   }
+
+  vm.eventClicked = function(calendarEvent){
+    console.log(calendarEvent);
+    vm.editAppointment = calendarEvent;
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'editAppointmentModal.html',
+      controller: 'DashboardController',
+      controllerAs: 'dash',
+      size: 'lg',
+      resolve: {
+        appointment: function (AppointmentService) {
+          return AppointmentService.getAppointment(calendarEvent._id).then(function(response){
+            return response;
+          });
+        }
+      }
+    })
+  }
+
+  vm.deleteAppointment = function(event){
+    console.log('deleting', vm.editAppointment._id);
+    AppointmentService.deleteAppointment(vm.editAppointment._id);
+  }
+
+  AppointmentService.getAppointments()
 
 }; //end DashboardController

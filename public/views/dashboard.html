@@ -169,7 +169,7 @@
 <!-- End Profile Modal -->
 
 
-<h2 class="text-center">{{ vm.calendarTitle }}</h2>
+<h2 class="text-center">{{ dash.calendarTitle }}</h2>
 
 <div class="row">
 
@@ -214,7 +214,7 @@
 
 
 <mwl-calendar
-  events="dash.events"
+  events="dash.showAppointments.appointments"
   view="dash.calendarView"
   view-title="dash.calendarTitle"
   view-date="dash.viewDate"
@@ -227,90 +227,193 @@
   cell-modifier="dash.modifyCell(calendarCell)">
 </mwl-calendar>
 
-<!-- admin add appointment form -->
-<div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
-  <h3 class="center-block">Add New Appointment</h3>
-  <label>Appointment Title:</label>
-  <input type="text" class="form-control" ng-model="dash.appointment.title" />
+<button ng-click="dash.addAppointmentModal()">Add New Appointment</button>
 
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Start Time</th>
-        <th>End Time</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <p class="input-group" style="max-width: 250px">
-            <input
-              type="text"
-              class="form-control"
-              uib-datepicker-popup="{{dash.format}}"
-              ng-model="dash.appointment.startTime"
-              is-open="dash.popup1.opened"
-              datepicker-options="dash.dateOptions"
-              ng-required="true"
-              close-text="Close"
-              alt-input-formats="dash.altInputFormats"
-              placeholder="Start Date" />
-            <span class="input-group-btn">
-              <button type="button"
-                class="btn btn-default"
-                ng-click="dash.open1()">
-                <i class="glyphicon glyphicon-calendar"></i>
-              </button>
-            </span>
-          </p>
-          <div
-            uib-timepicker
-            ng-model="dash.appointment.startTime"
-            hour-step="1"
-            minute-step="15"
-            show-meridian="true"
-            class="col-md-6">
-          </div>
-        </td>
-        <td>
-          <p class="input-group" style="max-width: 250px">
-            <input type="text"
-              class="form-control"
-              uib-datepicker-popup="{{dash.format}}"
-              ng-model="dash.appointment.endTime"
-              is-open="dash.popup2.opened"
-              datepicker-options="dash.dateOptions"
-              ng-required="true"
-              close-text="Close"
-              alt-input-formats="dash.altInputFormats"
-              placeholder="End Date" />
-            <span class="input-group-btn">
-              <button type="button"
-                class="btn btn-default"
-                ng-click="dash.open2()">
-                <i class="glyphicon glyphicon-calendar"></i>
-              </button>
-            </span>
-          </p>
-          <div
-            uib-timepicker
-            ng-model="dash.appointment.endTime"
-            hour-step="1"
-            minute-step="15"
-            show-meridian="true"
-            class="col-md-6">
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <label>Number of Volunteers Needed:</label>
-  <input type="number" class="form-control" ng-model="dash.appointment.volunteerSlots" placeholder=5 />
-  <label>Number of Possible Clients:</label>
-  <input type="number" class="form-control" ng-model="dash.appointment.clientSlots" placeholder=5 />
 
-  <label>Training Appointment?</label>
-  <input type="checkbox" ng-model="dash.appointment.trainingAppointment" />
+<!-- admin add appointment modal form -->
 
-<button class="center-block btn btn-default" ng-click="dash.addAppointment()" >Save Appointment</button>
-</div>
+<script type="text/ng-template" id="addAppointmentModal.html">
+  <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
+    <h3 class="center-block">Add New Appointment</h3>
+    <label>Appointment Title:</label>
+    <input type="text" class="form-control" ng-model="dash.appointment.title" />
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Start Time</th>
+          <th>End Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <p class="input-group" style="max-width: 250px">
+              <input
+                type="text"
+                class="form-control"
+                uib-datepicker-popup="{{dash.format}}"
+                ng-model="dash.appointment.startsAt"
+                is-open="dash.popup1.opened"
+                datepicker-options="dash.dateOptions"
+                ng-required="true"
+                close-text="Close"
+                alt-input-formats="dash.altInputFormats"
+                placeholder="Start Date" />
+              <span class="input-group-btn">
+                <button type="button"
+                  class="btn btn-default"
+                  ng-click="dash.open1()">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+            </p>
+            <div
+              uib-timepicker
+              ng-model="dash.appointment.startsAt"
+              hour-step="1"
+              minute-step="15"
+              show-meridian="true"
+              class="col-md-6">
+            </div>
+          </td>
+          <td>
+            <p class="input-group" style="max-width: 250px">
+              <input type="text"
+                class="form-control"
+                uib-datepicker-popup="{{dash.format}}"
+                ng-model="dash.appointment.endsAt"
+                is-open="dash.popup2.opened"
+                datepicker-options="dash.dateOptions"
+                ng-required="true"
+                close-text="Close"
+                alt-input-formats="dash.altInputFormats"
+                placeholder="End Date" />
+              <span class="input-group-btn">
+                <button type="button"
+                  class="btn btn-default"
+                  ng-click="dash.open2()">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+            </p>
+            <div
+              uib-timepicker
+              ng-model="dash.appointment.endsAt"
+              hour-step="1"
+              minute-step="15"
+              show-meridian="true"
+              class="col-md-6">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <label>Number of Volunteers Needed:</label>
+    <input type="number" class="form-control" ng-model="dash.appointment.volunteerSlots" placeholder=5 />
+    <label>Number of Possible Clients:</label>
+    <input type="number" class="form-control" ng-model="dash.appointment.clientSlots" placeholder=5 />
+
+    <label>Training Appointment?</label>
+    <input type="checkbox" ng-model="dash.appointment.trainingAppointment" />
+
+  <button class="center-block btn btn-default" ng-click="$close(dash.addAppointment())" >Save Appointment</button>
+  <button class="center-block btn btn-default" ng-click="$close()" >Cancle</button>
+
+  </div>
+</script>
+
+
+<!-- admin edit/delete appointment modal form -->
+
+<script type="text/ng-template" id="editAppointmentModal.html">
+  <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
+    <h3 class="center-block">Add New Appointment</h3>
+    <label>Appointment Title:</label>
+    <input type="text" class="form-control" ng-model="dash.editAppointment.title" />
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Start Time</th>
+          <th>End Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <p class="input-group" style="max-width: 250px">
+              <input
+                type="text"
+                class="form-control"
+                uib-datepicker-popup="{{dash.format}}"
+                ng-model="dash.editAppointment.startsAt"
+                is-open="dash.popup1.opened"
+                datepicker-options="dash.dateOptions"
+                ng-required="true"
+                close-text="Close"
+                alt-input-formats="dash.altInputFormats"
+                placeholder="Start Date" />
+              <span class="input-group-btn">
+                <button type="button"
+                  class="btn btn-default"
+                  ng-click="dash.open1()">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+            </p>
+            <div
+              uib-timepicker
+              ng-model="dash.editAppointment.startsAt"
+              hour-step="1"
+              minute-step="15"
+              show-meridian="true"
+              class="col-md-6">
+            </div>
+          </td>
+          <td>
+            <p class="input-group" style="max-width: 250px">
+              <input type="text"
+                class="form-control"
+                uib-datepicker-popup="{{dash.format}}"
+                ng-model="dash.editAppointment.endsAt"
+                is-open="dash.popup2.opened"
+                datepicker-options="dash.dateOptions"
+                ng-required="true"
+                close-text="Close"
+                alt-input-formats="dash.altInputFormats"
+                placeholder="End Date" />
+              <span class="input-group-btn">
+                <button type="button"
+                  class="btn btn-default"
+                  ng-click="dash.open2()">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+            </p>
+            <div
+              uib-timepicker
+              ng-model="dash.editAppointment.endsAt"
+              hour-step="1"
+              minute-step="15"
+              show-meridian="true"
+              class="col-md-6">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <label>Number of Volunteers Needed:</label>
+    <input type="number" class="form-control" ng-model="dash.editAppointment.volunteerSlots" placeholder=5 />
+    <label>Number of Possible Clients:</label>
+    <input type="number" class="form-control" ng-model="dash.editAppointment.clientSlots" placeholder=5 />
+
+    <label>Training Appointment?</label>
+    <input type="checkbox" ng-model="dash.editAppointment.trainingAppointment" />
+
+  <button class="center-block btn btn-default" ng-click="$close(dash.deleteAppointment(dash.editAppointment._id))" >Delete Appointment</button>
+  <button class="center-block btn btn-default" ng-click="$close(dash.updateAppointment(dash.editAppointment))" >Save Changes</button>
+  <button class="center-block btn btn-default" ng-click="$close()" >Cancle</button>
+
+  </div>
+</script>
