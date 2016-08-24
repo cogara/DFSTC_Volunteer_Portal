@@ -1,7 +1,7 @@
 <button class="btn btn-default" ui-sref="dashboard">back to dashboard</button>
 <h1>Admin Panel</h1>
 
-<uib-tabset class="admin-menu">
+<uib-tabset>
   <uib-tab heading="Volunteers" ui-sref="admin.volunteers"></uib-tab>
   <uib-tab heading="Reports" ui-sref="admin.reports"></uib-tab>
 </uib-tabset>
@@ -22,7 +22,7 @@
     <div ng-if="!prof.profile.isActive" class="clear">
       <div class="row" style="text-align: center">
         <div class="col-xs-12">
-          <textarea class="inactive-message-input" ng-disabled="!prof.isEditing" ng-model="prof.profile.inactiveMessage" msd-elastic rows="1" placeholder="No Inactive Reason Provided">
+          <textarea class="inactive-message-input animate" ng-disabled="!prof.isEditing" ng-model="prof.profile.inactiveMessage" msd-elastic="\n" rows="1" placeholder="No Inactive Reason Provided">
 
           </textarea>
         </div>
