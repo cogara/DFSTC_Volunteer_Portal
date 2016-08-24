@@ -31,6 +31,10 @@
   content: '\25bc';
 }
 
+.previous-companies span:not(:last-child):after {
+  content: ', ';
+}
+
 .sidebar-list {
   padding-top: 20px;
 }

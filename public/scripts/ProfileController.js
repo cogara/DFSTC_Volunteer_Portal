@@ -13,6 +13,7 @@ function ProfileController($http, $state, $uibModalInstance, UserService, profil
     //checks if saved company equals original company, if so, remove tempCompany
     //and save as normal
     if(profile.company === profile.tempCompany) {
+      console.log('company matches:', profile.compay, profile.tempCompany);
       for (var key in profile) {
         if(key !== 'tempCompany') {
           $uibModalInstance.close(profile);
