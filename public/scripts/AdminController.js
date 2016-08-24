@@ -12,6 +12,8 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.openProfile = openProfile;
   vm.trainingComplete = trainingComplete;
   vm.toggleActive = toggleActive;
+  vm.sortBy = sortBy;
+  vm.resetSearch = resetSearch;
 
   function toggleActive(volunteer) {
     UserService.editProfile(volunteer);
@@ -70,6 +72,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
       resolve: {
         profile: function (UserService) {
           return UserService.getProfile(id).then(function(response){
+            response.tempCompany = response.company;
             return response;
           });
         }
@@ -86,68 +89,85 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
       console.log(profile);
     });
   };
+
   // Search volunteer options and filters
-  vm.search = {};
-  vm.search.opportunity = {};
-  vm.search.opportunity.all = false;
-  vm.search.opportunity.imageCoach = false;
-  vm.search.opportunity.careerCoach = false;
-  vm.search.opportunity.clothingSorter = false;
-  vm.search.opportunity.clothingOrganizer = false;
-  vm.search.opportunity.frontDesk = false;
-  vm.search.opportunity.clothingSale = false;
-  vm.search.opportunity.clothingSaleCaptain = false;
-  vm.search.opportunity.careerAdvocate = false;
-  vm.search.opportunity.intelligenceMentor = false;
-  vm.search.opportunity.intelligenceMuse = false;
-  vm.search.opportunity.communityAmbassador = false;
-  vm.search.opportunity.eventSetUp = false;
-  vm.search.opportunity.photographer = false;
-  vm.search.opportunity.graphicDesigner = false;
+  function clearSearchOptions() {
+    vm.search = {};
+    vm.search.opportunity = {};
+    vm.search.opportunity.all = false;
+    vm.search.opportunity.imageCoach = false;
+    vm.search.opportunity.careerCoach = false;
+    vm.search.opportunity.clothingSorter = false;
+    vm.search.opportunity.clothingOrganizer = false;
+    vm.search.opportunity.frontDesk = false;
+    vm.search.opportunity.clothingSale = false;
+    vm.search.opportunity.clothingSaleCaptain = false;
+    vm.search.opportunity.careerAdvocate = false;
+    vm.search.opportunity.intelligenceMentor = false;
+    vm.search.opportunity.intelligenceMuse = false;
+    vm.search.opportunity.communityAmbassador = false;
+    vm.search.opportunity.eventSetUp = false;
+    vm.search.opportunity.photographer = false;
+    vm.search.opportunity.graphicDesigner = false;
 
 
-  vm.search.avail = {};
-  vm.search.avail.monday = {};
-  vm.search.avail.tuesday = {};
-  vm.search.avail.wednesday = {};
-  vm.search.avail.thursday = {};
-  vm.search.avail.friday = {};
-  vm.search.avail.saturday = {};
+    vm.search.avail = {};
+    vm.search.avail.monday = {};
+    vm.search.avail.tuesday = {};
+    vm.search.avail.wednesday = {};
+    vm.search.avail.thursday = {};
+    vm.search.avail.friday = {};
+    vm.search.avail.saturday = {};
 
-  vm.availableFilter = availableFilter;
-  vm.opportunityFilter = opportunityFilter;
-  vm.roleFilter = roleFilter;
-  vm.statusFilter = statusFilter;
-  vm.search.role = 'all';
-  vm.search.status = 'all';
+    vm.availableFilter = availableFilter;
+    vm.opportunityFilter = opportunityFilter;
+    vm.roleFilter = roleFilter;
+    vm.statusFilter = statusFilter;
+    vm.search.role = 'all';
+    vm.search.status = 'all';
+
+    vm.sortDefault = 'lastName';
+    vm.sortOrder = 'lastName';
+    vm.searchAvailActive = false;
+    vm.searchOpportunityActive = false;
+  }
+
+  function resetSearch() {
+    clearSearchOptions();
+  }
+
+  function sortBy(property) {
+    vm.sortReverse = (vm.sortOrder === property) ? !vm.sortReverse : false;
+    vm.sortReverse ? vm.sortDefault = '-lastName' : vm.sortDefault = 'lastName';
+    vm.sortOrder = property;
+  }
 
   function availableFilter(volunteer) {
-    var check = 0;
     for (var day in vm.search.avail) {
       for (var time in vm.search.avail[day]) {
-        if(vm.search.avail[day][time]) {
-          check++;
-        }
-        //check to be sure the volunteer avail[day] object even exists, if so, then check search params
-        if(volunteer.isAvail[day] && vm.search.avail[day]) {
-          if(volunteer.isAvail[day][time] === vm.search.avail[day][time]) {
-            return true;
+        if (vm.search.avail[day][time]) {
+          vm.searchAvailActive = true;
+          if(volunteer.isAvail[day]) {
+            if(!volunteer.isAvail[day][time]) {
+              return false;
+            }
+          } else {
+            return false;
           }
+          // return false;
+        } else {
+          vm.searchAvailActive = false;
         }
       }
     }
-    if(check > 0) {
-      return false;
-    } else {
-      return true;
-    }
+    return true;
   }
 
   function opportunityFilter(volunteer) {
-    var check = 0;
+    var check = false;
     for (var opp in vm.search.opportunity) {
       if(vm.search.opportunity[opp]) {
-        check = 1;
+        check = true;
       }
       if(vm.search.opportunity[opp]) {
         if(volunteer.volunteerOpportunities[opp] === vm.search.opportunity[opp]) {
@@ -155,9 +175,11 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
         }
       }
     }
-    if(check > 0) {
+    if(check) {
+      vm.searchOpportunityActive = true;
       return false;
     } else {
+      vm.searchOpportunityActive = false;
       return true;
     }
   }
@@ -216,6 +238,8 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     }
     vm.availDropdownOpen = false;
   }
+
+  clearSearchOptions();
   //end search filters
 
 } //end Admin Controller

@@ -105,7 +105,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 //ROUTES
-
 app.use('/register', register);
 app.use('/login', login);
 app.get('/logout', function(request, response) {

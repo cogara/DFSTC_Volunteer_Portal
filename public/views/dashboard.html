@@ -1,4 +1,4 @@
-<button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin">Admin Control</button>
+<button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin.volunteers">Admin Control</button>
 <button ng-if="main.currentUser" class="btn btn-default" ng-click="dash.openProfile(main.currentUser._id)">Profile</button>
 
 <!-- Profile Modal -->
@@ -263,7 +263,7 @@
 <!-- end add appt modal -->
 <div class="row">
   <div class="col-lg-8 calendar">
-    <h2 class="text-center">{{ dash.calendarTitle }} </h2>
+    <h2 class="text-center">{{ dash.calendarTitle }}</h2>
     <!-- <div class="row"> -->
       <div class="col-md-6 text-center">
         <div class="btn-group">

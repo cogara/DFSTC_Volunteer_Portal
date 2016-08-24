@@ -24,6 +24,17 @@
   display: block;
 }
 
+.sortorder:after {
+  content: '\25b2';
+}
+.sortorder.reverse:after {
+  content: '\25bc';
+}
+
+.previous-companies span:not(:last-child):after {
+  content: ', ';
+}
+
 .sidebar-list {
   padding-top: 20px;
 }

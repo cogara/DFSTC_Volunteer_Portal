@@ -34,6 +34,7 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
       resolve: {
         profile: function (UserService) {
           return UserService.getProfile(id).then(function(response){
+            response.tempCompany = response.company;
             return response;
           });
         }
