@@ -9,28 +9,24 @@ var mailReminder = function(){
 
   // sets the the times for midinght of the next day and and midnight of the day after
   var tomorrow  = new Date(new Date().setDate(new Date().getDate()+1));
-  tomorrow.setHours(0,0,0,0);
-  console.log(tomorrow);
   var nextDay  = new Date(new Date().setDate(new Date().getDate()+2));
+  tomorrow.setHours(0,0,0,0);
   nextDay.setHours(0,0,0,0);
-  console.log(nextDay);
-
-  // queries the server for apponitments between tomorrow and the next day for reminders
-  appointment.find({ "startTime":{ $gte: tomorrow , $lt: nextDay} }, function(err,theAppointment){
-    //console.log(theAppointment);
-    theAppointment.forEach(function(element){
-      //console.log(element.startTime +" Awesome!" );
-      //TODO: fix up mai;l sender
-      mailToUser(element);
-    });
-  }
-);
 
 
+    // queries the server for apponitments between tomorrow and the next day for reminders
+    appointment.find({ "startTime":{ $gte: tomorrow , $lt: nextDay} }, function(err,theAppointment){
+
+      theAppointment.forEach(function(element){
+        //console.log(element.startTime +" Awesome!" );
+        //TODO: fix up mai;l sender
+        mailToUser(element);
+      });
+    }
+  );
 }
 
 function mailToUser (apmt){
-
 
     var volunteer = "default";
     user.find( function(err, theVolenteer){
@@ -38,6 +34,7 @@ function mailToUser (apmt){
 
        var transporter = nodemailer.createTransport({
          service:'Gmail',
+         //TODO: Change to an actual secret account and if gmail sett to less secure in security settings
          auth:{
            user:'dfstc016@gmail.com',
            pass:'dressForSuccess'
@@ -46,28 +43,19 @@ function mailToUser (apmt){
          debug:false
        },{
          // default message
-         from: 'Macho Man Randy S<dogs>',
-           headers: {
-               'X-Laziness-level': 1000 // just an example header, no need to use this
-           }
-
+         from: 'MAd Dog Pete <dogs>',
        });
-
-      // console.log('SMTP');
 
        var message = {
          // Comma separated list of recipients
-       to: '"Richard C" <zerofox16@gmail.com>',
+       to: '"'+volunteer.firstName +'" <zerofox16@gmail.com>',
 
        // Subject of the message
-       subject: 'Nodemailer is unicode friendly ✔', //
-
-       // plaintext body
-       text: 'Hello to myself!',
+       subject: 'Mailer reminder ✔', //
 
        // HTML body
        html: '<p><b>Hello</b> to myself </p>' +
-           '<p>Hello '+volunteer.firstName+'</p> New message sent ' +new Date()+
+           '<p>Hello '+volunteer.firstName+'</p> New message sent: ' +new Date()+
            '<p>Appointment time at '+apmt.startTime+' </p>'
 
        };
@@ -83,12 +71,9 @@ function mailToUser (apmt){
        console.log('Server responded with "%s"', info.response);
 
 
-    });
+      });
 
     //console.log(name.select('firstName'));
-
-
-
 
     });
 }

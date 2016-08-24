@@ -86,15 +86,11 @@ passport.deserializeUser(function(id, done) {
   })
 })
 
-
-
 var dateF = new schedule.RecurrenceRule();
 dateF.second = 0;
 // dateF.minute = 49;
 // dateF.hour =14;
 // dateF.dayOfWeek = 2;
-
-
 
 schedule.scheduleJob(dateF,mailerR);
 
