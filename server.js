@@ -88,36 +88,16 @@ app.use(passport.session());
 app.use(flash());
 
 //Multer functionality
-var storage  = multer.diskStorage({
-  destination: function(req, file, cb){
-    cb(null, './userImages')
-  },
-  // filename: filename
-  // function(req, file, cb){
-  //   var datetimestamp = Date.now();
-  //   cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length-1])
-  // }
-});
-var upload = multer({
-  storage:storage
-}).single('file');
+
 
 
 //STATIC AND SERVER CONFIG
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
+app.use('/photos/', express.static('userImages'));
 //ROUTES
-app.post('/upload', function(req, res){
-  upload(req, res, function(err){
-    if(err){
-      res.jason({error_code:1, err_desc:err});
-      return;
-    }
-    res.json({error_code:0, err_desc:null});
-  })
-});
+
 app.use('/register', register);
 app.use('/login', login);
 app.get('/logout', function(request, response) {

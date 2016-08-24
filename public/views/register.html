@@ -160,8 +160,8 @@
            <i ng-show="main.registerUser.photo.$error.required">*required</i><br>
            <i ng-show="main.registerUser.photo.$error.maxSize">File too large
            {{main.registerUser.photo.size / 1000000|number:1}}MB: max 4M</i>
-           <button type="submit" ng-click="main.submit()">Submit</button>
-           <p>{{main.progress}}
+           <!-- <button type="submit" ng-click="main.submit()">Submit</button> -->
+           <!-- <p>{{main.progress}} -->
         </div>
       </div>
     <button class="center-block btn btn-default" ng-click="main.register()" >Register Now!</button>

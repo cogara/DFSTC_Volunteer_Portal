@@ -39,6 +39,8 @@
     </div>
     <div class="clear">
       <h5>(for testing) Logged In: <span ng-if="main.currentUser">{{main.currentUser.email}}</span><span ng-if="!main.currentUser">None</span></h5>
+      <!-- LINE BELOW IS HOW YOU ACCESS USER'S PHOTO -->
+      <img ng-src="/photos/{{main.currentUser.photo}}" width="100px;"/>
       <ul>Role:
         <li ng-if="main.currentUser.isAdmin">Admin</li>
         <li ng-if="main.currentUser.isTrainee">Trainee</li>
