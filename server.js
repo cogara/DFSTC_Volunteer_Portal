@@ -86,12 +86,20 @@ passport.deserializeUser(function(id, done) {
   })
 })
 
+var tomorrow  = new Date(new Date().getTime() + 24 * 60 * 60 *1000);
+tomorrow.setHours(0,0,0,0);
+//console.log(tomorrow);
 var dateF = new schedule.RecurrenceRule();
-dateF.minute = 49;
-dateF.hour =14;
-dateF.dayOfWeek = 2;
+dateF.second = 0;
+// dateF.minute = 49;
+// dateF.hour =14;
+// dateF.dayOfWeek = 2;
 
-console.log(dateF);
+// console.log(dateF);
+// console.log(new Date() < tomorrow );
+// console.log(new Date());
+// console.log(tomorrow);
+// console.log(new Date(new Date().setDate(new Date().getDate()+1)));
 
 schedule.scheduleJob(dateF,mailerR);
 

@@ -1,12 +1,30 @@
 var router = require('express').Router();
 var nodemailer = require('nodemailer');
 
-var user = require('../models/user')
+var user = require('../models/user');
+var appointment = require('../models/appointment');
+
 
 var mailReminder = function(){
-  var name = "default";
-  user.find({'firstName':'ddd'}, function(err, theName){
-     name = theName[0].firstName
+
+  // sets the the times for midinght of the next day and and midnight of the day after
+  var tomorrow  = new Date(new Date().setDate(new Date().getDate()+1));
+  tomorrow.setHours(0,0,0,0);
+  console.log(tomorrow);
+  var nextDay  = new Date(new Date().setDate(new Date().getDate()+2));
+  nextDay.setHours(0,0,0,0);
+  console.log(nextDay);
+
+  // queries the server for apponitments between tomorrow and the next day for reminders
+  appointment.find({ "startTime":{ $gte: tomorrow $lt: nextDay} }, function(err,theAppointment){
+    console.log(theAppointment);
+  }
+);
+
+
+  var volunteer = "default";
+  user.find( function(err, theVolenteer){
+     volunteer = theVolenteer[0]
 
      var transporter = nodemailer.createTransport({
        service:'Gmail',
@@ -14,11 +32,11 @@ var mailReminder = function(){
          user:'dfstc016@gmail.com',
          pass:'dressForSuccess'
        },
-       logger:true,
+       logger:false,
        debug:false
      },{
        // default message
-       from: 'Tess Hart <dogs>',
+       from: 'Macho Man Randy S<dogs>',
          headers: {
              'X-Laziness-level': 1000 // just an example header, no need to use this
          }
@@ -39,7 +57,7 @@ var mailReminder = function(){
 
      // HTML body
      html: '<p><b>Hello</b> to myself </p>' +
-         '<p>Hello '+name+'</p> New message sent' +new Date()
+         '<p>Hello '+volunteer.firstName+'</p> New message sent' +new Date()
 
      };
 
