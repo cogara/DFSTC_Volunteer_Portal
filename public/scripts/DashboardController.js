@@ -153,4 +153,6 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
     opened: false
   }
 
+
+
 }; //end DashboardController
