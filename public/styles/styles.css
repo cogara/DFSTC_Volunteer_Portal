@@ -33,8 +33,11 @@
   content: '\25bc';
 }
 
-.previous-companies span:not(:last-child):after {
-  content: ', ';
+.previous-company-list {
+  padding-left: 30px;
+}
+.previous-company {
+  margin: 3px;
 }
 
 .animate:focus {
@@ -52,10 +55,14 @@
   clear: both;
 }
 
-.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control, span.form-control {
   border-color: transparent;
   background-color: transparent;
   box-shadow: none;
+}
+
+.form-group label {
+  line-height: 34px;
 }
 
 .volunteers > li {
@@ -119,6 +126,27 @@
   padding-left: 16px;
   padding-bottom: 15px;
 }
+
+.volunteer-sub-data .form-group {
+  margin-bottom: 0;
+}
+
+.volunteer-sub-data .form-control {
+  padding-left: 0;
+}
+
+.volunteer-sub-data label {
+  margin-bottom: 0;
+}
+
+.form-control.form-expand {
+  height: auto;
+}
+
+.form-control.form-expand ul {
+  padding: 0 15px;
+}
+
 
 .inactive-message-input {
   resize: none;
