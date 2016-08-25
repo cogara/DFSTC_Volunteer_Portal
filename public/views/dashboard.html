@@ -307,7 +307,7 @@
   <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
     <h3 class="center-block">Edit Appointment</h3>
     <label>Appointment Title:</label>
-    <input type="text" class="form-control" ng-model="dash.editAppointment.title" />
+    <input type="text" class="form-control" ng-model="dash.editAppointment.event.title" />
 
     <table class="table table-bordered">
       <thead>
@@ -324,7 +324,7 @@
                 type="text"
                 class="form-control"
                 uib-datepicker-popup="{{dash.format}}"
-                ng-model="dash.editAppointment.startsAt"
+                ng-model="dash.editAppointment.event.startsAt"
                 is-open="dash.popup1.opened"
                 datepicker-options="dash.dateOptions"
                 ng-required="true"
@@ -341,7 +341,7 @@
             </p>
             <div
               uib-timepicker
-              ng-model="dash.editAppointment.startsAt"
+              ng-model="dash.editAppointment.event.startsAt"
               hour-step="1"
               minute-step="15"
               show-meridian="true"
@@ -353,7 +353,7 @@
               <input type="text"
                 class="form-control"
                 uib-datepicker-popup="{{dash.format}}"
-                ng-model="dash.editAppointment.endsAt"
+                ng-model="dash.editAppointment.event.endsAt"
                 is-open="dash.popup2.opened"
                 datepicker-options="dash.dateOptions"
                 ng-required="true"
@@ -370,7 +370,7 @@
             </p>
             <div
               uib-timepicker
-              ng-model="dash.editAppointment.endsAt"
+              ng-model="dash.editAppointment.event.endsAt"
               hour-step="1"
               minute-step="15"
               show-meridian="true"
@@ -381,16 +381,16 @@
       </tbody>
     </table>
     <label>Number of Volunteers Needed:</label>
-    <input type="number" class="form-control" ng-model="dash.editAppointment.volunteerSlots" placeholder=5 />
+    <input type="number" class="form-control" ng-model="dash.editAppointment.event.volunteerSlots" placeholder=5 />
     <label>Number of Possible Clients:</label>
-    <input type="number" class="form-control" ng-model="dash.editAppointment.clientSlots" placeholder=5 />
+    <input type="number" class="form-control" ng-model="dash.editAppointment.event.clientSlots" placeholder=5 />
 
     <label>Training Appointment?</label>
-    <input type="checkbox" ng-model="dash.editAppointment.trainingAppointment" />
+    <input type="checkbox" ng-model="dash.editAppointment.event.trainingAppointment" />
 
-  <button class="center-block btn btn-default" ng-click="$close(dash.deleteAppointment(dash.editAppointment._id))" >Delete Appointment</button>
-  <button class="center-block btn btn-default" ng-click="$close(dash.updateAppointment(dash.editAppointment))" >Save Changes</button>
-  <button class="center-block btn btn-default" ng-click="$close()" >Cancle</button>
+  <button class="center-block btn btn-default" ng-click="$close(dash.deleteAppointment(dash.editAppointment.event))" >Delete Appointment</button>
+  <button class="center-block btn btn-default" ng-click="$close(dash.updateAppointment(dash.editAppointment.event))" >Save Changes</button>
+  <button class="center-block btn btn-default" ng-click="$close()" >Cancel</button>
 
   </div>
 </script>

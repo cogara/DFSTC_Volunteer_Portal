@@ -5,6 +5,8 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   vm.showAppointments = AppointmentService.appointments;
   vm.editAppointment = {};
+  vm.editAppointment.event = AppointmentService.updateEvent.event;
+
 
   vm.openProfile = openProfile;
 
@@ -136,7 +138,7 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   vm.eventClicked = function(calendarEvent){
     console.log(calendarEvent);
-    vm.editAppointment = calendarEvent;
+    AppointmentService.updateEvent.event = calendarEvent;
     var modalInstance = $uibModal.open({
       animation: true,
       templateUrl: 'editAppointmentModal.html',
@@ -145,7 +147,7 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
       size: 'lg',
       resolve: {
         appointment: function (){
-          return calendarEvent;
+          return AppointmentService.updateEvent.event;
         }
       }
     });
@@ -153,11 +155,20 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   vm.updateAppointment = function(info){
     console.log(info);
+    console.log(AppointmentService.updateEvent.event);
   }
 
-  vm.deleteAppointment = function(id){
-    console.log('deleting', id);
-    AppointmentService.deleteAppointment(vm.editAppointment._id);
+  function findIndex(array, attr, value) {
+    for(var i = 0; i < array.length; i += 1) {
+      if(array[i][attr] === value) {
+        return i;
+      }
+    }
+  }
+  vm.deleteAppointment = function(event){
+    console.log('deleting', event);
+    AppointmentService.deleteAppointment(event._id);
+    vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', event._id), 1);
   }
 
   AppointmentService.getAppointments()
