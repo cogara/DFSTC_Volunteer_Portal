@@ -3,6 +3,8 @@ const path = require('path');
 const User = require('../models/user.js');
 const mongoose = require('mongoose');
 const Appointment = require('../models/appointment');
+const Announcement = require('../models/announcement');
+
 
 
 router.get('/checkLoggedIn', function(request, response) {
@@ -60,6 +62,24 @@ router.get('/volunteer/:id', function(request, response) {
 router.post('/appointment', function(request, response){
   console.log(request.body);
   Appointment.create(request.body, function(err){
+    if(err){
+      console.log(err);
+      response.sendStatus(500);
+    }else{
+      response.sendStatus(200);
+    }
+  });
+});
+
+//TODO:
+router.get('/announcement',function(req, res){
+  console.log(request.body);
+  Announcement.find({}, function(err,))
+});
+
+router.post('/announcement', function(req,res){
+  console.log(request.body);
+  Announcement.create(request.body, function(err){
     if(err){
       console.log(err);
       response.sendStatus(500);
