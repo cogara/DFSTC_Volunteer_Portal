@@ -75,7 +75,9 @@ router.post('/appointment', function(request, response){
 //TODO:
 router.get('/announcement',function(req, res){
   console.log(request.body);
-  Announcement.find({}, function(err,))
+  Announcement.find({}, function(err,announcement){
+
+  });
 });
 
 router.post('/announcement', function(req,res){
@@ -86,7 +88,9 @@ router.post('/announcement', function(req,res){
       response.sendStatus(500);
     }else{
       response.sendStatus(200);
-
+    }
+  });
+});
 
 router.get('/appointment/:id', function(request, response){
   console.log('one appointment get');
@@ -139,7 +143,7 @@ router.put('/appointment/:id', function(request, response){
     if(err){
       response.sendStatus(500);
     }else{
-      response.sendStatus(200)
+      response.sendStatus(200);
     }
   });
 });
