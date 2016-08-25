@@ -20,6 +20,10 @@ function AppointmentService($http){
     return $http.get('/api/appointment').then(function(response){
       console.log('get appointments success', response.data);
       appointments.appointments = response.data;
+      for (var i = 0; i < response.data.length; i++) {
+        response.data[i].startsAt = new Date(response.data[i].startsAt);
+        response.data[i].endsAt = new Date(response.data[i].endsAt);
+      }
       return response.data;
     }, function(response){
       console.log('get appointments fail', response.data);
