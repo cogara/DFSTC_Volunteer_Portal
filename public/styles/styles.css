@@ -47,9 +47,12 @@
   transform: translate(0, 100%);
 }
 .profile-menu button {
-  margin: 2px 0;
+  /*margin: 2px 0;*/
   display: block;
-  margin: 2px auto;
+  text-align: right;
+  clear: right;
+  float: right;
+  /*margin: 2px auto;*/
 }
 
 .profile-menu .profile-image {
