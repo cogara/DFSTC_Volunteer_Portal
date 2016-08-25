@@ -160,7 +160,10 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   vm.updateAppointment = function(info){
     console.log(info);
-    console.log(AppointmentService.updateEvent.event);
+    AppointmentService.updateAppointment(info._id, info);
+    vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', info._id), 1);
+    vm.showAppointments.appointments.push(info);
+
   }
 
   function findIndex(array, attr, value) {
