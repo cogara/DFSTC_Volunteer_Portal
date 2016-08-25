@@ -7,11 +7,8 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const LocalStrategy = require('passport-local').Strategy;
 const env = require('dotenv').config();
-<<<<<<< HEAD
 const moment = require('moment');
-=======
 const multer = require('multer');
->>>>>>> profileModalFormatting
 
 //ROUTE AND MODEL IMPORTS
 const User = require('./models/user.js');

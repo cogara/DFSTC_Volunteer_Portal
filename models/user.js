@@ -28,12 +28,8 @@ var UserSchema = new Schema(
     lastLogin: Date,
     volunteerOpportunities: Object,
     photo: String,
-<<<<<<< HEAD
     isActive: {type: Boolean, default: true},
     inactiveMessage: String
-=======
-    isActive: Boolean
->>>>>>> profileModalFormatting
   }
 );
 

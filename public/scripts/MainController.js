@@ -44,7 +44,7 @@ function MainController($http, $state, $window, UserService, Upload) {
       $state.go('dashboard');
     }, function(){
         vm.currentUser = null;
-      }
+      });
     }
 
     function logout() {
