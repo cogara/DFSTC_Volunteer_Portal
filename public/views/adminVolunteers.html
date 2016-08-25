@@ -157,7 +157,76 @@
         </div>
       </div>
       <div class="volunteer-expanded">
-        
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-2">Company:</label>
+            <div class="col-md-10">
+              <span class="form-control">{{volunteer.company}}</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2">Last Appointment:</label>
+            <div class="col-md-10">
+              <span class="form-control">*INSERT DATE*</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2">Opportunities:</label>
+            <div class="col-md-10">
+              <span class="form-control form-expand">
+                <ul>
+                  <li class="opporunity" ng-repeat="(opportunity, selected) in volunteer.volunteerOpportunities" ng-if="selected">{{opportunity}}</li>
+                </ul>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2">Availability:</label>
+            <div class="col-md-10">
+              <span class="form-control form-expand">
+                <table class="table table-hover">
+                  <tr>
+                    <th>Time of Day</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                  </tr>
+                  <tr>
+                    <td>Morning</td>
+                    <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.morning" /></td>
+                    <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.morning" /></td>
+                    <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.morning" /></td>
+                    <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.morning" /></td>
+                    <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.morning" /></td>
+                    <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.morning" /></td>
+                  </tr>
+                  <tr>
+                    <td>Afternoon</td>
+                    <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.afternoon" /></td>
+                    <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.afternoon" /></td>
+                    <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.afternoon" /></td>
+                    <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.afternoon" /></td>
+                    <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.afternoon" /></td>
+                    <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.afternoon" /></td>
+                  </tr>
+                  <tr>
+                    <td>Evening</td>
+                    <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.monday.evening"  /></td>
+                    <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.tuesday.evening" /></td>
+                    <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.wednesday.evening" /></td>
+                    <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.thursday.evening" /></td>
+                    <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.friday.evening" /></td>
+                    <td><input ng-disabled="!prof.isEditing" type="checkbox" ng-model="prof.profile.isAvail.saturday.evening" /></td>
+                  </tr>
+                </table>
+
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -203,6 +203,7 @@
 
 .volunteer-expanded {
   float: right;
+  text-align: left;
   border: 1px solid blue;
 }
 
