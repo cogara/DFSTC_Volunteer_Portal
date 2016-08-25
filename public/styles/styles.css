@@ -17,6 +17,72 @@
   padding: 5px 0 10px;
 }
 
+.profile-control {
+  position: relative;
+}
+
+.profile-button {
+  display: inline-block;
+  overflow: hidden;
+  cursor: pointer
+}
+
+.profile-button .profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+}
+
+.profile-menu {
+  display: block;
+  z-index: 5;
+  padding: 5px 10px 10px;
+  background-color: rgb(215,215,215);
+  border: 1px solid rgb(200,200,200);
+  box-shadow: 0 0 5px 0px rgba(0,0,0,.4);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 250px;
+  transform: translate(0, 100%);
+}
+.profile-menu button {
+  margin: 2px 0;
+  display: block;
+  margin: 2px auto;
+}
+
+.profile-menu .profile-image {
+  clear: both;
+  float: left;
+  width: 75px;
+  height: 75px;
+  border-radius: 75px;
+}
+
+.image-responsive {
+  width: 100%;
+}
+
+.profile-control-header {
+  text-transform: uppercase;
+  text-align: center;
+  border-bottom: 1px solid rgb(200,200,200);
+  padding: 0 0 5px;
+}
+
+.profile-menu .profile-image-default {
+  display: block;
+  clear: both;
+  float: left;
+}
+
+
+.profile-hide {
+  display: none;
+}
+
+
 .search-radio-list {
   display: inline-block;
   float: left;

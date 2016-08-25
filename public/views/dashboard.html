@@ -1,6 +1,18 @@
 <button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin.volunteers">Admin Control</button>
-<button ng-if="main.currentUser" class="btn btn-default" style="float: right; margin-left: 5px;" ng-click="dash.openProfile(main.currentUser._id)">Profile</button>
-<button ng-if="main.currentUser" class="btn btn-default" style="float: right; margin-left: 5px;" ng-click="main.logout()">Logout</button>
+<span class="profile-control" ng-if="main.currentUser" style="float: right; margin-left: 5px;" >
+  <span class="profile-button" ng-click="dash.toggleProfile()">
+    <img class="profile-image" ng-if="main.currentUser.photo" ng-src="/photos/{{main.currentUser.photo}}"/>
+    <i ng-if="!main.currentUser.photo" class="fa fa-user fa-lg" aria-hidden="true"></i>
+    <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+  </span>
+  <div class="profile-menu" ng-class="{'profile-hide': !dash.profileToggle}">
+    <h6 class="profile-control-header">{{main.currentUser.firstName}} {{main.currentUser.lastName}}</h6>
+    <img class="profile-image" ng-if="main.currentUser.photo" ng-src="/photos/{{main.currentUser.photo}}"/>
+    <i ng-if="!main.currentUser.photo" class="fa fa-user fa-5x profile-image" aria-hidden="true"></i>
+    <button class="btn btn-default" ng-click="dash.openProfile(main.currentUser._id)">Profile</button>
+    <button ng-if="main.currentUser" class="btn btn-default" ng-click="main.logout()">Logout</button>
+  </div>
+</span>
 <div class="clear"></div>
 
 <!-- Profile Modal -->
