@@ -1,7 +1,7 @@
 <button class="btn btn-default" ui-sref="dashboard">back to dashboard</button>
-<h1>Admin Panel</h1>
+<h1 style="text-align: center">Admin Panel</h1>
 
-<uib-tabset class="admin-menu">
+<uib-tabset>
   <uib-tab heading="Volunteers" ui-sref="admin.volunteers"></uib-tab>
   <uib-tab heading="Reports" ui-sref="admin.reports"></uib-tab>
 </uib-tabset>
@@ -22,7 +22,7 @@
     <div ng-if="!prof.profile.isActive" class="clear">
       <div class="row" style="text-align: center">
         <div class="col-xs-12">
-          <textarea class="inactive-message-input" ng-disabled="!prof.isEditing" ng-model="prof.profile.inactiveMessage" msd-elastic rows="1" placeholder="No Inactive Reason Provided">
+          <textarea class="inactive-message-input animate" ng-disabled="!prof.isEditing" ng-model="prof.profile.inactiveMessage" msd-elastic="\n" rows="1" placeholder="No Inactive Reason Provided">
 
           </textarea>
         </div>
@@ -45,7 +45,7 @@
                 <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.firstName" placeholder="First Name" />
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-">
               <label class="col-md-3">Last Name:</label>
               <div class="col-md-9">
                 <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.lastName" placeholder="Last Name" />
@@ -159,6 +159,19 @@
               <label class="col-md-3">Employer:</label>
               <div class="col-md-9">
                 <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.company" placeholder="Company" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3">Past Employers:</label>
+              <div class="col-md-9">
+                <ul class="previous-company-list" ng-if="prof.profile.pastCompanies.length > 0">
+                  <li class="previous-company" ng-repeat="company in prof.profile.pastCompanies track by $index">
+                    <button ng-if="!prof.isEditing" class="btn btn-danger btn-xs" ng-click="prof.removePrevCompany($index)">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                    {{company}}
+                  </li>
+                </ul>
               </div>
             </div>
         </form>

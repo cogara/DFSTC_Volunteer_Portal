@@ -156,7 +156,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
           }
           // return false;
         } else {
-          vm.searchAvailActive = false;
+          vm.searchAvailActive = false; 
         }
       }
     }

@@ -1,28 +1,14 @@
-angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController).controller('AppointmentController', AppointmentController);
+angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
 
-function AppointmentController($uibModalInstance) {
+function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig) {
   var vm = this;
 
-  $uibModalInstance.dismiss();
-  vm.saveAppointment = saveAppointment;
-  vm.cancel = cancel;
+  vm.showAppointments = AppointmentService.appointments;
+  vm.editAppointment = {};
+  vm.editAppointment.event = AppointmentService.updateEvent.event;
 
-  function saveAppointment() {
-    $uibModalInstance.close()
-  }
-
-  function cancel() {
-    $uibModalInstance.dismiss();
-    console.log('dismissing modal');
-  }
-
-}
-
-function DashboardController($http, $state, $uibModal, UserService, AppointmentService) {
-  var vm = this;
 
   vm.openProfile = openProfile;
-  vm.appointmentModal = appointmentModal;
 
   function openProfile(id) {
     var modalInstance = $uibModal.open({
@@ -52,48 +38,34 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
     });
   };
 
-  function appointmentModal() {
-    var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: 'appointmentModal.html',
-      controller: 'AppointmentController',
-      controllerAs: 'appt',
-      size: 'md'
-    });
-
-    modalInstance.result.then(function () {
-      console.log('save appointment');
-    });
-  };
-
+// start calendar and form settings
   //These variables MUST be set as a minimum for the calendar to work
   vm.calendarView = 'month';
   vm.viewDate = new Date();
   var actions = [{
     label: '<i class=\'glyphicon glyphicon-pencil\'></i>',
     onClick: function(args) {
-      //alert.show('Edited', args.calendarEvent);
     }
   }, {
     label: '<i class=\'glyphicon glyphicon-remove\'></i>',
     onClick: function(args) {
-      //alert.show('Deleted', args.calendarEvent);
     }
   }];
 
   vm.addAppointment = function(){
-  console.log(vm.appointment);
-  AppointmentService.addAppointment(vm.appointment).then(function(response){
-    console.log('add appointment success', response.data);
-  }, function(response){
-    console.log('add appointment fail', response.data);
-  })
+    console.log(vm.appointment);
+    AppointmentService.addAppointment(vm.appointment).then(function(response){
+      vm.showAppointments.appointments.push(vm.appointment);
+      console.log('add appointment success', response.data);
+    }, function(response){
+      console.log('add appointment fail', response.data);
+    })
   }
 
   vm.appointment={
     title: "Image Coach Appointment",
-    startTime: '',
-    endTime: '',
+    startsAt: '',
+    endsAt: '',
     volunteerSlots: 5,
     clientSlots: 5,
     trainingAppointment: false
@@ -152,8 +124,58 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   vm.popup2 = {
     opened: false
+  }//end calendar and form settings
+
+  vm.addAppointmentModal = function(){
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'addAppointmentModal.html',
+      controller: 'DashboardController',
+      controllerAs: 'dash',
+      size: 'lg'
+    })
   }
 
+  vm.eventClicked = function(calendarEvent){
+    console.log(calendarEvent);
+    AppointmentService.updateEvent.event = calendarEvent;
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'editAppointmentModal.html',
+      controller: 'DashboardController',
+      controllerAs: 'dash',
+      size: 'lg',
+      resolve: {
+        appointment: function (){
+          return AppointmentService.updateEvent.event;
+        }
+      }
+    });
+  }
+
+
+  vm.updateAppointment = function(info){
+    console.log(info);
+    AppointmentService.updateAppointment(info._id, info);
+    vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', info._id), 1);
+    vm.showAppointments.appointments.push(info);
+
+  }
+
+  function findIndex(array, attr, value) {
+    for(var i = 0; i < array.length; i += 1) {
+      if(array[i][attr] === value) {
+        return i;
+      }
+    }
+  }
+  vm.deleteAppointment = function(event){
+    console.log('deleting', event);
+    AppointmentService.deleteAppointment(event._id);
+    vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', event._id), 1);
+  }
+
+  AppointmentService.getAppointments()
 
 
 }; //end DashboardController
