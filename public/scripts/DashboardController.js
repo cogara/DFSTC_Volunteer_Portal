@@ -7,7 +7,6 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
   vm.editAppointment = {};
 
   vm.openProfile = openProfile;
-  vm.appointmentModal = appointmentModal;
 
   function openProfile(id) {
     var modalInstance = $uibModal.open({
@@ -145,17 +144,19 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
       controllerAs: 'dash',
       size: 'lg',
       resolve: {
-        appointment: function (AppointmentService) {
-          return AppointmentService.getAppointment(calendarEvent._id).then(function(response){
-            return response;
-          });
+        appointment: function (){
+          return calendarEvent;
         }
       }
-    })
+    });
   }
 
-  vm.deleteAppointment = function(event){
-    console.log('deleting', vm.editAppointment._id);
+  vm.updateAppointment = function(info){
+    console.log(info);
+  }
+
+  vm.deleteAppointment = function(id){
+    console.log('deleting', id);
     AppointmentService.deleteAppointment(vm.editAppointment._id);
   }
 

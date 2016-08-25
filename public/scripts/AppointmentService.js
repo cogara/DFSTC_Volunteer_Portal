@@ -3,6 +3,7 @@ angular.module('DfstcSchedulingApp').factory('AppointmentService', AppointmentSe
 function AppointmentService($http){
 
   var appointments = {};
+  var updateEvent = {};
 
   function addAppointment(appointment){
     console.log(appointment);
@@ -58,7 +59,8 @@ function updateAppointment(appointmentId, appointmentUpdate){
     appointments: appointments,
     deleteAppointment: deleteAppointment,
     updateAppointment: updateAppointment,
-    getAppointment: getAppointment
+    getAppointment: getAppointment,
+    updateEvent: updateEvent
   }
 
 } //end AppointmentService
