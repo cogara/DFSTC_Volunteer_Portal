@@ -14,8 +14,28 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.toggleActive = toggleActive;
   vm.sortBy = sortBy;
   vm.resetSearch = resetSearch;
+  vm.expandProfile = expandProfile;
+
+  function expandProfile(volunteer, panel) {
+    if(panel === 'all') {
+      if ((!volunteer.expandRight) || (!volunteer.expandDown)) {
+        volunteer.expandRight = true;
+        volunteer.expandDown = true;
+      } else {
+        volunteer.expandRight = false;
+        volunteer.expandDown = false;
+      }
+    }
+    if(panel === "right") {
+      volunteer.expandRight = true;
+    }
+    if(panel === "down") {
+      volunteer.expandDown = true;
+    }
+  }
 
   function toggleActive(volunteer) {
+    vm.preventProfile = true;
     UserService.editProfile(volunteer);
   }
 
@@ -48,7 +68,14 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
       controllerAs: 'modal',
       resolve: {
         volunteer: function() {
-          return volunteer;
+          var sendVolunteer = {};
+          for (var key in volunteer) {
+            if((key !== 'expandDown') || (key !== 'expandRight')) {
+              console.log('saving', key, volunteer[key]);
+              sendVolunteer[key] = volunteer[key];
+            }
+          }
+          return sendVolunteer;
         }
       }
     })
@@ -62,32 +89,35 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   }
 
   function openProfile(id) {
-
-    var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: 'adminProfileModal.html',
-      controller: 'ProfileController',
-      controllerAs: 'prof',
-      size: 'lg',
-      resolve: {
-        profile: function (UserService) {
-          return UserService.getProfile(id).then(function(response){
-            response.tempCompany = response.company;
-            return response;
-          });
+    console.log(vm.preventProfile);
+    if(!vm.preventProfile) {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: 'adminProfileModal.html',
+        controller: 'ProfileController',
+        controllerAs: 'prof',
+        size: 'lg',
+        resolve: {
+          profile: function (UserService) {
+            return UserService.getProfile(id).then(function(response){
+              response.tempCompany = response.company;
+              return response;
+            });
+          }
         }
-      }
-    });
-
-    modalInstance.result.then(function (profile) {
-      //do function to save new profile info
-      return UserService.editProfile(profile).then(function() {
-        console.log('promise?');
-        getVolunteers();
       });
 
-      console.log(profile);
-    });
+      modalInstance.result.then(function (profile) {
+        //do function to save new profile info
+        return UserService.editProfile(profile).then(function() {
+          console.log('promise?');
+          getVolunteers();
+        });
+
+        console.log(profile);
+      });
+    }
+    vm.preventProfile = false;
   };
 
   // Search volunteer options and filters
@@ -127,6 +157,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.search.status = 'all';
 
     vm.sortDefault = 'lastName';
+    vm.sortLast = 'firstName';
     vm.sortOrder = 'lastName';
     vm.searchAvailActive = false;
     vm.searchOpportunityActive = false;
@@ -138,7 +169,8 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
 
   function sortBy(property) {
     vm.sortReverse = (vm.sortOrder === property) ? !vm.sortReverse : false;
-    vm.sortReverse ? vm.sortDefault = '-lastName' : vm.sortDefault = 'lastName';
+    (vm.sortReverse) ? vm.sortDefault = '-lastName' : vm.sortDefault = 'lastName';
+    (vm.sortReverse) ? vm.sortLast = '-firstName' : vm.sortLast = 'firstName';
     vm.sortOrder = property;
   }
 
@@ -156,7 +188,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
           }
           // return false;
         } else {
-          vm.searchAvailActive = false; 
+          vm.searchAvailActive = false;
         }
       }
     }
@@ -186,39 +218,41 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
 
 
   function roleFilter(volunteer) {
-    // console.log(vm.search.role);
-    var check = 0;
     if(vm.search.role === 'isTrainee') {
       if(volunteer.isTrainee) {
+        vm.searchRoleActive = true;
         return true;
       }
     }
     if(vm.search.role === 'isVolunteer') {
       if(volunteer.isVolunteer) {
+        vm.searchRoleActive = true;
         return true;
       }
     }
     if(vm.search.role === 'all') {
       // console.log('showing all');
+      vm.searchRoleActive = false;
       return true;
     }
   }
 
   function statusFilter(volunteer) {
     // console.log(vm.search.role);
-    var check = 0;
     if(vm.search.status === 'true') {
       if(volunteer.isActive) {
+        vm.searchStatusActive = true;
         return true;
       }
     }
     if(vm.search.status === 'false') {
       if(!volunteer.isActive) {
+        vm.searchStatusActive = true;
         return true;
       }
     }
     if(vm.search.status === 'all') {
-      // console.log('showing all');
+      vm.searchStatusActive = false;
       return true;
     }
   }

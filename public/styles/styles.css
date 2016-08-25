@@ -83,7 +83,7 @@
 }
 
 
-.profile-hide {
+.hide {
   display: none;
 }
 
@@ -126,6 +126,14 @@
 }
 .search-radio-option {
   display: block;
+}
+
+.toggle-switch {
+  display: inline-block;
+  padding: 7px 5px;
+  /*line-height: 30px;*/
+  background-color: rgb(240,240,240);
+  border-radius: 5px;
 }
 
 .sortorder:after {
@@ -174,19 +182,20 @@
 
 /* volunteer list styles */
 .volunteers {
+  clear: both;
   padding: 10px 0;
   margin: 0 15px;
   text-align: center;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .volunteer {
   flex: 0 auto;
   /*min-width: 220px;*/
   overflow: hidden;
-  margin: 3px 0;
+  margin: 3px 2px;
   box-shadow: 0 0 5px 0 rgba(0,0,0,.2);
 }
 
@@ -197,14 +206,62 @@
 
 .volunteer-card {
   float: left;
-  width: 220px;
-  border: 1px solid red;
+  width: 200px;
+  /*border: 1px solid red;*/
 }
 
-.volunteer-expanded {
+.volunteer-expanded__right {
   float: right;
+  width: 150px;
+  padding: 0 10px;
+  /*border: 1px solid blue;*/
   text-align: left;
-  border: 1px solid blue;
+}
+
+.volunteer-expanded__right ul {
+  padding: 0;
+  list-style-position: inside;
+}
+.volunteer-expanded__below {
+  width: 200px;
+  /*border: 1px solid green;*/
+  clear: left;
+  overflow: hidden;
+  /*float: left;*/
+}
+
+.volunteer-expanded .form-group {
+  margin-bottom: 0;
+}
+
+.table {
+  text-align: center;
+}
+
+.table th {
+  text-align: center;
+}
+
+.table-availability {
+  /*width: 200px;*/
+  /*clear: left;*/
+  font-size: .7em;
+}
+
+.table>tbody>tr>th {
+  padding: 2px;
+}
+
+.form-control.form-expand {
+  height: auto;
+}
+
+.form-control.form-expand ul {
+  padding: 0 15px;
+}
+
+.volunteer-card {
+  padding: 0 0 10px;
 }
 
 .volunteer-photo {
@@ -221,8 +278,8 @@
   transform: translateY(25%);
 }
 
-.volunteer-info {
-  padding: 5px;
+.volunteer-info, .volunteer-action {
+  padding: 0 5px;
   margin: 0;
   text-align: left;
 }
