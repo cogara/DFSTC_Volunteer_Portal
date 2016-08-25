@@ -123,15 +123,42 @@
 <div class="col-xs-12">
   <input class="col-sm-12" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">
 </div>
-<!-- </div> -->
 <div class="clear"></div>
 
-
 <!-- Start volunteer list -->
-<div class="volunteers">
-  <div
-    class="volunteer"
-    ng-repeat="volunteer in admin.volunteers | orderBy:[admin.sortOrder, admin.sortDefault, 'firstName']:admin.sortReverse | filter: admin.search.input | filter: admin.roleFilter | filter: admin.availableFilter | filter: admin.opportunityFilter | filter: admin.statusFilter">
-    {{volunteer}}
+<!-- <div class="col-xs-12"> -->
+  <div class="volunteers">
+    <div
+      class="volunteer"
+      ng-repeat="volunteer in admin.volunteers | orderBy:[admin.sortOrder, admin.sortDefault, 'firstName']:admin.sortReverse | filter: admin.search.input | filter: admin.roleFilter | filter: admin.availableFilter | filter: admin.opportunityFilter | filter: admin.statusFilter">
+      <!-- <form class="active-switch"> -->
+      <div class="volunteer-card">
+        <div class="volunteer-photo">
+          <img ng-if="volunteer.photo" class="image-responsive" ng-src="/photos/{{volunteer.photo}}"/>
+          <i ng-if="!volunteer.photo" class="fa fa-user icon-image" aria-hidden="true"></i>
+        </div>
+        <div class="volunteer-info">
+          <div class="volunteer-meta">
+            <span class="volunteer-meta__header">Name:</span>
+            {{volunteer.firstName}} {{volunteer.lastName}}
+          </div>
+          <div class="volunteer-meta">
+            <span class="volunteer-meta__header">Email:</span>
+            {{volunteer.email}}
+          </div>
+          <div class="volunteer-meta">
+            <span class="volunteer-meta__header">Phone:</span>
+            {{volunteer.phoneNumber}}
+          </div>
+          <div class="volunteer-meta">
+            <span class="volunteer-meta__header">Active:</span>
+            <span ng-click="admin.toggleActive(volunteer)"><switch off="No" on="Yes" ng-model="volunteer.isActive" class="green"></switch></span>
+          </div>
+        </div>
+      </div>
+      <div class="volunteer-expanded">
+        
+      </div>
+    </div>
   </div>
-</div>
+<!-- </div> -->

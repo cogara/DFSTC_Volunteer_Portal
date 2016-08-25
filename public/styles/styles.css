@@ -172,6 +172,69 @@
   border-color: transparent;
 }
 
+/* volunteer list styles */
+.volunteers {
+  padding: 10px 0;
+  margin: 0 15px;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.volunteer {
+  flex: 0 auto;
+  /*min-width: 220px;*/
+  overflow: hidden;
+  margin: 3px 0;
+  box-shadow: 0 0 5px 0 rgba(0,0,0,.2);
+}
+
+.volunteer:hover {
+  cursor: pointer;
+  box-shadow: 0 0 5px 0 rgba(0,0,200,.5);
+}
+
+.volunteer-card {
+  float: left;
+  width: 220px;
+  border: 1px solid red;
+}
+
+.volunteer-expanded {
+  float: right;
+  border: 1px solid blue;
+}
+
+.volunteer-photo {
+  display: block;
+  font-size: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 150px;
+  line-height: 150px;
+}
+
+.icon-image {
+  font-size: 10rem;
+  transform: translateY(25%);
+}
+
+.volunteer-info {
+  padding: 5px;
+  margin: 0;
+  text-align: left;
+}
+
+.volunteer-meta__header {
+  text-transform: uppercase;
+  font-size: .7em;
+  color: rgb(150,150,150);
+}
+
+
+/* END VOLUNTEER LIST */
+
 /* SwITCH STYLES */
 
 .switch {
