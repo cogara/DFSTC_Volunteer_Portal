@@ -7,7 +7,11 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const LocalStrategy = require('passport-local').Strategy;
 const env = require('dotenv').config();
+<<<<<<< HEAD
 const moment = require('moment');
+=======
+const multer = require('multer');
+>>>>>>> profileModalFormatting
 
 //ROUTE AND MODEL IMPORTS
 const User = require('./models/user.js');
@@ -28,7 +32,7 @@ MongoDB.on('error', function(err) {
 })
 
 MongoDB.once('open', function() {
-  console.log('MongoDB Connetion Open!');
+  console.log('MongoDB Connection Open!');
 })
 
 //PASSPORT AND SESSION CONFIG
@@ -87,11 +91,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+//Multer functionality
+
+
+
 //STATIC AND SERVER CONFIG
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
+app.use('/photos/', express.static('userImages'));
 //ROUTES
 app.use('/register', register);
 app.use('/login', login);

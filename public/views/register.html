@@ -145,9 +145,23 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-md-3">Please upload a photo of yourself: <br /> <em>Please keep your file under 16MB</em></label>
+        <label class="col-md-3">Please upload a photo of yourself: <br /> <em>Please keep your file under 4MB</em></label>
         <div class="col-md-9">
-          <input type="file" class="form-control" ng-model="main.registerUser.photo" />
+          <input
+              type="file"
+              ngf-select
+              ng-model="main.registerUser.photo"
+              name="photo"
+              ngf-pattern="'image/*'"
+              accept="image/*"
+              ngf-max-size="4MB"
+              />
+           Image thumbnail: <img style="width:100px;" ngf-thumbnail="main.registerUser.photo || '/thumb.jpg'"/>
+           <i ng-show="main.registerUser.photo.$error.required">*required</i><br>
+           <i ng-show="main.registerUser.photo.$error.maxSize">File too large
+           {{main.registerUser.photo.size / 1000000|number:1}}MB: max 4M</i>
+           <!-- <button type="submit" ng-click="main.submit()">Submit</button> -->
+           <!-- <p>{{main.progress}} -->
         </div>
       </div>
     <button class="center-block btn btn-default" ng-click="main.register()" >Register Now!</button>
