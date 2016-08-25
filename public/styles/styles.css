@@ -5,6 +5,10 @@
   border: 1px solid yellow;
 }
 
+.form-group label {
+  line-height: 34px;
+}
+
 .page-header {
   margin: 15px 0;
   padding: 10px 0 10px;
@@ -43,16 +47,14 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 250px;
+  width: 220px;
   transform: translate(0, 100%);
 }
 .profile-menu button {
-  /*margin: 2px 0;*/
   display: block;
-  text-align: right;
   clear: right;
   float: right;
-  /*margin: 2px auto;*/
+  margin: 2px 0;
 }
 
 .profile-menu .profile-image {
@@ -85,6 +87,37 @@
   display: none;
 }
 
+.search-avail {
+  width: 400px;
+  padding: 10px 15px 0;
+}
+
+.search-opp {
+  width: 300px;
+  padding: 10px 15px 0;
+}
+
+.search-day {
+  display: inline-block;
+  width: 120px;
+}
+
+.search-day ul {
+  list-style-position: inside;
+  list-style-type: none;
+  padding: 0;
+}
+
+.dropdown-select-all {
+  /*padding: 0 15px;*/
+  margin: 5px auto;
+  text-align: center;
+  border-top: 1px solid rgb(220,220,220);
+}
+
+.dropdown-option {
+  padding: 0 15px;
+}
 
 .search-radio-list {
   display: inline-block;
@@ -130,23 +163,10 @@
   box-shadow: none;
 }
 
-.form-group label {
-  line-height: 34px;
-}
 
-.volunteers > li {
+
+/*.volunteers > li {
   list-style-type: none;
-}
-
-.dropdown-select-all {
-  /*padding: 0 15px;*/
-  margin: 5px auto;
-  text-align: center;
-  border-top: 1px solid rgb(220,220,220);
-}
-
-.dropdown-option {
-  padding: 0 15px;
 }
 
 .info-head {
@@ -178,7 +198,7 @@
   border-top-left-radius: 0;
 }
 
-/* Zebra stripe setting on volunteer list in admin panel */
+
 .accordion .panel-default:nth-child(2n)>.panel-heading {
   background-color: rgb(230,230,230);
 }
@@ -239,7 +259,7 @@
 .action-buttons {
   padding: 10px 0 0;
   text-align: center;
-}
+}*/
 
 .active-switch {
   float: right;
@@ -256,26 +276,7 @@
   border-color: transparent;
 }
 
-.search-avail {
-  width: 400px;
-  padding: 10px 15px 0;
-}
 
-.search-opp {
-  width: 300px;
-  padding: 10px 15px 0;
-}
-
-.search-day {
-  display: inline-block;
-  width: 120px;
-}
-
-.search-day ul {
-  list-style-position: inside;
-  list-style-type: none;
-  padding: 0;
-}
 
 
 /* SwITCH STYLES */

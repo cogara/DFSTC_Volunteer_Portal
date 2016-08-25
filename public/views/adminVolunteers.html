@@ -1,4 +1,4 @@
-<div class="accordion">
+
   <!-- Search Options -->
   <div class="admin-content">
     <!-- <div class="col-xs-12"> -->
@@ -129,11 +129,19 @@
     </div>
     <!-- </div> -->
     <div class="clear"></div>
-  </div>
 
-  <!-- Start volunteer list -->
 
-  <uib-accordion>
+    <!-- Start volunteer list -->
+    <div class="volunteers">
+      <div
+        class="volunteer"
+        ng-repeat="volunteer in admin.volunteers | orderBy:[admin.sortOrder, admin.sortDefault, 'firstName']:admin.sortReverse | filter: admin.search.input | filter: admin.roleFilter | filter: admin.availableFilter | filter: admin.opportunityFilter | filter: admin.statusFilter">
+        {{volunteer}}
+      </div>
+    </div>
+
+
+  <!-- <uib-accordion>
     <div
       uib-accordion-group
       class="panel-default clear"
@@ -253,5 +261,5 @@
         </div>
       </div>
     </div>
-  </uib-accordion> <!-- End Volunteer List -->
-</div>
+  </uib-accordion> -->
+<!-- </div> -->
