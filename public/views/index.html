@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap-theme.min.css">
     <link href="/vendor/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
+    <link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="/styles/styles.css">
 
     <!-- <script src="/vendor/jquery/dist/jquery.min.js" charset="utf-8"></script> -->
@@ -40,9 +41,13 @@
       <div class="col-sm-10 col-sm-offset-1">
         <div class="page-header">
           <img style="width: 100%; max-width: 500px" class="center-block " src="../images/DFS_TwinCities-resized.jpg"/>
+          <button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin.volunteers">Admin Control</button>
+          <button ng-if="main.currentUser" class="btn btn-default" style="float: right; margin-left: 5px;" ng-click="dash.openProfile(main.currentUser._id)">Profile</button>
+          <button ng-if="main.currentUser" class="btn btn-default" style="float: right; margin-left: 5px;" ng-click="main.logout()">Logout</button>
         </div>
       </div>
     </div>
+
 
     <div class="row">
       <div class="col-sm-10 col-sm-offset-1">
@@ -51,14 +56,12 @@
     </div>
 
 
-    <div ng-if="main.currentUser" style="clear: both; text-align: center">
-      <button class="clear" ng-click="main.logout()">Logout</button>
-    </div>
-    <div class="clear">
+
+    <!-- <div class="clear">
       <h5>(for testing) Logged In: <span ng-if="main.currentUser">{{main.currentUser.email}} {{main.currentUser._id}}</span><span ng-if="!main.currentUser">None</span></h5>
       <ul>Role:
         <li ng-if="main.currentUser.isAdmin">Admin</li>
         <li ng-if="main.currentUser.isTrainee">Trainee</li>
         <li ng-if="main.currentUser.isVolunteer">Volunteer</li>
       </ul>
-    </div>
+    </div> -->

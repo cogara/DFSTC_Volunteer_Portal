@@ -6,8 +6,13 @@ function ProfileController($http, $state, $uibModalInstance, UserService, profil
   vm.cancel = cancel;
   vm.saveProfile = saveProfile;
   vm.editProfile = editProfile;
+  vm.removePrevCompany = removePrevCompany;
   vm.profile = profile;
   console.log(profile);
+
+  function removePrevCompany(index) {
+    vm.profile.pastCompanies.splice(index, 1);
+  }
 
   function saveProfile(profile) {
     //checks if saved company equals original company, if so, remove tempCompany

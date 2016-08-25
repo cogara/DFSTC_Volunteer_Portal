@@ -7,12 +7,14 @@
 
 .page-header {
   margin: 15px 0;
-  padding: 10px 0 30px;
+  padding: 10px 0 10px;
   border-bottom: 1px solid rgb(220,220,220);
 }
 
-.admin-menu {
-  margin: 15px 0;
+.admin-content {
+  border: 1px solid #ddd;
+  border-top: none;
+  padding: 5px 0 10px;
 }
 
 .search-radio-list {
@@ -31,9 +33,19 @@
   content: '\25bc';
 }
 
-.previous-companies span:not(:last-child):after {
-  content: ', ';
+.previous-company-list {
+  padding-left: 30px;
 }
+.previous-company {
+  margin: 3px;
+}
+
+.animate:focus {
+      -webkit-transition: height 50ms ease-in-out;
+         -moz-transition: height 50ms ease-in-out;
+           -o-transition: height 50ms ease-in-out;
+              transition: height 50ms ease-in-out;
+    }
 
 .sidebar-list {
   padding-top: 20px;
@@ -43,10 +55,14 @@
   clear: both;
 }
 
-.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control, span.form-control {
   border-color: transparent;
   background-color: transparent;
   box-shadow: none;
+}
+
+.form-group label {
+  line-height: 34px;
 }
 
 .volunteers > li {
@@ -108,7 +124,29 @@
 
 .volunteers, .volunteer-sub-data {
   padding-left: 16px;
+  padding-bottom: 15px;
 }
+
+.volunteer-sub-data .form-group {
+  margin-bottom: 0;
+}
+
+.volunteer-sub-data .form-control {
+  padding-left: 0;
+}
+
+.volunteer-sub-data label {
+  margin-bottom: 0;
+}
+
+.form-control.form-expand {
+  height: auto;
+}
+
+.form-control.form-expand ul {
+  padding: 0 15px;
+}
+
 
 .inactive-message-input {
   resize: none;
@@ -130,6 +168,7 @@
 }
 
 .action-buttons {
+  padding: 10px 0 0;
   text-align: center;
 }
 
