@@ -273,6 +273,28 @@
  </script>
 <!-- end add appt modal -->
 
+<!-- Add Announcement Motal -->
+<script type="text/ng-template" id="addAnnouncementModal.html">
+  <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
+    <h3 class="center-block">Add New Appointment</h3>
+    <label>Appointment Title:</label>
+    <input type="text" class="form-control" ng-model="dash.appointment.title" />
+
+
+    <label>Number of Volunteers Needed:</label>
+    <input type="number" class="form-control" ng-model="dash.appointment.volunteerSlots" placeholder=5 />
+    <label>Number of Possible Clients:</label>
+    <input type="number" class="form-control" ng-model="dash.appointment.clientSlots" placeholder=5 />
+
+    <label>Training Appointment?</label>
+    <input type="checkbox" ng-model="dash.appointment.trainingAppointment" />
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$close(dash.addAppointment())" >Save Appointment</button>
+    <button class="btn btn-warning" type="button" ng-click="$close()">Cancel</button>
+  </div>
+ </script>
+<!-- end Add Announcement Motal -->
+
 <!-- admin edit/delete appointment modal form -->
 <script type="text/ng-template" id="editAppointmentModal.html">
   <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
@@ -455,3 +477,13 @@
 </div>
 
 <button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAppointmentModal()" >Add Appointment</button>
+
+Announcements:
+<p>
+  Title
+</p>
+
+<p>
+  Message
+</p>
+<button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAnnouncementModal()" >Add Announcement</button>
