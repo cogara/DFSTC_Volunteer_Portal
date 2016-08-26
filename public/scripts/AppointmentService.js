@@ -1,6 +1,6 @@
 angular.module('DfstcSchedulingApp').factory('AppointmentService', AppointmentService);
 
-function AppointmentService($http){
+function AppointmentService($http, calendarConfig, moment){
 
   var appointments = {};
   var updateEvent = {};
@@ -23,6 +23,8 @@ function AppointmentService($http){
       for (var i = 0; i < response.data.length; i++) {
         response.data[i].startsAt = new Date(response.data[i].startsAt);
         response.data[i].endsAt = new Date(response.data[i].endsAt);
+        response.data[i].color = calendarConfig.colorTypes.info;
+        response.data[i].incrementsBadgeTotal = false;
       }
       return response.data;
     }, function(response){
