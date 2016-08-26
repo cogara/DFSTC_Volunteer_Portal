@@ -6,15 +6,20 @@ const multer = require('multer');
 
 // var photo = request.body.photo;
 
-// var storage  = multer.diskStorage({
-//   destination: function(request, file, cb){
-//     cb(null, './userImages')
-//   }
-// });
+var storage  = multer.diskStorage({
+  destination: function(request, file, cb){
+    cb(null, './userImages')
+  },
+  filename: function(req, file, cb) {
+    console.log('Date Now', Date.now());
+    console.log('Date Now', Date.now());
+    console.log('Date Now', Date.now());
+    cb(null, Date.now().toString() + '.jpg')
+  }
+});
 
 var upload = multer({
-  // storage:storage,
-  dest: './userImages'
+  storage:storage
 }).single('photo');
 
 router.post('/', upload, function(request, response) {

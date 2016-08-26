@@ -16,6 +16,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.resetSearch = resetSearch;
   vm.expandProfile = expandProfile;
 
+
   function expandProfile(volunteer, panel) {
     if(panel === 'all') {
       if ((!volunteer.expandRight) || (!volunteer.expandDown)) {
@@ -288,6 +289,7 @@ function ModalController($uibModalInstance, volunteer) {
   vm.volunteer = volunteer;
   vm.saveTraining = saveTraining;
   vm.dismissTraining = dismissTraining;
+  
   function saveTraining() {
     $uibModalInstance.close();
   }

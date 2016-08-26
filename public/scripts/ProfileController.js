@@ -9,6 +9,15 @@ function ProfileController($http, $state, $uibModalInstance, UserService, profil
   vm.removePrevCompany = removePrevCompany;
   vm.profile = profile;
   console.log(profile);
+  vm.downloadPhoto = downloadPhoto;
+
+  function downloadPhoto(photo) {
+    console.log(photo);
+    $http.get('/photo/'+photo).then(function(response) {
+      console.log(response.data);
+    })
+  }
+
 
   function removePrevCompany(index) {
     vm.profile.pastCompanies.splice(index, 1);

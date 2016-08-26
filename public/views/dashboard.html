@@ -1,4 +1,4 @@
-<button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin.volunteers">Admin Control</button>
+<button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin.volunteers">Administration</button>
 <span class="profile-control" ng-if="main.currentUser" style="float: right; margin-left: 5px;" >
   <span class="profile-button" ng-click="dash.toggleProfile()">
     <!-- <img class="profile-image" ng-if="main.currentUser.photo" ng-src="/photos/{{main.currentUser.photo}}"/> -->
@@ -7,8 +7,10 @@
   </span>
   <div class="profile-menu" ng-class="{'hide': !dash.profileToggle}">
     <h6 class="profile-control-header">{{main.currentUser.firstName}} {{main.currentUser.lastName}}</h6>
-    <img class="profile-image" ng-if="main.currentUser.photo" ng-src="/photos/{{main.currentUser.photo}}"/>
-    <i ng-if="!main.currentUser.photo" class="fa fa-user fa-5x profile-image" aria-hidden="true"></i>
+    <div class="profile-image">
+      <img ng-if="main.currentUser.photo" height="100%" ng-src="/photos/{{main.currentUser.photo}}" alt="Profile Image"/>
+      <i ng-if="!main.currentUser.photo" class="fa fa-user fa-4x" aria-hidden="true"></i>
+    </div>
     <button class="btn btn-default" ng-click="dash.openProfile(main.currentUser._id)">Profile</button>
     <button ng-if="main.currentUser" class="btn btn-default" ng-click="main.logout()">Logout</button>
   </div>
