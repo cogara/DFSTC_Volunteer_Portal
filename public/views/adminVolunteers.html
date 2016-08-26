@@ -252,14 +252,28 @@
       <span>*INSERT DATE*</span>
       <h5 class="volunteer-meta__header">Opportunities:</h5>
       <span>
-        <ul>
-          <li class="opportunity" ng-repeat="(opportunity, selected) in volunteer.volunteerOpportunities" ng-if="selected">{{opportunity}}</li>
+        <ul style="text-align: left; display: inline-block">
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.imageCoach">Image Coach</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.careerCoach">Career Coach</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.clothingSorter">Clothing Sorter</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.clothingOrganizer">Clothing Organizer</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.frontDesk">Front Desk Volunteer</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.clothingSale">Clothing Sale Volunteer</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.clothingSaleCaptain">Clothing Sale Captain</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.careerAdvocate">Career Advocate</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.intelligenceMentor">Intelligence Mentor</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.intelligenceMuse">Intelligence Muse</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.communityAmbassador">Community Ambassador</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.eventSetUp">Client Event Set Up Volunteer</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.photographer">Event Photographer</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.graphicDesigner">Graphic Designer</li>
         </ul>
       </span>
     </div>
   </div>
 </div>
 
+<!-- PRINT VIEW -->
 <div id="print-volunteers">
   <style>
     #print-volunteers {
@@ -384,3 +398,4 @@
   </div>
 </div>
 <iframe id="print-frame" name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
+<!-- END PRINT VIEW -->
