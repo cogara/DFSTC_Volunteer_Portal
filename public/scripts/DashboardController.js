@@ -1,6 +1,6 @@
 angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
 
-function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig) {
+function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig, AnnouncementService) {
   var vm = this;
 
   vm.showAppointments = AppointmentService.appointments;
@@ -180,5 +180,34 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
   }
 
   AppointmentService.getAppointments()
+
+
+  // Announcements functions
+
+  vm.announcement={
+    title: "",
+    message: ''
+  };
+
+
+  vm.addAnnouncementModal = function(){
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'addAnnouncementModal.html',
+      controller: 'DashboardController',
+      controllerAs: 'dash',
+      size: 'lg'
+    })
+  }
+
+  vm.addAnnouncement = function(){
+    console.log(vm.announcement);
+    AnnouncementService.addAnnouncement(vm.announcement).then(function(response){
+    //  vm.showAppointments.appointments.push(vm.appointment);
+      console.log('add announcement success', response.data);
+    }, function(response){
+      console.log('add announcement fail', response.data);
+    })
+  }
 
 }; //end DashboardController
