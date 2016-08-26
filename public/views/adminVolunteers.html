@@ -1,5 +1,5 @@
-<div class="col-sm-5">
-  <h5>Filter:</h5>
+<div class="col-sm-6">
+  <div><h5 style="display: inline-block">Filter:</h5> <a href="#" ng-click="admin.resetSearch()"><h6 style="display: inline-block">Clear Search</h6></a></div>
   <div class="btn-group" uib-dropdown is-open="admin.oppDropdownOpen" auto-close="outsideClick">
     <button id="opportunity-search"
       type="button"
@@ -91,22 +91,6 @@
       </div>
     </div>
   </div>
-  <div class="btn-group" uib-dropdown is-open="admin.roleDropdownOpen" auto-close="outsideClick">
-    <button
-      id="role-search"
-      type="button"
-      ng-class="{'btn-default': !admin.searchRoleActive, 'btn-primary': admin.searchRoleActive}"
-      class="btn"
-      uib-dropdown-toggle
-      ng-disabled="disabled">
-      Role <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu search-opp" uib-dropdown-menu aria-labelledby="single-button">
-      <li><span class="search-radio-option"><input name="role" type="radio" ng-model="admin.search.role" value="all"> All</span></li>
-      <li><span class="search-radio-option"><input name="role" type="radio" ng-model="admin.search.role" value="isVolunteer"> Volunteer</span></li>
-      <li><span class="search-radio-option"><input name="role" type="radio" ng-model="admin.search.role" value="isTrainee"> Trainee</span></li>
-    </ul>
-  </div>
   <div class="btn-group" uib-dropdown is-open="admin.statusDropdownOpen" auto-close="outsideClick">
     <button
       id="role-search"
@@ -123,9 +107,26 @@
       <li><span class="search-radio-option"><input name="status" type="radio" ng-model="admin.search.status" value="false"> Inactive</span></li>
     </ul>
   </div>
+  <div class="btn-group" uib-dropdown is-open="admin.roleDropdownOpen" auto-close="outsideClick">
+    <button
+      id="role-search"
+      type="button"
+      ng-class="{'btn-default': !admin.searchRoleActive, 'btn-primary': admin.searchRoleActive}"
+      class="btn"
+      uib-dropdown-toggle
+      ng-disabled="disabled">
+      Role <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu search-opp" uib-dropdown-menu aria-labelledby="single-button">
+      <li><span class="search-radio-option"><input name="role" type="radio" ng-model="admin.search.role" value="all"> All</span></li>
+      <li><span class="search-radio-option"><input name="role" type="radio" ng-model="admin.search.role" value="isVolunteer"> Volunteer</span></li>
+      <li><span class="search-radio-option"><input name="role" type="radio" ng-model="admin.search.role" value="isTrainee"> Trainee</span></li>
+    </ul>
+  </div>
+
   <div class="clear"></div>
 </div>
-<div class="col-sm-5">
+<div class="col-sm-6">
   <h5>Sort:</h5>
   <button ng-class="{'btn-default': !(admin.sortOrder === 'lastName'), 'btn-primary': (admin.sortOrder === 'lastName')}" class="btn" ng-click="admin.sortBy('lastName')">
     Name <span class="sortorder" ng-show="(admin.sortOrder === 'lastName')" ng-class="{reverse: !admin.sortReverse}"></span>
@@ -137,14 +138,10 @@
     Volunteer/Trainee <span class="sortorder" ng-show="(admin.sortOrder === '-isVolunteer')" ng-class="{reverse: !admin.sortReverse}"></span>
   </button>
 </div>
-<div class="col-sm-2" style="text-align: right;">
-  <!-- <h5>Reset Search</h5> -->
-  <h5><a href="#" ng-click="admin.resetSearch()">Clear Search</a></h5>
-  <!-- <button class="btn btn-default" ng-click="admin.resetSearch()">Clear</button> -->
-</div>
 <div class="col-xs-12" style="margin: 10px 0">
   <input class="col-sm-12" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">
 </div>
+
 <div class="col-xs-12">
   <div class="toggle-switch">
     Show Detail <switch off="No" on="Yes" ng-model="admin.expandRightAll" class="green"></switch>
@@ -158,8 +155,13 @@
   <div
     class="volunteer"
     ng-repeat="volunteer in admin.volunteers | orderBy:[admin.sortOrder, admin.sortDefault, admin.sortLast]:admin.sortReverse | filter: admin.search.input | filter: admin.roleFilter | filter: admin.availableFilter | filter: admin.opportunityFilter | filter: admin.statusFilter"
+    ng-click="admin.openProfile(volunteer._id)"
     >
-    <div class="volunteer-card" ng-click="admin.openProfile(volunteer._id)">
+    <div class="volunteer-card">
+      <div class="trainee-mark" ng-if="volunteer.isTrainee">
+        <i class="fa fa-asterisk" aria-hidden="true"></i>
+        <button class="btn btn-primary btn-xs" style="float: right" ng-click="admin.trainingComplete(volunteer)">Approve Trainee</button>
+      </div>
       <div class="volunteer-photo">
         <img ng-if="volunteer.photo" class="image-responsive" ng-src="/photos/{{volunteer.photo}}"/>
         <i ng-if="!volunteer.photo" class="fa fa-user icon-image" aria-hidden="true"></i>
@@ -185,12 +187,10 @@
             <switch off="No" on="Yes" ng-model="volunteer.isActive" class="green"></switch>
           </span>
           <div ng-if="!volunteer.isActive" class="inactive-reason">
-            <span ng-if="volunteer.inactiveMessage.length > 0">{{volunteer.inactiveMessage}}</span>
-            <span ng-if="!volunteer.inactiveMessage.length > 0">N/A</span>
+            <span class="volunteer-meta__header">Reason:</span>
+            <span class="inactive-message" ng-if="volunteer.inactiveMessage.length > 0">{{volunteer.inactiveMessage}}</span>
+            <span class="inactive-message" ng-if="!volunteer.inactiveMessage.length > 0">N/A</span>
           </div>
-        </div>
-        <div ng-if="volunteer.isTrainee" class="volunteer-meta">
-          <button ng-click="admin.trainingComplete(volunteer)">Training Complete</button>
         </div>
       </div>
     </div>
@@ -210,7 +210,7 @@
     <div class="volunteer-expanded__below" ng-class="{hide: !(volunteer.expandDown || admin.expandDownAll)}">
       <h5 class="volunteer-meta__header">Availability:</h5>
       <!-- <div> -->
-        <table class="table table-hover table-availability">
+        <table class="table table-availability">
           <tr>
             <th></th>
             <th>Morning</th>
@@ -227,7 +227,7 @@
             <td>Tue</td>
             <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.morning" /></td>
             <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.afternoon" /></td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.afternoon" /></td>
+            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.evening" /></td>
           </tr>
           <tr>
             <td>Wed</td>

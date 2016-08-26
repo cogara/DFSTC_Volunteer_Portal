@@ -60,6 +60,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   }
 
   function trainingComplete(volunteer) {
+    vm.preventProfile=true;
     var modalInstance = $uibModal.open({
       animation: true,
       templateUrl: 'trainingComplete.html',
@@ -155,10 +156,10 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.statusFilter = statusFilter;
     vm.search.role = 'all';
     vm.search.status = 'all';
-
-    vm.sortDefault = 'lastName';
-    vm.sortLast = 'firstName';
-    vm.sortOrder = 'lastName';
+    //
+    // vm.sortDefault = 'lastName';
+    // vm.sortLast = 'firstName';
+    // vm.sortOrder = 'lastName';
     vm.searchAvailActive = false;
     vm.searchOpportunityActive = false;
   }
@@ -167,6 +168,10 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     clearSearchOptions();
   }
 
+
+  vm.sortDefault = 'lastName';
+  vm.sortLast = 'firstName';
+  vm.sortOrder = 'lastName';
   function sortBy(property) {
     vm.sortReverse = (vm.sortOrder === property) ? !vm.sortReverse : false;
     (vm.sortReverse) ? vm.sortDefault = '-lastName' : vm.sortDefault = 'lastName';

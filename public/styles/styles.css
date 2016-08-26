@@ -188,14 +188,14 @@
   text-align: center;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .volunteer {
   flex: 0 auto;
   /*min-width: 220px;*/
   overflow: hidden;
-  margin: 3px 2px;
+  margin: 5px;
   box-shadow: 0 0 5px 0 rgba(0,0,0,.2);
 }
 
@@ -205,6 +205,7 @@
 }
 
 .volunteer-card {
+  position: relative;
   float: left;
   width: 200px;
   /*border: 1px solid red;*/
@@ -265,7 +266,9 @@
 }
 
 .volunteer-photo {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   font-size: 0;
   overflow: hidden;
   width: 100%;
@@ -290,6 +293,41 @@
   color: rgb(150,150,150);
 }
 
+.active-switch-modal {
+  clear: both;
+}
+
+.inactive-message {
+  font-style: italic;
+}
+
+.inactive-message-input {
+  width: 100%;
+  margin: 5px 0;
+  padding: 0 5px;
+  resize: none;
+  border-color: rgb(220,220,220);
+}
+
+.inactive-message-input[disabled] {
+  border-color: transparent;
+
+}
+
+.trainee-mark {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 2px 5px;
+  background-color: rgba(255,255,255,.8);
+  color: blue;
+  text-align: left;
+}
+
+.volunteer input[type=checkbox][disabled] {
+  cursor: inherit;
+}
 
 /* END VOLUNTEER LIST */
 
@@ -312,6 +350,7 @@
   transition: 0.3s ease-out all;
   -webkit-transition: 0.3s ease-out all;
   top: 4px;
+  cursor: ew-resize;
 }
 /*adding a wide width for larger switch text*/
 .switch.wide {

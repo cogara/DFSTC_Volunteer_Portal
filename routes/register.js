@@ -19,15 +19,22 @@ var upload = multer({
 
 router.post('/', upload, function(request, response) {
   var info = request.body;
+  for (var day in info.isAvail) {
+    for (var time in info.isAvail[day]) {
+      info.isAvail[day][time] = (info.isAvail[day][time] === 'true');
+    }
+  }
+  for (var opportunity in info.volunteerOpportunities) {
+    info.volunteerOpportunities[opportunity] = (info.volunteerOpportunities[opportunity] === 'true');
+  }
+  console.log('info:', info);
 
   User.findOne({email: info.email}, function(err, exists) {
     if(exists) {
       response.send({message: 'Email Already Exists'});
     } else {
-      info.photo = request.file.filename
-
-      console.log(info)
-
+      info.photo = (request.file) ? request.file.filename : null;
+      console.log(info);
       var user = new User(info);
 
       user.save(function(err) {
