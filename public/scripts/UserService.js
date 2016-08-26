@@ -2,6 +2,8 @@ angular.module('DfstcSchedulingApp').factory('UserService', UserService);
 
 function UserService($http, Upload) {
 
+  var currentUser = {};
+
   function checkLoggedIn() {
     return $http.get('/api/checkLoggedIn').then(function(response) {
       if(response.data._id) {
@@ -49,7 +51,8 @@ function UserService($http, Upload) {
     login: login,
     logout: logout,
     getProfile: getProfile,
-    editProfile: editProfile
+    editProfile: editProfile,
+    currentUser: currentUser
   }
 
 }// end UserService

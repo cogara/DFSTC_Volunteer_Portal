@@ -6,6 +6,10 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
   vm.showAppointments = AppointmentService.appointments;
   vm.editAppointment = {};
   vm.editAppointment.event = AppointmentService.updateEvent.event;
+  vm.currentUser = {};
+  vm.currentUser.user = UserService.currentUser.user;
+
+  console.log('isAdmin', UserService.currentUser.user);
 
 
   vm.openProfile = openProfile;

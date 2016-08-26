@@ -41,6 +41,7 @@ function MainController($http, $state, $window, UserService, Upload) {
   function login() {
     UserService.login(vm.loginUser).then(function(response) {
       vm.currentUser = response;
+      UserService.currentUser.user = vm.currentUser;
       $state.go('dashboard');
     }, function(){
         vm.currentUser = null;

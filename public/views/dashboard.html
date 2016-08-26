@@ -276,7 +276,7 @@
 <!-- edit/delete appointment modal form -->
 <script type="text/ng-template" id="editAppointmentModal.html">
   <!-- admin edit/delete -->
-  <div ng-if="main.currentUser.isAdmin">
+  <div ng-if="dash.currentUser.user.isAdmin">
     <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
       <h3 class="center-block">Edit Appointment</h3>
       <label>Appointment Title:</label>
@@ -369,7 +369,7 @@
   </div>
 
 <!-- volunteer claim form -->
-  <div ng-if="!main.currentUser.isAdmin">
+  <div ng-if="!dash.currentUser.user.isAdmin">
     <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
       <h3 class="center-block">{{dash.editAppointment.event.title}} - {{dash.editAppointment.event.startsAt | date: "shortDate"}}</h3>
       <br>
