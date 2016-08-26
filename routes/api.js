@@ -69,4 +69,61 @@ router.post('/appointment', function(request, response){
   });
 });
 
+
+router.get('/appointment/:id', function(request, response){
+  console.log('one appointment get');
+  Appointment.findById(request.params.id, function(err, appointment){
+    if(err){
+      response.sendStatus(500);
+    }else{
+      response.send(appointment)
+    }
+  });
+});
+
+router.get('/appointment', function(request, response){
+  console.log('appointment get');
+  if(request.user.isAdmin){
+    Appointment.find(function(err, appointments){
+      if(err){
+        console.log(err);
+        response.sendStatus(500);
+      }else{
+        response.send(appointments);
+      }
+    })
+  }else{
+    Appointment.find({trainingAppointment: request.user.isTrainee}, function(err, appointments){
+      if(err){
+        console.log(err);
+        response.sendStatus(500);
+      }else{
+        response.send(appointments);
+      }
+    });
+  }
+});
+
+router.delete('/appointment/:id', function(request, response){
+  console.log('appointment delete');
+  Appointment.findByIdAndRemove(request.params.id, function(err, appointment){
+    if(err){
+      response.sendStatus(500);
+    }else{
+      response.sendStatus(200)
+    }
+  });
+});
+
+router.put('/appointment/:id', function(request, response){
+  console.log('appointment update');
+  Appointment.findByIdAndUpdate({_id: request.params.id}, {$set: request.body}, function(err, appointment){
+    if(err){
+      response.sendStatus(500);
+    }else{
+      response.sendStatus(200)
+    }
+  });
+});
+
 module.exports = router;

@@ -5,8 +5,8 @@ var appointmentSchema = new Schema(
   {
     title: {type: String, default: 'Image Coach Appointment'},
     date: Date,
-    startTime: Date,
-    endTime: Date,
+    startsAt: Date,
+    endsAt: Date,
     volunteerSlots: Number,
     volunteers: Object,
     clientSlots: Number,

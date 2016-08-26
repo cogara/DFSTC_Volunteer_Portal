@@ -1,6 +1,6 @@
 angular.module('DfstcSchedulingApp').factory('UserService', UserService);
 
-function UserService($http) {
+function UserService($http, Upload) {
 
   function checkLoggedIn() {
     return $http.get('/api/checkLoggedIn').then(function(response) {
@@ -12,7 +12,12 @@ function UserService($http) {
 
   function register(user) {
     console.log(user);
-    return $http.post('/register', user);
+    return Upload.upload({
+      url: '/register',
+      data: user
+    })
+
+    // return $http.post('/register', user);
   }
 
   function login(user) {

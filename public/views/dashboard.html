@@ -1,5 +1,21 @@
-<button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin.volunteers">Admin Control</button>
-<button ng-if="main.currentUser" class="btn btn-default" ng-click="dash.openProfile(main.currentUser._id)">Profile</button>
+<button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin.volunteers">Administration</button>
+<span class="profile-control" ng-if="main.currentUser" style="float: right; margin-left: 5px;" >
+  <span class="profile-button" ng-click="dash.toggleProfile()">
+    <!-- <img class="profile-image" ng-if="main.currentUser.photo" ng-src="/photos/{{main.currentUser.photo}}"/> -->
+    <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+    <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+  </span>
+  <div class="profile-menu" ng-class="{'hide': !dash.profileToggle}">
+    <h6 class="profile-control-header">{{main.currentUser.firstName}} {{main.currentUser.lastName}}</h6>
+    <div class="profile-image">
+      <img ng-if="main.currentUser.photo" height="100%" ng-src="/photos/{{main.currentUser.photo}}" alt="Profile Image"/>
+      <i ng-if="!main.currentUser.photo" class="fa fa-user fa-4x" aria-hidden="true"></i>
+    </div>
+    <button class="btn btn-default" ng-click="dash.openProfile(main.currentUser._id)">Profile</button>
+    <button ng-if="main.currentUser" class="btn btn-default" ng-click="main.logout()">Logout</button>
+  </div>
+</span>
+<div class="clear"></div>
 
 <!-- Profile Modal -->
 <script type="text/ng-template" id="profileModal.html">
@@ -10,8 +26,6 @@
   <div class="row">
     <div class="modal-body profile">
       <div class="panel panel-default col-sm-10 col-sm-offset-1">
-
-        <!-- <h3 class="center-block">Profile</h3> -->
         <br />
         <form class="form-horizontal">
             <div class="form-group">
@@ -41,7 +55,7 @@
             <div class="form-group">
               <label class="col-md-3">Phone Number:</label>
               <div class="col-md-9">
-                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.phoneNumber" data-format="+1 (ddd) ddd-dddd" placeholder="Phone Number" />
+                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.phoneNumber" ui-mask="(999) 999-9999" />
               </div>
             </div>
             <div class="form-group">
@@ -168,11 +182,9 @@
 <!-- End Profile Modal -->
 
 <!-- Add Appt modal -->
-<script type="text/ng-template" id="appointmentModal.html">
-  <div class="modal-header">
-    <h2>Add New Appointment</h2>
-  </div>
-  <div class="modal-body">
+<script type="text/ng-template" id="addAppointmentModal.html">
+  <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
+    <h3 class="center-block">Add New Appointment</h3>
     <label>Appointment Title:</label>
     <input type="text" class="form-control" ng-model="dash.appointment.title" />
 
@@ -191,7 +203,7 @@
                 type="text"
                 class="form-control"
                 uib-datepicker-popup="{{dash.format}}"
-                ng-model="dash.appointment.startTime"
+                ng-model="dash.appointment.startsAt"
                 is-open="dash.popup1.opened"
                 datepicker-options="dash.dateOptions"
                 ng-required="true"
@@ -208,7 +220,7 @@
             </p>
             <div
               uib-timepicker
-              ng-model="dash.appointment.startTime"
+              ng-model="dash.appointment.startsAt"
               hour-step="1"
               minute-step="15"
               show-meridian="true"
@@ -220,7 +232,7 @@
               <input type="text"
                 class="form-control"
                 uib-datepicker-popup="{{dash.format}}"
-                ng-model="dash.appointment.endTime"
+                ng-model="dash.appointment.endsAt"
                 is-open="dash.popup2.opened"
                 datepicker-options="dash.dateOptions"
                 ng-required="true"
@@ -237,7 +249,7 @@
             </p>
             <div
               uib-timepicker
-              ng-model="dash.appointment.endTime"
+              ng-model="dash.appointment.endsAt"
               hour-step="1"
               minute-step="15"
               show-meridian="true"
@@ -254,69 +266,162 @@
 
     <label>Training Appointment?</label>
     <input type="checkbox" ng-model="dash.appointment.trainingAppointment" />
-  </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="appt.saveAppointment()" >Save Appointment</button>
-    <button class="btn btn-warning" type="button" ng-click="appt.cancel()">Cancel</button>
+    <button class="btn btn-primary" type="button" ng-click="$close(dash.addAppointment())" >Save Appointment</button>
+    <button class="btn btn-warning" type="button" ng-click="$close()">Cancel</button>
   </div>
  </script>
 <!-- end add appt modal -->
+
+<!-- admin edit/delete appointment modal form -->
+<script type="text/ng-template" id="editAppointmentModal.html">
+  <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
+    <h3 class="center-block">Edit Appointment</h3>
+    <label>Appointment Title:</label>
+    <input type="text" class="form-control" ng-model="dash.editAppointment.event.title" />
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Start Time</th>
+          <th>End Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <p class="input-group" style="max-width: 250px">
+              <input
+                type="text"
+                class="form-control"
+                uib-datepicker-popup="{{dash.format}}"
+                ng-model="dash.editAppointment.event.startsAt"
+                is-open="dash.popup1.opened"
+                datepicker-options="dash.dateOptions"
+                ng-required="true"
+                close-text="Close"
+                alt-input-formats="dash.altInputFormats"
+                placeholder="Start Date" />
+              <span class="input-group-btn">
+                <button type="button"
+                  class="btn btn-default"
+                  ng-click="dash.open1()">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+            </p>
+            <div
+              uib-timepicker
+              ng-model="dash.editAppointment.event.startsAt"
+              hour-step="1"
+              minute-step="15"
+              show-meridian="true"
+              class="col-md-6">
+            </div>
+          </td>
+          <td>
+            <p class="input-group" style="max-width: 250px">
+              <input type="text"
+                class="form-control"
+                uib-datepicker-popup="{{dash.format}}"
+                ng-model="dash.editAppointment.event.endsAt"
+                is-open="dash.popup2.opened"
+                datepicker-options="dash.dateOptions"
+                ng-required="true"
+                close-text="Close"
+                alt-input-formats="dash.altInputFormats"
+                placeholder="End Date" />
+              <span class="input-group-btn">
+                <button type="button"
+                  class="btn btn-default"
+                  ng-click="dash.open2()">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+            </p>
+            <div
+              uib-timepicker
+              ng-model="dash.editAppointment.event.endsAt"
+              hour-step="1"
+              minute-step="15"
+              show-meridian="true"
+              class="col-md-6">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <label>Number of Volunteers Needed:</label>
+    <input type="number" class="form-control" ng-model="dash.editAppointment.event.volunteerSlots" placeholder=5 />
+    <label>Number of Possible Clients:</label>
+    <input type="number" class="form-control" ng-model="dash.editAppointment.event.clientSlots" placeholder=5 />
+
+    <label>Training Appointment?</label>
+    <input type="checkbox" ng-model="dash.editAppointment.event.trainingAppointment" />
+
+  <button class="center-block btn btn-default" ng-click="$close(dash.deleteAppointment(dash.editAppointment.event))" >Delete Appointment</button>
+  <button class="center-block btn btn-default" ng-click="$close(dash.updateAppointment(dash.editAppointment.event))" >Save Changes</button>
+  <button class="center-block btn btn-default" ng-click="$close()" >Cancel</button>
+
+  </div>
+</script>
+<!-- end edit/delete modal -->
+
 <div class="row">
   <div class="col-lg-8 calendar">
     <h2 class="text-center">{{ dash.calendarTitle }}</h2>
     <!-- <div class="row"> -->
-      <div class="col-md-6 text-center">
-        <div class="btn-group">
-          <button
-            class="btn btn-primary"
-            mwl-date-modifier
-            date="dash.viewDate"
-            decrement="dash.calendarView">
-            Previous
-          </button>
-          <button
-            class="btn btn-default"
-            mwl-date-modifier
-            date="dash.viewDate"
-            set-to-today>
-            Today
-          </button>
-          <button
-            class="btn btn-primary"
-            mwl-date-modifier
-            date="dash.viewDate"
-            increment="dash.calendarView">
-            Next
-          </button>
-        </div>
+    <div class="col-md-6 text-center">
+      <div class="btn-group">
+        <button
+          class="btn btn-primary"
+          mwl-date-modifier
+          date="dash.viewDate"
+          decrement="dash.calendarView">
+          Previous
+        </button>
+        <button
+          class="btn btn-default"
+          mwl-date-modifier
+          date="dash.viewDate"
+          set-to-today>
+          Today
+        </button>
+        <button
+          class="btn btn-primary"
+          mwl-date-modifier
+          date="dash.viewDate"
+          increment="dash.calendarView">
+          Next
+        </button>
       </div>
+    </div>
 
-      <br class="visible-xs visible-sm">
+    <br class="visible-xs visible-sm">
 
-      <div class="col-md-6 text-center">
-        <div class="btn-group">
-          <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'year'">Year</label>
-          <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'month'">Month</label>
-          <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'week'">Week</label>
-          <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'day'">Day</label>
-        </div>
+    <div class="col-md-6 text-center">
+      <div class="btn-group">
+        <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'year'">Year</label>
+        <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'month'">Month</label>
+        <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'week'">Week</label>
+        <label class="btn btn-primary" ng-model="dash.calendarView" uib-btn-radio="'day'">Day</label>
       </div>
-    <!-- </div> -->
-
-
-    <mwl-calendar
-    events="dash.events"
-    view="dash.calendarView"
-    view-title="dash.calendarTitle"
-    view-date="dash.viewDate"
-    on-event-click="dash.eventClicked(calendarEvent)"
-    on-event-times-changed="dash.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-    cell-is-open="dash.isCellOpen"
-    day-view-start="06:00"
-    day-view-end="22:59"
-    day-view-split="30"
-    cell-modifier="dash.modifyCell(calendarCell)">
-    </mwl-calendar>
+    </div>
+    <div class="col-xs-12">
+      <mwl-calendar
+      events="dash.showAppointments.appointments"
+      view="dash.calendarView"
+      view-title="dash.calendarTitle"
+      view-date="dash.viewDate"
+      on-event-click="dash.eventClicked(calendarEvent)"
+      on-event-times-changed="dash.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+      cell-is-open="dash.isCellOpen"
+      day-view-start="06:00"
+      day-view-end="22:59"
+      day-view-split="30"
+      cell-modifier="dash.modifyCell(calendarCell)">
+      </mwl-calendar>
+    </div>
   </div>
   <div class="col-lg-4 sidebar">
     <h2 class="text-center">Sidebar</h2>
@@ -349,4 +454,4 @@
   </div>
 </div>
 
-<button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.appointmentModal()" >Add Appointment</button>
+<button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAppointmentModal()" >Add Appointment</button>
