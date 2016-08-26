@@ -1,4 +1,4 @@
-angular.module('DfstcSchedulingApp').controller('AdminController', AdminController).controller('ModalController', ModalController);
+angular.module('DfstcSchedulingApp').controller('AdminController', AdminController).controller('ModalController', ModalController).filter('PhoneFormat', phoneFormat);
 
 function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList) {
   var vm = this;
@@ -295,4 +295,30 @@ function ModalController($uibModalInstance, volunteer) {
   function dismissTraining() {
     $uibModalInstance.dismiss();
   }
+}
+
+function phoneFormat() {
+  return function (tel) {
+    if (!tel) { return ''; }
+
+    var value = tel.toString().trim().replace(/^\+/, '');
+
+    if (value.match(/[^0-9]/)) {
+        return tel;
+    }
+
+    var country, city, number;
+
+    country = 1;
+    city = value.slice(0, 3);
+    number = value.slice(3);
+
+    if (country == 1) {
+        country = "";
+    }
+
+    number = number.slice(0, 3) + '-' + number.slice(3);
+
+    return (country + " (" + city + ") " + number).trim();
+  };
 }
