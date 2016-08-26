@@ -1,4 +1,4 @@
-angular.module('DfstcSchedulingApp').controller('AdminController', AdminController).controller('ModalController', ModalController);
+angular.module('DfstcSchedulingApp').controller('AdminController', AdminController).controller('ModalController', ModalController).filter('PhoneFormat', phoneFormat);
 
 function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList) {
   var vm = this;
@@ -7,15 +7,40 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.editVolunteer = editVolunteer;
   vm.viewVolunteer = viewVolunteer;
   vm.saveEdit = saveEdit;
-  vm.clearSearchOpp = clearSearchOpp;
-  vm.clearSearchAvail = clearSearchAvail;
   vm.openProfile = openProfile;
   vm.trainingComplete = trainingComplete;
   vm.toggleActive = toggleActive;
   vm.sortBy = sortBy;
   vm.resetSearch = resetSearch;
+  vm.expandProfile = expandProfile;
+  vm.availableFilter = availableFilter;
+  vm.opportunityFilter = opportunityFilter;
+  vm.roleFilter = roleFilter;
+  vm.statusFilter = statusFilter;
+  vm.clearSearchOpp = clearSearchOpp;
+  vm.clearSearchAvail = clearSearchAvail;
+
+
+  function expandProfile(volunteer, panel) {
+    if(panel === 'all') {
+      if ((!volunteer.expandRight) || (!volunteer.expandDown)) {
+        volunteer.expandRight = true;
+        volunteer.expandDown = true;
+      } else {
+        volunteer.expandRight = false;
+        volunteer.expandDown = false;
+      }
+    }
+    if(panel === "right") {
+      volunteer.expandRight = true;
+    }
+    if(panel === "down") {
+      volunteer.expandDown = true;
+    }
+  }
 
   function toggleActive(volunteer) {
+    vm.preventProfile = true;
     UserService.editProfile(volunteer);
   }
 
@@ -40,6 +65,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   }
 
   function trainingComplete(volunteer) {
+    vm.preventProfile=true;
     var modalInstance = $uibModal.open({
       animation: true,
       templateUrl: 'trainingComplete.html',
@@ -48,7 +74,14 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
       controllerAs: 'modal',
       resolve: {
         volunteer: function() {
-          return volunteer;
+          var sendVolunteer = {};
+          for (var key in volunteer) {
+            if((key !== 'expandDown') || (key !== 'expandRight')) {
+              console.log('saving', key, volunteer[key]);
+              sendVolunteer[key] = volunteer[key];
+            }
+          }
+          return sendVolunteer;
         }
       }
     })
@@ -62,33 +95,49 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   }
 
   function openProfile(id) {
-
-    var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: 'adminProfileModal.html',
-      controller: 'ProfileController',
-      controllerAs: 'prof',
-      size: 'lg',
-      resolve: {
-        profile: function (UserService) {
-          return UserService.getProfile(id).then(function(response){
-            response.tempCompany = response.company;
-            return response;
-          });
+    console.log(vm.preventProfile);
+    if(!vm.preventProfile) {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: 'adminProfileModal.html',
+        controller: 'ProfileController',
+        controllerAs: 'prof',
+        size: 'lg',
+        resolve: {
+          profile: function (UserService) {
+            return UserService.getProfile(id).then(function(response){
+              response.tempCompany = response.company;
+              return response;
+            });
+          }
         }
-      }
-    });
-
-    modalInstance.result.then(function (profile) {
-      //do function to save new profile info
-      return UserService.editProfile(profile).then(function() {
-        console.log('promise?');
-        getVolunteers();
       });
 
-      console.log(profile);
-    });
+      modalInstance.result.then(function (profile) {
+        //do function to save new profile info
+        return UserService.editProfile(profile).then(function() {
+          console.log('promise?');
+          getVolunteers();
+        });
+
+        console.log(profile);
+      });
+    }
+    vm.preventProfile = false;
   };
+
+  function clearSearchAvail() {
+    vm.search.avail = {};
+    vm.search.avail.monday = {};
+    vm.search.avail.tuesday = {};
+    vm.search.avail.wednesday = {};
+    vm.search.avail.thursday = {};
+    vm.search.avail.friday = {};
+    vm.search.avail.saturday = {};
+    vm.searchAvailActive = false;
+    console.log(vm.search.avail);
+    vm.availDropdownOpen = false;
+  }
 
   // Search volunteer options and filters
   function clearSearchOptions() {
@@ -119,26 +168,29 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.search.avail.friday = {};
     vm.search.avail.saturday = {};
 
-    vm.availableFilter = availableFilter;
-    vm.opportunityFilter = opportunityFilter;
-    vm.roleFilter = roleFilter;
-    vm.statusFilter = statusFilter;
+
     vm.search.role = 'all';
     vm.search.status = 'all';
-
-    vm.sortDefault = 'lastName';
-    vm.sortOrder = 'lastName';
+    //
+    // vm.sortDefault = 'lastName';
+    // vm.sortLast = 'firstName';
+    // vm.sortOrder = 'lastName';
     vm.searchAvailActive = false;
-    vm.searchOpportunityActive = false;
+    // vm.searchOpportunityActive = false;
   }
 
   function resetSearch() {
     clearSearchOptions();
   }
 
+
+  vm.sortDefault = 'lastName';
+  vm.sortLast = 'firstName';
+  vm.sortOrder = 'lastName';
   function sortBy(property) {
     vm.sortReverse = (vm.sortOrder === property) ? !vm.sortReverse : false;
-    vm.sortReverse ? vm.sortDefault = '-lastName' : vm.sortDefault = 'lastName';
+    (vm.sortReverse) ? vm.sortDefault = '-lastName' : vm.sortDefault = 'lastName';
+    (vm.sortReverse) ? vm.sortLast = '-firstName' : vm.sortLast = 'firstName';
     vm.sortOrder = property;
   }
 
@@ -156,7 +208,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
           }
           // return false;
         } else {
-          vm.searchAvailActive = false; 
+          vm.searchAvailActive = false;
         }
       }
     }
@@ -186,39 +238,41 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
 
 
   function roleFilter(volunteer) {
-    // console.log(vm.search.role);
-    var check = 0;
     if(vm.search.role === 'isTrainee') {
       if(volunteer.isTrainee) {
+        vm.searchRoleActive = true;
         return true;
       }
     }
     if(vm.search.role === 'isVolunteer') {
       if(volunteer.isVolunteer) {
+        vm.searchRoleActive = true;
         return true;
       }
     }
     if(vm.search.role === 'all') {
       // console.log('showing all');
+      vm.searchRoleActive = false;
       return true;
     }
   }
 
   function statusFilter(volunteer) {
     // console.log(vm.search.role);
-    var check = 0;
     if(vm.search.status === 'true') {
       if(volunteer.isActive) {
+        vm.searchStatusActive = true;
         return true;
       }
     }
     if(vm.search.status === 'false') {
       if(!volunteer.isActive) {
+        vm.searchStatusActive = true;
         return true;
       }
     }
     if(vm.search.status === 'all') {
-      // console.log('showing all');
+      vm.searchStatusActive = false;
       return true;
     }
   }
@@ -230,14 +284,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.oppDropdownOpen = false;
   }
 
-  function clearSearchAvail() {
-    for (var key in vm.search.avail) {
-      vm.search.avail[key].morning = false;
-      vm.search.avail[key].afternoon = false;
-      vm.search.avail[key].evening = false;
-    }
-    vm.availDropdownOpen = false;
-  }
+
 
   clearSearchOptions();
   //end search filters
@@ -249,6 +296,7 @@ function ModalController($uibModalInstance, volunteer) {
   vm.volunteer = volunteer;
   vm.saveTraining = saveTraining;
   vm.dismissTraining = dismissTraining;
+
   function saveTraining() {
     $uibModalInstance.close();
   }
@@ -256,4 +304,30 @@ function ModalController($uibModalInstance, volunteer) {
   function dismissTraining() {
     $uibModalInstance.dismiss();
   }
+}
+
+function phoneFormat() {
+  return function (tel) {
+    if (!tel) { return ''; }
+
+    var value = tel.toString().trim().replace(/^\+/, '');
+
+    if (value.match(/[^0-9]/)) {
+        return tel;
+    }
+
+    var country, city, number;
+
+    country = 1;
+    city = value.slice(0, 3);
+    number = value.slice(3);
+
+    if (country == 1) {
+        country = "";
+    }
+
+    number = number.slice(0, 3) + '-' + number.slice(3);
+
+    return (country + " (" + city + ") " + number).trim();
+  };
 }

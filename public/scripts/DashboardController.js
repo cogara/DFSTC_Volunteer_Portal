@@ -10,6 +10,11 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   vm.openProfile = openProfile;
 
+  vm.profileToggle = false;
+  vm.toggleProfile = toggleProfile;
+  function toggleProfile() {
+    vm.profileToggle ? vm.profileToggle = false : vm.profileToggle =  true;
+  }
   function openProfile(id) {
     var modalInstance = $uibModal.open({
       animation: true,
