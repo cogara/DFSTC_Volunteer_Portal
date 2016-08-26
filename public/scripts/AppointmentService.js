@@ -19,6 +19,13 @@ function AppointmentService($http){
   function getAppointments(){
     return $http.get('/api/appointment').then(function(response){
       console.log('get appointments success', response.data);
+
+      for (var i = response.data.length-1; i >= 0; i--){
+        if (response.data[i].volunteers.length == response.data[i].volunteerSlots){
+          response.data.splice(i, 1);
+        }
+      }
+
       appointments.appointments = response.data;
       for (var i = 0; i < response.data.length; i++) {
         response.data[i].startsAt = new Date(response.data[i].startsAt);

@@ -68,7 +68,8 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
     endsAt: '',
     volunteerSlots: 5,
     clientSlots: 5,
-    trainingAppointment: false
+    trainingAppointment: false,
+    volunteers: []
   };
 
   vm.today = function() {

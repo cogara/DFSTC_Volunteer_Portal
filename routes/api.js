@@ -69,18 +69,6 @@ router.post('/appointment', function(request, response){
   });
 });
 
-
-router.get('/appointment/:id', function(request, response){
-  console.log('one appointment get');
-  Appointment.findById(request.params.id, function(err, appointment){
-    if(err){
-      response.sendStatus(500);
-    }else{
-      response.send(appointment)
-    }
-  });
-});
-
 router.get('/appointment', function(request, response){
   console.log('appointment get');
   if(request.user.isAdmin){
