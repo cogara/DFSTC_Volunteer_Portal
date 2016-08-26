@@ -7,14 +7,18 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.editVolunteer = editVolunteer;
   vm.viewVolunteer = viewVolunteer;
   vm.saveEdit = saveEdit;
-  vm.clearSearchOpp = clearSearchOpp;
-  vm.clearSearchAvail = clearSearchAvail;
   vm.openProfile = openProfile;
   vm.trainingComplete = trainingComplete;
   vm.toggleActive = toggleActive;
   vm.sortBy = sortBy;
   vm.resetSearch = resetSearch;
   vm.expandProfile = expandProfile;
+  vm.availableFilter = availableFilter;
+  vm.opportunityFilter = opportunityFilter;
+  vm.roleFilter = roleFilter;
+  vm.statusFilter = statusFilter;
+  vm.clearSearchOpp = clearSearchOpp;
+  vm.clearSearchAvail = clearSearchAvail;
 
 
   function expandProfile(volunteer, panel) {
@@ -122,6 +126,19 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.preventProfile = false;
   };
 
+  function clearSearchAvail() {
+    vm.search.avail = {};
+    vm.search.avail.monday = {};
+    vm.search.avail.tuesday = {};
+    vm.search.avail.wednesday = {};
+    vm.search.avail.thursday = {};
+    vm.search.avail.friday = {};
+    vm.search.avail.saturday = {};
+    vm.searchAvailActive = false;
+    console.log(vm.search.avail);
+    vm.availDropdownOpen = false;
+  }
+
   // Search volunteer options and filters
   function clearSearchOptions() {
     vm.search = {};
@@ -151,10 +168,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.search.avail.friday = {};
     vm.search.avail.saturday = {};
 
-    vm.availableFilter = availableFilter;
-    vm.opportunityFilter = opportunityFilter;
-    vm.roleFilter = roleFilter;
-    vm.statusFilter = statusFilter;
+
     vm.search.role = 'all';
     vm.search.status = 'all';
     //
@@ -162,7 +176,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     // vm.sortLast = 'firstName';
     // vm.sortOrder = 'lastName';
     vm.searchAvailActive = false;
-    vm.searchOpportunityActive = false;
+    // vm.searchOpportunityActive = false;
   }
 
   function resetSearch() {
@@ -270,14 +284,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.oppDropdownOpen = false;
   }
 
-  function clearSearchAvail() {
-    for (var key in vm.search.avail) {
-      vm.search.avail[key].morning = false;
-      vm.search.avail[key].afternoon = false;
-      vm.search.avail[key].evening = false;
-    }
-    vm.availDropdownOpen = false;
-  }
+
 
   clearSearchOptions();
   //end search filters
@@ -289,7 +296,7 @@ function ModalController($uibModalInstance, volunteer) {
   vm.volunteer = volunteer;
   vm.saveTraining = saveTraining;
   vm.dismissTraining = dismissTraining;
-  
+
   function saveTraining() {
     $uibModalInstance.close();
   }

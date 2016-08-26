@@ -219,26 +219,38 @@
   position: relative;
   float: left;
   width: 200px;
-  /*border: 1px solid red;*/
 }
 
 .volunteer-expanded__right {
-  float: right;
-  width: 150px;
+  float: left;
   padding: 0 10px;
-  /*border: 1px solid blue;*/
   text-align: left;
 }
 
-.volunteer-expanded__right ul {
+.volunteer-expanded__below ul {
   padding: 0;
   list-style-position: inside;
+  list-style-type: none;
+}
+@media (max-width: 450px) {
+  .volunteer-expanded__right {
+    font-size: .75em;
+    padding: 0 5px;
+  }
+  .volunteer {
+    font-size: .9em;
+  }
+
+  .volunteer-card {
+    width: 160px;
+  }
 }
 .volunteer-expanded__below {
-  width: 200px;
+  /*width: 200px;*/
   /*border: 1px solid green;*/
-  clear: left;
-  overflow: hidden;
+  clear: both;
+  text-align: center;
+  /*overflow: hidden;*/
   /*float: left;*/
 }
 
