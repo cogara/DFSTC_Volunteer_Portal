@@ -54,10 +54,12 @@ function MainController($http, $state, $window, UserService, Upload) {
         $state.go('/');
       })
     }
-
     //checks if user is currently logged in on page load
     UserService.checkLoggedIn().then(function(response) {
       console.log(response);
       vm.currentUser = response;
+      UserService.currentUser.user = vm.currentUser;
     });
+
+
   } //end Main Controller

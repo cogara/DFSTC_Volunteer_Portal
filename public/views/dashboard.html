@@ -355,6 +355,11 @@
       </table>
       <label>Number of Volunteers Needed:</label>
       <input type="number" class="form-control" ng-model="dash.editAppointment.event.volunteerSlots" placeholder=5 />
+      Current Volunteers:
+      <ul>
+        <li ng-repeat="volunteer in dash.editAppointment.event.volunteers track by $index">{{volunteer.firstName}} {{volunteer.lastName}}
+        <button ng-click="dash.removeVolunteer($index, dash.editAppointment.event)">Remove from Appointment</button></li>
+      </ul>
       <label>Number of Possible Clients:</label>
       <input type="number" class="form-control" ng-model="dash.editAppointment.event.clientSlots" placeholder=5 />
 
@@ -377,7 +382,7 @@
       <br>
       Ends At: <h4>{{dash.editAppointment.event.endsAt | date: "shortTime"}}</h4>
 
-    <button class="center-block btn btn-default" ng-click="$close(dash.updateAppointment(dash.editAppointment.event))" >Claim Appointment</button>
+    <button class="center-block btn btn-default" ng-click="$close(dash.claimAppointment(dash.editAppointment.event))" >Claim Appointment</button>
     <button class="center-block btn btn-default" ng-click="$close()" >Cancel</button>
 
     </div>

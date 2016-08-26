@@ -9,8 +9,6 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
   vm.currentUser = {};
   vm.currentUser.user = UserService.currentUser.user;
 
-  console.log('isAdmin', UserService.currentUser.user);
-
 
   vm.openProfile = openProfile;
 
@@ -184,6 +182,25 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
     vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', event._id), 1);
   }
 
-  AppointmentService.getAppointments()
+  vm.claimAppointment = function(info){
+    info.volunteers.push(vm.currentUser.user);
+    AppointmentService.updateAppointment(info._id, info);
+    vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', info._id), 1);
+  };
+
+  vm.removeVolunteer = function(index, event){
+    event.volunteers.splice(index, 1);
+    for (var i = vm.showAppointments.appointments.length-1; i >= 0; i--){
+      if (vm.showAppointments.appointments[i]._id == event._id){
+        vm.showAppointments.appointments[i].volunteers.splice(index, 1);
+      }
+    }
+    AppointmentService.updateAppointment(event._id, event);
+
+  }
+
+console.log(UserService.currentUser.user);
+
+  AppointmentService.getAppointments(UserService.currentUser.user);
 
 }; //end DashboardController
