@@ -164,7 +164,7 @@
       </div>
       <div class="volunteer-photo">
         <img ng-if="volunteer.photo" class="image-responsive" ng-src="/photos/{{volunteer.photo}}"/>
-        
+
         <i ng-if="!volunteer.photo" class="fa fa-user icon-image" aria-hidden="true"></i>
       </div>
       <div class="volunteer-info">
@@ -195,66 +195,119 @@
         </div>
       </div>
     </div>
-    <!-- <div> -->
     <div class="volunteer-expanded__right" ng-class="{hide: !(volunteer.expandRight || admin.expandRightAll)}">
-      <h5 class="volunteer-meta__header">Company:</h5>
-        <span>{{volunteer.company}}</span>
+      <h5 class="volunteer-meta__header">Availability:</h5>
+      <table class="table table-availability">
+        <tr>
+          <th></th>
+          <th>Morning</th>
+          <th>Afternoon</th>
+          <th>Evening</th>
+        </tr>
+        <tr>
+          <td>Mon</td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.morning" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.afternoon" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.evening" /></td>
+        </tr>
+        <tr>
+          <td>Tue</td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.morning" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.afternoon" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.evening" /></td>
+        </tr>
+        <tr>
+          <td>Wed</td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.morning"  /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.afternoon" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.evening" /></td>
+        </tr>
+        <tr>
+          <td>Thu</td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.morning"  /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.afternoon" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.evening" /></td>
+        </tr>
+        <tr>
+          <td>Fri</td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.morning"  /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.afternoon" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.evening" /></td>
+        </tr>
+        <tr>
+          <td>Sat</td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.morning"  /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.afternoon" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.evening" /></td>
+        </tr>
+      </table>
+      <!-- <h5 class="volunteer-meta__header">Company:</h5>
+      <span>{{volunteer.company}}</span>
       <h5 class="volunteer-meta__header">Last Appointment:</h5>
-        <span>*INSERT DATE*</span>
+      <span>*INSERT DATE*</span>
       <h5 class="volunteer-meta__header">Opportunities:</h5>
-        <span>
-          <ul>
-            <li class="opportunity" ng-repeat="(opportunity, selected) in volunteer.volunteerOpportunities" ng-if="selected">{{opportunity}}</li>
-          </ul>
-        </span>
+      <span>
+        <ul>
+          <li class="opportunity" ng-repeat="(opportunity, selected) in volunteer.volunteerOpportunities" ng-if="selected">{{opportunity}}</li>
+        </ul>
+      </span> -->
     </div>
     <div class="volunteer-expanded__below" ng-class="{hide: !(volunteer.expandDown || admin.expandDownAll)}">
-      <h5 class="volunteer-meta__header">Availability:</h5>
-      <!-- <div> -->
-        <table class="table table-availability">
-          <tr>
-            <th></th>
-            <th>Morning</th>
-            <th>Afternoon</th>
-            <th>Evening</th>
-          </tr>
-          <tr>
-            <td>Mon</td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.morning" /></td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.afternoon" /></td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.evening" /></td>
-          </tr>
-          <tr>
-            <td>Tue</td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.morning" /></td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.afternoon" /></td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.evening" /></td>
-          </tr>
-          <tr>
-            <td>Wed</td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.morning"  /></td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.afternoon" /></td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.evening" /></td>
-          </tr>
-          <tr>
-            <td>Thu</td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.morning"  /></td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.afternoon" /></td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.evening" /></td>
-          </tr>
-          <tr>
-            <td>Fri</td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.morning"  /></td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.afternoon" /></td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.evening" /></td>
-          </tr>
-          <tr>
-            <td>Sat</td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.morning"  /></td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.afternoon" /></td>
-            <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.evening" /></td>
-          </tr>
-        </table>
+      <h5 class="volunteer-meta__header">Company:</h5>
+      <span>{{volunteer.company}}</span>
+      <h5 class="volunteer-meta__header">Last Appointment:</h5>
+      <span>*INSERT DATE*</span>
+      <h5 class="volunteer-meta__header">Opportunities:</h5>
+      <span>
+        <ul>
+          <li class="opportunity" ng-repeat="(opportunity, selected) in volunteer.volunteerOpportunities" ng-if="selected">{{opportunity}}</li>
+        </ul>
+      </span>
+      <!-- <h5 class="volunteer-meta__header">Availability:</h5>
+      <table class="table table-availability">
+        <tr>
+          <th></th>
+          <th>Morning</th>
+          <th>Afternoon</th>
+          <th>Evening</th>
+        </tr>
+        <tr>
+          <td>Mon</td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.morning" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.afternoon" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.evening" /></td>
+        </tr>
+        <tr>
+          <td>Tue</td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.morning" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.afternoon" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.evening" /></td>
+        </tr>
+        <tr>
+          <td>Wed</td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.morning"  /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.afternoon" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.evening" /></td>
+        </tr>
+        <tr>
+          <td>Thu</td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.morning"  /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.afternoon" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.evening" /></td>
+        </tr>
+        <tr>
+          <td>Fri</td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.morning"  /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.afternoon" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.evening" /></td>
+        </tr>
+        <tr>
+          <td>Sat</td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.morning"  /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.afternoon" /></td>
+          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.evening" /></td>
+        </tr>
+      </table> -->
     </div>
       <!-- </div> -->
     <!-- </div> -->
