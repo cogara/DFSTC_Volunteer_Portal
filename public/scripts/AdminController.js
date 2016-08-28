@@ -20,6 +20,14 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.clearSearchOpp = clearSearchOpp;
   vm.clearSearchAvail = clearSearchAvail;
 
+  vm.printDiv = printDiv;
+  function printDiv(divId) {
+    window.frames["print_frame"].document.body.innerHTML = document.getElementById(divId).innerHTML;
+    // console.log(window.frames["print_frame"].document.body.innerHTML);
+    window.frames["print_frame"].window.focus();
+    window.frames["print_frame"].window.print();
+  }
+
 
   function expandProfile(volunteer, panel) {
     if(panel === 'all') {
@@ -199,7 +207,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
       for (var time in vm.search.avail[day]) {
         if (vm.search.avail[day][time]) {
           vm.searchAvailActive = true;
-          if(volunteer.isAvail[day]) {
+          if(volunteer.isAvail && volunteer.isAvail[day]) {
             if(!volunteer.isAvail[day][time]) {
               return false;
             }
