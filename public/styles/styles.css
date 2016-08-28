@@ -445,4 +445,9 @@
   display:block;
 
 }
+
+.modal-header{
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 /* END SWITCH STYLES */
