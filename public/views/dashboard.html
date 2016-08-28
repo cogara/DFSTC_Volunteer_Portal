@@ -282,7 +282,7 @@
 
 
     <label>Number of Volunteers Needed:</label>
-    <textarea msd-elastic="\n"  class="form-control" ng-model="dash.appointment.volunteerSlots"  />
+    <textarea msd-elastic="\n"  class="form-control" ng-model="dash.announcement.message"  />
 
     </textarea>
 
@@ -477,14 +477,13 @@
 <button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAppointmentModal()" >Add Appointment</button>
 
 Announcements:
-<p>
-  Title
+<p ng-bind="dash.Ann.title">
 </p>
 <p>
-  Date:
+
 </p>
 
 <p>
-  Message
+  Message:
 </p>
 <button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAnnouncementModal()" >Add Announcement</button>

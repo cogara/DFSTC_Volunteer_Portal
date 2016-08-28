@@ -189,6 +189,14 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
     message: ''
   };
 
+  vm.Ann={
+    title: "",
+    message: '',
+    date:new Date()
+  }
+
+  vm.title = "test";
+
 
   vm.addAnnouncementModal = function(){
     var modalInstance = $uibModal.open({
@@ -203,11 +211,20 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
   vm.addAnnouncement = function(){
     console.log(vm.announcement);
     AnnouncementService.addAnnouncement(vm.announcement).then(function(response){
-    //  vm.showAppointments.appointments.push(vm.appointment);
       console.log('add announcement success', response.data);
     }, function(response){
       console.log('add announcement fail', response.data);
     })
   }
+
+  var getAnnouncement = function(){
+    AnnouncementService.getAnnouncement().then(successHandle)
+      function successHandle(res){
+        vm.Ann.title = res[0].title;
+        console.log(res[0].title);
+      };
+
+  }
+ getAnnouncement();
 
 }; //end DashboardController
