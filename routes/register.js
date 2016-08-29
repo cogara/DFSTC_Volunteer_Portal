@@ -41,11 +41,7 @@ router.post('/', upload, function(request, response) {
       info.photo = (request.file) ? request.file.filename : null;
       console.log(info);
       var user = new User(info);
-<<<<<<< HEAD
       console.log('creating user', user);
-=======
-
->>>>>>> master
       user.save(function(err) {
         if(err) {
           console.log(err);

@@ -19,6 +19,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.statusFilter = statusFilter;
   vm.clearSearchOpp = clearSearchOpp;
   vm.clearSearchAvail = clearSearchAvail;
+  vm.registerClient = registerClient;
 
   vm.printDiv = printDiv;
   function printDiv(divId) {
@@ -26,6 +27,11 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     // console.log(window.frames["print_frame"].document.body.innerHTML);
     window.frames["print_frame"].window.focus();
     window.frames["print_frame"].window.print();
+  }
+
+  function registerClient() {
+    vm.registerUser.isClient = true;
+    UserService.register(vm.registerUser);
   }
 
 

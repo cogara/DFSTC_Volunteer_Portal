@@ -11,7 +11,6 @@ function UserService($http, Upload) {
   }
 
   function register(user) {
-    console.log(user);
     return Upload.upload({
       url: '/register',
       data: user

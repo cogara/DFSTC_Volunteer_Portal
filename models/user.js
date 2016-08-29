@@ -34,9 +34,9 @@ var UserSchema = new Schema(
     isAvail: Object,
     volunteerOpportunities: Object,
 //client info
-    altContactName: String,
-    altContactPh: Number,
-    altContactRel: String,
+    altContactName: String, //
+    altContactPh: Number, //
+    altContactRel: String, //
     age: Number,
     height: Number,
     topSize: String,

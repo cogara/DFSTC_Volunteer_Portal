@@ -1,59 +1,110 @@
-<!-- <div class="row">
-  <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3">
-    <img style="width: 100%; max-width: 500px" class="center-block " src="../images/DFS_TwinCities-resized.jpg"/>
-  </div>
-</div> -->
-<hr />
-<div class="clear">
-  <a ui-sref="/">Back</a>
-</div>
 <div class="panel panel-default col-sm-8 col-sm-offset-2">
-  <h3 class="center-block">Register to Volunteer</h3>
+  <h3 class="center-block">Client Registration</h3>
   <form class="form-horizontal">
       <div class="form-group">
         <label class="col-md-3">E-mail address: <span style="display: block; font-size: 1rem; font-weight: normal;">(this will be your login username)</span></label>
         <div class="col-md-9">
-          <input type="text" class="form-control" ng-model="main.registerUser.email" placeholder="E-mail Address" />
+          <input type="text" class="form-control" ng-model="admin.registerUser.email" placeholder="E-mail Address" />
         </div>
       </div>
       <div class="form-group">
         <label class="col-md-3">Password:</label>
         <div class="col-md-9">
-          <input type="password" class="form-control" ng-model="main.registerUser.password" placeholder="Password" />
+          <input type="password" class="form-control" ng-model="admin.registerUser.password" placeholder="Password" />
         </div>
       </div>
       <div class="form-group">
         <label class="col-md-3">First Name:</label>
         <div class="col-md-9">
-          <input type="text" class="form-control" ng-model="main.registerUser.firstName" placeholder="First Name" />
+          <input type="text" class="form-control" ng-model="admin.registerUser.firstName" placeholder="First Name" />
         </div>
       </div>
       <div class="form-group">
         <label class="col-md-3">Last Name:</label>
         <div class="col-md-9">
-          <input type="text" class="form-control" ng-model="main.registerUser.lastName" placeholder="Last Name" />
+          <input type="text" class="form-control" ng-model="admin.registerUser.lastName" placeholder="Last Name" />
         </div>
       </div>
       <div class="form-group">
         <label class="col-md-3">Phone Number:</label>
         <div class="col-md-9">
-          <input class="form-control" type="tel" ng-model="main.registerUser.phoneNumber" ui-mask="(999) 999-9999" />
+          <input class="form-control" type="tel" ng-model="admin.registerUser.phoneNumber" ui-mask="(999) 999-9999" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3">Alternate Contact Name:</label>
+        <div class="col-md-9">
+          <input class="form-control" type="text" ng-model="admin.registerUser.altContactName" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3">Alternate Contact Phone:</label>
+        <div class="col-md-9">
+          <input class="form-control" type="tel" ng-model="admin.registerUser.altContactPh" ui-mask="(999) 999-9999" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3">Alternate Contact Relationship:</label>
+        <div class="col-md-9">
+          <input class="form-control" type="text" ng-model="admin.registerUser.altContactRel"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3">Age:</label>
+        <div class="col-md-9">
+          <input class="form-control" type="number" ng-model="admin.registerUser.age"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3">Height:</label>
+        <div class="col-md-9">
+          <input class="form-control" type="number" ng-model="admin.registerUser.height"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3">Top Size:</label>
+        <div class="col-md-9">
+          <input class="form-control" type="text" ng-model="admin.registerUser.topSize"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3">Bottom Size:</label>
+        <div class="col-md-9">
+          <input class="form-control" type="text" ng-model="admin.registerUser.bottomSize"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3">Shoe Size:</label>
+        <div class="col-md-9">
+          <input class="form-control" type="text" ng-model="admin.registerUser.shoeSize"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3">Restrictions:</label>
+        <div class="col-md-9">
+          <input class="form-control" type="text" ng-model="admin.registerUser.shoeSize"/>
         </div>
       </div>
       <div class="form-group">
         <label class="col-md-3">Address:</label>
         <div class="col-md-9">
-          <input type="text" class="form-control" ng-model="main.registerUser.address.addressOne" placeholder="Address Line 1" />
-          <input type="text" class="form-control" ng-model="main.registerUser.address.addressTwo" placeholder="Address Line 2" />
-          <input type="text" class="form-control" ng-model="main.registerUser.address.city" placeholder="City" />
-          <input type="text" class="form-control" ng-model="main.registerUser.address.state" placeholder="State" />
-          <input type="text" class="form-control" ng-model="main.registerUser.address.zip" placeholder="Zip Code" />
+          <input type="text" class="form-control" ng-model="admin.registerUser.address.addressOne" placeholder="Address Line 1" />
+          <input type="text" class="form-control" ng-model="admin.registerUser.address.addressTwo" placeholder="Address Line 2" />
+          <input type="text" class="form-control" ng-model="admin.registerUser.address.city" placeholder="City" />
+          <input type="text" class="form-control" ng-model="admin.registerUser.address.state" placeholder="State" />
+          <input type="text" class="form-control" ng-model="admin.registerUser.address.zip" placeholder="Zip Code" />
         </div>
       </div>
       <div class="form-group">
         <label class="col-md-3">Employer:</label>
         <div class="col-md-9">
-          <input type="text" class="form-control" ng-model="main.registerUser.company" placeholder="Company" />
+          <input type="text" class="form-control" ng-model="admin.registerUser.company" placeholder="Company" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3">Job Title:</label>
+        <div class="col-md-9">
+          <input type="text" class="form-control" ng-model="admin.registerUser.jobTitle" placeholder="Company" />
         </div>
       </div>
       <div class="form-group">
@@ -62,20 +113,21 @@
           <input
               type="file"
               ngf-select
-              ng-model="main.registerUser.photo"
+              ng-model="admin.registerUser.photo"
               name="photo"
               ngf-pattern="'image/*'"
               accept="image/*"
               ngf-max-size="4MB"
               />
-           Image thumbnail: <img style="width:100px;" ngf-thumbnail="main.registerUser.photo || '/thumb.jpg'"/>
-           <i ng-show="main.registerUser.photo.$error.required">*required</i><br>
-           <i ng-show="main.registerUser.photo.$error.maxSize">File too large
-           {{main.registerUser.photo.size / 1000000|number:1}}MB: max 4M</i>
-           <!-- <button type="submit" ng-click="main.submit()">Submit</button> -->
-           <!-- <p>{{main.progress}} -->
+           Image thumbnail: <img style="width:100px;" ngf-thumbnail="admin.registerUser.photo || '/thumb.jpg'"/>
+           <i ng-show="admin.registerUser.photo.$error.required">*required</i><br>
+           <i ng-show="admin.registerUser.photo.$error.maxSize">File too large
+           {{admin.registerUser.photo.size / 1000000|number:1}}MB: max 4M</i>
+           <!-- <button type="submit" ng-click="admin.submit()">Submit</button> -->
+           <!-- <p>{{admin.progress}} -->
         </div>
       </div>
-    <button class="center-block btn btn-default" ng-click="main.register('client')" >Register Now!</button>
+    <button class="center-block btn btn-default" ng-click="admin.registerClient()" >Register Now!</button>
   </form>
 </div>
+<div class="clear"></div>
