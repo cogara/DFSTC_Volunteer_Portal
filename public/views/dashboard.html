@@ -198,7 +198,7 @@
                       </p>
                     </span>
                   </div>
-                  
+
                 </div>
               </div>
             </div>
@@ -367,7 +367,7 @@
 
 
     <label>Number of Volunteers Needed:</label>
-    <textarea msd-elastic="\n"  class="form-control" ng-model="dash.announcement.message"  />
+    <textarea msd-elastic="<br>"  class="form-control" ng-model="dash.announcement.message"  />
 
     </textarea>
 
@@ -567,10 +567,15 @@
   </p>
 
   <h4>Date:</h4>
-  <p ng-bind="dash.Ann.date.toLocaleString()"></p>
+  <p ng-bind="dash.Ann.date"></p>
 
   <h4>Message:</h4>
-  <p ng-bind="dash.Ann.message"></p>
+  <p>
+    <pre>
+      {{dash.Ann.message}}
+    </pre>
+  </p>
+
 </div>
 
 <button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAnnouncementModal()" >Add Announcement</button>

@@ -1,10 +1,6 @@
 angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
 
-<<<<<<< HEAD
 function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig, AnnouncementService, moment) {
-=======
-function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig, moment) {
->>>>>>> master
   var vm = this;
 
   vm.showAppointments = AppointmentService.appointments;
