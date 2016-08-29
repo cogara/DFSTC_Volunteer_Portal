@@ -1,4 +1,4 @@
-<div class="col-sm-6">
+<div class="col-sm-6 hide-print">
   <div><h5 style="display: inline-block">Filter:</h5> <a href="#" ng-click="admin.resetSearch()"><h6 style="display: inline-block">Clear Search</h6></a></div>
   <div class="btn-group" uib-dropdown is-open="admin.oppDropdownOpen" auto-close="outsideClick">
     <button id="opportunity-search"
@@ -148,7 +148,11 @@
   <div class="toggle-switch">
     Show Availability <switch off="No" on="Yes" ng-model="admin.expandRightAll" class="green"></switch>
   </div>
+  <div class="print-list">
+    <a href="#" ng-click="admin.printDiv('print-volunteers')"><i class="fa fa-print fa-2x"></i></a>
+  </div>
 </div>
+
 <!-- Start volunteer list -->
 <div class="volunteers">
   <div
@@ -240,16 +244,6 @@
           <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.evening" /></td>
         </tr>
       </table>
-      <!-- <h5 class="volunteer-meta__header">Company:</h5>
-      <span>{{volunteer.company}}</span>
-      <h5 class="volunteer-meta__header">Last Appointment:</h5>
-      <span>*INSERT DATE*</span>
-      <h5 class="volunteer-meta__header">Opportunities:</h5>
-      <span>
-        <ul>
-          <li class="opportunity" ng-repeat="(opportunity, selected) in volunteer.volunteerOpportunities" ng-if="selected">{{opportunity}}</li>
-        </ul>
-      </span> -->
     </div>
     <div class="volunteer-expanded__below" ng-class="{hide: !(volunteer.expandDown || admin.expandDownAll)}">
       <h5 class="volunteer-meta__header">Company:</h5>
@@ -258,57 +252,150 @@
       <span>*INSERT DATE*</span>
       <h5 class="volunteer-meta__header">Opportunities:</h5>
       <span>
-        <ul>
-          <li class="opportunity" ng-repeat="(opportunity, selected) in volunteer.volunteerOpportunities" ng-if="selected">{{opportunity}}</li>
+        <ul style="text-align: left; display: inline-block">
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.imageCoach">Image Coach</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.careerCoach">Career Coach</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.clothingSorter">Clothing Sorter</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.clothingOrganizer">Clothing Organizer</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.frontDesk">Front Desk Volunteer</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.clothingSale">Clothing Sale Volunteer</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.clothingSaleCaptain">Clothing Sale Captain</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.careerAdvocate">Career Advocate</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.intelligenceMentor">Intelligence Mentor</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.intelligenceMuse">Intelligence Muse</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.communityAmbassador">Community Ambassador</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.eventSetUp">Client Event Set Up Volunteer</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.photographer">Event Photographer</li>
+          <li class="opportunity" ng-if="volunteer.volunteerOpportunities.graphicDesigner">Graphic Designer</li>
         </ul>
       </span>
-      <!-- <h5 class="volunteer-meta__header">Availability:</h5>
-      <table class="table table-availability">
-        <tr>
-          <th></th>
-          <th>Morning</th>
-          <th>Afternoon</th>
-          <th>Evening</th>
-        </tr>
-        <tr>
-          <td>Mon</td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.morning" /></td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.afternoon" /></td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.monday.evening" /></td>
-        </tr>
-        <tr>
-          <td>Tue</td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.morning" /></td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.afternoon" /></td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.tuesday.evening" /></td>
-        </tr>
-        <tr>
-          <td>Wed</td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.morning"  /></td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.afternoon" /></td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.wednesday.evening" /></td>
-        </tr>
-        <tr>
-          <td>Thu</td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.morning"  /></td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.afternoon" /></td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.thursday.evening" /></td>
-        </tr>
-        <tr>
-          <td>Fri</td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.morning"  /></td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.afternoon" /></td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.friday.evening" /></td>
-        </tr>
-        <tr>
-          <td>Sat</td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.morning"  /></td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.afternoon" /></td>
-          <td><input type="checkbox" disabled ng-model="volunteer.isAvail.saturday.evening" /></td>
-        </tr>
-      </table> -->
     </div>
-      <!-- </div> -->
-    <!-- </div> -->
   </div>
 </div>
+
+<!-- PRINT VIEW -->
+<div id="print-volunteers">
+  <style>
+    #print-volunteers {
+      margin: 0 auto;
+      /*width: 8in;*/
+      display: none;
+    }
+    .print-volunteer-list {
+      padding: 0;
+    }
+
+    .print-volunteer,
+    .print-volunteer-list-headers {
+      display: flex;
+    }
+    .print-name,
+    .print-email,
+    .print-name-header,
+    .print-email-header {
+      flex: 1 0;
+      /*border: 1px solid rgba(0,0,0,.3);*/
+    }
+
+    .print-status-header,
+    .print-role-header,
+    .print-status,
+    .print-role {
+      flex: 0 10%;
+      /*border: 1px solid rgba(0,0,0,.3);*/
+      text-align: center;
+    }
+
+    .print-phone,
+    .print-phone-spacer {
+      flex: 0 auto;
+      position: relative;
+      /*border: 1px solid rgba(0,0,0,.3);*/
+      white-space: nowrap;
+    }
+
+    .print-phone-header {
+      position: absolute;
+    }
+
+    .print-name-header,
+    .print-email-header,
+    .print-phone-header,
+    .print-status-header,
+    .print-role-header {
+      text-transform: uppercase;
+      /*font-weight: bold;*/
+    }
+
+    .print-trainee {
+      color: rgb(50,50,255);
+    }
+
+    .print-inactive {
+      color: rgb(255,50,50);
+    }
+    .print-volunteer-list li {
+      border-top: 1px solid rgba(0,0,0,.3);
+    }
+    .print-volunteer-list li:last-child {
+      border-bottom: 1px solid rgba(0,0,0,.3);
+    }
+    .print-volunteer-list li:first-child {
+      background-color: rgb(100,100,100);
+      color: white;
+    }
+    .print-volunteer-list li:nth-child(2n+3) {
+      background-color: rgb(240,240,240);
+    }
+
+    .print-volunteer-list li:first-child div {
+      padding: 5px;
+    }
+
+    .print-volunteer-list li div {
+      padding: 1px 5px;
+      font-size: .9em;
+      border-left: 1px solid rgba(0,0,0,.3);
+    }
+    .print-volunteer-list li div:last-child {
+      border-right: 1px solid rgba(0,0,0,.3);
+    }
+
+    .print-container {
+      /*padding: .25in;*/
+    }
+
+
+  </style>
+  <div class="print-container">
+    <h3 class="print-test">Dress for Success Twin Cities Volunteers</h3>
+    <div class="print-inactive"> Red / [ ! ] - Volunteer is inactive</div>
+    <div class="print-trainee"> Blue / [ * ] - Volunteer is a Trinee</div>
+    <ul class="print-volunteer-list">
+      <li class="print-volunteer-list-headers">
+        <div class="print-name-header">Name</div>
+        <div class="print-email-header">Email</div>
+        <div class="print-phone-spacer"><span class="print-phone-header">Phone #</span><span style="color: transparent">{{5555555555 | PhoneFormat}}</span></div>
+        <!-- <div class="print-status-header">Inactive</div>
+        <div class="print-role-header">Trainee</div> -->
+      </li>
+      <li class="print-volunteer"
+        ng-repeat="volunteer in admin.volunteers | orderBy:[admin.sortOrder, admin.sortDefault, admin.sortLast]:admin.sortReverse | filter: admin.search.input | filter: admin.roleFilter | filter: admin.availableFilter | filter: admin.opportunityFilter | filter: admin.statusFilter"
+        ng-class="{'print-trainee': volunteer.isTrainee, 'print-inactive': !volunteer.isActive}">
+        <div class="print-name">
+          {{volunteer.firstName}} {{volunteer.lastName}}
+          <span ng-if="!volunteer.isActive">[ ! ]</span>
+          <span ng-if="volunteer.isTrainee">[ * ]</span>
+        </div>
+        <div class="print-email">
+          {{volunteer.email}}
+        </div>
+        <div class="print-phone">
+          {{volunteer.phoneNumber | PhoneFormat}}<span ng-if="!volunteer.phoneNumber" style="color: transparent">{{5555555555 | PhoneFormat}}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<iframe id="print-frame" name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
+<!-- END PRINT VIEW -->

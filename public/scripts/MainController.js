@@ -5,14 +5,16 @@ function MainController($http, $state, $window, UserService, Upload) {
   vm.login = login;
   vm.register = register;
   vm.logout = logout;
-  //temp for QOL
+  //temp for QOL testing
   vm.loginUser = {};
-  // vm.loginUser.email = 'test';
-  // vm.loginUser.password = 'test';
+  vm.loginUser.email = 'test';
+  vm.loginUser.password = 'test';
+
   function register() {
     UserService.register(vm.registerUser).then(function() {
+      vm.registerUser = {};
       UserService.login(vm.registerUser).then(function(response) {
-        console.log('registering, go?');
+        vm.loginUser = {};
         vm.currentUser = response;
         $state.go('dashboard');
       });
@@ -21,8 +23,8 @@ function MainController($http, $state, $window, UserService, Upload) {
 
   function login() {
     UserService.login(vm.loginUser).then(function(response) {
+      vm.loginUser = {};
       vm.currentUser = response;
-      console.log('going to dashboard');
       $state.go('dashboard');
     }, function() {
       vm.currentUser = null;
