@@ -68,7 +68,7 @@
                 <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.address.zip" placeholder="Zip Code" />
               </div>
             </div>
-            <div class="form-group">
+            <div ng-if="prof.profile.isTrainee || prof.profile.isVolunteer" class="form-group">
               <label class="col-md-3">Volunteer positions you are interested in:</label>
               <div class="col-md-9">
                 <div class="checkbox panel panel-default col-md-12" style="padding: 10px 30px">
@@ -198,12 +198,12 @@
                       </p>
                     </span>
                   </div>
-                  
+
                 </div>
               </div>
             </div>
-            <label>Please select your availability:</label>
-            <table class="table table-hover">
+            <label ng-if="prof.profile.isTrainee || prof.profile.isVolunteer">Please select your availability:</label>
+            <table ng-if="prof.profile.isTrainee || prof.profile.isVolunteer" class="table table-hover">
               <tr>
                 <th>Time of Day</th>
                 <th>Monday</th>
@@ -245,6 +245,12 @@
               <label class="col-md-3">Employer:</label>
               <div class="col-md-9">
                 <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.company" placeholder="Company" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3">Job Title:</label>
+              <div class="col-md-9">
+                <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.jobTitle" placeholder="Company" />
               </div>
             </div>
             <div class="form-group">

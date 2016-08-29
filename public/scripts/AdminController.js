@@ -24,7 +24,6 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.printDiv = printDiv;
   function printDiv(divId) {
     window.frames["print_frame"].document.body.innerHTML = document.getElementById(divId).innerHTML;
-    // console.log(window.frames["print_frame"].document.body.innerHTML);
     window.frames["print_frame"].window.focus();
     window.frames["print_frame"].window.print();
   }
@@ -33,7 +32,6 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.registerUser.isClient = true;
     UserService.register(vm.registerUser);
   }
-
 
   function expandProfile(volunteer, panel) {
     if(panel === 'all') {
