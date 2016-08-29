@@ -142,7 +142,6 @@
 .toggle-switch {
   display: inline-block;
   padding: 7px 5px;
-  /*line-height: 30px;*/
   background-color: rgb(240,240,240);
   border-radius: 5px;
 }
@@ -445,4 +444,25 @@
   display:block;
 
 }
+
+.modal-header{
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 /* END SWITCH STYLES */
+
+
+/* PRINT STYLES */
+
+.print-list {
+  float: right;
+  padding: 7px 10px;
+}
+
+.print-list a {
+  color: black;
+}
+
+.print-list a:hover {
+  color: rgb(100,100,100);
+}

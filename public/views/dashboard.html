@@ -475,15 +475,17 @@
 </div>
 
 <button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAppointmentModal()" >Add Appointment</button>
+<div class="">
+  <h3>Announcements:</h3>
+  <h4>Title</h4>
+  <p ng-bind="dash.Ann.title">
+  </p>
 
-Announcements:
-<p ng-bind="dash.Ann.title">
-</p>
-<p>
+  <h4>Date:</h4>
+  <p ng-bind="dash.Ann.date.toLocaleString()"></p>
 
-</p>
+  <h4>Message:</h4>
+  <p ng-bind="dash.Ann.message"></p>
+</div>
 
-<p>
-  Message:
-</p>
 <button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAnnouncementModal()" >Add Announcement</button>

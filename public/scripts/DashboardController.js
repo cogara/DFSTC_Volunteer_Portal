@@ -221,7 +221,8 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
     AnnouncementService.getAnnouncement().then(successHandle)
       function successHandle(res){
         vm.Ann.title = res[0].title;
-        console.log(res[0].title);
+        vm.Ann.message = res[0].message;
+        vm.Ann.date = res[0].date;
       };
 
   }
