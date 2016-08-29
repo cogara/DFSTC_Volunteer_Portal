@@ -10,6 +10,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const env = require('dotenv').config();
 const moment = require('moment');
 const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
 
 //ROUTE AND MODEL IMPORTS
 const User = require('./models/user.js');
@@ -109,6 +111,10 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use('/photos/', express.static('userImages'));
+app.get('/photo/:id', function(request, response) {
+  console.log(request.params.id);
+  response.sendFile(path.join(__dirname, 'userImages', request.params.id));
+})
 //ROUTES
 app.use('/register', register);
 app.use('/login', login);
@@ -119,7 +125,7 @@ app.get('/logout', function(request, response) {
 app.use('/api', api);
 app.use('*', index);
 
-app.use('/', index);
+// app.use('/', index);
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, function() {

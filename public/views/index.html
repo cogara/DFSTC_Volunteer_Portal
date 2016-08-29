@@ -54,5 +54,16 @@
     </div>
 
     <img ng-src="/photos/{{main.currentUser.photo}}" width="100px;"/>
+    <script>
+      var printCSS = '<meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />' +
+                    '<link rel="stylesheet" href="/styles/printstyles.css" />'
+      function printDiv(divId) {
+          window.frames["print_frame"].document.body.innerHTML = printCSS + document.getElementById(divId).innerHTML;
+          // console.log(window.frames["print_frame"].document.body.innerHTML);
+          window.frames["print_frame"].window.focus();
+          window.frames["print_frame"].window.print();
+      }
+    </script>
+
   </body>
 </html>
