@@ -80,6 +80,15 @@
   width: 100%;
 }
 
+.icon-modal {
+  font-size: 10em;
+  width: 100%;
+  padding: 20px 0;
+  border: 1px solid rgba(50,50,50,.1);
+  text-align: center;
+  border-radius: 5px;
+}
+
 .profile-control-header {
   text-transform: uppercase;
   text-align: center;
@@ -322,6 +331,7 @@
   font-size: 10rem;
   transform: translateY(25%);
 }
+
 
 .volunteer-info, .volunteer-action {
   padding: 0 10px;

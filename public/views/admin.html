@@ -63,8 +63,8 @@
         </form>
         <div class="col-sm-6">
           <img ng-if="prof.profile.photo" style="border-radius: 5px 5px 0 0" class="image-responsive" ng-src="/photos/{{prof.profile.photo}}" download="{{prof.profile.firstName}}"/>
-          <i ng-if="!prof.profile.photo" class="fa fa-user icon-image" aria-hidden="true"></i>
-          <div class="photo-action">
+          <i ng-if="!prof.profile.photo" class="fa fa-user icon-modal" aria-hidden="true"></i>
+          <div ng-if="prof.profile.photo" class="photo-action">
             <a style="float: left" ng-href="/photo/{{prof.profile.photo}}" target="_blank">
               View Full Size <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
             </a>
