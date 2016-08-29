@@ -18,18 +18,38 @@ var UserSchema = new Schema(
       city: String,
       zip: String
     },
-    company: String,
-    pastCompanies: Object,
     isVolunteer: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
     isSuperAdmin: {type:Boolean, default: false},
-    isTrainee: {type: Boolean, default: true},
-    isAvail: Object,
+    isTrainee: {type: Boolean, default: false},
+    isClient: {type: Boolean, default: false},
+    isCaseWorker: {type: Boolean, default: false},
     lastLogin: Date,
-    volunteerOpportunities: Object,
     photo: String,
     isActive: {type: Boolean, default: true},
-    inactiveMessage: String
+    inactiveMessage: String,
+    company: String,
+//volunteer info
+    pastCompanies: Object,
+    isAvail: Object,
+    volunteerOpportunities: Object,
+//client info
+    altContactName: String,
+    altContactPh: Number,
+    altContactRel: String,
+    age: Number,
+    height: Number,
+    topSize: String,
+    bottomSize: String,
+    shoeSize: String,
+    restrictions: String,
+    interviewStartDate: Date,
+    employmentStartDate: Date,
+    internshipStartDate: Date,
+    jobTitle: String,
+    schedulingRestrictions: String,
+//case worker info
+    clients: Object
   }
 );
 
