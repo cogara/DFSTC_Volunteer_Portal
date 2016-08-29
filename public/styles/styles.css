@@ -364,6 +364,7 @@
   padding: 2px 5px;
   background-color: rgba(255,255,255,.8);
   color: blue;
+  z-index: 3;
   text-align: left;
 }
 
