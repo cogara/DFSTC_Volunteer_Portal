@@ -2,6 +2,16 @@ angular.module('DfstcSchedulingApp').controller('DashboardController', Dashboard
 
 function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig, moment) {
   var vm = this;
+  for (var i = 0; i<AppointmentService.appointments.length; i++){
+    console.log('Checking appointments in controller!');
+    for (var j = 0; j<AppointmentService.appointments[i].volunteers.length; j++){
+    if(AppointmentService.apppointments[i].volunteers[j]._id == UserService.checkLoggedIn._id){
+      AppointmentService.appointments[i].color = calendarConfig.colorTypes.info;
+    } else {
+      AppointmentService.appointments[i].color = calendarConfig.colorTypes.warn;
+    }
+    }
+  }
 
   vm.showAppointments = AppointmentService.appointments;
   vm.editAppointment = {};
@@ -180,7 +190,18 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
     AppointmentService.deleteAppointment(event._id);
     vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', event._id), 1);
   }
-
+  // Checks the pulled appointments to see if the current user is assigned, then colors Appts
+  
   AppointmentService.getAppointments()
+  for (var i = 0; i<AppointmentService.appointments.length; i++){
+    console.log('Checking appointments in controller!');
+    for (var j = 0; j<AppointmentService.appointments[i].volunteers.length; j++){
+    if(AppointmentService.apppointments[i].volunteers[j]._id == UserService.checkLoggedIn._id){
+      AppointmentService.appointments[i].color = calendarConfig.colorTypes.info;
+    } else {
+      AppointmentService.appointments[i].color = calendarConfig.colorTypes.warn;
+    }
+    }
+  }
 
 }; //end DashboardController

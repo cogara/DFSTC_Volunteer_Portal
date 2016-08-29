@@ -23,8 +23,18 @@ function AppointmentService($http, calendarConfig, moment){
       for (var i = 0; i < response.data.length; i++) {
         response.data[i].startsAt = new Date(response.data[i].startsAt);
         response.data[i].endsAt = new Date(response.data[i].endsAt);
-        response.data[i].color = calendarConfig.colorTypes.info;
-        response.data[i].incrementsBadgeTotal = false;
+        // response.data[i].color = calendarConfig.colorTypes.info;
+        // response.data[i].incrementsBadgeTotal = false;
+        for (var i = 0; i<AppointmentService.appointments.length; i++){
+          console.log('Checking appointments in controller!');
+          for (var j = 0; j<AppointmentService.appointments[i].volunteers.length; j++){
+          if(AppointmentService.apppointments[i].volunteers[j]._id == UserService.checkLoggedIn._id){
+            AppointmentService.appointments[i].color = calendarConfig.colorTypes.info;
+          } else {
+            AppointmentService.appointments[i].color = calendarConfig.colorTypes.warn;
+          }
+          }
+        }
       }
       return response.data;
     }, function(response){
