@@ -97,7 +97,7 @@ dateF.second = 40;
 console.log(dateF);
 
 //TODO: add back in to send emails
-//schedule.scheduleJob(dateF,mailerR);
+schedule.scheduleJob(dateF,mailerR);
 
 app.use(passport.initialize());
 app.use(passport.session());
