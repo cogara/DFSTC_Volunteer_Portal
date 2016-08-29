@@ -89,6 +89,7 @@ passport.deserializeUser(function(id, done) {
   })
 })
 
+// the reminders are sent out at midnight
 var dateF = new schedule.RecurrenceRule();
 dateF.second = 40;
 dateF.minute = 00;
