@@ -90,12 +90,13 @@ passport.deserializeUser(function(id, done) {
 })
 
 var dateF = new schedule.RecurrenceRule();
-//dateF.second = 0;
+dateF.second = 40;
 // dateF.minute = 49;
 // dateF.hour =14;
 // dateF.dayOfWeek = 2;
+console.log(dateF);
 
-//TODO: add back in to send emails 
+//TODO: add back in to send emails
 //schedule.scheduleJob(dateF,mailerR);
 
 app.use(passport.initialize());
