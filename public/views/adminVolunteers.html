@@ -166,7 +166,7 @@
         <button class="btn btn-primary btn-xs" style="float: right" ng-click="admin.trainingComplete(volunteer)">Approve Trainee</button>
       </div>
       <div class="volunteer-photo">
-        <img ng-if="volunteer.photo" class="image-responsive" ng-src="/photos/{{volunteer.photo}}"/>
+        <img ng-if="volunteer.photo" ng-src="/photos/{{volunteer.photo}}"/>
 
         <i ng-if="!volunteer.photo" class="fa fa-user icon-image" aria-hidden="true"></i>
       </div>
@@ -252,7 +252,7 @@
       <span>*INSERT DATE*</span>
       <h5 class="volunteer-meta__header">Opportunities:</h5>
       <span>
-        <ul style="text-align: left; display: inline-block">
+        <ul style="display: inline-block">
           <li class="opportunity" ng-if="volunteer.volunteerOpportunities.imageCoach">Image Coach</li>
           <li class="opportunity" ng-if="volunteer.volunteerOpportunities.careerCoach">Career Coach</li>
           <li class="opportunity" ng-if="volunteer.volunteerOpportunities.clothingSorter">Clothing Sorter</li>
