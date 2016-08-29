@@ -1,7 +1,17 @@
 angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
 
-function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig) {
+function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig, moment) {
   var vm = this;
+  for (var i = 0; i<AppointmentService.appointments.length; i++){
+    console.log('Checking appointments in controller!');
+    for (var j = 0; j<AppointmentService.appointments[i].volunteers.length; j++){
+    if(AppointmentService.apppointments[i].volunteers[j]._id == UserService.checkLoggedIn._id){
+      AppointmentService.appointments[i].color = calendarConfig.colorTypes.info;
+    } else {
+      AppointmentService.appointments[i].color = calendarConfig.colorTypes.warn;
+    }
+    }
+  }
 
   vm.showAppointments = AppointmentService.appointments;
   vm.editAppointment = {};
@@ -73,12 +83,14 @@ console.log('mine', AppointmentService.myAppointments.scheduled);
 
   vm.appointment={
     title: "Image Coach Appointment",
+    color: calendarConfig.colorTypes.special,
     startsAt: '',
     endsAt: '',
     volunteerSlots: 5,
     clientSlots: 5,
     trainingAppointment: false,
-    volunteers: []
+    volunteers: [],
+    incrementsBadgeTotal: false
   };
 
   vm.today = function() {
@@ -204,6 +216,18 @@ console.log('mine', AppointmentService.myAppointments.scheduled);
 
 console.log(UserService.currentUser.user);
 
-  AppointmentService.getAppointments(UserService.currentUser.user);
+  // Checks the pulled appointments to see if the current user is assigned, then colors Appts
+
+  AppointmentService.getAppointments(UserService.currentUser.user)
+  // for (var i = 0; i<AppointmentService.appointments.length; i++){
+  //   console.log('Checking appointments in controller!');
+  //   for (var j = 0; j<AppointmentService.appointments[i].volunteers.length; j++){
+  //   if(AppointmentService.apppointments[i].volunteers[j]._id == UserService.checkLoggedIn._id){
+  //     AppointmentService.appointments[i].color = calendarConfig.colorTypes.info;
+  //   } else {
+  //     AppointmentService.appointments[i].color = calendarConfig.colorTypes.warn;
+  //   }
+  //   }
+  // }
 
 }; //end DashboardController
