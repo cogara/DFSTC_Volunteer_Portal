@@ -8,8 +8,10 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
   vm.editAppointment.event = AppointmentService.updateEvent.event;
   vm.currentUser = {};
   vm.currentUser.user = UserService.currentUser.user;
+  vm.myAppointments = {};
+  vm.myAppointments = AppointmentService.myAppointments.scheduled;
 
-
+console.log('mine', AppointmentService.myAppointments.scheduled);
   vm.openProfile = openProfile;
 
   vm.profileToggle = false;
@@ -146,6 +148,7 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   vm.eventClicked = function(calendarEvent){
     console.log(calendarEvent);
+    AppointmentService.myAppointments.scheduled = [];
     AppointmentService.updateEvent.event = calendarEvent;
     var modalInstance = $uibModal.open({
       animation: true,

@@ -382,7 +382,7 @@
       <br>
       Ends At: <h4>{{dash.editAppointment.event.endsAt | date: "shortTime"}}</h4>
 
-    <button class="center-block btn btn-default" ng-click="$close(dash.claimAppointment(dash.editAppointment.event))" >Claim Appointment</button>
+    <button class="center-block btn btn-default" ng-if="dash." ng-click="$close(dash.claimAppointment(dash.editAppointment.event))" >Claim Appointment</button>
     <button class="center-block btn btn-default" ng-click="$close()" >Cancel</button>
 
     </div>
@@ -452,16 +452,7 @@
     <uib-tabset class="admin-menu">
       <uib-tab heading="Appointments Selected">
         <ul class="sidebar-list">
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
+          <li ng-repeat="appointment in dash.myAppointments track by $index" ng-click="dash.eventClicked(appointment[0])">{{appointment[0].startsAt | date: "shortDate"}} - {{appointment[0].title}}, {{appointment[0].startsAt | date: "shortTime"}}</li>
         </ul>
       </uib-tab>
       <uib-tab heading="High Priority Appts">

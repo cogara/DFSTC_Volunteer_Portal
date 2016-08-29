@@ -4,6 +4,8 @@ function AppointmentService($http){
 
   var appointments = {};
   var updateEvent = {};
+  var myAppointments = {};
+  myAppointments.scheduled = [];
 
   function addAppointment(appointment){
     console.log(appointment);
@@ -26,14 +28,17 @@ function AppointmentService($http){
             response.data.splice(i, 1);
           }
         }
-
+console.log('appt service response', response.data);
         for (var j = 0; j < response.data.length; j++){
           for (var k = response.data[j].volunteers.length-1; k >= 0; k--){
-            if (response.data[j].volunteers[k]._id == user._id){
-              response.data.splice(j, 1);
+            if (response.data[j].volunteers.length > 0){
+              if (response.data[j].volunteers[k]._id == user._id){
+                myAppointments.scheduled.push(response.data.splice(j, 1));
+              }
             }
           }
         }
+        console.log('appointment service', myAppointments.scheduled);
       }
 
       appointments.appointments = response.data;
@@ -69,7 +74,8 @@ function updateAppointment(appointmentId, appointmentUpdate){
     appointments: appointments,
     deleteAppointment: deleteAppointment,
     updateAppointment: updateAppointment,
-    updateEvent: updateEvent
+    updateEvent: updateEvent,
+    myAppointments: myAppointments
   }
 
 } //end AppointmentService
