@@ -1,6 +1,10 @@
 angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
 
-function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig, AnnouncementService) {
+<<<<<<< HEAD
+function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig, AnnouncementService, moment) {
+=======
+function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig, moment) {
+>>>>>>> master
   var vm = this;
 
   vm.showAppointments = AppointmentService.appointments;
@@ -69,11 +73,13 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   vm.appointment={
     title: "Image Coach Appointment",
+    color: calendarConfig.colorTypes.special,
     startsAt: '',
     endsAt: '',
     volunteerSlots: 5,
     clientSlots: 5,
-    trainingAppointment: false
+    trainingAppointment: false,
+    incrementsBadgeTotal: false
   };
 
   vm.today = function() {
