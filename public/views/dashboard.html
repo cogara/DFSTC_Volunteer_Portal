@@ -373,7 +373,7 @@
     </div>
   </div>
 
-<!-- volunteer claim form -->
+<!-- volunteer claim/remove form -->
   <div ng-if="!dash.currentUser.user.isAdmin">
     <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
       <h3 class="center-block">{{dash.editAppointment.event.title}} - {{dash.editAppointment.event.startsAt | date: "shortDate"}}</h3>
@@ -382,7 +382,9 @@
       <br>
       Ends At: <h4>{{dash.editAppointment.event.endsAt | date: "shortTime"}}</h4>
 
-    <button class="center-block btn btn-default" ng-click="$close(dash.claimAppointment(dash.editAppointment.event))" >Claim Appointment</button>
+    <button class="center-block btn btn-default" ng-if="dash.editAppointment.event.color.primary!='#1e90ff'"ng-click="$close(dash.claimAppointment(dash.editAppointment.event))" >Claim Appointment</button>
+    <button class="center-block btn btn-default" ng-if="dash.editAppointment.event.color.primary=='#1e90ff'"ng-click="$close(dash.removeMe(dash.editAppointment.event))" >Delete Appointment</button>
+
     <button class="center-block btn btn-default" ng-click="$close()" >Cancel</button>
 
     </div>
@@ -452,7 +454,7 @@
     <uib-tabset class="admin-menu">
       <uib-tab heading="Appointments Selected">
         <ul class="sidebar-list">
-          <li ng-repeat="appointment in dash.myAppointments track by $index" ng-click="dash.eventClicked(appointment[0])">{{appointment[0].startsAt | date: "shortDate"}} - {{appointment[0].title}}, {{appointment[0].startsAt | date: "shortTime"}}</li>
+          <a><li ng-repeat="appointment in dash.myAppointments track by $index" ng-click="dash.eventClicked(appointment)">{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</li></a>
         </ul>
       </uib-tab>
       <uib-tab heading="High Priority Appts">

@@ -1,4 +1,4 @@
-angular.module('mwl.calendar').config(function(calendarConfig) {
+// angular.module('mwl.calendar').config(function(calendarConfig) {
 //     console.log(calendarConfig);
     // calendarConfig.dateFormatter = 'moment';
     // moment.locale('en_US')

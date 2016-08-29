@@ -1,6 +1,6 @@
 angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
 
-function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig, moment) {
+function DashboardController($http, $state, $uibModal, $scope, UserService, AppointmentService, calendarConfig, moment) {
   var vm = this;
   for (var i = 0; i<AppointmentService.appointments.length; i++){
     console.log('Checking appointments in controller!');
@@ -18,10 +18,10 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
   vm.editAppointment.event = AppointmentService.updateEvent.event;
   vm.currentUser = {};
   vm.currentUser.user = UserService.currentUser.user;
-  vm.myAppointments = {};
+  vm.myAppointments = [];
   vm.myAppointments = AppointmentService.myAppointments.scheduled;
 
-console.log('mine', AppointmentService.myAppointments.scheduled);
+console.log('mine', vm.myAppointments);
   vm.openProfile = openProfile;
 
   vm.profileToggle = false;
@@ -196,13 +196,19 @@ console.log('mine', AppointmentService.myAppointments.scheduled);
     AppointmentService.deleteAppointment(event._id);
     vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', event._id), 1);
   }
-
+// volunteer adding themselves to appointment
   vm.claimAppointment = function(info){
     info.volunteers.push(vm.currentUser.user);
     AppointmentService.updateAppointment(info._id, info);
     vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', info._id), 1);
-  };
+    info.color = calendarConfig.colorTypes.info;
+    vm.myAppointments.push(info);
+    vm.showAppointments.appointments.push(info);
+    $scope.safeApply();
 
+    console.log('my appointments', vm.myAppointments);
+  };
+// admin removing volunteer from appointment
   vm.removeVolunteer = function(index, event){
     event.volunteers.splice(index, 1);
     for (var i = vm.showAppointments.appointments.length-1; i >= 0; i--){
@@ -211,23 +217,31 @@ console.log('mine', AppointmentService.myAppointments.scheduled);
       }
     }
     AppointmentService.updateAppointment(event._id, event);
+  }
+// volunteer removing self from appointment
+  vm.removeMe = function(event){
+    event.color = calendarConfig.colorTypes.warning;
+    for (var i = event.volunteers.length-1; i >= 0; i--){
+      if (event.volunteers[i]._id == UserService.currentUser.user._id){
+        event.volunteers.splice(i, 1);
+      }
+    }
+    AppointmentService.updateAppointment(event._id, event);
+
+    for (var j = vm.showAppointments.appointments.length-1; j >= 0; j--){
+      if (vm.showAppointments.appointments[j]._id == event._id){
+        vm.showAppointments.appointments.splice(j, 1);
+        vm.showAppointments.appointments.push(event);
+      }
+    }
+    for (var k = vm.myAppointments.length-1; k >= 0; k--){
+      if (vm.myAppointments[k]._id == event._id){
+        vm.myAppointments.splice(k, 1);
+      }
+    }
+    // $scope.safeApply();
 
   }
 
-console.log(UserService.currentUser.user);
-
-  // Checks the pulled appointments to see if the current user is assigned, then colors Appts
-
   AppointmentService.getAppointments(UserService.currentUser.user)
-  // for (var i = 0; i<AppointmentService.appointments.length; i++){
-  //   console.log('Checking appointments in controller!');
-  //   for (var j = 0; j<AppointmentService.appointments[i].volunteers.length; j++){
-  //   if(AppointmentService.apppointments[i].volunteers[j]._id == UserService.checkLoggedIn._id){
-  //     AppointmentService.appointments[i].color = calendarConfig.colorTypes.info;
-  //   } else {
-  //     AppointmentService.appointments[i].color = calendarConfig.colorTypes.warn;
-  //   }
-  //   }
-  // }
-
 }; //end DashboardController

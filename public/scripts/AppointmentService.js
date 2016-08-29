@@ -23,21 +23,28 @@ function AppointmentService($http, calendarConfig, moment){
   function getAppointments(user){
     return $http.get('/api/appointment').then(function(response){
       console.log('get appointments success', response.data);
-      for (var i = 0; i < response.data.length; i++) {
-        response.data[i].startsAt = new Date(response.data[i].startsAt);
-        response.data[i].endsAt = new Date(response.data[i].endsAt);
+      for (var h = 0; h < response.data.length; h++) {
+        response.data[h].startsAt = new Date(response.data[h].startsAt);
+        response.data[h].endsAt = new Date(response.data[h].endsAt);
       }
 
       if (!user.isAdmin){
+
+        // for (var j = 0; j < response.data.length; j++){
+        //   if (response.data[j].volunteers.length == response.data[j].volunteerSlots){
+        //     for (var k = response.data[j].volunteers.length-1; k >= 0; k--){
+        //       if (response.data[j].volunteers[k]._id == user._id){
+        //
         for (var i = response.data.length-1; i >= 0; i--){
           if (response.data[i].volunteers.length == response.data[i].volunteerSlots){
             response.data.splice(i, 1);
           }
         }
-console.log('appt service response', response.data);
         for (var j = 0; j < response.data.length; j++){
-          for (var k = response.data[j].volunteers.length-1; k >= 0; k--){
-            if (response.data[j].volunteers.length > 0){
+          if (response.data[j].volunteers.length == 0){
+            response.data[j].color = calendarConfig.colorTypes.warning;
+          } else if (response.data[j].volunteers.length > 0){
+            for (var k = response.data[j].volunteers.length-1; k >= 0; k--){
               if (response.data[j].volunteers[k]._id == user._id){
                 response.data[j].color = calendarConfig.colorTypes.info;
                 myAppointments.scheduled.push(response.data[j]);

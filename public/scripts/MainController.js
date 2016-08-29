@@ -1,6 +1,15 @@
 angular.module('DfstcSchedulingApp').controller('MainController', MainController);
 
-function MainController($http, $state, $window, UserService, Upload) {
+function MainController($http, $state, $window, $scope, UserService, Upload) {
+
+  $scope.safeApply = function(fn) {
+  var phase = this.$root.$$phase;
+  if(phase == '$apply' || phase == '$digest')
+    this.$eval(fn);
+  else
+    this.$apply(fn);
+};
+
   var vm = this;
   vm.login = login;
   vm.register = register;
