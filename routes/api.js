@@ -14,7 +14,7 @@ router.get('/checkLoggedIn', function(request, response) {
 })
 
 router.get('/volunteers', function(request, response) {
-  User.find({isAdmin: false}, function(err, volunteers) {
+  User.find({$or: [{isVolunteer: true}, {isTrainee: true}]}, function(err, volunteers) {
     if(err) {
       console.log(err);
       return false
