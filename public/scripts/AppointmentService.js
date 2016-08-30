@@ -7,8 +7,6 @@ function AppointmentService($http, calendarConfig, moment){
   var myAppointments = {};
   myAppointments.scheduled = [];
 
-  console.log('config', calendarConfig);
-
   function addAppointment(appointment){
     console.log(appointment);
     return $http.post('/api/appointment', appointment).then(function(response){
