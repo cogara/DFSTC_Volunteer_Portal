@@ -3,8 +3,8 @@ var Schema = mongoose.Schema;
 
 var announcementSchema = new Schema ({
   title:String,
-  date: Date,
-  massage:String
+  date: {type:Date, default:new Date()},
+  message:String
 });
 
 module.exports = mongoose.model('announcement', announcementSchema);

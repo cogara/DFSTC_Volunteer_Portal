@@ -17,7 +17,16 @@ function AnnouncementService($http){
     };
   }
 
+
+  function getAnnouncement() {
+    return $http.get('/api/announcement').then(function(res) {
+      console.log(res.data);
+      return res.data;
+    })
+  }
+
   return {
-    addAnnouncement:addAnnouncement
+    addAnnouncement:addAnnouncement,
+    getAnnouncement:getAnnouncement
   }
 }

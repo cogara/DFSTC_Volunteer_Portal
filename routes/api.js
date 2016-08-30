@@ -16,7 +16,7 @@ router.get('/checkLoggedIn', function(request, response) {
 })
 
 router.get('/volunteers', function(request, response) {
-  User.find({isAdmin: false}, function(err, volunteers) {
+  User.find({$or: [{isVolunteer: true}, {isTrainee: true}]}, function(err, volunteers) {
     if(err) {
       console.log(err);
       return false
@@ -72,25 +72,7 @@ router.post('/appointment', function(request, response){
 });
 
 
-//TODO:
-router.get('/announcement',function(req, res){
-  console.log(request.body);
-  Announcement.find({}, function(err,announcement){
 
-  });
-});
-
-router.post('/announcement', function(req,res){
-  console.log(request.body);
-  Announcement.create(request.body, function(err){
-    if(err){
-      console.log(err);
-      response.sendStatus(500);
-    }else{
-      response.sendStatus(200);
-    }
-  });
-});
 
 router.get('/appointment/:id', function(request, response){
   console.log('one appointment get');
@@ -144,6 +126,32 @@ router.put('/appointment/:id', function(request, response){
       response.sendStatus(500);
     }else{
       response.sendStatus(200);
+    }
+  });
+});
+
+// announcements stuff
+//TODO:
+router.get('/announcement',function(req, res){
+  console.log(req.body);
+  Announcement.find({}, function(err,announcement){
+    if(err){
+      console.log(err);
+      res.sendStatus(500);
+    }else{
+      res.send(announcement);
+    }
+  });
+});
+
+router.post('/announcement', function(req,res){
+  console.log(req.body);
+  Announcement.update(req.body, function(err){
+    if(err){
+      console.log(err);
+      res.sendStatus(500);
+    }else{
+      res.sendStatus(200);
     }
   });
 });

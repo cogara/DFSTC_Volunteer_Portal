@@ -80,6 +80,15 @@
   width: 100%;
 }
 
+.icon-modal {
+  font-size: 10em;
+  width: 100%;
+  padding: 20px 0;
+  border: 1px solid rgba(50,50,50,.1);
+  text-align: center;
+  border-radius: 5px;
+}
+
 .profile-control-header {
   text-transform: uppercase;
   text-align: center;
@@ -323,6 +332,7 @@
   transform: translateY(25%);
 }
 
+
 .volunteer-info, .volunteer-action {
   padding: 0 10px;
   margin: 0;
@@ -364,6 +374,7 @@
   padding: 2px 5px;
   background-color: rgba(255,255,255,.8);
   color: blue;
+  z-index: 3;
   text-align: left;
 }
 
@@ -484,6 +495,7 @@
 }
 
 .print-list a:hover {
+  text-decoration: none;
   color: rgb(100,100,100);
 }
 
@@ -517,4 +529,9 @@
   border-bottom: 1px solid rgba(0,0,0,.2);
   margin-bottom: 5px;
   padding: 0 0 5px;
+}
+
+pre{
+  background-color: #FFFFFF;
+  text-overflow: clip;
 }
