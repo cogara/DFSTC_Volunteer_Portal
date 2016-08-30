@@ -12,11 +12,13 @@ function AdminService($http) {
   function addAdmin(admin) {
     var data = admin;
     data.isAdmin = true;
+    data.isTrainee = false;
     return $http.post('/register', data)
   }
 
   return {
-    getVolunteers: getVolunteers
+    getVolunteers: getVolunteers,
+    addAdmin: addAdmin
   }
 
 }// end AdminService

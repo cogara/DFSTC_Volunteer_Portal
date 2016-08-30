@@ -25,7 +25,10 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.addAdmin = addAdmin;
 
   function addAdmin(admin) {
-    AdminService.addAdmin(admin);
+    AdminService.addAdmin(admin).then(function(response) {
+      console.log('admin created');
+      vm.newAdmin = {};
+    });
   }
 
 
