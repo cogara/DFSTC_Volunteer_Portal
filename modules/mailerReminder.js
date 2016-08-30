@@ -33,7 +33,7 @@ var mailReminder = function(){
 }
 
 function mailToUser (apmt){
-    console.log("running function called");
+
     var volunteer = "default";
     user.find( function(err, theVolenteer){
        volunteer = theVolenteer[0]
@@ -49,7 +49,7 @@ function mailToUser (apmt){
          debug:false
        },{
          // default message
-         from: 'MAd Dog Pete <dogs>',
+         from: 'Dress for Success Twin Cities <dfstc016@gmail.com>',
        });
 
        var message = {
@@ -108,7 +108,6 @@ function mailToUser (apmt){
 
        };
 
-       console.log('sending mail');
        transporter.sendMail(message, function(err, info){
          if (err) {
            console.log(err);
