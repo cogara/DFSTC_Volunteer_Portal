@@ -31,20 +31,54 @@ router.get('/volunteers', function(request, response) {
 router.put('/volunteer/:id', function(request, response) {
   var volunteer = request.body;
   var editVolunteer = {};
-  for (var key in volunteer) {
-    if (!(key==='password')) {
-      editVolunteer[key] = volunteer[key];
-    }
-  }
+  if(request.query.changepass) {
+    User.findOne({_id: request.params.id}, function(err, user) {
+      if(err) {
+        console.log(err);
+        response.sendStatus(500);
+      } else {
+        user.passwordCheck(volunteer.oldPassword, function(err, isMatch) {
+          if(err) {
+            console.log(err);
+            response.sendStatus(500);
+          } else if(!isMatch) {
+            response.sendStatus(503);
+          } else if(isMatch) {
+            user.changePassword(volunteer.newPassword, function(err, hash) {
+              if(err) {
+                console.log('hash error');
+                response.sendStatus(500);
+              } else {
+                User.findByIdAndUpdate({_id: request.params.id}, {$set: {'password': hash}}, function(err, user) {
+                  if(err) {
+                    response.sendStatus(500);
+                  } else {
+                    response.sendStatus(200);
+                  }
+                })
+              }
+            })
+          }
+        })
+      }
+    })
+  } else {
 
-  User.findByIdAndUpdate({_id: request.params.id}, {$set: editVolunteer}, function(err, volunteer) {
-    if(err){
-      console.log(err);
-      response.sendStatus(500);
-    } else {
-      response.sendStatus(200);
+    for (var key in volunteer) {
+      if (!(key==='password')) {
+        editVolunteer[key] = volunteer[key];
+      }
     }
-  });
+
+    User.findByIdAndUpdate({_id: request.params.id}, {$set: editVolunteer}, function(err, volunteer) {
+      if(err){
+        console.log(err);
+        response.sendStatus(500);
+      } else {
+        response.sendStatus(200);
+      }
+    });
+  }
 });
 
 router.get('/volunteer/:id', function(request, response) {
