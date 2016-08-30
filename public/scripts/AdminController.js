@@ -22,7 +22,11 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.exportToExcel = exportToExcel;
   vm.printDiv = printDiv;
 
+  vm.addAdmin = addAdmin;
 
+  function addAdmin(admin) {
+    AdminService.addAdmin(admin);
+  }
 
 
   function expandProfile(volunteer, panel) {

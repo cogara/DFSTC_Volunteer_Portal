@@ -9,6 +9,12 @@ function AdminService($http) {
     })
   }
 
+  function addAdmin(admin) {
+    var data = admin;
+    data.isAdmin = true;
+    return $http.post('/register', data)
+  }
+
   return {
     getVolunteers: getVolunteers
   }
