@@ -18,7 +18,7 @@ angular
           day: 'd MMM',
           month: 'MMMM',
           weekDay: 'EEEE',
-          time: 'hh:mm',
+          time: 'h:mm',
           datetime: 'MMM d, h:mm a'
         },
         title: {
@@ -30,7 +30,7 @@ angular
       },
       moment: {
         date: {
-          hour: 'h',
+          hour: 'h:mm a',
           day: 'D MMM',
           month: 'MMMM',
           weekDay: 'dddd',
