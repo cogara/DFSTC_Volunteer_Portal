@@ -8,9 +8,10 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
   vm.editAppointment.event = AppointmentService.updateEvent.event;
   vm.currentUser = {};
   vm.currentUser.user = UserService.currentUser.user;
-  vm.myAppointments = {};
-  vm.myAppointments.scheduled = [];
+  vm.myAppointments = {};//AppointmentService.myAppointments;
+  // vm.myAppointments.scheduled = [];
   vm.myAppointments.scheduled = AppointmentService.myAppointments.scheduled;
+  vm.highPriority = AppointmentService.highPriority;
 
   vm.openProfile = openProfile;
 
@@ -78,6 +79,7 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
     endsAt: '',
     volunteerSlots: 5,
     clientSlots: 5,
+    clients: 0,
     trainingAppointment: false,
     volunteers: [],
     incrementsBadgeTotal: false
@@ -150,7 +152,7 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
 
   vm.eventClicked = function(calendarEvent){
     console.log(calendarEvent);
-    AppointmentService.myAppointments.scheduled = [];
+    //AppointmentService.myAppointments.scheduled = [];
     AppointmentService.updateEvent.event = calendarEvent;
     var modalInstance = $uibModal.open({
       animation: true,

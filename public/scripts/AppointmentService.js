@@ -6,6 +6,7 @@ function AppointmentService($http, calendarConfig, moment){
   var updateEvent = {};
   var myAppointments = {};
   myAppointments.scheduled = [];
+  var highPriority = [];
 
   function addAppointment(appointment){
     console.log(appointment);
@@ -26,6 +27,13 @@ function AppointmentService($http, calendarConfig, moment){
         response.data[h].endsAt = new Date(response.data[h].endsAt);
       }
 
+      for (var g = 0; g < response.data.length; g++){
+        if (response.data[g].clients > response.data[g].volunteers.length){
+          response.data[g].color = calendarConfig.colorTypes.important;
+          highPriority.push(response.data[g]);
+        }
+      }
+
       if (!user.isAdmin){
 
         // for (var j = 0; j < response.data.length; j++){
@@ -39,14 +47,17 @@ function AppointmentService($http, calendarConfig, moment){
           }
         }
         for (var j = 0; j < response.data.length; j++){
-          if (response.data[j].volunteers.length == 0){
+          if (response.data[j].volunteers.length == 0 && response.data[j].clients == 0){
             response.data[j].color = calendarConfig.colorTypes.warning;
           } else if (response.data[j].volunteers.length > 0){
             for (var k = response.data[j].volunteers.length-1; k >= 0; k--){
               if (response.data[j].volunteers[k]._id == user._id){
                 response.data[j].color = calendarConfig.colorTypes.info;
                 myAppointments.scheduled.push(response.data[j]);
-              }else{
+                if(response.data[j].clients > response.data[j].volunteers.length){
+                  highPriority.splice(j, 1);
+                }
+              }else if (response.data[j].volunteers.length >= response.data[j].clients){
                 response.data[j].color = calendarConfig.colorTypes.warning;
               }
             }
@@ -54,6 +65,7 @@ function AppointmentService($http, calendarConfig, moment){
         }
         console.log('response.data', response.data);
         console.log('appointment service', myAppointments.scheduled);
+        console.log('high', highPriority);
       }
 
       appointments.appointments = response.data;
@@ -102,7 +114,8 @@ function updateAppointment(appointmentId, appointmentUpdate){
     deleteAppointment: deleteAppointment,
     updateAppointment: updateAppointment,
     updateEvent: updateEvent,
-    myAppointments: myAppointments
+    myAppointments: myAppointments,
+    highPriority: highPriority
   }
 
 } //end AppointmentService

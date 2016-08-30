@@ -459,11 +459,7 @@
       </uib-tab>
       <uib-tab heading="High Priority Appts">
         <ul class="sidebar-list">
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
+          <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
         </ul>
       </uib-tab>
     </uib-tabset>
