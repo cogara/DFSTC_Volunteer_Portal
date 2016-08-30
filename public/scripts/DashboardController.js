@@ -1,6 +1,6 @@
 angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
 
-function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig, moment) {
+function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig, AnnouncementService, moment) {
   var vm = this;
 
   vm.showAppointments = AppointmentService.appointments;
@@ -182,5 +182,52 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
   }
 
   AppointmentService.getAppointments()
+
+
+  // Announcements functions
+
+  vm.announcement={
+    title: "",
+    message: ''
+  };
+
+  vm.Ann={
+    title: "",
+    message: '',
+    date:new Date()
+  }
+
+  vm.title = "test";
+
+
+  vm.addAnnouncementModal = function(){
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'addAnnouncementModal.html',
+      controller: 'DashboardController',
+      controllerAs: 'dash',
+      size: 'lg'
+    })
+  }
+
+  vm.addAnnouncement = function(){
+    console.log(vm.announcement);
+    AnnouncementService.addAnnouncement(vm.announcement).then(function(response){
+      console.log('add announcement success', response.data);
+    }, function(response){
+      console.log('add announcement fail', response.data);
+    })
+  }
+
+  var getAnnouncement = function(){
+    AnnouncementService.getAnnouncement().then(successHandle)
+      function successHandle(res){
+        vm.Ann.title = res[0].title;
+        vm.Ann.message = res[0].message;
+        vm.Ann.date = res[0].date;
+      };
+
+  }
+ getAnnouncement();
 
 }; //end DashboardController

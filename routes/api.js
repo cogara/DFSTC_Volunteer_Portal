@@ -3,6 +3,8 @@ const path = require('path');
 const User = require('../models/user.js');
 const mongoose = require('mongoose');
 const Appointment = require('../models/appointment');
+const Announcement = require('../models/announcement');
+
 
 
 router.get('/checkLoggedIn', function(request, response) {
@@ -70,6 +72,8 @@ router.post('/appointment', function(request, response){
 });
 
 
+
+
 router.get('/appointment/:id', function(request, response){
   console.log('one appointment get');
   Appointment.findById(request.params.id, function(err, appointment){
@@ -121,7 +125,33 @@ router.put('/appointment/:id', function(request, response){
     if(err){
       response.sendStatus(500);
     }else{
-      response.sendStatus(200)
+      response.sendStatus(200);
+    }
+  });
+});
+
+// announcements stuff
+//TODO:
+router.get('/announcement',function(req, res){
+  console.log(req.body);
+  Announcement.find({}, function(err,announcement){
+    if(err){
+      console.log(err);
+      res.sendStatus(500);
+    }else{
+      res.send(announcement);
+    }
+  });
+});
+
+router.post('/announcement', function(req,res){
+  console.log(req.body);
+  Announcement.update(req.body, function(err){
+    if(err){
+      console.log(err);
+      res.sendStatus(500);
+    }else{
+      res.sendStatus(200);
     }
   });
 });
