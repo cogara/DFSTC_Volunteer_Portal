@@ -91,9 +91,14 @@ function EditController($http, $state, $uibModal, $scope, UserService, Appointme
   vm.claimAppointment = function(info){
     info.volunteers.push(vm.currentUser.user);
     AppointmentService.updateAppointment(info._id, info);
-    AppointmentService.appointments.appointments.splice(findIndex(AppointmentService.appointments, '_id', info._id), 1);
+    AppointmentService.appointments.appointments.splice(findIndex(AppointmentService.appointments.appointments, '_id', info._id), 1);
+    AppointmentService.highPriority.splice(findIndex(AppointmentService.highPriority, '_id', info._id), 1);
+
     info.color = calendarConfig.colorTypes.info;
+    console.log('scheduled', AppointmentService.myAppointments.scheduled);
     AppointmentService.myAppointments.scheduled.push(info);
+    // console.log('scheduled after update', AppointmentService.myAppointments.scheduled);
+
     AppointmentService.appointments.appointments.push(info);
     
     // location.reload();
@@ -111,12 +116,18 @@ function EditController($http, $state, $uibModal, $scope, UserService, Appointme
   }
 // volunteer removing self from appointment
   vm.removeMe = function(event){
-    event.color = calendarConfig.colorTypes.warning;
     for (var i = event.volunteers.length-1; i >= 0; i--){
       if (event.volunteers[i]._id == UserService.currentUser.user._id){
         event.volunteers.splice(i, 1);
       }
     }
+    if (event.volunteers.length < event.clients){
+      event.color = calendarConfig.colorTypes.important;
+      AppointmentService.highPriority.push(event);
+    }else{
+      event.color = calendarConfig.colorTypes.warning;
+    }
+
     AppointmentService.updateAppointment(event._id, event);
 
     for (var j = AppointmentService.appointments.length-1; j >= 0; j--){
