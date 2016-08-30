@@ -83,6 +83,11 @@ function mailToUser (apmt){
        '<p>' +
        '  We are located at 1549 University Avenue W., St. Paul, MN 5104' +
        '</p>' +
+       '<p>'+
+       '  On average our Image Coach Appointments take approximately 3 Hours, but  '+
+       'meetings have the potential to go on longer, so please plan out the day  '+
+       'accordingly.'+
+       '</p>'+
        '<p>' +
        '  Our parking lot is located directly behind the building. You can park in' +
        '  any of the spots labeled "Dress for Success" or "Ashton Building" and enter' +
