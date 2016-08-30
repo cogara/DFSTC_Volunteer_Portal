@@ -149,7 +149,10 @@
     Show Availability <switch off="No" on="Yes" ng-model="admin.expandRightAll" class="green"></switch>
   </div>
   <div class="print-list">
-    <a href="#" ng-click="admin.printDiv('print-volunteers')"><i class="fa fa-print fa-2x"></i></a>
+    <a href="#" ng-click="admin.printDiv('print-volunteers')"><i class="fa fa-print fa-lg"></i> Print</a>
+  </div>
+  <div class="print-list">
+    <a href="#" ng-click="admin.exportToExcel('volunteerTable')"><i class="fa fa-table fa-lg" aria-hidden="true"></i> Export</a>
   </div>
 </div>
 

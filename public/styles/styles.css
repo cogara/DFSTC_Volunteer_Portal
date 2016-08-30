@@ -495,6 +495,7 @@
 }
 
 .print-list a:hover {
+  text-decoration: none;
   color: rgb(100,100,100);
 }
 

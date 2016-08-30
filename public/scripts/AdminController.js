@@ -19,22 +19,10 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.statusFilter = statusFilter;
   vm.clearSearchOpp = clearSearchOpp;
   vm.clearSearchAvail = clearSearchAvail;
-
-  vm.exportToExcel = function(volunteerTable) {
-    vm.exportHref = Excel.tableToExcel(volunteerTable, 'volunteers');
-    $timeout(function() {
-      location.href = vm.exportHref;
-    }, 100);
-  }
-
-
+  vm.exportToExcel = exportToExcel;
   vm.printDiv = printDiv;
-  function printDiv(divId) {
-    window.frames["print_frame"].document.body.innerHTML = document.getElementById(divId).innerHTML;
-    // console.log(window.frames["print_frame"].document.body.innerHTML);
-    window.frames["print_frame"].window.focus();
-    window.frames["print_frame"].window.print();
-  }
+
+
 
 
   function expandProfile(volunteer, panel) {
@@ -222,7 +210,6 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
           } else {
             return false;
           }
-          // return false;
         } else {
           vm.searchAvailActive = false;
         }
@@ -232,25 +219,43 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   }
 
   function opportunityFilter(volunteer) {
-    var check = false;
-    for (var opp in vm.search.opportunity) {
-      if(vm.search.opportunity[opp]) {
+    var check;
+    for(var opp in vm.search.opportunity) {
+      if (vm.search.opportunity[opp]) {
         check = true;
-      }
-      if(vm.search.opportunity[opp]) {
-        if(volunteer.volunteerOpportunities[opp] === vm.search.opportunity[opp]) {
-          return true;
+        if (!volunteer.volunteerOpportunities[opp]) {
+          return false;
         }
       }
     }
-    if(check) {
+    if (check) {
       vm.searchOpportunityActive = true;
-      return false;
     } else {
       vm.searchOpportunityActive = false;
-      return true;
     }
+    return true;
   }
+
+
+  //   var check = false;
+  //   for (var opp in vm.search.opportunity) {
+  //     if(vm.search.opportunity[opp]) {
+  //       check = true;
+  //     }
+  //     if(vm.search.opportunity[opp]) {
+  //       if(volunteer.volunteerOpportunities[opp] === vm.search.opportunity[opp]) {
+  //         return true;
+  //       }
+  //     }
+  //   }
+  //   if(check) {
+  //     vm.searchOpportunityActive = true;
+  //     return false;
+  //   } else {
+  //     vm.searchOpportunityActive = false;
+  //     return true;
+  //   }
+  // }
 
 
   function roleFilter(volunteer) {
@@ -300,10 +305,22 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.oppDropdownOpen = false;
   }
 
-
-
   clearSearchOptions();
   //end search filters
+
+  function exportToExcel(volunteerTable) {
+    vm.exportHref = Excel.tableToExcel(volunteerTable, 'volunteers');
+    $timeout(function() {
+      location.href = vm.exportHref;
+    }, 100);
+  }
+
+  function printDiv(divId) {
+    window.frames["print_frame"].document.body.innerHTML = document.getElementById(divId).innerHTML;
+    // console.log(window.frames["print_frame"].document.body.innerHTML);
+    window.frames["print_frame"].window.focus();
+    window.frames["print_frame"].window.print();
+  }
 
 } //end Admin Controller
 
@@ -346,4 +363,6 @@ function phoneFormat() {
 
     return (country + " (" + city + ") " + number).trim();
   };
+
+
 }
