@@ -393,6 +393,15 @@
 </script>
 <!-- end edit/delete modal -->
 
+<!-- thank you alert! -->
+
+<div>
+  <div uib-alert ng-repeat="alert in dash.alerts track by $index" ng-class="'alert-' + (alert.type || 'primary')" close="closeAlert($index)">{{alert.msg}}</div>
+  <!-- <button type="button" class='btn btn-default' ng-click="addAlert()">Add Alert</button> -->
+</div>
+
+<!-- end thank you alert! -->
+
 <div class="row">
   <div class="col-lg-8 calendar">
     <h2 class="text-center">{{ dash.calendarTitle }}</h2>

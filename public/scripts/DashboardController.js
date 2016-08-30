@@ -165,6 +165,15 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
       }
     });
   }
+  vm.alerts = [];
+
+  vm.addAlert = function() {
+      $scope.alerts.push({ msg: 'Thank you for choosing to volunteer! We will send you a reminder email before your chosen appointment.'});
+    };
+
+  vm.closeAlert = function(index) {
+      $scope.alerts.splice(index, 1);
+    };
 
 //   vm.updateAppointment = function(info){
 //     AppointmentService.updateAppointment(info._id, info);

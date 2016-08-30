@@ -95,6 +95,7 @@ function EditController($http, $state, $uibModal, $scope, UserService, Appointme
     info.color = calendarConfig.colorTypes.info;
     AppointmentService.myAppointments.scheduled.push(info);
     AppointmentService.appointments.appointments.push(info);
+    
     // location.reload();
     // $scope.safeApply();
   };
