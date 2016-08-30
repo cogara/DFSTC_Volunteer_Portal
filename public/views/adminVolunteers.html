@@ -399,3 +399,22 @@
 </div>
 <iframe id="print-frame" name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
 <!-- END PRINT VIEW -->
+
+
+<button ng-click="admin.exportToExcel('volunteerTable')">Excel</button>
+<table id="volunteerTable" style="display: none">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone Number</th>
+    <th>Active</th>
+    <th>Trainee</th>
+  </tr>
+  <tr ng-repeat="volunteer in admin.volunteers | orderBy:[admin.sortOrder, admin.sortDefault, admin.sortLast]:admin.sortReverse | filter: admin.search.input | filter: admin.roleFilter | filter: admin.availableFilter | filter: admin.opportunityFilter | filter: admin.statusFilter">
+    <td>{{volunteer.firstName}} {{volunteer.lastName}}</td>
+    <td>{{volunteer.email}}</td>
+    <td>{{volunteer.phoneNumber | PhoneFormat}}</td>
+    <td>{{volunteer.isActive}}</td>
+    <td>{{volunteer.isTrainee}}</td>
+  </tr>
+</table>

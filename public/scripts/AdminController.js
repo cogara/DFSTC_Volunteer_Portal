@@ -1,6 +1,6 @@
 angular.module('DfstcSchedulingApp').controller('AdminController', AdminController).controller('ModalController', ModalController).filter('PhoneFormat', phoneFormat);
 
-function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList) {
+function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList, Excel, $timeout) {
   var vm = this;
   vm.volunteers = volunteerList;
   vm.getVolunteers = getVolunteers;
@@ -19,6 +19,14 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.statusFilter = statusFilter;
   vm.clearSearchOpp = clearSearchOpp;
   vm.clearSearchAvail = clearSearchAvail;
+
+  vm.exportToExcel = function(volunteerTable) {
+    vm.exportHref = Excel.tableToExcel(volunteerTable, 'volunteers');
+    $timeout(function() {
+      location.href = vm.exportHref;
+    }, 100);
+  }
+
 
   vm.printDiv = printDiv;
   function printDiv(divId) {
