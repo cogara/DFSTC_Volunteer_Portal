@@ -1,6 +1,6 @@
 angular.module('DfstcSchedulingApp').controller('AdminController', AdminController).controller('ModalController', ModalController).filter('PhoneFormat', phoneFormat);
 
-function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList) {
+function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList, Excel, $timeout) {
   var vm = this;
   vm.volunteers = volunteerList;
   vm.getVolunteers = getVolunteers;
@@ -32,6 +32,9 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.registerUser.isClient = true;
     UserService.register(vm.registerUser);
   }
+
+  vm.exportToExcel = exportToExcel;
+  vm.printDiv = printDiv;
 
   function expandProfile(volunteer, panel) {
     if(panel === 'all') {
@@ -218,7 +221,6 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
           } else {
             return false;
           }
-          // return false;
         } else {
           vm.searchAvailActive = false;
         }
@@ -228,26 +230,22 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   }
 
   function opportunityFilter(volunteer) {
-    var check = false;
-    for (var opp in vm.search.opportunity) {
-      if(vm.search.opportunity[opp]) {
+    var check;
+    for(var opp in vm.search.opportunity) {
+      if (vm.search.opportunity[opp]) {
         check = true;
-      }
-      if(vm.search.opportunity[opp]) {
-        if(volunteer.volunteerOpportunities[opp] === vm.search.opportunity[opp]) {
-          return true;
+        if (!volunteer.volunteerOpportunities[opp]) {
+          return false;
         }
       }
     }
-    if(check) {
+    if (check) {
       vm.searchOpportunityActive = true;
-      return false;
     } else {
       vm.searchOpportunityActive = false;
-      return true;
     }
+    return true;
   }
-
 
   function roleFilter(volunteer) {
     if(vm.search.role === 'isTrainee') {
@@ -296,10 +294,22 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.oppDropdownOpen = false;
   }
 
-
-
   clearSearchOptions();
   //end search filters
+
+  function exportToExcel(volunteerTable) {
+    vm.exportHref = Excel.tableToExcel(volunteerTable, 'volunteers');
+    $timeout(function() {
+      location.href = vm.exportHref;
+    }, 100);
+  }
+
+  function printDiv(divId) {
+    window.frames["print_frame"].document.body.innerHTML = document.getElementById(divId).innerHTML;
+    // console.log(window.frames["print_frame"].document.body.innerHTML);
+    window.frames["print_frame"].window.focus();
+    window.frames["print_frame"].window.print();
+  }
 
 } //end Admin Controller
 
@@ -342,4 +352,6 @@ function phoneFormat() {
 
     return (country + " (" + city + ") " + number).trim();
   };
+
+
 }

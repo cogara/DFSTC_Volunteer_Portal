@@ -30,8 +30,14 @@ router.post('/', upload, function(request, response) {
     }
   }
   for (var opportunity in info.volunteerOpportunities) {
+    if (opportunity === 'other'){
+      info.volunteerOpportunities[opportunity] = info.otherText;
+      console.log('I AM BEING HIT!', opportunity);
+    } else {
     info.volunteerOpportunities[opportunity] = (info.volunteerOpportunities[opportunity] === 'true');
+    console.log('Setting to true', opportunity);
   }
+}
   console.log('info:', info);
 
   User.findOne({email: info.email}, function(err, exists) {

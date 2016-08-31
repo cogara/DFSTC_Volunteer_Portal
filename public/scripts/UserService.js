@@ -2,6 +2,8 @@ angular.module('DfstcSchedulingApp').factory('UserService', UserService);
 
 function UserService($http, Upload) {
 
+  var currentUser = {};
+
   function checkLoggedIn() {
     return $http.get('/api/checkLoggedIn').then(function(response) {
       if(response.data._id) {
@@ -15,8 +17,6 @@ function UserService($http, Upload) {
       url: '/register',
       data: user
     })
-
-    // return $http.post('/register', user);
   }
 
   function login(user) {
@@ -42,13 +42,22 @@ function UserService($http, Upload) {
     return $http.get('/logout');
   }
 
+  function changePassword(volunteer, oldPassword, newPassword) {
+    var data = {};
+    data.oldPassword = oldPassword;
+    data.newPassword = newPassword;
+    return $http.put('/api/volunteer/' + volunteer._id + '?changepass=true', data)
+  }
+
   return {
     checkLoggedIn: checkLoggedIn,
     register: register,
     login: login,
     logout: logout,
     getProfile: getProfile,
-    editProfile: editProfile
+    changePassword: changePassword,
+    editProfile: editProfile,
+    currentUser: currentUser
   }
 
 }// end UserService

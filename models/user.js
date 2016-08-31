@@ -18,6 +18,8 @@ var UserSchema = new Schema(
       city: String,
       zip: String
     },
+    company: String,
+    title: String,
     isVolunteer: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
     isSuperAdmin: {type:Boolean, default: false},
@@ -28,7 +30,6 @@ var UserSchema = new Schema(
     photo: String,
     isActive: {type: Boolean, default: true},
     inactiveMessage: String,
-    company: String,
 //volunteer info
     pastCompanies: Object,
     isAvail: Object,
@@ -71,7 +72,8 @@ UserSchema.pre('save', function(next) {
   }
 })
 
-UserSchema.methods.passwordCheck = function(candidatePassword, callback) {
+UserSchema.methods.passwordCheck = function (candidatePassword, callback) {
+  console.log('old pass', this.password);
   bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
     if(err){
       console.log(err);
@@ -80,6 +82,18 @@ UserSchema.methods.passwordCheck = function(candidatePassword, callback) {
       callback(null, isMatch);
     }
   });
+}
+
+UserSchema.methods.changePassword = function(newPassword, callback) {
+  bcrypt.hash(newPassword, SALT_WORK_FACTOR, function(err, hash) {
+    if(err) {
+      console.log('hash error', err);
+      return false;
+    } else {
+      console.log('new pass', hash);
+      callback(null, hash)
+    }
+  })
 }
 
 module.exports = mongoose.model('User', UserSchema);

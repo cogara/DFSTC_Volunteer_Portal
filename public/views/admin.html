@@ -1,16 +1,18 @@
-<button class="btn btn-default" ui-sref="dashboard">back to dashboard</button>
-<button ng-if="main.currentUser" class="btn btn-default" style="float: right" ng-click="main.logout()">Logout</button>
-<h1 style="text-align: center">Admin Panel</h1>
+<button class="btn btn-default" ui-sref="dashboard" style="position: absolute;">back to calendar</button>
+<!-- <button ng-if="main.currentUser" class="btn btn-default" style="float: right" ng-click="main.logout()">Logout</button> -->
+<h3 style="text-align: center">Administration</h3><br>
 
 <uib-tabset>
   <uib-tab heading="Volunteers" ui-sref="admin.volunteers"></uib-tab>
   <uib-tab heading="Reports" ui-sref="admin.reports"></uib-tab>
+  <uib-tab ng-if="main.currentUser.isSuperAdmin" heading="Manage Users" ui-sref="admin.users"></uib-tab>
 </uib-tabset>
 
 <div class="row">
   <div class="col-xs-12">
     <div class="admin-content">
       <div ui-view></div>
+      <div class="clear"></div>
     </div>
   </div>
 </div>

@@ -149,7 +149,10 @@
     Show Availability <switch off="No" on="Yes" ng-model="admin.expandRightAll" class="green"></switch>
   </div>
   <div class="print-list">
-    <a href="#" ng-click="admin.printDiv('print-volunteers')"><i class="fa fa-print fa-2x"></i></a>
+    <a href="#" ng-click="admin.printDiv('print-volunteers')"><i class="fa fa-print fa-lg"></i> Print</a>
+  </div>
+  <div class="print-list">
+    <a href="#" ng-click="admin.exportToExcel('volunteerTable')"><i class="fa fa-table fa-lg" aria-hidden="true"></i> Export</a>
   </div>
 </div>
 
@@ -165,10 +168,10 @@
         <i class="fa fa-asterisk" aria-hidden="true"></i>
         <button class="btn btn-primary btn-xs" style="float: right" ng-click="admin.trainingComplete(volunteer)">Approve Trainee</button>
       </div>
-      <div class="volunteer-photo">
-        <img ng-if="volunteer.photo" ng-src="/photos/{{volunteer.photo}}"/>
-
-        <i ng-if="!volunteer.photo" class="fa fa-user icon-image" aria-hidden="true"></i>
+      <div ng-if="volunteer.photo"class="volunteer-photo" style="background-image: url('/photos/{{volunteer.photo}}')">
+      </div>
+      <div ng-if="!volunteer.photo" class="volunteer-photo">
+        <i class="fa fa-user icon-image" aria-hidden="true"></i>
       </div>
       <div class="volunteer-info">
         <div class="volunteer-meta">
@@ -370,7 +373,7 @@
   <div class="print-container">
     <h3 class="print-test">Dress for Success Twin Cities Volunteers</h3>
     <div class="print-inactive"> Red / [ ! ] - Volunteer is inactive</div>
-    <div class="print-trainee"> Blue / [ * ] - Volunteer is a Trinee</div>
+    <div class="print-trainee"> Blue / [ * ] - Volunteer is a Trainee</div>
     <ul class="print-volunteer-list">
       <li class="print-volunteer-list-headers">
         <div class="print-name-header">Name</div>
@@ -399,3 +402,23 @@
 </div>
 <iframe id="print-frame" name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
 <!-- END PRINT VIEW -->
+
+
+<!-- Export to Excel -->
+<table id="volunteerTable" style="display: none">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone Number</th>
+    <th>Active</th>
+    <th>Trainee</th>
+  </tr>
+  <tr ng-repeat="volunteer in admin.volunteers | orderBy:[admin.sortOrder, admin.sortDefault, admin.sortLast]:admin.sortReverse | filter: admin.search.input | filter: admin.roleFilter | filter: admin.availableFilter | filter: admin.opportunityFilter | filter: admin.statusFilter">
+    <td>{{volunteer.firstName}} {{volunteer.lastName}}</td>
+    <td>{{volunteer.email}}</td>
+    <td>{{volunteer.phoneNumber | PhoneFormat}}</td>
+    <td>{{volunteer.isActive}}</td>
+    <td>{{volunteer.isTrainee}}</td>
+  </tr>
+</table>
+<!-- End export to excel -->
