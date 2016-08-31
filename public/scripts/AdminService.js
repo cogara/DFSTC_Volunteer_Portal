@@ -9,6 +9,13 @@ function AdminService($http) {
     })
   }
 
+  function getAllUsers() {
+    return $http.get('/api/users').then(function(response) {
+      console.log(response.data);
+      return response.data;
+    })
+  }
+
   function addAdmin(admin) {
     var data = admin;
     data.isAdmin = true;
@@ -18,6 +25,7 @@ function AdminService($http) {
 
   return {
     getVolunteers: getVolunteers,
+    getAllUsers: getAllUsers,
     addAdmin: addAdmin
   }
 

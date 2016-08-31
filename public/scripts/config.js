@@ -83,9 +83,16 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       url:'/reports',
       templateUrl: '../views/adminReports.html'
     })
-    .state('admin.admins', {
-      url:'/admins',
-      templateUrl: '../views/adminAdmins.html'
+    .state('admin.users', {
+      url:'/users',
+      templateUrl: '../views/adminUsers.html',
+      controller: 'SuperAdminController',
+      controllerAs: 'sa',
+      resolve: {
+        users: function(AdminService) {
+          return AdminService.getAllUsers();
+        }
+      }
     });
 
     $locationProvider.html5Mode(true);
