@@ -54,7 +54,7 @@ function mailToUser (apmt){
 
        var message = {
          // Comma separated list of recipients
-       to: '"'+volunteer.firstName +'" <zerofox16@gmail.com>',
+       to: '"'+volunteer.firstName +'" <'+volunteer.email+'>',
 
        // Subject of the message
        subject: 'Image Coaching Reminder ✔', //

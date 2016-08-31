@@ -1,4 +1,9 @@
 var router =  require('express').Router();
+var nodemailer = require('nodemailer');
+const moment = require('moment');
+
+var user = require('../models/user');
+var appointment = require('../models/appointment');
 
 
 
