@@ -160,6 +160,7 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
     });
   }
 
+
   vm.updateAppointment = function(info){
     console.log(info);
     AppointmentService.updateAppointment(info._id, info);
@@ -182,6 +183,7 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
   }
 
   AppointmentService.getAppointments()
+
 
 
   // Announcements functions
@@ -229,5 +231,6 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   }
  getAnnouncement();
+
 
 }; //end DashboardController

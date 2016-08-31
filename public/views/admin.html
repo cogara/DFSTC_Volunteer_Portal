@@ -5,12 +5,14 @@
 <uib-tabset>
   <uib-tab heading="Volunteers" ui-sref="admin.volunteers"></uib-tab>
   <uib-tab heading="Reports" ui-sref="admin.reports"></uib-tab>
+  <uib-tab ng-if="main.currentUser.isSuperAdmin" heading="Admins" ui-sref="admin.admins"></uib-tab>
 </uib-tabset>
 
 <div class="row">
   <div class="col-xs-12">
     <div class="admin-content">
       <div ui-view></div>
+      <div class="clear"></div>
     </div>
   </div>
 </div>
