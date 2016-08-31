@@ -19,6 +19,7 @@ var UserSchema = new Schema(
       zip: String
     },
     company: String,
+    title: String,
     pastCompanies: Object,
     isVolunteer: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},

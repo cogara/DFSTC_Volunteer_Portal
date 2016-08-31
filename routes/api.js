@@ -28,6 +28,19 @@ router.get('/volunteers', function(request, response) {
   })
 })
 
+router.get('/users', function(request, response) {
+  User.find({}, function(err, users) {
+    if(err) {
+      console.log(err);
+      return false
+    }
+    for (var i = 0; i < users.length; i++) {
+      users[i].password = null;
+    }
+    response.send(users);
+  })
+})
+
 router.put('/volunteer/:id', function(request, response) {
   var volunteer = request.body;
   var editVolunteer = {};
