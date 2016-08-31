@@ -16,8 +16,6 @@ function UserService($http, Upload) {
       url: '/register',
       data: user
     })
-
-    // return $http.post('/register', user);
   }
 
   function login(user) {

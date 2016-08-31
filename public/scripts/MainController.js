@@ -1,6 +1,15 @@
 angular.module('DfstcSchedulingApp').controller('MainController', MainController);
 
-function MainController($http, $state, $window, UserService, Upload) {
+function MainController($http, $state, $window, $scope, UserService, Upload) {
+
+  $scope.safeApply = function(fn) {
+  var phase = this.$root.$$phase;
+  if(phase == '$apply' || phase == '$digest')
+    this.$eval(fn);
+  else
+    this.$apply(fn);
+};
+
   var vm = this;
   vm.login = login;
   vm.register = register;
@@ -43,6 +52,7 @@ function MainController($http, $state, $window, UserService, Upload) {
   function login() {
     UserService.login(vm.loginUser).then(function(response) {
       vm.currentUser = response;
+      UserService.currentUser.user = vm.currentUser;
       $state.go('dashboard');
     }, function(){
         vm.currentUser = null;
@@ -55,10 +65,12 @@ function MainController($http, $state, $window, UserService, Upload) {
         $state.go('/');
       })
     }
-
     //checks if user is currently logged in on page load
     UserService.checkLoggedIn().then(function(response) {
       console.log(response);
       vm.currentUser = response;
+      UserService.currentUser.user = vm.currentUser;
     });
+
+
   } //end Main Controller

@@ -1,13 +1,27 @@
 angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
 
-function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig, AnnouncementService, moment) {
+function DashboardController($http, $state, $uibModal, $scope, UserService, AppointmentService, calendarConfig, moment, AnnouncementService) {
   var vm = this;
+  for (var i = 0; i<AppointmentService.appointments.length; i++){
+    console.log('Checking appointments in controller!');
+    for (var j = 0; j<AppointmentService.appointments[i].volunteers.length; j++){
+    if(AppointmentService.apppointments[i].volunteers[j]._id == UserService.checkLoggedIn._id){
+      AppointmentService.appointments[i].color = calendarConfig.colorTypes.info;
+    } else {
+      AppointmentService.appointments[i].color = calendarConfig.colorTypes.warn;
+    }
+    }
+  }
 
   vm.showAppointments = AppointmentService.appointments;
   vm.editAppointment = {};
   vm.editAppointment.event = AppointmentService.updateEvent.event;
+  vm.currentUser = {};
+  vm.currentUser.user = UserService.currentUser.user;
+  vm.myAppointments = [];
+  vm.myAppointments = AppointmentService.myAppointments.scheduled;
 
-
+console.log('mine', vm.myAppointments);
   vm.openProfile = openProfile;
 
   vm.profileToggle = false;
@@ -75,6 +89,7 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
     volunteerSlots: 5,
     clientSlots: 5,
     trainingAppointment: false,
+    volunteers: [],
     incrementsBadgeTotal: false
   };
 
@@ -145,6 +160,7 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   vm.eventClicked = function(calendarEvent){
     console.log(calendarEvent);
+    AppointmentService.myAppointments.scheduled = [];
     AppointmentService.updateEvent.event = calendarEvent;
     var modalInstance = $uibModal.open({
       animation: true,
@@ -181,10 +197,52 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
     AppointmentService.deleteAppointment(event._id);
     vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', event._id), 1);
   }
+// volunteer adding themselves to appointment
+  vm.claimAppointment = function(info){
+    info.volunteers.push(vm.currentUser.user);
+    AppointmentService.updateAppointment(info._id, info);
+    vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', info._id), 1);
+    info.color = calendarConfig.colorTypes.info;
+    vm.myAppointments.push(info);
+    vm.showAppointments.appointments.push(info);
+    $scope.safeApply();
 
-  AppointmentService.getAppointments()
+    console.log('my appointments', vm.myAppointments);
+  };
+// admin removing volunteer from appointment
+  vm.removeVolunteer = function(index, event){
+    event.volunteers.splice(index, 1);
+    for (var i = vm.showAppointments.appointments.length-1; i >= 0; i--){
+      if (vm.showAppointments.appointments[i]._id == event._id){
+        vm.showAppointments.appointments[i].volunteers.splice(index, 1);
+      }
+    }
+    AppointmentService.updateAppointment(event._id, event);
+  }
+// volunteer removing self from appointment
+  vm.removeMe = function(event){
+    event.color = calendarConfig.colorTypes.warning;
+    for (var i = event.volunteers.length-1; i >= 0; i--){
+      if (event.volunteers[i]._id == UserService.currentUser.user._id){
+        event.volunteers.splice(i, 1);
+      }
+    }
+    AppointmentService.updateAppointment(event._id, event);
 
+    for (var j = vm.showAppointments.appointments.length-1; j >= 0; j--){
+      if (vm.showAppointments.appointments[j]._id == event._id){
+        vm.showAppointments.appointments.splice(j, 1);
+        vm.showAppointments.appointments.push(event);
+      }
+    }
+    for (var k = vm.myAppointments.length-1; k >= 0; k--){
+      if (vm.myAppointments[k]._id == event._id){
+        vm.myAppointments.splice(k, 1);
+      }
+    }
+    // $scope.safeApply();
 
+  }
 
   // Announcements functions
 
@@ -223,14 +281,14 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   var getAnnouncement = function(){
     AnnouncementService.getAnnouncement().then(successHandle)
-      function successHandle(res){
-        vm.Ann.title = res[0].title;
-        vm.Ann.message = res[0].message;
-        vm.Ann.date = moment(res[0].date).format('MMM Do YYYY');
-      };
 
+    function successHandle(res){
+      vm.Ann.title = res[0].title;
+      vm.Ann.message = res[0].message;
+      vm.Ann.date = moment(res[0].date).format('MMM Do YYYY');
+    };
   }
- getAnnouncement();
+  getAnnouncement();
 
-
+  AppointmentService.getAppointments(UserService.currentUser.user);
 }; //end DashboardController

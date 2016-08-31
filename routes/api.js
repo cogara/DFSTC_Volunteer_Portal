@@ -105,9 +105,6 @@ router.post('/appointment', function(request, response){
   });
 });
 
-
-
-
 router.get('/appointment/:id', function(request, response){
   console.log('one appointment get');
   Appointment.findById(request.params.id, function(err, appointment){
