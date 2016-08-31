@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
+const schedule = require('node-schedule');
 const flash = require('connect-flash');
 const LocalStrategy = require('passport-local').Strategy;
 const env = require('dotenv').config();
@@ -18,6 +19,8 @@ const index = require('./routes/index.js');
 const register = require('./routes/register.js');
 const login = require('./routes/login.js');
 const api = require('./routes/api.js');
+const mailerR = require('./modules/mailerReminder');
+
 
 //DECLARE SERVER APP
 const app = express();
@@ -85,6 +88,16 @@ passport.deserializeUser(function(id, done) {
     done(null, userInfo);
   })
 })
+
+// the reminders are sent out at midnight
+var dateF = new schedule.RecurrenceRule();
+dateF.second = 40;
+dateF.minute = 00;
+dateF.hour =00;
+console.log(dateF);
+
+//TODO: add back in to send emails
+schedule.scheduleJob(dateF,mailerR);
 
 app.use(passport.initialize());
 app.use(passport.session());

@@ -80,6 +80,15 @@
   width: 100%;
 }
 
+.icon-modal {
+  font-size: 10em;
+  width: 100%;
+  padding: 20px 0;
+  border: 1px solid rgba(50,50,50,.1);
+  text-align: center;
+  border-radius: 5px;
+}
+
 .profile-control-header {
   text-transform: uppercase;
   text-align: center;
@@ -211,7 +220,7 @@
 
 .volunteer:hover {
   cursor: pointer;
-  box-shadow: 0 0 5px 0 rgba(0,0,200,.5);
+  box-shadow: 0 0 5px 1px rgba(0,0,200,.5);
 }
 
 .volunteer-card {
@@ -227,10 +236,14 @@
 }
 
 .volunteer-expanded__below ul {
-  padding: 0;
+  /*width: 100%;*/
+  /*max-width: 180px;*/
+  padding: 0 10px;
+  text-align: center;
   list-style-position: inside;
   list-style-type: none;
 }
+
 @media (max-width: 450px) {
   .volunteer-expanded__right {
     font-size: .75em;
@@ -275,6 +288,14 @@
   padding: 2px;
 }
 
+.table input[type=checkbox] {
+  margin: 0;
+}
+
+.table>tbody>tr>td {
+  line-height: 1;
+}
+
 .form-control.form-expand {
   height: auto;
 }
@@ -288,14 +309,22 @@
 }
 
 .volunteer-photo {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  font-size: 0;
-  overflow: hidden;
-  width: 100%;
+  position: relative;
   height: 150px;
-  line-height: 150px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.volunteer-photo img {
+  display: block;
+  position: absolute;
+  left: -1000%;
+  right: -1000%;
+  top: -1000%;
+  bottom: -1000%;
+  margin: auto;
+  height: 150px;
+  min-width: 100%;
 }
 
 .icon-image {
@@ -303,8 +332,9 @@
   transform: translateY(25%);
 }
 
+
 .volunteer-info, .volunteer-action {
-  padding: 0 5px;
+  padding: 0 10px;
   margin: 0;
   text-align: left;
 }
@@ -344,6 +374,7 @@
   padding: 2px 5px;
   background-color: rgba(255,255,255,.8);
   color: blue;
+  z-index: 3;
   text-align: left;
 }
 
@@ -464,5 +495,43 @@
 }
 
 .print-list a:hover {
+  text-decoration: none;
   color: rgb(100,100,100);
+}
+
+.learn-more {
+  position: relative;
+  cursor: help;
+}
+
+.learn-more-box {
+  display: none;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 300px;
+  padding: 10px;
+  background-color: rgb(240,240,240);
+  border: 1px solid rgba(0,0,0,.1);
+  box-shadow: 0 0 5px 0 rgba(0,0,0,.3);
+  z-index: 3;
+}
+
+.learn-more:hover .learn-more-box {
+  display: block;
+}
+
+.learn-more-header {
+  display: block;
+  font-size: .8em;
+  text-transform: uppercase;
+  color: rgb(130,130,130);
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  margin-bottom: 5px;
+  padding: 0 0 5px;
+}
+
+pre{
+  background-color: #FFFFFF;
+  text-overflow: clip;
 }

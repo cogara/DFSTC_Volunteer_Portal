@@ -1,6 +1,6 @@
 angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
 
-function DashboardController($http, $state, $uibModal, $scope, UserService, AppointmentService, calendarConfig, moment) {
+function DashboardController($http, $state, $uibModal, $scope, UserService, AppointmentService, calendarConfig, moment, AnnouncementService) {
   var vm = this;
 
   vm.showAppointments = AppointmentService.appointments;
@@ -168,71 +168,51 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
     });
   }
 
-//   vm.updateAppointment = function(info){
-//     AppointmentService.updateAppointment(info._id, info);
-//     vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', info._id), 1);
-//     vm.showAppointments.appointments.push(info);
-//
-//   }
-//
-//   function findIndex(array, attr, value) {
-//     for(var i = 0; i < array.length; i += 1) {
-//       if(array[i][attr] === value) {
-//         return i;
-//       }
-//     }
-//   }
-//   vm.deleteAppointment = function(event){
-//     console.log('deleting', event);
-//     AppointmentService.deleteAppointment(event._id);
-//     vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', event._id), 1);
-//   }
-// // volunteer adding themselves to appointment
-//   vm.claimAppointment = function(info){
-//     info.volunteers.push(vm.currentUser.user);
-//     AppointmentService.updateAppointment(info._id, info);
-//     vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', info._id), 1);
-//     info.color = calendarConfig.colorTypes.info;
-//     vm.myAppointments.scheduled.push(info);
-//     vm.showAppointments.appointments.push(info);
-//     location.reload();
-//     // $scope.safeApply();
-//   };
-// // admin removing volunteer from appointment
-//   vm.removeVolunteer = function(index, event){
-//     event.volunteers.splice(index, 1);
-//     for (var i = vm.showAppointments.appointments.length-1; i >= 0; i--){
-//       if (vm.showAppointments.appointments[i]._id == event._id){
-//         vm.showAppointments.appointments[i].volunteers.splice(index, 1);
-//       }
-//     }
-//     AppointmentService.updateAppointment(event._id, event);
-//   }
-// // volunteer removing self from appointment
-//   vm.removeMe = function(event){
-//     event.color = calendarConfig.colorTypes.warning;
-//     for (var i = event.volunteers.length-1; i >= 0; i--){
-//       if (event.volunteers[i]._id == UserService.currentUser.user._id){
-//         event.volunteers.splice(i, 1);
-//       }
-//     }
-//     AppointmentService.updateAppointment(event._id, event);
-//
-//     // for (var j = vm.showAppointments.appointments.length-1; j >= 0; j--){
-//     //   if (vm.showAppointments.appointments[j]._id == event._id){
-//     //     vm.showAppointments.appointments.splice(j, 1);
-//     //     vm.showAppointments.appointments.push(event);
-//     //   }
-//     // }
-//     // for (var k = vm.myAppointments.scheduled.length-1; k >= 0; k--){
-//     //   if (vm.myAppointments.scheduled[k]._id == event._id){
-//     //     vm.myAppointments.scheduled.splice(k, 1);
-//     //     // AppointmentService.myAppointments.scheduled.splice(k, 1);
-//     //   }
-//     // }
-//     // location.reload();
-//     // console.log('me all day', vm.myAppointments);
-//   }
+  // Announcements functions
 
-  AppointmentService.getAppointments(UserService.currentUser.user)
+  vm.announcement={
+    title: "",
+    message: ''
+  };
+
+  vm.Ann={
+    title: "",
+    message: '',
+    date:new Date()
+  }
+
+  vm.title = "test";
+
+
+  vm.addAnnouncementModal = function(){
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'addAnnouncementModal.html',
+      controller: 'DashboardController',
+      controllerAs: 'dash',
+      size: 'lg'
+    })
+  }
+
+  vm.addAnnouncement = function(){
+    console.log(vm.announcement);
+    AnnouncementService.addAnnouncement(vm.announcement).then(function(response){
+      console.log('add announcement success', response.data);
+    }, function(response){
+      console.log('add announcement fail', response.data);
+    })
+  }
+
+  var getAnnouncement = function(){
+    AnnouncementService.getAnnouncement().then(successHandle)
+
+    function successHandle(res){
+      vm.Ann.title = res[0].title;
+      vm.Ann.message = res[0].message;
+      vm.Ann.date = moment(res[0].date).format('MMM Do YYYY');
+    };
+  }
+  getAnnouncement();
+
+  AppointmentService.getAppointments(UserService.currentUser.user);
 }; //end DashboardController

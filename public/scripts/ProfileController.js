@@ -71,7 +71,6 @@ function ProfileController($http, $state, $uibModalInstance, UserService, profil
   }
 
   function cancel() {
-    console.log('close plz');
     $uibModalInstance.dismiss();
   }
 
@@ -84,6 +83,29 @@ function ProfileController($http, $state, $uibModalInstance, UserService, profil
       vm.isEditing = true;
     }
   }
-
+  vm.changePassword = changePassword;
+  vm.changePassToggle = changePassToggle;
+  function changePassToggle() {
+    vm.passError = '';
+    vm.passToggle = (vm.passToggle) ? false : true;
+    console.log(vm.passToggle);
+  }
+  function changePassword(volunteer, oldPassword, newPassword, passConfirm) {
+    if(!(oldPassword && newPassword && passConfirm)) {
+      vm.passError = "Missing input, please try again";
+      return false;
+    }
+    if((newPassword != passConfirm) && (newPassword.length > 0)) {
+      vm.passError = 'New password does not match';
+      return false;
+    }
+    console.log(volunteer, oldPassword, newPassword);
+    UserService.changePassword(volunteer, oldPassword, newPassword).then(function(response) {
+      console.log('password changed');
+      changePassToggle();
+    }, function() {
+      vm.passError = 'Incorrect password, please try again';
+    });
+  }
 
 } //end ProfileController

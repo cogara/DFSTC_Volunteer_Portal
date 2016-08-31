@@ -18,8 +18,6 @@ function UserService($http, Upload) {
       url: '/register',
       data: user
     })
-
-    // return $http.post('/register', user);
   }
 
   function login(user) {
@@ -45,12 +43,20 @@ function UserService($http, Upload) {
     return $http.get('/logout');
   }
 
+  function changePassword(volunteer, oldPassword, newPassword) {
+    var data = {};
+    data.oldPassword = oldPassword;
+    data.newPassword = newPassword;
+    return $http.put('/api/volunteer/' + volunteer._id + '?changepass=true', data)
+  }
+
   return {
     checkLoggedIn: checkLoggedIn,
     register: register,
     login: login,
     logout: logout,
     getProfile: getProfile,
+    changePassword: changePassword,
     editProfile: editProfile,
     currentUser: currentUser
   }

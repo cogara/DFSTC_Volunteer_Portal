@@ -5,12 +5,14 @@
 <uib-tabset>
   <uib-tab heading="Volunteers" ui-sref="admin.volunteers"></uib-tab>
   <uib-tab heading="Reports" ui-sref="admin.reports"></uib-tab>
+  <uib-tab ng-if="main.currentUser.isSuperAdmin" heading="Admins" ui-sref="admin.admins"></uib-tab>
 </uib-tabset>
 
 <div class="row">
   <div class="col-xs-12">
     <div class="admin-content">
       <div ui-view></div>
+      <div class="clear"></div>
     </div>
   </div>
 </div>
@@ -55,7 +57,7 @@
           <div class="form-group">
             <label>Address:</label>
             <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.address.addressOne" placeholder="Address Line 1" />
-            <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.address.addressTwo" placeholder="Address Line 2" />
+            <input ng-if="prof.profile.address.addressTwo" ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.address.addressTwo" placeholder="Address Line 2" />
             <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.address.city" placeholder="City" />
             <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.address.state" placeholder="State" />
             <input ng-disabled="!prof.isEditing" type="text" class="form-control" ng-model="prof.profile.address.zip" placeholder="Zip Code" />
@@ -63,8 +65,8 @@
         </form>
         <div class="col-sm-6">
           <img ng-if="prof.profile.photo" style="border-radius: 5px 5px 0 0" class="image-responsive" ng-src="/photos/{{prof.profile.photo}}" download="{{prof.profile.firstName}}"/>
-          <i ng-if="!prof.profile.photo" class="fa fa-user icon-image" aria-hidden="true"></i>
-          <div class="photo-action">
+          <i ng-if="!prof.profile.photo" class="fa fa-user icon-modal" aria-hidden="true"></i>
+          <div ng-if="prof.profile.photo" class="photo-action">
             <a style="float: left" ng-href="/photo/{{prof.profile.photo}}" target="_blank">
               View Full Size <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
             </a>
@@ -169,7 +171,7 @@
             <label>Past Employers:</label>
             <ul class="previous-company-list" ng-if="prof.profile.pastCompanies.length > 0">
               <li class="previous-company" ng-repeat="company in prof.profile.pastCompanies track by $index">
-                <button ng-if="!prof.isEditing" class="btn btn-danger btn-xs" ng-click="prof.removePrevCompany($index)">
+                <button ng-if="prof.isEditing" class="btn btn-danger btn-xs" ng-click="prof.removePrevCompany($index)">
                   <i class="fa fa-times" aria-hidden="true"></i>
                 </button>
                 {{company}}
@@ -181,9 +183,11 @@
     </div>
   </div>
   <div class="row">
-    <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="prof.saveProfile(prof.profile)">Save</button>
-        <button class="btn btn-warning" type="button" ng-click="prof.cancel()">Cancel</button>
+    <div class="col-xs-12">
+      <div class="modal-footer">
+          <button class="btn btn-primary" type="button" ng-click="prof.saveProfile(prof.profile)">Save</button>
+          <button class="btn btn-warning" type="button" ng-click="prof.cancel()">Cancel</button>
+      </div>
     </div>
   </div>
 </script>
