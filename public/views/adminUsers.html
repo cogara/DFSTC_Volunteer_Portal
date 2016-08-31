@@ -9,7 +9,7 @@
           <span>Email</span>
           <span>Action</span>
         </li>
-        <li class="user-list__user" class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputVol" ng-if="user.isVolunteer || user.isTrainee">
+        <li class="user-list__user" class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputVol | orderBy: 'lastName'" ng-if="user.isVolunteer || user.isTrainee">
           <span>{{user.firstName}} {{user.lastName}}</span>
           <span>{{user.email}}</span>
           <span>
@@ -27,7 +27,7 @@
           <span>Caseworker</span>
           <span>Action</span>
         </li>
-        <li class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputClient" ng-if="user.isClient">
+        <li class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputClient | orderBy: 'lastName'" ng-if="user.isClient">
           <span>{{user.firstName}} {{user.lastName}}</span>
           <span>{{user.email}}</span>
           <span ng-if="user.caseworker">{{user.caseworker}}</span><span ng-if="!user.caseworker">N/A</span>
@@ -36,6 +36,17 @@
           </span>
         </li>
       </ul>
+      <!-- <div ng-if="sa.adminToggle" class="admin-add">
+        <h5 style="text-align: center; border-bottom: 1px solid rgba(0,0,0,.1); padding-bottom: 10px; margin-bottom: 10px;">Adding Admin</h5>
+        <label>Email </label>
+        <input ng-model="sa.newAdmin.email" type="text" /><br>
+        <label>Password </label>
+        <input ng-model="sa.newAdmin.password" type="text" /><br>
+        <button ng-if="sa.adminToggle" ng-click="sa.addAdmin(sa.newAdmin)">Submit</button>
+      </div> -->
+      <div class="page-actions">
+        <button ng-click="sa.addClient()">Add Client</button>
+      </div>
     </uib-tab>
     <!-- <uib-tab heading="Caseworkers" ng-click="sa.search.inputCase = ''">
       <input type="text" style="width: 100%; margin: 5px 0" ng-model="sa.search.inputCase" placeholder="Search Caseworkers">
@@ -45,7 +56,7 @@
           <span>Email</span>
           <span>Action</span>
         </li>
-        <li class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputCase" ng-if="user.isCaseworker">
+        <li class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputCase | orderBy: 'lastName'" ng-if="user.isCaseworker">
           <span>{{user.firstName}} {{user.lastName}}</span>
           <span>{{user.email}}</span>
           <span>
@@ -61,7 +72,7 @@
           <span>Email</span>
           <span>Action</span>
         </li>
-        <li class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputAdmin" ng-if="user.isAdmin && !user.isSuperAdmin">
+        <li class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputAdmin | orderBy: 'lastName'" ng-if="user.isAdmin && !user.isSuperAdmin">
           <span>{{user.email}}</span>
           <span>
             <button class="btn btn-danger btn-xs" ng-click="sa.deleteUser(user._id)"><i class="fa fa-trash"></i> Remove</button>
