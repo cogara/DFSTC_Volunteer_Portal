@@ -358,7 +358,7 @@
       Current Volunteers:
       <ul>
         <li ng-repeat="volunteer in edit.editAppointment.event.volunteers track by $index">{{volunteer.firstName}} {{volunteer.lastName}}
-        <button ng-click="edit.removeVolunteer($index, dash.editAppointment.event)">Remove from Appointment</button></li>
+        <button ng-click="edit.removeVolunteer($index, edit.editAppointment.event)">Remove from Appointment</button></li>
       </ul>
       <label>Number of Possible Clients:</label>
       <input type="number" class="form-control" ng-model="edit.editAppointment.event.clientSlots" placeholder=5 />

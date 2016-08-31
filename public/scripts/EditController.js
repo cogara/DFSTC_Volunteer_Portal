@@ -105,6 +105,7 @@ function EditController($http, $state, $uibModal, $scope, UserService, Appointme
   };
 // admin removing volunteer from appointment
   vm.removeVolunteer = function(index, event){
+    console.log(event);
     event.volunteers.splice(index, 1);
     for (var i = AppointmentService.appointments.length-1; i >= 0; i--){
       if (AppointmentService.appointments[i]._id == event._id){
@@ -112,6 +113,16 @@ function EditController($http, $state, $uibModal, $scope, UserService, Appointme
       }
     }
     AppointmentService.updateAppointment(event._id, event);
+
+    // if (!(_.find(AppointmentService.highPriority, event)){
+    //   event.color = calendarConfig.colorTypes.important;
+    //   AppointmentService.highPriority.push(event);
+    //
+    if(!(_.find(AppointmentService.highPriority, event)) &&
+     event.volunteers.length < event.clients){
+       event.color = calendarConfig.colorTypes.important;
+       AppointmentService.highPriority.push(event);
+    }
   }
 // volunteer removing self from appointment
   vm.removeMe = function(event){
