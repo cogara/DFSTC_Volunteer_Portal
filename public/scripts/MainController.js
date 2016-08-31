@@ -52,7 +52,7 @@ function MainController($http, $state, $window, $scope, UserService, Upload) {
   function login() {
     UserService.login(vm.loginUser).then(function(response) {
       vm.currentUser = response;
-      // UserService.currentUser.user = vm.currentUser;
+      UserService.currentUser.user = vm.currentUser;
       $state.go('dashboard');
     }, function(){
         vm.currentUser = null;
@@ -69,7 +69,7 @@ function MainController($http, $state, $window, $scope, UserService, Upload) {
     UserService.checkLoggedIn().then(function(response) {
       console.log(response);
       vm.currentUser = response;
-      // UserService.currentUser.user = vm.currentUser;
+      UserService.currentUser.user = vm.currentUser;
     });
 
 
