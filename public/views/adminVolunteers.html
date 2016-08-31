@@ -168,10 +168,10 @@
         <i class="fa fa-asterisk" aria-hidden="true"></i>
         <button class="btn btn-primary btn-xs" style="float: right" ng-click="admin.trainingComplete(volunteer)">Approve Trainee</button>
       </div>
-      <div class="volunteer-photo">
-        <img ng-if="volunteer.photo" ng-src="/photos/{{volunteer.photo}}"/>
-
-        <i ng-if="!volunteer.photo" class="fa fa-user icon-image" aria-hidden="true"></i>
+      <div ng-if="volunteer.photo"class="volunteer-photo" style="background-image: url('/photos/{{volunteer.photo}}')">
+      </div>
+      <div ng-if="!volunteer.photo" class="volunteer-photo">
+        <i class="fa fa-user icon-image" aria-hidden="true"></i>
       </div>
       <div class="volunteer-info">
         <div class="volunteer-meta">
@@ -404,7 +404,7 @@
 <!-- END PRINT VIEW -->
 
 
-<button ng-click="admin.exportToExcel('volunteerTable')">Excel</button>
+<!-- Export to Excel -->
 <table id="volunteerTable" style="display: none">
   <tr>
     <th>Name</th>
@@ -421,3 +421,4 @@
     <td>{{volunteer.isTrainee}}</td>
   </tr>
 </table>
+<!-- End export to excel -->

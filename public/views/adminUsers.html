@@ -1,32 +1,131 @@
-<div class="col-xs-12">
-  <h3>Admins</h3>
-  <label>Email </label>
-  <input ng-model="sa.newAdmin.email" type="text" /><br>
-  <label>Password </label>
-  <input ng-model="sa.newAdmin.password" type="text" /><br>
-  <button ng-click="sa.addAdmin(sa.newAdmin)">Add Admin</button>
-</div>
 
 <div class="col-xs-12">
-  <h6>Admins</h6>
+  <uib-tabset type="pills">
+    <uib-tab heading="Volunteers" ng-click="sa.search.inputVol = ''">
+      <input type="text" style="width: 100%; margin: 5px 0" ng-model="sa.search.inputVol" placeholder="Search Volunteers">
+      <ul class="user-list">
+        <li class="user-list__headers">
+          <span>Name</span>
+          <span>Email</span>
+          <span>Action</span>
+        </li>
+        <li class="user-list__user" class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputVol" ng-if="user.isVolunteer || user.isTrainee">
+          <span>{{user.firstName}} {{user.lastName}}</span>
+          <span>{{user.email}}</span>
+          <span>
+            <button class="btn btn-danger btn-xs" ng-click="sa.deleteUser(user._id)"><i class="fa fa-trash"></i> Remove</button>
+          </span>
+        </li>
+      </ul>
+    </uib-tab>
+    <uib-tab heading="Clients" ng-click="sa.search.inputClient = ''">
+      <input type="text" style="width: 100%; margin: 5px 0" ng-model="sa.search.inputClient" placeholder="Search Clients">
+      <ul class="user-list">
+        <li class="user-list__headers">
+          <span>Name</span>
+          <span>Email</span>
+          <span>Caseworker</span>
+          <span>Action</span>
+        </li>
+        <li class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputClient" ng-if="user.isClient">
+          <span>{{user.firstName}} {{user.lastName}}</span>
+          <span>{{user.email}}</span>
+          <span ng-if="user.caseworker">{{user.caseworker}}</span><span ng-if="!user.caseworker">N/A</span>
+          <span>
+            <button class="btn btn-danger btn-xs" ng-click="sa.deleteUser(user._id)"><i class="fa fa-trash"></i> Remove</button>
+          </span>
+        </li>
+      </ul>
+    </uib-tab>
+    <!-- <uib-tab heading="Caseworkers" ng-click="sa.search.inputCase = ''">
+      <input type="text" style="width: 100%; margin: 5px 0" ng-model="sa.search.inputCase" placeholder="Search Caseworkers">
+      <ul class="user-list">
+        <li class="user-list__headers">
+          <span>Name</span>
+          <span>Email</span>
+          <span>Action</span>
+        </li>
+        <li class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputCase" ng-if="user.isCaseworker">
+          <span>{{user.firstName}} {{user.lastName}}</span>
+          <span>{{user.email}}</span>
+          <span>
+            <button class="btn btn-danger btn-xs" ng-click="sa.deleteUser(user._id)"><i class="fa fa-trash"></i> Remove</button>
+          </span>
+        </li>
+      </ul>
+    </uib-tab> -->
+    <uib-tab heading="Admins" ng-click="sa.search.inputAdmin = ''">
+      <input type="text" style="width: 100%; margin: 5px 0" ng-model="sa.search.inputAdmin" placeholder="Search Admins">
+      <ul class="user-list">
+        <li class="user-list__headers">
+          <span>Email</span>
+          <span>Action</span>
+        </li>
+        <li class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputAdmin" ng-if="user.isAdmin && !user.isSuperAdmin">
+          <span>{{user.email}}</span>
+          <span>
+            <button class="btn btn-danger btn-xs" ng-click="sa.deleteUser(user._id)"><i class="fa fa-trash"></i> Remove</button>
+          </span>
+        </li>
+      </ul>
+      <div ng-if="sa.adminToggle" class="admin-add">
+        <h5 style="text-align: center; border-bottom: 1px solid rgba(0,0,0,.1); padding-bottom: 10px; margin-bottom: 10px;">Adding Admin</h5>
+        <label>Email </label>
+        <input ng-model="sa.newAdmin.email" type="text" /><br>
+        <label>Password </label>
+        <input ng-model="sa.newAdmin.password" type="text" /><br>
+        <button ng-if="sa.adminToggle" ng-click="sa.addAdmin(sa.newAdmin)">Submit</button>
+      </div>
+      <div class="page-actions">
+        <button ng-click="sa.addAdminToggle()">{{sa.toggleButtonText}}</button>
+      </div>
+    </uib-tab>
+
+    <!-- <uib-tab heading="All">
+      <h5>Admins</h5>
+      <ul style="list-style-type: none; padding: 0;">
+        <li style="display: flex; justify-content: space-between; border: 1px solid rgba(0,0,0,.2); padding: 3px;" ng-repeat="user in sa.users" ng-if="user.isAdmin && !user.isSuperAdmin">
+          {{user.email}}
+          <button ng-click="sa.deleteUser(user._id)">Remove</button>
+        </li>
+      </ul>
+      <h5>Volunteers</h5>
+      <ul>
+        <li ng-repeat="user in sa.users" ng-if="user.isVolunteer || user.isTrainee">
+          {{user.email}}
+          <button ng-click="sa.deleteUser(user._id)">Remove</button>
+        </li>
+      </ul>
+      <h5>Clients</h5>
+      <ul>
+        <li ng-repeat="user in sa.users" ng-if="user.isClient">
+          {{user.email}}
+          <button ng-click="sa.deleteUser(user._id)">Remove</button>
+        </li>
+      </ul>
+    </uib-tab> -->
+  </uib-tabset>
+</div>
+<!-- <div class="col-xs-12">
+  <h5>Admins</h5>
   <ul style="list-style-type: none; padding: 0;">
-    <li style="display: flex; justify-content: space-between; border: 1px solid rgba(0,0,0,.2); padding: 3px;" ng-repeat="user in sa.users" ng-if="user.isAdmin">
+    <li style="display: flex; justify-content: space-between; border: 1px solid rgba(0,0,0,.2); padding: 3px;" ng-repeat="user in sa.users" ng-if="user.isAdmin && !user.isSuperAdmin">
       {{user.email}}
       <button ng-click="sa.deleteUser(user._id)">Remove</button>
     </li>
   </ul>
-  <h6>Volunteers</h6>
+  <h5>Volunteers</h5>
   <ul>
     <li ng-repeat="user in sa.users" ng-if="user.isVolunteer || user.isTrainee">
       {{user.email}}
       <button ng-click="sa.deleteUser(user._id)">Remove</button>
     </li>
   </ul>
-  <h6>Clients</h6>
+  <h5>Clients</h5>
   <ul>
     <li ng-repeat="user in sa.users" ng-if="user.isClient">
       {{user.email}}
       <button ng-click="sa.deleteUser(user._id)">Remove</button>
     </li>
   </ul>
-</div>
+</div> -->

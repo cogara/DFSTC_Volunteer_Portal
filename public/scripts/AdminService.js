@@ -16,6 +16,10 @@ function AdminService($http) {
     })
   }
 
+  function deleteUser(id) {
+    $http.delete('/api/users/' + id);
+  }
+
   function addAdmin(admin) {
     var data = admin;
     data.isAdmin = true;
@@ -26,6 +30,7 @@ function AdminService($http) {
   return {
     getVolunteers: getVolunteers,
     getAllUsers: getAllUsers,
+    deleteUser: deleteUser,
     addAdmin: addAdmin
   }
 

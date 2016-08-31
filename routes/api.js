@@ -41,6 +41,13 @@ router.get('/users', function(request, response) {
   })
 })
 
+router.delete('/users/:id', function(request, response) {
+  console.log(request.params.id);
+  User.findByIdAndRemove(request.params.id, function(err, result){
+    console.log(result);
+  })
+})
+
 router.put('/volunteer/:id', function(request, response) {
   var volunteer = request.body;
   var editVolunteer = {};

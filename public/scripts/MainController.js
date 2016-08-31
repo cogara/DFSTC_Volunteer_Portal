@@ -1,6 +1,6 @@
 angular.module('DfstcSchedulingApp').controller('MainController', MainController);
 
-function MainController($http, $state, $window, $scope, UserService, Upload) {
+function MainController($http, $state, $window, $scope, $uibModal, UserService, Upload) {
 
   $scope.safeApply = function(fn) {
   var phase = this.$root.$$phase;
@@ -18,6 +18,42 @@ function MainController($http, $state, $window, $scope, UserService, Upload) {
   vm.loginUser = {};
   vm.loginUser.email = 'test';
   vm.loginUser.password = 'test';
+
+  vm.menuToggle = false;
+  vm.toggleMenu = toggleMenu;
+  function toggleMenu() {
+    vm.menuToggle ? vm.menuToggle = false : vm.menuToggle =  true;
+  }
+
+  vm.openProfile = openProfile;
+
+  function openProfile(id) {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'profileModal.html',
+      controller: 'ProfileController',
+      controllerAs: 'prof',
+      size: 'lg',
+      resolve: {
+        profile: function (UserService) {
+          return UserService.getProfile(id).then(function(response){
+            response.tempCompany = response.company;
+            return response;
+          });
+        }
+      }
+    });
+
+    modalInstance.result.then(function (profile) {
+      //do function to save new profile info
+      return UserService.editProfile(profile).then(function() {
+        console.log('promise?');
+        window.location.reload();
+      });
+
+      console.log(profile);
+    });
+  };
 
   function register() {
     UserService.register(vm.registerUser).then(function() {

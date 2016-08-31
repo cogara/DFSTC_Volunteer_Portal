@@ -21,43 +21,7 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
   vm.myAppointments = [];
   vm.myAppointments = AppointmentService.myAppointments.scheduled;
 
-console.log('mine', vm.myAppointments);
-  vm.openProfile = openProfile;
-
-  vm.profileToggle = false;
-  vm.toggleProfile = toggleProfile;
-  function toggleProfile() {
-    vm.profileToggle ? vm.profileToggle = false : vm.profileToggle =  true;
-  }
-  function openProfile(id) {
-    var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: 'profileModal.html',
-      controller: 'ProfileController',
-      controllerAs: 'prof',
-      size: 'lg',
-      resolve: {
-        profile: function (UserService) {
-          return UserService.getProfile(id).then(function(response){
-            response.tempCompany = response.company;
-            return response;
-          });
-        }
-      }
-    });
-
-    modalInstance.result.then(function (profile) {
-      //do function to save new profile info
-      return UserService.editProfile(profile).then(function() {
-        console.log('promise?');
-        window.location.reload();
-      });
-
-      console.log(profile);
-    });
-  };
-
-// start calendar and form settings
+  // start calendar and form settings
   //These variables MUST be set as a minimum for the calendar to work
   vm.calendarView = 'month';
   vm.viewDate = new Date();
@@ -197,7 +161,7 @@ console.log('mine', vm.myAppointments);
     AppointmentService.deleteAppointment(event._id);
     vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', event._id), 1);
   }
-// volunteer adding themselves to appointment
+  // volunteer adding themselves to appointment
   vm.claimAppointment = function(info){
     info.volunteers.push(vm.currentUser.user);
     AppointmentService.updateAppointment(info._id, info);
@@ -209,7 +173,7 @@ console.log('mine', vm.myAppointments);
 
     console.log('my appointments', vm.myAppointments);
   };
-// admin removing volunteer from appointment
+  // admin removing volunteer from appointment
   vm.removeVolunteer = function(index, event){
     event.volunteers.splice(index, 1);
     for (var i = vm.showAppointments.appointments.length-1; i >= 0; i--){
@@ -219,7 +183,7 @@ console.log('mine', vm.myAppointments);
     }
     AppointmentService.updateAppointment(event._id, event);
   }
-// volunteer removing self from appointment
+  // volunteer removing self from appointment
   vm.removeMe = function(event){
     event.color = calendarConfig.colorTypes.warning;
     for (var i = event.volunteers.length-1; i >= 0; i--){
