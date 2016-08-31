@@ -224,7 +224,7 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
       function successHandle(res){
         vm.Ann.title = res[0].title;
         vm.Ann.message = res[0].message;
-        vm.Ann.date = res[0].date;
+        vm.Ann.date = moment(res[0].date).format('MMM Do YYYY');
       };
 
   }
