@@ -17,7 +17,7 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
   vm.editAppointment = {};
   vm.editAppointment.event = AppointmentService.updateEvent.event;
   vm.currentUser = {};
-  vm.currentUser.user = UserService.currentUser.user;
+  // vm.currentUser.user = UserService.currentUser.user;
   vm.myAppointments = [];
   vm.myAppointments = AppointmentService.myAppointments.scheduled;
 
