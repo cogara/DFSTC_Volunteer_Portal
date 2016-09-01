@@ -197,7 +197,7 @@
 </script>
 <!-- End Profile Modal -->
 
-<!-- Confirmation Modal -->
+<!-- Training complete confirmation Modal -->
 <script type="text/ng-template" id="trainingComplete.html">
 
   <div class="modal-body">
@@ -210,7 +210,24 @@
   </div>
 
 </script>
-<!-- End Confirmation Modal -->
+<!-- End Training Complete Confirmation Modal -->
+
+<!-- Delete user confirmation Modal -->
+<script type="text/ng-template" id="confirmDeleteUser.html">
+
+  <div class="modal-body">
+    You are about to permanently remove {{rm.user.firstName}} {{rm.user.lastName}}. All information will be lost. <span style="font-weight: bold;">This cannot be undone</span>. Are you sure you wish to continue?
+  </div>
+  
+  <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="rm.save()">Yes</button>
+      <button class="btn btn-warning" type="button" ng-click="rm.dismiss()">No</button>
+  </div>
+
+</script>
+<!-- End delete user Confirmation Modal -->
+
+
 
 <!-- Client Register Modal -->
 <script type="text/ng-template" id="registerClient.html">

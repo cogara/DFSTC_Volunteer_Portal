@@ -13,7 +13,7 @@
           <span>{{user.firstName}} {{user.lastName}}</span>
           <span>{{user.email}}</span>
           <span>
-            <button class="btn btn-danger btn-xs" ng-click="sa.deleteUser(user._id)"><i class="fa fa-trash"></i> Remove</button>
+            <button class="btn btn-danger btn-xs" ng-click="sa.openDeleteUser(user)"><i class="fa fa-trash"></i> Remove</button>
           </span>
         </li>
       </ul>
@@ -32,7 +32,7 @@
           <span>{{user.email}}</span>
           <span ng-if="user.caseWorker">{{user.caseWorker}}</span><span ng-if="!user.caseWorker">N/A</span>
           <span>
-            <button class="btn btn-danger btn-xs" ng-click="sa.deleteUser(user._id)"><i class="fa fa-trash"></i> Remove</button>
+            <button class="btn btn-danger btn-xs" ng-click="sa.openDeleteUser(user)"><i class="fa fa-trash"></i> Remove</button>
           </span>
         </li>
       </ul>
@@ -52,7 +52,7 @@
           <span>{{user.firstName}} {{user.lastName}}</span>
           <span>{{user.email}}</span>
           <span>
-            <button class="btn btn-danger btn-xs" ng-click="sa.deleteUser(user._id)"><i class="fa fa-trash"></i> Remove</button>
+            <button class="btn btn-danger btn-xs" ng-click="sa.openDeleteUser(user)"><i class="fa fa-trash"></i> Remove</button>
           </span>
         </li>
       </ul>
@@ -70,7 +70,7 @@
         <li class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputAdmin | orderBy: 'lastName'" ng-if="user.isAdmin && !user.isSuperAdmin">
           <span>{{user.email}}</span>
           <span>
-            <button class="btn btn-danger btn-xs" ng-click="sa.deleteUser(user._id)"><i class="fa fa-trash"></i> Remove</button>
+            <button class="btn btn-danger btn-xs" ng-click="sa.openDeleteUser(user)"><i class="fa fa-trash"></i> Remove</button>
           </span>
         </li>
       </ul>
@@ -92,21 +92,21 @@
       <ul style="list-style-type: none; padding: 0;">
         <li style="display: flex; justify-content: space-between; border: 1px solid rgba(0,0,0,.2); padding: 3px;" ng-repeat="user in sa.users" ng-if="user.isAdmin && !user.isSuperAdmin">
           {{user.email}}
-          <button ng-click="sa.deleteUser(user._id)">Remove</button>
+          <button ng-click="sa.deleteUser(user)">Remove</button>
         </li>
       </ul>
       <h5>Volunteers</h5>
       <ul>
         <li ng-repeat="user in sa.users" ng-if="user.isVolunteer || user.isTrainee">
           {{user.email}}
-          <button ng-click="sa.deleteUser(user._id)">Remove</button>
+          <button ng-click="sa.deleteUser(user)">Remove</button>
         </li>
       </ul>
       <h5>Clients</h5>
       <ul>
         <li ng-repeat="user in sa.users" ng-if="user.isClient">
           {{user.email}}
-          <button ng-click="sa.deleteUser(user._id)">Remove</button>
+          <button ng-click="sa.deleteUser(user)">Remove</button>
         </li>
       </ul>
     </uib-tab> -->
@@ -117,21 +117,21 @@
   <ul style="list-style-type: none; padding: 0;">
     <li style="display: flex; justify-content: space-between; border: 1px solid rgba(0,0,0,.2); padding: 3px;" ng-repeat="user in sa.users" ng-if="user.isAdmin && !user.isSuperAdmin">
       {{user.email}}
-      <button ng-click="sa.deleteUser(user._id)">Remove</button>
+      <button ng-click="sa.deleteUser(user)">Remove</button>
     </li>
   </ul>
   <h5>Volunteers</h5>
   <ul>
     <li ng-repeat="user in sa.users" ng-if="user.isVolunteer || user.isTrainee">
       {{user.email}}
-      <button ng-click="sa.deleteUser(user._id)">Remove</button>
+      <button ng-click="sa.deleteUser(user)">Remove</button>
     </li>
   </ul>
   <h5>Clients</h5>
   <ul>
     <li ng-repeat="user in sa.users" ng-if="user.isClient">
       {{user.email}}
-      <button ng-click="sa.deleteUser(user._id)">Remove</button>
+      <button ng-click="sa.deleteUser(user)">Remove</button>
     </li>
   </ul>
 </div> -->

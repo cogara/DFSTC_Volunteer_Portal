@@ -1,4 +1,8 @@
-angular.module('DfstcSchedulingApp').controller('SuperAdminController', SuperAdminController).controller('RegisterUserController', RegisterUserController);
+angular
+  .module('DfstcSchedulingApp')
+  .controller('SuperAdminController', SuperAdminController)
+  .controller('RegisterUserController', RegisterUserController)
+  .controller('RemoveUserModalController', RemoveUserModalController);
 
 function SuperAdminController($http, $uibModal, AdminService, UserService, users) {
   var vm = this;
@@ -6,11 +10,12 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
   console.log(vm.users);
 
   vm.addAdmin = addAdmin;
-  vm.deleteUser = deleteUser;
+  // vm.deleteUser = deleteUser;
   vm.addAdminToggle = addAdminToggle;
   vm.toggleButtonText = 'Add Admin';
   vm.openRegisterClient = openRegisterClient;
   vm.openRegisterCaseWorker = openRegisterCaseWorker;
+  vm.openDeleteUser = openDeleteUser;
 
   function addAdminToggle() {
     vm.adminToggle = (vm.adminToggle) ? false : true;
@@ -25,17 +30,6 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
       });
       vm.newAdmin = {};
     });
-  }
-
-  function deleteUser(id) {
-    AdminService.deleteUser(id);
-    for (var i = 0; i < users.length; i++) {
-      if (users[i]._id === id) {
-        console.log('id matches', users[i]);
-        vm.users.splice(i, 1);
-      }
-    }
-    console.log(id);
   }
 
   function openRegisterClient() {
@@ -64,7 +58,6 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
     });
 
     modalInstance.result.then(function (caseWorker) {
-      //do function to register caseWorker
       console.log('register caseworker', caseWorker);
       registerCaseWorker(caseWorker);
     });
@@ -87,6 +80,37 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
       });
     })
   }
+  function openDeleteUser(user) {
+    vm.preventProfile=true;
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'confirmDeleteUser.html',
+      size: 'md',
+      controller: 'RemoveUserModalController',
+      controllerAs: 'rm',
+      resolve: {
+        user: function() {
+          return user;
+        }
+      }
+    })
+
+    modalInstance.result.then(function(user) {
+      console.log('deleting', user);
+      deleteUser(user._id);
+    })
+  }
+
+  function deleteUser(id) {
+    AdminService.deleteUser(id);
+    for (var i = 0; i < users.length; i++) {
+      if (users[i]._id === id) {
+        console.log('id matches', users[i]);
+        vm.users.splice(i, 1);
+      }
+    }
+    console.log(id);
+  }
 }
 
 function RegisterUserController($uibModalInstance) {
@@ -100,6 +124,23 @@ function RegisterUserController($uibModalInstance) {
   }
 
   function cancel() {
+    $uibModalInstance.dismiss();
+  }
+
+} //end register user controller
+
+function RemoveUserModalController($uibModalInstance, user) {
+  var vm = this;
+  vm.user = user;
+  console.log(vm.user);
+  vm.save = save;
+  vm.dismiss = dismiss;
+
+  function save() {
+    $uibModalInstance.close(user);
+  }
+
+  function dismiss() {
     $uibModalInstance.dismiss();
   }
 }

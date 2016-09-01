@@ -328,20 +328,6 @@ function ModalController($uibModalInstance, volunteer) {
   }
 }
 
-// function RegisterClientController($uibModalInstance) {
-//   var vm = this;
-//   vm.registerClient = registerClient;
-//   vm.cancel = cancel;
-//   function registerClient(client) {
-//     $uibModalInstance.close(client);
-//   }
-//
-//   function cancel() {
-//     $uibModalInstance.dismiss();
-//   }
-// }
-
-
 function phoneFormat() {
   return function (tel) {
     if (!tel) { return ''; }
