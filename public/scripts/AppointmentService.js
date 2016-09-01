@@ -24,14 +24,19 @@ function AppointmentService($http, calendarConfig, moment){
       }
 
       for (var g = 0; g < response.data.length; g++) {
-        if (response.data[g].clients > response.data[g].volunteers.length) {
+        if(response.data[g].volunteers) {
+          if (response.data[g].clients > response.data[g].volunteers.length) {
+            response.data[g].color = calendarConfig.colorTypes.important;
+            highPriority.push(response.data[g]);
+          } else if (response.data[g].volunteers.length == response.data[g].volunteerSlots &&
+             response.data[g].clientSlots == response.data[g].clients) {
+            response.data[g].color = calendarConfig.colorTypes.success;
+          } else {
+            response.data[g].color = calendarConfig.colorTypes.warning;
+          }
+        } else {
           response.data[g].color = calendarConfig.colorTypes.important;
           highPriority.push(response.data[g]);
-        } else if (response.data[g].volunteers.length == response.data[g].volunteerSlots &&
-           response.data[g].clientSlots == response.data[g].clients) {
-          response.data[g].color = calendarConfig.colorTypes.success;
-        } else {
-          response.data[g].color = calendarConfig.colorTypes.warning;
         }
       }
 
