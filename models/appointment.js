@@ -11,7 +11,7 @@ var appointmentSchema = new Schema(
     volunteers: Object,
     clientSlots: Number,
     clients: Object,
-    color: String,
+    color: Object,
     incrementsBadgeTotal: Boolean,
 
     // this object will have a value for each client to indicate appointment type - e.g.

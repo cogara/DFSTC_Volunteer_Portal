@@ -1,4 +1,9 @@
-angular.module('DfstcSchedulingApp').controller('AdminController', AdminController).controller('ModalController', ModalController).filter('PhoneFormat', phoneFormat);
+angular
+  .module('DfstcSchedulingApp')
+  .controller('AdminController', AdminController)
+  .controller('ModalController', ModalController)
+  // .controller('RegisterClientController', RegisterClientController)
+  .filter('PhoneFormat', phoneFormat);
 
 function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList, Excel, $timeout) {
   var vm = this;
@@ -19,18 +24,52 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.statusFilter = statusFilter;
   vm.clearSearchOpp = clearSearchOpp;
   vm.clearSearchAvail = clearSearchAvail;
-  vm.exportToExcel = exportToExcel;
-  vm.printDiv = printDiv;
+  vm.selectTrainee = selectTrainee;
+  vm.approveMultipleTrainee = approveMultipleTrainee;
 
-  vm.addAdmin = addAdmin;
-
-  function addAdmin(admin) {
-    AdminService.addAdmin(admin).then(function(response) {
-      console.log('admin created');
-      vm.newAdmin = {};
-    });
+  function approveMultipleTrainee() {
+    if(confirm('Convert to Volunteers?')) {
+      for (var i = 0; i < vm.volunteers.length; i++) {
+        if(vm.volunteers[i].traineeSelected) {
+          vm.volunteers[i].isTrainee = false;
+          vm.volunteers[i].isVolunteer = true;
+          UserService.editProfile(vm.volunteers[i]);
+          vm.traineeSelectCheck = false;
+        }
+      }
+    }
   }
 
+  function selectTrainee(trainee) {
+    vm.preventProfile = true;
+    console.log(trainee);
+    if(trainee.traineeSelected) {
+      trainee.traineeSelected = false;
+    } else {
+      trainee.traineeSelected = true;
+    }
+    // trainee.traineeSelected = (trainee.traineeSelected) ? false : true;
+    for (var i = 0; i < vm.volunteers.length; i++) {
+      console.log(vm.volunteers[i].traineeSelected);
+      if(vm.volunteers[i].traineeSelected) {
+        vm.traineeSelectCheck = true;
+        return;
+      } else {
+        vm.traineeSelectCheck = false;
+      }
+    }
+  }
+
+  vm.printDiv = printDiv;
+  function printDiv(divId) {
+    window.frames["print_frame"].document.body.innerHTML = document.getElementById(divId).innerHTML;
+    window.frames["print_frame"].window.focus();
+    window.frames["print_frame"].window.print();
+  }
+
+
+  vm.exportToExcel = exportToExcel;
+  vm.printDiv = printDiv;
 
   function expandProfile(volunteer, panel) {
     if(panel === 'all') {
@@ -76,7 +115,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   }
 
   function trainingComplete(volunteer) {
-    vm.preventProfile=true;
+    vm.preventProfile = true;
     var modalInstance = $uibModal.open({
       animation: true,
       templateUrl: 'trainingComplete.html',
@@ -242,28 +281,6 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     }
     return true;
   }
-
-
-  //   var check = false;
-  //   for (var opp in vm.search.opportunity) {
-  //     if(vm.search.opportunity[opp]) {
-  //       check = true;
-  //     }
-  //     if(vm.search.opportunity[opp]) {
-  //       if(volunteer.volunteerOpportunities[opp] === vm.search.opportunity[opp]) {
-  //         return true;
-  //       }
-  //     }
-  //   }
-  //   if(check) {
-  //     vm.searchOpportunityActive = true;
-  //     return false;
-  //   } else {
-  //     vm.searchOpportunityActive = false;
-  //     return true;
-  //   }
-  // }
-
 
   function roleFilter(volunteer) {
     if(vm.search.role === 'isTrainee') {

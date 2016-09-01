@@ -1,12 +1,17 @@
 angular.module('DfstcSchedulingApp').controller('DashboardController', DashboardController);
 
-function DashboardController($http, $state, $uibModal, UserService, AppointmentService, calendarConfig, AnnouncementService, moment) {
+function DashboardController($http, $state, $uibModal, $scope, UserService, AppointmentService, calendarConfig, moment, AnnouncementService) {
   var vm = this;
 
   vm.showAppointments = AppointmentService.appointments;
   vm.editAppointment = {};
   vm.editAppointment.event = AppointmentService.updateEvent.event;
-
+  vm.currentUser = {};
+  vm.currentUser.user = UserService.currentUser.user;
+  vm.myAppointments = {};//AppointmentService.myAppointments;
+  // vm.myAppointments.scheduled = [];
+  vm.myAppointments.scheduled = AppointmentService.myAppointments.scheduled;
+  vm.highPriority = AppointmentService.highPriority;
 
   vm.openProfile = openProfile;
 
@@ -43,7 +48,7 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
     });
   };
 
-// start calendar and form settings
+  // start calendar and form settings
   //These variables MUST be set as a minimum for the calendar to work
   vm.calendarView = 'month';
   vm.viewDate = new Date();
@@ -74,7 +79,9 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
     endsAt: '',
     volunteerSlots: 5,
     clientSlots: 5,
+    clients: 0,
     trainingAppointment: false,
+    volunteers: [],
     incrementsBadgeTotal: false
   };
 
@@ -145,12 +152,13 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   vm.eventClicked = function(calendarEvent){
     console.log(calendarEvent);
+    //AppointmentService.myAppointments.scheduled = [];
     AppointmentService.updateEvent.event = calendarEvent;
     var modalInstance = $uibModal.open({
       animation: true,
       templateUrl: 'editAppointmentModal.html',
-      controller: 'DashboardController',
-      controllerAs: 'dash',
+      controller: 'EditController',
+      controllerAs: 'edit',
       size: 'lg',
       resolve: {
         appointment: function (){
@@ -159,32 +167,6 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
       }
     });
   }
-
-
-  vm.updateAppointment = function(info){
-    console.log(info);
-    AppointmentService.updateAppointment(info._id, info);
-    vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', info._id), 1);
-    vm.showAppointments.appointments.push(info);
-
-  }
-
-  function findIndex(array, attr, value) {
-    for(var i = 0; i < array.length; i += 1) {
-      if(array[i][attr] === value) {
-        return i;
-      }
-    }
-  }
-  vm.deleteAppointment = function(event){
-    console.log('deleting', event);
-    AppointmentService.deleteAppointment(event._id);
-    vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', event._id), 1);
-  }
-
-  AppointmentService.getAppointments()
-
-
 
   // Announcements functions
 
@@ -223,14 +205,14 @@ function DashboardController($http, $state, $uibModal, UserService, AppointmentS
 
   var getAnnouncement = function(){
     AnnouncementService.getAnnouncement().then(successHandle)
-      function successHandle(res){
-        vm.Ann.title = res[0].title;
-        vm.Ann.message = res[0].message;
-        vm.Ann.date = moment(res[0].date).format('MMM Do YYYY');
-      };
 
+    function successHandle(res){
+      vm.Ann.title = res[0].title;
+      vm.Ann.message = res[0].message;
+      vm.Ann.date = moment(res[0].date).format('MMM Do YYYY');
+    };
   }
- getAnnouncement();
+  getAnnouncement();
 
-
+  AppointmentService.getAppointments(UserService.currentUser.user);
 }; //end DashboardController

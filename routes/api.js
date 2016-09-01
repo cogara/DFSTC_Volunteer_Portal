@@ -28,9 +28,34 @@ router.get('/volunteers', function(request, response) {
   })
 })
 
+router.get('/users', function(request, response) {
+  User.find({}, function(err, users) {
+    if(err) {
+      console.log(err);
+      return false
+    }
+    for (var i = 0; i < users.length; i++) {
+      users[i].password = null;
+    }
+    console.log(users);
+    response.send(users);
+  })
+})
+
+router.delete('/users/:id', function(request, response) {
+  console.log(request.params.id);
+  User.findByIdAndRemove(request.params.id, function(err, result){
+    console.log(result);
+    response.sendStatus(200);
+  }, function() {
+    response.sendStatus(500);
+  })
+})
+
 router.put('/volunteer/:id', function(request, response) {
   var volunteer = request.body;
   var editVolunteer = {};
+  editVolunteer.fullName = volunteer.firstName + ' ' + volunteer.lastName;
   if(request.query.changepass) {
     User.findOne({_id: request.params.id}, function(err, user) {
       if(err) {
@@ -65,7 +90,7 @@ router.put('/volunteer/:id', function(request, response) {
   } else {
 
     for (var key in volunteer) {
-      if (!(key==='password')) {
+      if (!(key==='password' || key==='fullName')) {
         editVolunteer[key] = volunteer[key];
       }
     }
@@ -104,9 +129,6 @@ router.post('/appointment', function(request, response){
     }
   });
 });
-
-
-
 
 router.get('/appointment/:id', function(request, response){
   console.log('one appointment get');
@@ -189,5 +211,46 @@ router.post('/announcement', function(req,res){
     }
   });
 });
+
+router.get('/clients', function(request, response) {
+  console.log(request.user);
+  var clientArray = [];
+  var clients = [];
+  if(!request.user.clients) {
+    response.send(clientArray);
+    return;
+  }
+  if(request.user.clients.length > 0) {
+    for (var i = 0; i < request.user.clients.length; i++) {
+      console.log(request.user.clients[i]);
+      clients.push(request.user.clients[i]);
+    }
+    User.find({_id: {$in: clients}}, function(err, clientList) {
+      if(err) {
+        console.log(err);
+        response.sendStatus(500);
+      } else {
+        console.log(clientList);
+        response.send(clientList);
+      }
+    })
+  } else {
+    response.send(clientArray);
+  }
+});
+
+router.put('/caseWorkers/:id', function(request, response) {
+  var clientId = request.query.client;
+  console.log(clientId);
+  User.findByIdAndUpdate(request.params.id, {$push: {clients: clientId}}, function(err, caseWorker) {
+    if(err) {
+      console.log(err);
+      console.log('error in updating caseworker');
+      response.sendStatus(500);
+    } else {
+      response.sendStatus(200);
+    }
+  })
+})
 
 module.exports = router;
