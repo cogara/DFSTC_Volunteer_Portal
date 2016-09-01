@@ -5,7 +5,7 @@ angular
   // .controller('RegisterClientController', RegisterClientController)
   .filter('PhoneFormat', phoneFormat);
 
-function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList, Excel, $timeout) {
+function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList, appointments, Excel, $timeout) {
   var vm = this;
   vm.volunteers = volunteerList;
   vm.getVolunteers = getVolunteers;
@@ -26,6 +26,24 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.clearSearchAvail = clearSearchAvail;
   vm.selectTrainee = selectTrainee;
   vm.approveMultipleTrainee = approveMultipleTrainee;
+  vm.exportToExcel = exportToExcel;
+  vm.printDiv = printDiv;
+  vm.appointments = appointments;
+  vm.todaysDate = new Date();
+  // vm.todaysDate.toISOString();
+  console.log(typeof vm.todaysDate);
+
+  // getAppointments();
+  // function getAppointments() {
+  //   AdminService.getAppointments().then(function(response) {
+  //     console.log(response.data);
+  //     if(!response.data.clients) {
+  //       response.data.clients = ['test'];
+  //     }
+  //     console.log('length', response.data.clients.length);
+  //     vm.appointments = response.data;
+  //   })
+  // }
 
   function approveMultipleTrainee() {
     if(confirm('Convert to Volunteers?')) {
@@ -60,16 +78,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     }
   }
 
-  vm.printDiv = printDiv;
-  function printDiv(divId) {
-    window.frames["print_frame"].document.body.innerHTML = document.getElementById(divId).innerHTML;
-    window.frames["print_frame"].window.focus();
-    window.frames["print_frame"].window.print();
-  }
 
-
-  vm.exportToExcel = exportToExcel;
-  vm.printDiv = printDiv;
 
   function expandProfile(volunteer, panel) {
     if(panel === 'all') {

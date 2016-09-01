@@ -27,10 +27,25 @@ function AdminService($http) {
     return $http.post('/register', data)
   }
 
+  function getAppointments() {
+    return $http.get('/api/appointment').then(function(response) {
+      var appointments = response.data;
+      console.log(appointments);
+      for (var i = 0; i < appointments.length; i++) {
+        if(!appointments[i].clients) {
+          console.log('setting clients');
+          appointments[i].clients = 0;
+        }
+      }
+      return appointments;
+    });
+  }
+
   return {
     getVolunteers: getVolunteers,
     getAllUsers: getAllUsers,
     deleteUser: deleteUser,
+    getAppointments: getAppointments,
     addAdmin: addAdmin
   }
 

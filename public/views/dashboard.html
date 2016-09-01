@@ -1,10 +1,4 @@
-<button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin.volunteers">Administration</button>
 <span class="profile-control" ng-if="main.currentUser" style="float: right; margin-left: 5px;" >
-  <!-- <span class="profile-button" ng-click="dash.toggleProfile()">
-   <img class="profile-image" ng-if="main.currentUser.photo" ng-src="/photos/{{main.currentUser.photo}}"/>
-    <i class="fa fa-user fa-lg" aria-hidden="true"></i>
-    <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
-  </span> -->
   <div class="profile-menu" ng-class="{'hide': !dash.profileToggle}">
     <h6 class="profile-control-header">{{main.currentUser.firstName}} {{main.currentUser.lastName}}</h6>
     <div class="profile-image">
@@ -21,7 +15,7 @@
 <script type="text/ng-template" id="profileModal.html">
   <div class="modal-header">
     <button class="pull-right btn btn-primary" ng-click="prof.editProfile()">Edit Profile</button>
-      <h3 class="modal-title">Profile</h3>
+    <h3 class="modal-title">Profile</h3>
   </div>
   <div class="row">
     <div class="modal-body profile">
