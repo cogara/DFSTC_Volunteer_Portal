@@ -2,6 +2,7 @@ angular.module('DfstcSchedulingApp').controller('MainController', MainController
 
 function MainController($http, $state, $window, $scope, $uibModal, UserService, Upload) {
 
+
   $scope.safeApply = function(fn) {
     var phase = this.$root.$$phase;
     if(phase == '$apply' || phase == '$digest')
@@ -90,7 +91,7 @@ function MainController($http, $state, $window, $scope, $uibModal, UserService, 
       $state.go('index');
     })
   }
-  
+
   //checks if user is currently logged in on page load
   UserService.checkLoggedIn().then(function(response) {
     console.log(response);
