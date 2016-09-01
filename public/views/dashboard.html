@@ -1,10 +1,10 @@
 <button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin.volunteers">Administration</button>
 <span class="profile-control" ng-if="main.currentUser" style="float: right; margin-left: 5px;" >
-  <span class="profile-button" ng-click="dash.toggleProfile()">
-    <!-- <img class="profile-image" ng-if="main.currentUser.photo" ng-src="/photos/{{main.currentUser.photo}}"/> -->
+  <!-- <span class="profile-button" ng-click="dash.toggleProfile()">
+   <img class="profile-image" ng-if="main.currentUser.photo" ng-src="/photos/{{main.currentUser.photo}}"/>
     <i class="fa fa-user fa-lg" aria-hidden="true"></i>
     <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
-  </span>
+  </span> -->
   <div class="profile-menu" ng-class="{'hide': !dash.profileToggle}">
     <h6 class="profile-control-header">{{main.currentUser.firstName}} {{main.currentUser.lastName}}</h6>
     <div class="profile-image">
@@ -374,18 +374,19 @@
 <script type="text/ng-template" id="addAnnouncementModal.html">
   <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
     <h3 class="center-block">Add New Announcements</h3>
-    <label>Announcements Title:</label>
+    <label>Title:</label>
     <input type="text" class="form-control" ng-model="dash.announcement.title" />
 
 
-    <label>Number of Volunteers Needed:</label>
+    <label>Message:</label>
     <textarea msd-elastic="<br>"  class="form-control" ng-model="dash.announcement.message"  />
 
     </textarea>
 
-  <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="$close(dash.addAnnouncement())" >Save Announcement</button>
-    <button class="btn btn-warning" type="button" ng-click="$close()">Cancel</button>
+    <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="$close(dash.addAnnouncement())" >Save Announcement</button>
+      <button class="btn btn-warning" type="button" ng-click="$close()">Cancel</button>
+    </div>
   </div>
  </script>
 <!-- end Add Announcement Motal -->
@@ -567,8 +568,20 @@
     </div>
   </div>
   <div class="col-lg-4 sidebar">
-    <h2 class="text-center">Sidebar</h2>
-    <uib-tabset class="admin-menu">
+    <h2 style="margin-bottom: 74px;"class="text-center">Upcoming</h2>
+    <div class="panel panel-default" ng-if="!main.currentUser.isAdmin">
+      <h5 class="text-muted text-uppercase profile-control-header">My Appointments</h5>
+      <ul class="sidebar-list">
+        <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
+      </ul>
+    </div>
+    <div class="panel panel-default">
+      <h5 class="text-muted text-uppercase profile-control-header">High Priority</h5>
+      <ul class="sidebar-list">
+        <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
+      </ul>
+    </div>
+    <!-- <uib-tabset class="admin-menu">
       <uib-tab heading="Appointments Selected">
         <ul class="sidebar-list">
           <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
@@ -579,7 +592,7 @@
           <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
         </ul>
       </uib-tab>
-    </uib-tabset>
+    </uib-tabset> -->
 
   </div>
 </div>
