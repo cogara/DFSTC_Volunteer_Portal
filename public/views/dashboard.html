@@ -210,8 +210,8 @@
     </div>
   </div>
 
-<!-- volunteer claim/remove form -->
-  <div ng-if="!edit.currentUser.user.isAdmin">
+  <!-- volunteer claim/remove form -->
+  <div ng-if="edit.currentUser.user.isVolunteer">
     <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
       <h3 class="center-block">{{edit.editAppointment.event.title}} - {{edit.editAppointment.event.startsAt | date: "shortDate"}}</h3>
       <br>
