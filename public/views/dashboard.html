@@ -287,18 +287,28 @@
   </div>
   <div class="col-lg-4 sidebar">
     <h2 class="text-center">Sidebar</h2>
-    <uib-tabset class="admin-menu">
+    <div class="panel panel-default" ng-if="!main.currentUser.isAdmin">
+      <h5 class="text-muted text-uppercase profile-control-header">My Appointments</h5>
+      <ul class="sidebar-list">
+        <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
+      </ul>
+    </div>
+    <div class="panel panel-default">
+      <h5 class="text-muted text-uppercase profile-control-header">High Priority</h5>
+      <ul class="sidebar-list">
+        <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
+      </ul>
+    </div>
+    <!-- <uib-tabset class="admin-menu">
       <uib-tab heading="Appointments Selected">
-        <ul class="sidebar-list">
-          <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
-        </ul>
+
       </uib-tab>
       <uib-tab heading="High Priority Appts">
         <ul class="sidebar-list">
           <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
         </ul>
       </uib-tab>
-    </uib-tabset>
+    </uib-tabset> -->
 
   </div>
 </div>
