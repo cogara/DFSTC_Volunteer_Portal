@@ -9,12 +9,15 @@
     <span>Phone</span>
     <span>Action</span>
   </li>
-  <li class="user-list__user" class="user-list__user" ng-repeat="client in cw.clients | filter: cw.search.inputVol | orderBy: 'lastName'">
+  <li
+    class="user-list__user"
+    ng-repeat="client in cw.clients | filter: cw.search.inputVol | orderBy: 'lastName'"
+    ng-click="cw.editClient(user)">
     <span>{{client.fullName}}</span>
     <span>{{client.email}}</span>
     <span>{{client.phoneNumber | PhoneFormat}}</span>
     <span>
-      <button class="btn btn-primary btn-xs" ng-click="cw.editClient(user._id)"><i class="fa fa-pencil"></i> Edit</button>
+      <button class="btn btn-danger btn-xs" ng-click="cw.dropClient(user._id)"><i class="fa fa-trash"></i> Drop</button>
     </span>
   </li>
 </ul>

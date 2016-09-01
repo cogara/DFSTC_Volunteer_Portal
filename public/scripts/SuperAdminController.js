@@ -103,8 +103,8 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
 
   function deleteUser(id) {
     AdminService.deleteUser(id);
-    for (var i = 0; i < users.length; i++) {
-      if (users[i]._id === id) {
+    for (var i = 0; i < vm.users.length; i++) {
+      if (vm.users[i]._id === id) {
         console.log('id matches', users[i]);
         vm.users.splice(i, 1);
       }

@@ -588,6 +588,8 @@ pre{
   padding: 1px 5px;
 }
 
+
+
 .user-list__headers {
   text-transform: uppercase;
   font-size: .85em;
@@ -598,6 +600,11 @@ pre{
 
 .user-list__user:nth-of-type(2n+1) {
   background-color: rgb(240,240,240);
+}
+
+.user-list__user:hover {
+  background-color: rgb(220,220,220);
+  cursor: pointer;
 }
 
 .user-list__user span, .user-list__headers span {
