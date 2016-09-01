@@ -8,9 +8,8 @@ function EditController($http, $state, $uibModal, $scope, UserService, Appointme
   vm.editAppointment.event = AppointmentService.updateEvent.event;
   vm.currentUser = {};
   vm.currentUser.user = UserService.currentUser.user;
-  vm.myAppointments = {};
-  vm.myAppointments.scheduled = [];
-  vm.myAppointments.scheduled = AppointmentService.myAppointments.scheduled;
+  vm.myAppointments = AppointmentService.myAppointments;
+  // vm.myAppointments.scheduled = AppointmentService.myAppointments.scheduled;
 
   vm.today = function() {
     vm.dt = new Date();
@@ -86,22 +85,21 @@ function EditController($http, $state, $uibModal, $scope, UserService, Appointme
     console.log('deleting', event);
     AppointmentService.deleteAppointment(event._id);
     vm.showAppointments.appointments.splice(findIndex(vm.showAppointments.appointments, '_id', event._id), 1);
+
   }
 // volunteer adding themselves to appointment
   vm.claimAppointment = function(info){
+
     info.volunteers.push(vm.currentUser.user);
     AppointmentService.updateAppointment(info._id, info);
     AppointmentService.appointments.appointments.splice(findIndex(AppointmentService.appointments.appointments, '_id', info._id), 1);
-    AppointmentService.highPriority.splice(findIndex(AppointmentService.highPriority, '_id', info._id), 1);
+    // AppointmentService.highPriority.splice(findIndex(AppointmentService.highPriority, '_id', info._id), 1);
+
 
     info.color = calendarConfig.colorTypes.info;
     console.log('scheduled', AppointmentService.myAppointments.scheduled);
     AppointmentService.myAppointments.scheduled.push(info);
-    // console.log('scheduled after update', AppointmentService.myAppointments.scheduled);
-
     AppointmentService.appointments.appointments.push(info);
-    // location.reload();
-    // $scope.safeApply();
   };
 // admin removing volunteer from appointment
   vm.removeVolunteer = function(index, event){
