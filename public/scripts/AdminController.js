@@ -1,4 +1,4 @@
-angular.module('DfstcSchedulingApp').controller('AdminController', AdminController).controller('ModalController', ModalController).filter('PhoneFormat', phoneFormat);
+angular.module('DfstcSchedulingApp').controller('AdminController', AdminController).controller('ModalController', ModalController).controller('RegisterClientController', RegisterClientController).filter('PhoneFormat', phoneFormat);
 
 function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList, Excel, $timeout) {
   var vm = this;
@@ -19,7 +19,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.statusFilter = statusFilter;
   vm.clearSearchOpp = clearSearchOpp;
   vm.clearSearchAvail = clearSearchAvail;
-  vm.registerClient = registerClient;
+  vm.openRegisterClient = openRegisterClient;
 
   vm.printDiv = printDiv;
   function printDiv(divId) {
@@ -28,10 +28,6 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     window.frames["print_frame"].window.print();
   }
 
-  function registerClient() {
-    vm.registerUser.isClient = true;
-    UserService.register(vm.registerUser);
-  }
 
   vm.exportToExcel = exportToExcel;
   vm.printDiv = printDiv;
@@ -140,6 +136,27 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     }
     vm.preventProfile = false;
   };
+
+  function openRegisterClient(id) {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'registerClient.html',
+      controller: 'RegisterClientController',
+      controllerAs: 'rc',
+      size: 'lg'
+    });
+
+    modalInstance.result.then(function (client) {
+      //do function to register client
+      console.log('register client', client);
+      registerClient(client);
+    });
+  };
+
+  function registerClient(client) {
+    client.isClient = true;
+    UserService.register(client);
+  }
 
   function clearSearchAvail() {
     vm.search.avail = {};
@@ -327,6 +344,20 @@ function ModalController($uibModalInstance, volunteer) {
     $uibModalInstance.dismiss();
   }
 }
+
+function RegisterClientController($uibModalInstance) {
+  var vm = this;
+  vm.registerClient = registerClient;
+  vm.cancel = cancel;
+  function registerClient(client) {
+    $uibModalInstance.close(client);
+  }
+
+  function cancel() {
+    $uibModalInstance.dismiss();
+  }
+}
+
 
 function phoneFormat() {
   return function (tel) {

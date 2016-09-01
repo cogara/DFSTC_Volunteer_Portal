@@ -19,7 +19,7 @@ var UserSchema = new Schema(
       zip: String
     },
     company: String,
-    title: String,
+    jobTitle: String,
     isVolunteer: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
     isSuperAdmin: {type:Boolean, default: false},
@@ -38,6 +38,7 @@ var UserSchema = new Schema(
     altContactName: String, //
     altContactPh: Number, //
     altContactRel: String, //
+    caseworker: String,
     age: Number,
     height: Number,
     topSize: String,

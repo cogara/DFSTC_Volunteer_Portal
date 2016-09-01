@@ -79,10 +79,6 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/volunteers',
       templateUrl: '../views/adminVolunteers.html'
     })
-    .state('admin.registerClient', {
-      url: '/registerClient',
-      templateUrl: '../views/registerClient.html'
-    })
     .state('admin.reports', {
       url:'/reports',
       templateUrl: '../views/adminReports.html'
