@@ -176,24 +176,10 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.preventProfile = false;
   };
 
-  function clearSearchAvail() {
-    vm.search.avail = {};
-    vm.search.avail.monday = {};
-    vm.search.avail.tuesday = {};
-    vm.search.avail.wednesday = {};
-    vm.search.avail.thursday = {};
-    vm.search.avail.friday = {};
-    vm.search.avail.saturday = {};
-    vm.searchAvailActive = false;
-    console.log(vm.search.avail);
-    vm.availDropdownOpen = false;
-  }
+  vm.search = {};
 
-  // Search volunteer options and filters
-  function clearSearchOptions() {
-    vm.search = {};
-    vm.search.opportunity = {};
-    vm.search.opportunity.all = false;
+  vm.search.opportunity = {};
+  function clearSearchOpp() {
     vm.search.opportunity.imageCoach = false;
     vm.search.opportunity.careerCoach = false;
     vm.search.opportunity.clothingSorter = false;
@@ -208,31 +194,39 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.search.opportunity.eventSetUp = false;
     vm.search.opportunity.photographer = false;
     vm.search.opportunity.graphicDesigner = false;
+    vm.oppDropdownOpen = false;
+  }
 
+  vm.search.avail = {};
+  function clearSearchAvail() {
 
-    vm.search.avail = {};
     vm.search.avail.monday = {};
     vm.search.avail.tuesday = {};
     vm.search.avail.wednesday = {};
     vm.search.avail.thursday = {};
     vm.search.avail.friday = {};
     vm.search.avail.saturday = {};
+    for(var day in vm.search.avail) {
+      vm.search.avail[day].monday = false;
+      vm.search.avail[day].morning = false;
+      vm.search.avail[day].evening = false;
+    }
+    console.log(vm.search.avail);
+    vm.searchAvailActive = false;
+    vm.availDropdownOpen = false;
+  }
 
-
+  // Search volunteer options and filters
+  function clearSearchOptions() {
+    clearSearchOpp();
+    clearSearchAvail();
     vm.search.role = 'all';
     vm.search.status = 'all';
-    //
-    // vm.sortDefault = 'lastName';
-    // vm.sortLast = 'firstName';
-    // vm.sortOrder = 'lastName';
-    vm.searchAvailActive = false;
-    // vm.searchOpportunityActive = false;
   }
 
   function resetSearch() {
     clearSearchOptions();
   }
-
 
   vm.sortDefault = 'lastName';
   vm.sortLast = 'firstName';
@@ -245,22 +239,24 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   }
 
   function availableFilter(volunteer) {
+    var filterCheck;
     for (var day in vm.search.avail) {
       for (var time in vm.search.avail[day]) {
         if (vm.search.avail[day][time]) {
-          vm.searchAvailActive = true;
+          filterCheck = true;
           if(volunteer.isAvail && volunteer.isAvail[day]) {
             if(!volunteer.isAvail[day][time]) {
+              vm.searchAvailActive = filterCheck;
               return false;
             }
           } else {
+            vm.searchAvailActive = filterCheck;
             return false;
           }
-        } else {
-          vm.searchAvailActive = false;
         }
       }
     }
+    vm.searchAvailActive = filterCheck;
     return true;
   }
 
@@ -270,15 +266,12 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
       if (vm.search.opportunity[opp]) {
         check = true;
         if (!volunteer.volunteerOpportunities[opp]) {
+          vm.searchOpportunityActive = check;
           return false;
         }
       }
     }
-    if (check) {
-      vm.searchOpportunityActive = true;
-    } else {
-      vm.searchOpportunityActive = false;
-    }
+    vm.searchOpportunityActive = check;
     return true;
   }
 
@@ -322,12 +315,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     }
   }
 
-  function clearSearchOpp() {
-      for (var key in vm.search.opportunity) {
-        vm.search.opportunity[key] = false;
-      }
-    vm.oppDropdownOpen = false;
-  }
+
 
   clearSearchOptions();
   //end search filters
