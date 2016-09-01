@@ -1,3 +1,279 @@
+<button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin.volunteers">Administration</button>
+<span class="profile-control" ng-if="main.currentUser" style="float: right; margin-left: 5px;" >
+  <span class="profile-button" ng-click="dash.toggleProfile()">
+    <!-- <img class="profile-image" ng-if="main.currentUser.photo" ng-src="/photos/{{main.currentUser.photo}}"/> -->
+    <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+    <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+  </span>
+  <div class="profile-menu" ng-class="{'hide': !dash.profileToggle}">
+    <h6 class="profile-control-header">{{main.currentUser.firstName}} {{main.currentUser.lastName}}</h6>
+    <div class="profile-image">
+      <img ng-if="main.currentUser.photo" height="100%" ng-src="/photos/{{main.currentUser.photo}}" alt="Profile Image"/>
+      <i ng-if="!main.currentUser.photo" class="fa fa-user fa-4x" aria-hidden="true"></i>
+    </div>
+    <button class="btn btn-default" ng-click="dash.openProfile(main.currentUser._id)">Profile</button>
+    <button ng-if="main.currentUser" class="btn btn-default" ng-click="main.logout()">Logout</button>
+  </div>
+</span>
+<div class="clear"></div>
+
+<!-- Profile Modal -->
+<script type="text/ng-template" id="profileModal.html">
+  <div class="modal-header">
+    <button class="pull-right btn btn-primary" ng-click="prof.editProfile()">Edit Profile</button>
+      <h3 class="modal-title">Profile</h3>
+  </div>
+  <div class="row">
+    <div class="modal-body profile">
+      <div class="panel panel-default col-sm-10 col-sm-offset-1">
+        <br />
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-3">E-mail address: <span style="display: block; font-size: 1rem; font-weight: normal;">(this will be your login username)</span></label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" ng-model="prof.profile.email" ng-disabled="!prof.isEditing" placeholder="E-mail Address" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3">First Name:</label>
+            <div class="col-md-9">
+              <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.firstName" placeholder="First Name" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3">Last Name:</label>
+            <div class="col-md-9">
+              <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.lastName" placeholder="Last Name" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3">Phone Number:</label>
+            <div class="col-md-9">
+              <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.phoneNumber" ui-mask="(999) 999-9999" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3">Address:</label>
+            <div class="col-md-9">
+              <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.address.addressOne" placeholder="Address Line 1" />
+              <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.address.addressTwo" placeholder="Address Line 2" />
+              <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.address.city" placeholder="City" />
+              <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.address.state" placeholder="State" />
+              <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.address.zip" placeholder="Zip Code" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3">Volunteer positions you are interested in:</label>
+            <div class="col-md-9">
+              <div class="checkbox panel panel-default col-md-12" style="padding: 10px 30px">
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.imageCoach" /> Image Coach
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Image Coach</span>
+                      Work one-on-one with a Dress for Success Twin Cities client in our boutique to help her select her professional attire and to provide support and encouragement as she prepares for her interview or starts a new job. Appointments take place Tuesday, Wednesday and Saturday’s with a variety of daytime, afternoon and some evening slots.
+                    </p>
+                  </span>
+                </div>
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.careerCoach" /> Career Coach
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Career Coach</span>
+                      Work one-on-one with a Dress for Success Twin Cities client in our Career Center. Help draft and review resumes, draft and review cover letters, set up or maintain linked-in profiles, conduct mock-interviews and strategize job searches. Appointments take place Tuesday, Thursdays and Saturdays with a variety of day time, afternoon and some evening slots.
+                    </p>
+                  </span>
+                </div>
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.clothingSorter" />Clothing Sorter
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Clothing Sorter</span>
+                      Process incoming clothing donations and help to decide what items are appropriate to keep for our boutique. Great for someone with an eye for fashion and a love of keeping up with current trends and styles.
+                    </p>
+                  </span>
+                </div>
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.clothingOrganizer"  />Clothing Organizer
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Clothing Organizer</span>
+                      A great opportunity for people who love to organize. Hang, organize and place donations on the boutique floor. Help ensure donations look great and are easy to access.
+                    </p>
+                  </span>
+                </div>
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.frontDesk" />Front Desk Volunteer
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Front Desk Volunteer</span>
+                      Help to ensure that Dress for Success Twin Cities is a warm and welcoming place to all clients and volunteers. Help run the front desk; answer phones, greet clients and volunteers, and assist with clothing donation drop offs. We ask that Front Desk Volunteers commit to a regular weekly shift of 3-4 hours.
+                    </p>
+                  </span>
+                </div>
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.clothingSale" />Clothing Sale Volunteer
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Clothing Sale Volunteer</span>
+                      Assist shoppers in putting together outfits, manage fitting rooms and help keep the floor organized. Clothing sales are held four times a year on Thursdays, Fridays & Saturdays. Shifts are 3 hours long. A great opportunity to invite a friend along or do with a small group.
+                    </p>
+                  </span>
+                </div>
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.clothingSaleCaptain" />Clothing Sale Captain
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Clothing Sale Captain</span>
+                      Work closely with the Volunteer & Communication Coordinator to plan and execute 4 yearly clothing sales. Great for someone who loves project based work and has an interest or experience in retail or visual merchandising as well as event marketing. This is a yearlong commitment.
+                    </p>
+                  </span>
+                </div>
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.careerAdvocate" />Career Advocate
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Career Advocate</span>
+                      Support a woman through our Interview Skills Program, The Goings Places Network by Walmart Foundation. Connect with your mentee via phone or email once a week, for 10 weeks. Encourage and inspire her during her job search.
+                    </p>
+                  </span>
+                </div>
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.intelligenceMentor" />Professional Intelligence Mentor
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Professional Intelligence Mentor</span>
+                      Support a woman through our Job Retention Program, Professional Intelligence. Meet twice a month with your mentee, once in person and once remotely to help support them through their work plan. You will provide guidance and support for 8 months. Mentors should have 10 years in their field and management experience.
+                    </p>
+                  </span>
+                </div>
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.intelligenceMuse" />Professional Intelligence Muse
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Professional Intelligence Muse</span>
+                      Provide encouragement to a women participating in our Job Retention Program, Professional Intelligence. Mail an encouraging note or card each week as she completes 6 months of classroom learning. Great for someone who loves quotes and providing inspiration!
+                    </p>
+                  </span>
+                </div>
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.communityAmbassador" />Community Ambassador
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Community Ambassador</span>
+                      Represent Dress for Success Twin Cities at community events designed to increase our awareness. Help to spread the message of Dress for Success Twin Cities to potential clients and volunteers. This is a longer volunteer commitment.
+                    </p>
+                  </span>
+                </div>
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.eventSetUp" />Client Event Set Up Volunteer
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Client Event Set Up Volunteer</span>
+                      Help to prepare for client events and meetings. Help to prepare name tags, food, arrange the space, greet clients and more. Perfect for someone who loves to host and entertain! Many client events take place on weekday evenings.
+                    </p>
+                  </span>
+                </div>
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.photographer" />Event Photographer
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Event Photographer</span>
+                      Photograph graduation ceremonies for two of our programs, providing documentation and a special keepsake for our clients. We host four Interview skills graduations that take place during the week day and two Job Retention graduations that take place during the weekends. Dates are TBD.
+                    </p>
+                  </span>
+                </div>
+                <div>
+                  <input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.volunteerOpportunities.graphicDesigner" />Graphic Designer
+                  <span class="learn-more"><i class="fa fa-question-circle"></i>
+                    <p class="learn-more-box">
+                      <span class="learn-more-header">Graphic Designer</span>
+                      Help to re-imagine and redesign the clothing sale visual identity.  Materials to be updated include price signs, fliers and more.
+                    </p>
+                  </span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <label>Please select your availability:</label>
+          <table class="table table-hover">
+            <tr>
+              <th>Time of Day</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+            </tr>
+            <tr>
+              <td>Morning <em>8am-12pm</em></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.monday.morning" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.tuesday.morning" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.wednesday.morning" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.thursday.morning" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.friday.morning" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.saturday.morning" /></td>
+            </tr>
+            <tr>
+              <td>Afternoon <em>12pm-5pm</em></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.monday.afternoon" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.tuesday.afternoon" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.wednesday.afternoon" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.thursday.afternoon" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.friday.afternoon" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.saturday.afternoon" /></td>
+            </tr>
+            <tr>
+              <td>Evening <em>5pm-9pm</em></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.monday.evening"  /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.tuesday.evening" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.wednesday.evening" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.thursday.evening" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.friday.evening" /></td>
+              <td><input type="checkbox" ng-disabled="!prof.isEditing" ng-model="prof.profile.isAvail.saturday.evening" /></td>
+            </tr>
+          </table>
+          <div class="form-group">
+            <label class="col-md-3">Employer:</label>
+            <div class="col-md-9">
+              <input type="text" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.company" placeholder="Company" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3">Photo:</label>
+            <div class="col-md-9">
+              <input type="file" ng-disabled="!prof.isEditing" class="form-control" ng-model="prof.profile.photo" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-3"><button class="btn btn-primary btn-xs" ng-click="prof.changePassToggle()">Change Password</button></div>
+            <div class="col-md-9">
+              <div ng-if="prof.passToggle" style="text-align: center;">
+                <input class="form-control" type="password" ng-model="prof.oldPass" placeholder="Old Password" />
+                <input class="form-control" type="password" ng-model="prof.newPass" placeholder="New Password" />
+                <input class="form-control" type="password" ng-model="prof.newPassConfirm" placeholder="Confirm New Password" />
+                {{prof.passError}}<br>
+                <button class="btn btn-default btn-xs" ng-click="prof.changePassword(prof.profile, prof.oldPass, prof.newPass, prof.newPassConfirm)">Change pass</button><br>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="modal-footer">
+          <button class="btn btn-primary" type="button" ng-click="prof.saveProfile(prof.profile)">Save</button>
+          <button class="btn btn-warning" type="button" ng-click="prof.cancel()">Cancel</button>
+      </div>
+    </div>
+  </div>
+ </script>
+<!-- End Profile Modal -->
+
 <!-- Add Appt modal -->
 <script type="text/ng-template" id="addAppointmentModal.html">
   <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
@@ -83,6 +359,10 @@
 
     <label>Training Appointment?</label>
     <input type="checkbox" ng-model="dash.appointment.trainingAppointment" />
+
+
+
+
   <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="$close(dash.addAppointment())" >Save Appointment</button>
     <button class="btn btn-warning" type="button" ng-click="$close()">Cancel</button>
@@ -111,6 +391,7 @@
 <!-- end Add Announcement Motal -->
 
 <!-- edit/delete and claim/leave appointment modal form -->
+
 <script type="text/ng-template" id="editAppointmentModal.html">
   <!-- admin edit/delete -->
   <div ng-if="edit.currentUser.user.isAdmin">
@@ -210,8 +491,8 @@
     </div>
   </div>
 
-  <!-- volunteer claim/remove form -->
-  <div ng-if="edit.currentUser.user.isVolunteer">
+<!-- volunteer claim/remove form -->
+  <div ng-if="!edit.currentUser.user.isAdmin">
     <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
       <h3 class="center-block">{{edit.editAppointment.event.title}} - {{edit.editAppointment.event.startsAt | date: "shortDate"}}</h3>
       <br>
@@ -286,31 +567,23 @@
     </div>
   </div>
   <div class="col-lg-4 sidebar">
-    <div class="panel panel-default" ng-if="!main.currentUser.isAdmin">
-      <h5 class="text-muted text-uppercase profile-control-header">My Appointments</h5>
-      <ul class="sidebar-list">
-        <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
-      </ul>
-    </div>
-    <div class="panel panel-default">
-      <h5 class="text-muted text-uppercase profile-control-header">High Priority</h5>
-      <ul class="sidebar-list">
-        <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
-      </ul>
-    </div>
-    <!-- <uib-tabset class="admin-menu">
+    <h2 class="text-center">Sidebar</h2>
+    <uib-tabset class="admin-menu">
       <uib-tab heading="Appointments Selected">
-
+        <ul class="sidebar-list">
+          <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
+        </ul>
       </uib-tab>
       <uib-tab heading="High Priority Appts">
         <ul class="sidebar-list">
           <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
         </ul>
       </uib-tab>
-    </uib-tabset> -->
+    </uib-tabset>
 
   </div>
 </div>
+
 
 <button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAppointmentModal()" >Add Appointment</button>
 <div class="">

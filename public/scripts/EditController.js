@@ -8,9 +8,8 @@ function EditController($http, $state, $uibModal, $scope, UserService, Appointme
   vm.editAppointment.event = AppointmentService.updateEvent.event;
   vm.currentUser = {};
   vm.currentUser.user = UserService.currentUser.user;
-  vm.myAppointments = {};
-  vm.myAppointments.scheduled = [];
-  vm.myAppointments.scheduled = AppointmentService.myAppointments.scheduled;
+  vm.myAppointments = AppointmentService.myAppointments;
+  // vm.myAppointments.scheduled = AppointmentService.myAppointments.scheduled;
 
   vm.today = function() {
     vm.dt = new Date();
