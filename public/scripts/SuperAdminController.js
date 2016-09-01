@@ -90,9 +90,17 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
     client.isClient = true;
     client.caseWorker = caseWorker.fullName;
     console.log(caseWorker);
+    console.log(client);
+    // UserService.assignClient(client, caseWorker);
     UserService.register(client).then(function(response) {
       AdminService.getAllUsers().then(function(response) {
         vm.users = response;
+        for (var i = 0; i < vm.users.length; i++) {
+          if(vm.users[i].email === client.email) {
+            console.log('found matching client');
+            UserService.assignClient(vm.users[i], caseWorker);
+          }
+        }
       });
     })
   }

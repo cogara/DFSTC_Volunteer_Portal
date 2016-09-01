@@ -13,13 +13,18 @@ function CaseWorkerController($http, $uibModal, UserService, clients) {
       templateUrl: 'registerClient.html',
       controller: 'RegisterUserController',
       controllerAs: 'rc',
-      size: 'lg'
+      size: 'lg',
+      resolve: {
+        caseWorkers: function() {
+          return null;
+        }
+      }
     });
 
-    modalInstance.result.then(function (client) {
+    modalInstance.result.then(function (data) {
       //do function to register client
-      console.log('register client', client);
-      registerClient(client);
+      console.log('register client', data.user);
+      registerClient(data.user);
     });
   };
 

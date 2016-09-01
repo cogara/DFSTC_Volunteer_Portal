@@ -239,4 +239,18 @@ router.get('/clients', function(request, response) {
   }
 });
 
+router.put('/caseWorkers/:id', function(request, response) {
+  var clientId = request.query.client;
+  console.log(clientId);
+  User.findByIdAndUpdate(request.params.id, {$push: {clients: clientId}}, function(err, caseWorker) {
+    if(err) {
+      console.log(err);
+      console.log('error in updating caseworker');
+      response.sendStatus(500);
+    } else {
+      response.sendStatus(200);
+    }
+  })
+})
+
 module.exports = router;
