@@ -17,6 +17,7 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
 
   vm.profileToggle = false;
   vm.toggleProfile = toggleProfile;
+  vm.eventColors = calendarConfig.colorTypes;
   function toggleProfile() {
     vm.profileToggle ? vm.profileToggle = false : vm.profileToggle =  true;
   }
