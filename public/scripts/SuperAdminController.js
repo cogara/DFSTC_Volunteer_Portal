@@ -38,13 +38,26 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
       templateUrl: 'registerClient.html',
       controller: 'RegisterUserController',
       controllerAs: 'rc',
-      size: 'lg'
+      size: 'lg',
+      resolve: {
+        caseWorkers: function() {
+          var caseWorkerList = [];
+          for (var i = 0; i < vm.users.length; i++) {
+            if(vm.users[i].isCaseWorker) {
+              caseWorkerList.push(vm.users[i]);
+            }
+          }
+          return caseWorkerList;
+        }
+      }
     });
 
-    modalInstance.result.then(function (client) {
+    modalInstance.result.then(function (data) {
       //do function to register client
-      console.log('register client', client);
-      registerClient(client);
+      console.log(data);
+      // console.log('register client case', data);
+      // console.log('register client', client);
+      registerClient(data.user, data.caseWorker);
     });
   };
 
@@ -54,17 +67,29 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
       templateUrl: 'registerCaseWorker.html',
       controller: 'RegisterUserController',
       controllerAs: 'rc',
-      size: 'lg'
+      size: 'lg',
+      resolve: {
+        caseWorkers: function() {
+          var caseWorkerList = [];
+          for (var i = 0; i < vm.users.length; i++) {
+            if(vm.users[i].isCaseWorker) {
+              caseWorkerList.push(vm.users[i]);
+            }
+          }
+          return caseWorkerList;
+        }
+      }
     });
 
-    modalInstance.result.then(function (caseWorker) {
-      console.log('register caseworker', caseWorker);
-      registerCaseWorker(caseWorker);
+    modalInstance.result.then(function (data) {
+      registerCaseWorker(data.user);
     });
   };
 
-  function registerClient(client) {
+  function registerClient(client, caseWorker) {
     client.isClient = true;
+    client.caseWorker = caseWorker.fullName;
+    console.log(caseWorker);
     UserService.register(client).then(function(response) {
       AdminService.getAllUsers().then(function(response) {
         vm.users = response;
@@ -113,14 +138,19 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
   }
 }
 
-function RegisterUserController($uibModalInstance) {
+function RegisterUserController($uibModalInstance, caseWorkers) {
   var vm = this;
-
+  vm.caseWorkers = caseWorkers;
+  console.log(vm.caseWorkers);
   vm.register = register;
   vm.cancel = cancel;
 
-  function register(user) {
-    $uibModalInstance.close(user);
+  function register(user, caseWorker) {
+    console.log(caseWorker);
+    var data = {};
+    data.user = user;
+    data.caseWorker = caseWorker;
+    $uibModalInstance.close(data);
   }
 
   function cancel() {

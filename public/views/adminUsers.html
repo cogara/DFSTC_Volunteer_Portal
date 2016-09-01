@@ -24,12 +24,14 @@
         <li class="user-list__headers">
           <span>Name</span>
           <span>Email</span>
+          <span>Phone</span>
           <span>Case Worker</span>
           <span>Action</span>
         </li>
         <li class="user-list__user" ng-repeat="user in sa.users | filter: sa.search.inputClient | orderBy: 'lastName'" ng-if="user.isClient">
           <span>{{user.firstName}} {{user.lastName}}</span>
           <span>{{user.email}}</span>
+          <span>{{user.phoneNumber | PhoneFormat}}</span>
           <span ng-if="user.caseWorker">{{user.caseWorker}}</span><span ng-if="!user.caseWorker">N/A</span>
           <span>
             <button class="btn btn-danger btn-xs" ng-click="sa.openDeleteUser(user)"><i class="fa fa-trash"></i> Remove</button>
