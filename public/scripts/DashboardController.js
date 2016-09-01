@@ -169,7 +169,7 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
     info.color = calendarConfig.colorTypes.info;
     vm.myAppointments.push(info);
     vm.showAppointments.appointments.push(info);
-    $scope.safeApply();
+    // $scope.safeApply();
 
     console.log('my appointments', vm.myAppointments);
   };

@@ -10,6 +10,7 @@ var UserSchema = new Schema(
     password: String,
     firstName: String,
     lastName: String,
+    fullName: String,
     phoneNumber: String,
     address:{
       addressOne: String,
@@ -38,7 +39,7 @@ var UserSchema = new Schema(
     altContactName: String, //
     altContactPh: Number, //
     altContactRel: String, //
-    caseworker: String,
+    caseWorker: String,
     age: Number,
     height: Number,
     topSize: String,
@@ -57,7 +58,7 @@ var UserSchema = new Schema(
 
 UserSchema.pre('save', function(next) {
   var user = this;
-
+  user.fullName = user.firstName + ' ' + user.lastName;
   if(user.isModified('password')) {
     bcrypt.hash(user.password, SALT_WORK_FACTOR, function(err, hash) {
       if(err) {
@@ -74,7 +75,6 @@ UserSchema.pre('save', function(next) {
 })
 
 UserSchema.methods.passwordCheck = function (candidatePassword, callback) {
-  console.log('old pass', this.password);
   bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
     if(err){
       console.log(err);

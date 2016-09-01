@@ -17,17 +17,18 @@ angular
     });
 
 function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('index');
 
   $stateProvider
-    .state('/', {
+    .state('index', {
       url: '/',
       templateUrl: '../views/landingPage.html',
       resolve: {
         userCheck: function(UserService, $state) {
           UserService.checkLoggedIn().then(function(response) {
             if(response) {
-              $state.go('dashboard')
+              console.log('going dashboard');
+              $state.go('dashboard');
             }
           })
         }
@@ -45,8 +46,16 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       resolve: {
         userCheck: function(UserService, $state) {
           UserService.checkLoggedIn().then(function(response) {
+            console.log('dash checking user,', response);
+            // if(response.isCaseWorker) {
+            //   console.log('going caseworker');
+            //   $state.go('caseWorker');
+            //   return;
+            // }
             if(!response) {
-              $state.go('/');
+              console.log('going login');
+              $state.go('index');
+              return;
             }
           });
         }
@@ -61,9 +70,12 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       resolve: {
         userCheck: function(UserService, $state) {
           UserService.checkLoggedIn().then(function(response) {
+            console.log(response);
             if(!response) {
               //user not logged in, send to login
-              $state.go('/');
+              $state.go('index');
+            } else if(response.isCaseWorker){
+              $state.go('caseWorker')
             } else if(!response.isAdmin) {
               //user not admin, send to dashboard
               $state.go('dashboard');
@@ -91,6 +103,30 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       resolve: {
         users: function(AdminService) {
           return AdminService.getAllUsers();
+        }
+      }
+    })
+    .state('caseWorker', {
+      url:'/caseWorker',
+      templateUrl: '../views/caseWorker.html',
+      controller: 'CaseWorkerController',
+      controllerAs: 'cw',
+      resolve: {
+        userCheck: function(UserService, $state) {
+          UserService.checkLoggedIn().then(function(response) {
+            if(response) {
+              if(!response.isCaseWorker){
+                console.log('going index');
+                $state.go('index');
+              }
+            }
+          })
+        },
+        clients: function(UserService, $state) {
+          return UserService.caseWorkerClients().then(function(response) {
+            console.log(response);
+            return response;
+          });
         }
       }
     });

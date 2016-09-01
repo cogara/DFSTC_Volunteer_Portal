@@ -70,7 +70,7 @@ function MainController($http, $state, $window, $scope, $uibModal, UserService, 
   function logout() {
     UserService.logout().then(function(response) {
       vm.currentUser = null;
-      $state.go('/');
+      $state.go('index');
     })
   }
 
@@ -87,7 +87,7 @@ function MainController($http, $state, $window, $scope, $uibModal, UserService, 
   function logout() {
     UserService.logout().then(function(response) {
       vm.currentUser = null;
-      $state.go('/');
+      $state.go('index');
     })
   }
   

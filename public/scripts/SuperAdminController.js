@@ -1,13 +1,16 @@
-angular.module('DfstcSchedulingApp').controller('SuperAdminController', SuperAdminController);
+angular.module('DfstcSchedulingApp').controller('SuperAdminController', SuperAdminController).controller('RegisterUserController', RegisterUserController);
 
-function SuperAdminController($http, AdminService, users) {
+function SuperAdminController($http, $uibModal, AdminService, UserService, users) {
   var vm = this;
   vm.users = users;
+  console.log(vm.users);
 
   vm.addAdmin = addAdmin;
   vm.deleteUser = deleteUser;
   vm.addAdminToggle = addAdminToggle;
-  vm.toggleButtonText = 'Add Admin'
+  vm.toggleButtonText = 'Add Admin';
+  vm.openRegisterClient = openRegisterClient;
+  vm.openRegisterCaseWorker = openRegisterCaseWorker;
 
   function addAdminToggle() {
     vm.adminToggle = (vm.adminToggle) ? false : true;
@@ -35,4 +38,68 @@ function SuperAdminController($http, AdminService, users) {
     console.log(id);
   }
 
+  function openRegisterClient() {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'registerClient.html',
+      controller: 'RegisterUserController',
+      controllerAs: 'rc',
+      size: 'lg'
+    });
+
+    modalInstance.result.then(function (client) {
+      //do function to register client
+      console.log('register client', client);
+      registerClient(client);
+    });
+  };
+
+  function openRegisterCaseWorker() {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'registerCaseWorker.html',
+      controller: 'RegisterUserController',
+      controllerAs: 'rc',
+      size: 'lg'
+    });
+
+    modalInstance.result.then(function (caseWorker) {
+      //do function to register caseWorker
+      console.log('register caseworker', caseWorker);
+      registerCaseWorker(caseWorker);
+    });
+  };
+
+  function registerClient(client) {
+    client.isClient = true;
+    UserService.register(client).then(function(response) {
+      AdminService.getAllUsers().then(function(response) {
+        vm.users = response;
+      });
+    })
+  }
+
+  function registerCaseWorker(caseWorker) {
+    caseWorker.isCaseWorker = true;
+    UserService.register(caseWorker).then(function(response) {
+      AdminService.getAllUsers().then(function(response) {
+        vm.users = response;
+      });
+    })
+  }
+}
+
+function RegisterUserController($uibModalInstance) {
+  var vm = this;
+
+  vm.register = register;
+  vm.cancel = cancel;
+
+  function register(user) {
+    $uibModalInstance.close(user);
+  }
+
+  function cancel() {
+    $uibModalInstance.dismiss();
+  }
 }

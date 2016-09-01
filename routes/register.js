@@ -23,6 +23,7 @@ var upload = multer({
 }).single('photo');
 
 router.post('/', upload, function(request, response) {
+
   var info = request.body;
   for (var day in info.isAvail) {
     for (var time in info.isAvail[day]) {
@@ -34,10 +35,10 @@ router.post('/', upload, function(request, response) {
       info.volunteerOpportunities[opportunity] = info.otherText;
       console.log('I AM BEING HIT!', opportunity);
     } else {
-    info.volunteerOpportunities[opportunity] = (info.volunteerOpportunities[opportunity] === 'true');
-    console.log('Setting to true', opportunity);
+      info.volunteerOpportunities[opportunity] = (info.volunteerOpportunities[opportunity] === 'true');
+      console.log('Setting to true', opportunity);
+    }
   }
-}
   console.log('info:', info);
 
   User.findOne({email: info.email}, function(err, exists) {
@@ -45,12 +46,22 @@ router.post('/', upload, function(request, response) {
       response.send({message: 'Email Already Exists'});
     } else {
       info.photo = (request.file) ? request.file.filename : null;
-      console.log(info);
       var user = new User(info);
-      console.log('creating user', user);
       user.save(function(err) {
         if(err) {
           console.log(err);
+        }
+        if(request.user.isCaseWorker) {
+          User.findOne({email: info.email}, function(err, client){
+            console.log('user id', request.user._id, client._id);
+            User.findByIdAndUpdate(request.user._id, {$push: {clients: client._id}}, function(err, caseWorker){
+              if(err) {
+                console.log(err);
+              } else {
+                console.log(caseWorker);
+              }
+            })
+          })
         }
         response.send({message: 'User Created'});
       })

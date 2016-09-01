@@ -37,6 +37,7 @@ router.get('/users', function(request, response) {
     for (var i = 0; i < users.length; i++) {
       users[i].password = null;
     }
+    console.log(users);
     response.send(users);
   })
 })
@@ -45,12 +46,16 @@ router.delete('/users/:id', function(request, response) {
   console.log(request.params.id);
   User.findByIdAndRemove(request.params.id, function(err, result){
     console.log(result);
+    response.sendStatus(200);
+  }, function() {
+    response.sendStatus(500);
   })
 })
 
 router.put('/volunteer/:id', function(request, response) {
   var volunteer = request.body;
   var editVolunteer = {};
+  editVolunteer.fullName = volunteer.firstName + ' ' + volunteer.lastName;
   if(request.query.changepass) {
     User.findOne({_id: request.params.id}, function(err, user) {
       if(err) {
@@ -85,7 +90,7 @@ router.put('/volunteer/:id', function(request, response) {
   } else {
 
     for (var key in volunteer) {
-      if (!(key==='password')) {
+      if (!(key==='password' || key==='fullName')) {
         editVolunteer[key] = volunteer[key];
       }
     }
@@ -205,6 +210,33 @@ router.post('/announcement', function(req,res){
       res.sendStatus(200);
     }
   });
+});
+
+router.get('/clients', function(request, response) {
+  console.log(request.user);
+  var clientArray = [];
+  var clients = [];
+  if(!request.user.clients) {
+    response.send(clientArray);
+    return;
+  }
+  if(request.user.clients.length > 0) {
+    for (var i = 0; i < request.user.clients.length; i++) {
+      console.log(request.user.clients[i]);
+      clients.push(request.user.clients[i]);
+    }
+    User.find({_id: {$in: clients}}, function(err, clientList) {
+      if(err) {
+        console.log(err);
+        response.sendStatus(500);
+      } else {
+        console.log(clientList);
+        response.send(clientList);
+      }
+    })
+  } else {
+    response.send(clientArray);
+  }
 });
 
 module.exports = router;

@@ -49,6 +49,12 @@ function UserService($http, Upload) {
     return $http.put('/api/volunteer/' + volunteer._id + '?changepass=true', data)
   }
 
+  function caseWorkerClients() {
+    return $http.get('/api/clients').then(function(response) {
+      return response.data;
+    });
+  }
+
   return {
     checkLoggedIn: checkLoggedIn,
     register: register,
@@ -57,6 +63,7 @@ function UserService($http, Upload) {
     getProfile: getProfile,
     changePassword: changePassword,
     editProfile: editProfile,
+    caseWorkerClients: caseWorkerClients,
     currentUser: currentUser
   }
 

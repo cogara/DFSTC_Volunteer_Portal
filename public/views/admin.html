@@ -5,7 +5,7 @@
 <uib-tabset>
   <uib-tab heading="Volunteers" ui-sref="admin.volunteers"></uib-tab>
   <uib-tab heading="Reports" ui-sref="admin.reports"></uib-tab>
-  <uib-tab ng-if="main.currentUser.isSuperAdmin" heading="Manage Users" ui-sref="admin.users"></uib-tab>
+  <uib-tab heading="Manage Users" ui-sref="admin.users"></uib-tab>
 </uib-tabset>
 
 <div class="row">
@@ -18,7 +18,7 @@
 </div>
 
 
-<button class="center-block btn btn-default" ng-click="admin.openRegisterClient()">Client Register</button>
+
 
 <!-- Profile Modal -->
 <script type="text/ng-template" id="adminProfileModal.html">
@@ -250,7 +250,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-3">Caseworker:</label>
+            <label class="col-md-3">Case Worker:</label>
             <div class="col-md-9">
               <input class="form-control" type="text" ng-model="rc.registerUser.caseworker" />
             </div>
@@ -357,8 +357,98 @@
   </div>
 
   <div class="modal-footer">
-      <button class="btn btn-primary" type="button" ng-click="rc.registerClient(rc.registerUser)">Yes</button>
-      <button class="btn btn-warning" type="button" ng-click="rc.dismissTraining()">Cancel</button>
+      <button class="btn btn-primary" type="button" ng-click="rc.register(rc.registerUser)">Yes</button>
+      <button class="btn btn-warning" type="button" ng-click="rc.cancel()">Cancel</button>
+  </div>
+
+</script>
+<!-- End Client Register Modal  -->
+
+<!-- Caseworker Register Modal -->
+<script type="text/ng-template" id="registerCaseWorker.html">
+
+  <div class="modal-body">
+    <div class="panel panel-default col-sm-10 col-sm-offset-1">
+      <h3 class="center-block">Caseworker Registration</h3>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-md-3">E-mail address: <span style="display: block; font-size: 1rem; font-weight: normal;">(this will be your login username)</span></label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" ng-model="rc.registerUser.email" placeholder="E-mail Address" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3">Password:</label>
+          <div class="col-md-9">
+            <input type="password" class="form-control" ng-model="rc.registerUser.password" placeholder="Password" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3">First Name:</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" ng-model="rc.registerUser.firstName" placeholder="First Name" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3">Last Name:</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" ng-model="rc.registerUser.lastName" placeholder="Last Name" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3">Phone Number:</label>
+          <div class="col-md-9">
+            <input class="form-control" type="tel" ng-model="rc.registerUser.phoneNumber" ui-mask="(999) 999-9999" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3">Address:</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" ng-model="rc.registerUser.address.addressOne" placeholder="Address Line 1" />
+            <input type="text" class="form-control" ng-model="rc.registerUser.address.addressTwo" placeholder="Address Line 2" />
+            <input type="text" class="form-control" ng-model="rc.registerUser.address.city" placeholder="City" />
+            <input type="text" class="form-control" ng-model="rc.registerUser.address.state" placeholder="State" />
+            <input type="text" class="form-control" ng-model="rc.registerUser.address.zip" placeholder="Zip Code" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3">Employer:</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" ng-model="rc.registerUser.company" placeholder="Company" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3">Job Title:</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" ng-model="rc.registerUser.jobTitle" placeholder="Company" />
+          </div>
+        </div>
+        <!-- <div class="form-group">
+          <label class="col-md-3">Please upload a photo of yourself: <br /> <em>Please keep your file under 4MB</em></label>
+          <div class="col-md-9">
+            <input
+                type="file"
+                ngf-select
+                ng-model="rc.registerUser.photo"
+                name="photo"
+                ngf-pattern="'image/*'"
+                accept="image/*"
+                ngf-max-size="4MB"
+                />
+             Image thumbnail: <img style="width:100px;" ngf-thumbnail="rc.registerUser.photo || '/thumb.jpg'"/>
+             <i ng-show="rc.registerUser.photo.$error.required">*required</i><br>
+             <i ng-show="rc.registerUser.photo.$error.maxSize">File too large
+             {{rc.registerUser.photo.size / 1000000|number:1}}MB: max 4M</i>
+          </div>
+        </div> -->
+      </form>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+  <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="rc.register(rc.registerUser)">Save</button>
+      <button class="btn btn-warning" type="button" ng-click="rc.cancel()">Cancel</button>
   </div>
 
 </script>
