@@ -15,6 +15,7 @@ function MainController($http, $state, $window, $scope, $uibModal, UserService, 
   vm.login = login;
   vm.register = register;
   vm.logout = logout;
+
   //temp for QOL testing
   vm.loginUser = {};
   vm.loginUser.email = 'test';
@@ -77,6 +78,7 @@ function MainController($http, $state, $window, $scope, $uibModal, UserService, 
 
   function login() {
     UserService.login(vm.loginUser).then(function(response) {
+      vm.loginUser = {};
       vm.currentUser = response;
       UserService.currentUser.user = vm.currentUser;
       $state.go('dashboard');

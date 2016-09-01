@@ -24,6 +24,41 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.statusFilter = statusFilter;
   vm.clearSearchOpp = clearSearchOpp;
   vm.clearSearchAvail = clearSearchAvail;
+  vm.selectTrainee = selectTrainee;
+  vm.approveMultipleTrainee = approveMultipleTrainee;
+
+  function approveMultipleTrainee() {
+    if(confirm('Convert to Volunteers?')) {
+      for (var i = 0; i < vm.volunteers.length; i++) {
+        if(vm.volunteers[i].traineeSelected) {
+          vm.volunteers[i].isTrainee = false;
+          vm.volunteers[i].isVolunteer = true;
+          UserService.editProfile(vm.volunteers[i]);
+          vm.traineeSelectCheck = false;
+        }
+      }
+    }
+  }
+
+  function selectTrainee(trainee) {
+    vm.preventProfile = true;
+    console.log(trainee);
+    if(trainee.traineeSelected) {
+      trainee.traineeSelected = false;
+    } else {
+      trainee.traineeSelected = true;
+    }
+    // trainee.traineeSelected = (trainee.traineeSelected) ? false : true;
+    for (var i = 0; i < vm.volunteers.length; i++) {
+      console.log(vm.volunteers[i].traineeSelected);
+      if(vm.volunteers[i].traineeSelected) {
+        vm.traineeSelectCheck = true;
+        return;
+      } else {
+        vm.traineeSelectCheck = false;
+      }
+    }
+  }
 
   vm.printDiv = printDiv;
   function printDiv(divId) {
@@ -80,7 +115,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   }
 
   function trainingComplete(volunteer) {
-    vm.preventProfile=true;
+    vm.preventProfile = true;
     var modalInstance = $uibModal.open({
       animation: true,
       templateUrl: 'trainingComplete.html',
