@@ -36,9 +36,9 @@ var UserSchema = new Schema(
     isAvail: Object,
     volunteerOpportunities: Object,
 //client info
-    altContactName: String, //
-    altContactPh: Number, //
-    altContactRel: String, //
+    altContactName: String,
+    altContactPh: Number,
+    altContactRel: String,
     caseWorker: String,
     age: Number,
     height: Number,
@@ -49,7 +49,6 @@ var UserSchema = new Schema(
     interviewStartDate: Date,
     employmentStartDate: Date,
     internshipStartDate: Date,
-    jobTitle: String,
     schedulingRestrictions: String,
 //case worker info
     clients: Object
