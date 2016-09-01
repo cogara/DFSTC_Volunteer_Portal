@@ -222,6 +222,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     clearSearchAvail();
     vm.search.role = 'all';
     vm.search.status = 'all';
+    vm.search.input = null;
   }
 
   function resetSearch() {
