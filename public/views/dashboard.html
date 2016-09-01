@@ -94,18 +94,19 @@
 <script type="text/ng-template" id="addAnnouncementModal.html">
   <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
     <h3 class="center-block">Add New Announcements</h3>
-    <label>Announcements Title:</label>
+    <label>Title:</label>
     <input type="text" class="form-control" ng-model="dash.announcement.title" />
 
 
-    <label>Number of Volunteers Needed:</label>
+    <label>Message:</label>
     <textarea msd-elastic="<br>"  class="form-control" ng-model="dash.announcement.message"  />
 
     </textarea>
 
-  <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="$close(dash.addAnnouncement())" >Save Announcement</button>
-    <button class="btn btn-warning" type="button" ng-click="$close()">Cancel</button>
+    <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="$close(dash.addAnnouncement())" >Save Announcement</button>
+      <button class="btn btn-warning" type="button" ng-click="$close()">Cancel</button>
+    </div>
   </div>
  </script>
 <!-- end Add Announcement Motal -->
@@ -286,7 +287,7 @@
     </div>
   </div>
   <div class="col-lg-4 sidebar">
-    <h2 class="text-center">Upcoming Appointments</h2>
+    <h2 style="margin-bottom: 74px;"class="text-center">Upcoming</h2>
     <div class="panel panel-default" ng-if="!main.currentUser.isAdmin">
       <h5 class="text-muted text-uppercase profile-control-header">My Appointments</h5>
       <ul class="sidebar-list">
