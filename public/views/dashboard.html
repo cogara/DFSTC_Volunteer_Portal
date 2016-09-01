@@ -276,11 +276,11 @@
 <!-- edit/delete appointment modal form -->
 <script type="text/ng-template" id="editAppointmentModal.html">
   <!-- admin edit/delete -->
-  <div ng-if="dash.currentUser.user.isAdmin">
+  <div ng-if="edit.currentUser.user.isAdmin">
     <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
       <h3 class="center-block">Edit Appointment</h3>
       <label>Appointment Title:</label>
-      <input type="text" class="form-control" ng-model="dash.editAppointment.event.title" />
+      <input type="text" class="form-control" ng-model="edit.editAppointment.event.title" />
 
       <table class="table table-bordered">
         <thead>
@@ -296,25 +296,25 @@
                 <input
                   type="text"
                   class="form-control"
-                  uib-datepicker-popup="{{dash.format}}"
-                  ng-model="dash.editAppointment.event.startsAt"
-                  is-open="dash.popup1.opened"
-                  datepicker-options="dash.dateOptions"
+                  uib-datepicker-popup="{{edit.format}}"
+                  ng-model="edit.editAppointment.event.startsAt"
+                  is-open="edit.popup1.opened"
+                  datepicker-options="edit.dateOptions"
                   ng-required="true"
                   close-text="Close"
-                  alt-input-formats="dash.altInputFormats"
+                  alt-input-formats="edit.altInputFormats"
                   placeholder="Start Date" />
                 <span class="input-group-btn">
                   <button type="button"
                     class="btn btn-default"
-                    ng-click="dash.open1()">
+                    ng-click="edit.open1()">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
               </p>
               <div
                 uib-timepicker
-                ng-model="dash.editAppointment.event.startsAt"
+                ng-model="edit.editAppointment.event.startsAt"
                 hour-step="1"
                 minute-step="15"
                 show-meridian="true"
@@ -325,25 +325,25 @@
               <p class="input-group" style="max-width: 250px">
                 <input type="text"
                   class="form-control"
-                  uib-datepicker-popup="{{dash.format}}"
-                  ng-model="dash.editAppointment.event.endsAt"
-                  is-open="dash.popup2.opened"
-                  datepicker-options="dash.dateOptions"
+                  uib-datepicker-popup="{{edit.format}}"
+                  ng-model="edit.editAppointment.event.endsAt"
+                  is-open="edit.popup2.opened"
+                  datepicker-options="edit.dateOptions"
                   ng-required="true"
                   close-text="Close"
-                  alt-input-formats="dash.altInputFormats"
+                  alt-input-formats="edit.altInputFormats"
                   placeholder="End Date" />
                 <span class="input-group-btn">
                   <button type="button"
                     class="btn btn-default"
-                    ng-click="dash.open2()">
+                    ng-click="edit.open2()">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
               </p>
               <div
                 uib-timepicker
-                ng-model="dash.editAppointment.event.endsAt"
+                ng-model="edit.editAppointment.event.endsAt"
                 hour-step="1"
                 minute-step="15"
                 show-meridian="true"
@@ -354,36 +354,36 @@
         </tbody>
       </table>
       <label>Number of Volunteers Needed:</label>
-      <input type="number" class="form-control" ng-model="dash.editAppointment.event.volunteerSlots" placeholder=5 />
+      <input type="number" class="form-control" ng-model="edit.editAppointment.event.volunteerSlots" placeholder=5 />
       Current Volunteers:
       <ul>
-        <li ng-repeat="volunteer in dash.editAppointment.event.volunteers track by $index">{{volunteer.firstName}} {{volunteer.lastName}}
-        <button ng-click="dash.removeVolunteer($index, dash.editAppointment.event)">Remove from Appointment</button></li>
+        <li ng-repeat="volunteer in edit.editAppointment.event.volunteers track by $index">{{volunteer.firstName}} {{volunteer.lastName}}
+        <button ng-click="edit.removeVolunteer($index, edit.editAppointment.event)">Remove from Appointment</button></li>
       </ul>
       <label>Number of Possible Clients:</label>
-      <input type="number" class="form-control" ng-model="dash.editAppointment.event.clientSlots" placeholder=5 />
+      <input type="number" class="form-control" ng-model="edit.editAppointment.event.clientSlots" placeholder=5 />
 
       <label>Training Appointment?</label>
-      <input type="checkbox" ng-model="dash.editAppointment.event.trainingAppointment" />
+      <input type="checkbox" ng-model="edit.editAppointment.event.trainingAppointment" />
 
-    <button class="center-block btn btn-default" ng-click="$close(dash.deleteAppointment(dash.editAppointment.event))" >Delete Appointment</button>
-    <button class="center-block btn btn-default" ng-click="$close(dash.updateAppointment(dash.editAppointment.event))" >Save Changes</button>
+    <button class="center-block btn btn-default" ng-click="$close(edit.deleteAppointment(edit.editAppointment.event))" >Delete Appointment</button>
+    <button class="center-block btn btn-default" ng-click="$close(edit.updateAppointment(edit.editAppointment.event))" >Save Changes</button>
     <button class="center-block btn btn-default" ng-click="$close()" >Cancel</button>
 
     </div>
   </div>
 
 <!-- volunteer claim/remove form -->
-  <div ng-if="!dash.currentUser.user.isAdmin">
+  <div ng-if="!edit.currentUser.user.isAdmin">
     <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
-      <h3 class="center-block">{{dash.editAppointment.event.title}} - {{dash.editAppointment.event.startsAt | date: "shortDate"}}</h3>
+      <h3 class="center-block">{{edit.editAppointment.event.title}} - {{edit.editAppointment.event.startsAt | date: "shortDate"}}</h3>
       <br>
-      Starts At: <h4>{{dash.editAppointment.event.startsAt | date: "shortTime"}}</h4>
+      Starts At: <h4>{{edit.editAppointment.event.startsAt | date: "shortTime"}}</h4>
       <br>
-      Ends At: <h4>{{dash.editAppointment.event.endsAt | date: "shortTime"}}</h4>
+      Ends At: <h4>{{edit.editAppointment.event.endsAt | date: "shortTime"}}</h4>
 
-    <button class="center-block btn btn-default" ng-if="dash.editAppointment.event.color.primary!='#1e90ff'"ng-click="$close(dash.claimAppointment(dash.editAppointment.event))" >Claim Appointment</button>
-    <button class="center-block btn btn-default" ng-if="dash.editAppointment.event.color.primary=='#1e90ff'"ng-click="$close(dash.removeMe(dash.editAppointment.event))" >Delete Appointment</button>
+    <button class="center-block btn btn-default" ng-if="edit.editAppointment.event.color.primary!='#1e90ff'" ng-click="$close(edit.claimAppointment(edit.editAppointment.event))" >Claim Appointment</button>
+    <button class="center-block btn btn-default" ng-if="edit.editAppointment.event.color.primary=='#1e90ff'" ng-click="$close(edit.removeMe(edit.editAppointment.event))" >Delete Appointment</button>
 
     <button class="center-block btn btn-default" ng-click="$close()" >Cancel</button>
 
@@ -454,16 +454,12 @@
     <uib-tabset class="admin-menu">
       <uib-tab heading="Appointments Selected">
         <ul class="sidebar-list">
-          <a><li ng-repeat="appointment in dash.myAppointments track by $index" ng-click="dash.eventClicked(appointment)">{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</li></a>
+          <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
         </ul>
       </uib-tab>
       <uib-tab heading="High Priority Appts">
         <ul class="sidebar-list">
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
-          <li>Appointment Slot</li>
+          <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
         </ul>
       </uib-tab>
     </uib-tabset>

@@ -2,7 +2,7 @@ angular.module('DfstcSchedulingApp').controller('MainController', MainController
 
 function MainController($http, $state, $window, $scope, UserService, Upload) {
 
-  $scope.safeApply = function(fn) {
+$scope.safeApply = function(fn) {
   var phase = this.$root.$$phase;
   if(phase == '$apply' || phase == '$digest')
     this.$eval(fn);
