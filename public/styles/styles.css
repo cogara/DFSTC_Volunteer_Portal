@@ -787,3 +787,7 @@ pre{
 .toggle-selected {
   color: black;
 }
+
+.nav.nav-pills {
+  margin: 10px 0 0;
+}
