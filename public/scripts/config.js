@@ -47,11 +47,6 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
         userCheck: function(UserService, $state) {
           UserService.checkLoggedIn().then(function(response) {
             console.log('dash checking user,', response);
-            // if(response.isCaseWorker) {
-            //   console.log('going caseworker');
-            //   $state.go('caseWorker');
-            //   return;
-            // }
             if(!response) {
               console.log('going login');
               $state.go('/');

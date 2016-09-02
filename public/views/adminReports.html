@@ -58,17 +58,17 @@
             <ul ng-if="appointment.toggleVolunteers">
               <h5 class="appointment-details-heading">Volunteers</h5>
               <li class="appointment-user" ng-repeat="volunteer in appointment.volunteers">
-                <span>{{volunteer.fullName}}</span>
-                <span>{{volunteer.email}}</span>
-                <span>{{volunteer.phoneNumber | PhoneFormat}}</span>
+                <span><i class="fa fa-tag"></i> {{volunteer.fullName}}</span>
+                <span><i class="fa fa-envelope"></i> {{volunteer.email}}</span>
+                <span><i class="fa fa-phone"></i> {{volunteer.phoneNumber | PhoneFormat}}</span>
               </li>
             </ul>
             <ul ng-if="appointment.toggleClients">
               <h5 class="appointment-details-heading">Clients</h5>
               <li class="appointment-user" ng-repeat="volunteer in appointment.volunteers">
-                <span>{{volunteer.fullName}}</span>
-                <span>{{volunteer.email}}</span>
-                <span>{{volunteer.phoneNumber | PhoneFormat}}</span>
+                <span>Client One</span>
+                <span>asdf@gmail.com</span>
+                <span>{{2341235234 | PhoneFormat}}</span>
               </li>
             </ul>
           </div>

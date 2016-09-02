@@ -765,6 +765,10 @@ pre{
   justify-content: space-between;
 }
 
+.reports-list .appointment-details > ul > li > span:not(:last-child) {
+  flex: 1 0;
+}
+
 .header-clickable {
   cursor: pointer;
 }
