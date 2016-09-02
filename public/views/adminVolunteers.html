@@ -137,6 +137,7 @@
   <button ng-class="{'btn-default': !(admin.sortOrder === '-isVolunteer'), 'btn-primary': (admin.sortOrder === '-isVolunteer')}" class="btn" ng-click="admin.sortBy('-isVolunteer')">
     Volunteer/Trainee <span class="sortorder" ng-show="(admin.sortOrder === '-isVolunteer')" ng-class="{reverse: !admin.sortReverse}"></span>
   </button>
+  
 </div>
 <div class="col-xs-12" style="margin: 10px 0">
   <input class="col-sm-12" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">

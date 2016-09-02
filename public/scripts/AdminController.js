@@ -30,8 +30,49 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.printDiv = printDiv;
   vm.appointments = appointments;
   vm.todaysDate = new Date();
-  // vm.todaysDate.toISOString();
-  console.log(typeof vm.todaysDate);
+  vm.toggleReportExpandVolunteers = toggleReportExpandVolunteers;
+  vm.toggleReportExpandClients = toggleReportExpandClients;
+  vm.toggleReportExpandAll = toggleReportExpandAll;
+
+  function toggleReportExpandVolunteers() {
+    vm.reportExpandVolunteers = !vm.reportExpandVolunteers;
+    var boolean = vm.reportExpandVolunteers;
+    console.log(boolean);
+    closeToggleVolunteers(boolean);
+    checkToggleAll();
+  }
+  function toggleReportExpandClients() {
+    vm.reportExpandClients = !vm.reportExpandClients;
+    var boolean = vm.reportExpandClients;
+    closeToggleClients(boolean);
+    checkToggleAll();
+  }
+  function toggleReportExpandAll() {
+    vm.reportExpandAll = !vm.reportExpandAll;
+    var boolean = vm.reportExpandAll;
+    vm.reportExpandVolunteers = boolean;
+    vm.reportExpandClients = boolean;
+    closeToggleVolunteers(boolean);
+    closeToggleClients(boolean);
+    checkToggleAll();
+  }
+
+  function checkToggleAll() {
+    vm.reportExpandAll = (vm.reportExpandClients && vm.reportExpandVolunteers) ? true:false;
+  }
+
+  function closeToggleVolunteers(boolean) {
+    for (var i = 0; i < vm.appointments.length; i++) {
+      console.log(boolean);
+      vm.appointments[i].toggleVolunteers = boolean;
+    }
+  }
+
+  function closeToggleClients(boolean) {
+    for (var i = 0; i < vm.appointments.length; i++) {
+      vm.appointments[i].toggleClients = boolean;
+    }
+  }
 
   // getAppointments();
   // function getAppointments() {
