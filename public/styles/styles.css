@@ -9,12 +9,6 @@
   line-height: 34px;
 }
 
-/*.page-header {
-  margin: 15px 0;
-  padding: 10px 0 10px;
-  border-bottom: 1px solid rgb(220,220,220);
-}*/
-
 .admin-content {
   border: 1px solid #ddd;
   border-top: none;
@@ -102,10 +96,18 @@
 }
 
 .profile-control-header {
+  margin: 0;
+  padding: 5px 0;
+  line-height: 20px;
+  position: relative;
   text-transform: uppercase;
   text-align: center;
   border-bottom: 1px solid rgb(200,200,200);
-  padding: 0 0 5px;
+}
+
+.announcement-message {
+  margin: 10px 0 0;
+  padding: 0 5px;
 }
 
 .profile-menu .profile-image-default {
@@ -201,6 +203,7 @@
   border-color: transparent;
   background-color: transparent;
   box-shadow: none;
+  cursor: default;
 }
 
 .active-switch {
