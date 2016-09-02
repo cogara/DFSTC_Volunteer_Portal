@@ -5,7 +5,7 @@ angular
   // .controller('RegisterClientController', RegisterClientController)
   .filter('PhoneFormat', phoneFormat);
 
-function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList, Excel, $timeout) {
+function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList, appointments, Excel, $timeout) {
   var vm = this;
   vm.volunteers = volunteerList;
   vm.getVolunteers = getVolunteers;
@@ -26,6 +26,65 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.clearSearchAvail = clearSearchAvail;
   vm.selectTrainee = selectTrainee;
   vm.approveMultipleTrainee = approveMultipleTrainee;
+  vm.exportToExcel = exportToExcel;
+  vm.printDiv = printDiv;
+  vm.appointments = appointments;
+  vm.todaysDate = new Date();
+  vm.toggleReportExpandVolunteers = toggleReportExpandVolunteers;
+  vm.toggleReportExpandClients = toggleReportExpandClients;
+  vm.toggleReportExpandAll = toggleReportExpandAll;
+
+  function toggleReportExpandVolunteers() {
+    vm.reportExpandVolunteers = !vm.reportExpandVolunteers;
+    var boolean = vm.reportExpandVolunteers;
+    console.log(boolean);
+    closeToggleVolunteers(boolean);
+    checkToggleAll();
+  }
+  function toggleReportExpandClients() {
+    vm.reportExpandClients = !vm.reportExpandClients;
+    var boolean = vm.reportExpandClients;
+    closeToggleClients(boolean);
+    checkToggleAll();
+  }
+  function toggleReportExpandAll() {
+    vm.reportExpandAll = !vm.reportExpandAll;
+    var boolean = vm.reportExpandAll;
+    vm.reportExpandVolunteers = boolean;
+    vm.reportExpandClients = boolean;
+    closeToggleVolunteers(boolean);
+    closeToggleClients(boolean);
+    checkToggleAll();
+  }
+
+  function checkToggleAll() {
+    vm.reportExpandAll = (vm.reportExpandClients && vm.reportExpandVolunteers) ? true:false;
+  }
+
+  function closeToggleVolunteers(boolean) {
+    for (var i = 0; i < vm.appointments.length; i++) {
+      console.log(boolean);
+      vm.appointments[i].toggleVolunteers = boolean;
+    }
+  }
+
+  function closeToggleClients(boolean) {
+    for (var i = 0; i < vm.appointments.length; i++) {
+      vm.appointments[i].toggleClients = boolean;
+    }
+  }
+
+  // getAppointments();
+  // function getAppointments() {
+  //   AdminService.getAppointments().then(function(response) {
+  //     console.log(response.data);
+  //     if(!response.data.clients) {
+  //       response.data.clients = ['test'];
+  //     }
+  //     console.log('length', response.data.clients.length);
+  //     vm.appointments = response.data;
+  //   })
+  // }
 
   function approveMultipleTrainee() {
     if(confirm('Convert to Volunteers?')) {
@@ -60,16 +119,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     }
   }
 
-  vm.printDiv = printDiv;
-  function printDiv(divId) {
-    window.frames["print_frame"].document.body.innerHTML = document.getElementById(divId).innerHTML;
-    window.frames["print_frame"].window.focus();
-    window.frames["print_frame"].window.print();
-  }
 
-
-  vm.exportToExcel = exportToExcel;
-  vm.printDiv = printDiv;
 
   function expandProfile(volunteer, panel) {
     if(panel === 'all') {

@@ -1,4 +1,4 @@
-<div class="col-sm-6 hide-print">
+<div class="col-sm-12 hide-print">
   <div><h5 style="display: inline-block">Filter:</h5> <a href="#" ng-click="admin.resetSearch()"><h6 style="display: inline-block">Clear Search</h6></a></div>
   <div class="btn-group" uib-dropdown is-open="admin.oppDropdownOpen" auto-close="outsideClick">
     <button id="opportunity-search"
@@ -124,39 +124,57 @@
     </ul>
   </div>
 
-  <div class="clear"></div>
-</div>
-<div class="col-sm-6">
-  <h5>Sort:</h5>
-  <button ng-class="{'btn-default': !(admin.sortOrder === 'lastName'), 'btn-primary': (admin.sortOrder === 'lastName')}" class="btn" ng-click="admin.sortBy('lastName')">
-    Name <span class="sortorder" ng-show="(admin.sortOrder === 'lastName')" ng-class="{reverse: !admin.sortReverse}"></span>
-  </button>
-  <button ng-class="{'btn-default': !(admin.sortOrder === '-isActive'), 'btn-primary': (admin.sortOrder === '-isActive')}" class="btn" ng-click="admin.sortBy('-isActive')">
-    Active <span class="sortorder" ng-show="(admin.sortOrder === '-isActive')" ng-class="{reverse: !admin.sortReverse}"></span>
-  </button>
-  <button ng-class="{'btn-default': !(admin.sortOrder === '-isVolunteer'), 'btn-primary': (admin.sortOrder === '-isVolunteer')}" class="btn" ng-click="admin.sortBy('-isVolunteer')">
-    Volunteer/Trainee <span class="sortorder" ng-show="(admin.sortOrder === '-isVolunteer')" ng-class="{reverse: !admin.sortReverse}"></span>
-  </button>
-</div>
-<div class="col-xs-12" style="margin: 10px 0">
-  <input class="col-sm-12" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">
-</div>
-<div class="col-xs-12">
-  <div class="toggle-switch">
-    Show Detail <switch off="No" on="Yes" ng-model="admin.expandDownAll" class="green"></switch>
-  </div>
-  <div class="toggle-switch">
-    Show Availability <switch off="No" on="Yes" ng-model="admin.expandRightAll" class="green"></switch>
-  </div>
-  <div class="toggle-switch approve" ng-if="admin.traineeSelectCheck">
-    Approve Selected Trainees: <button class="btn btn-primary btn-xs" ng-click="admin.approveMultipleTrainee()">Approve</button>
-  </div>
+
   <div class="print-list">
     <a href="#" ng-click="admin.printDiv('print-volunteers')"><i class="fa fa-print fa-lg"></i> Print</a>
   </div>
   <div class="print-list">
     <a href="#" ng-click="admin.exportToExcel('volunteerTable')"><i class="fa fa-table fa-lg" aria-hidden="true"></i> Export</a>
   </div>
+
+  <div class="clear"></div>
+</div>
+<!-- <div class="col-xs-12" style="margin: 10px 0">
+  <input class="col-xs-12" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">
+</div> -->
+<div class="col-xs-12">
+
+  <div class="toggle-switch">
+    Show Availability <switch off="No" on="Yes" ng-model="admin.expandRightAll" class="green"></switch>
+  </div>
+  <div class="toggle-switch">
+    Show Detail <switch off="No" on="Yes" ng-model="admin.expandDownAll" class="green"></switch>
+  </div>
+  <div class="toggle-switch" ng-if="admin.traineeSelectCheck">
+    Approve Selected Trainees:
+    <button class="btn btn-primary btn-xs" ng-click="admin.approveMultipleTrainee()">Approve</button>
+  </div>
+
+  <div style="float: left;">
+    <div
+      class="sort-volunteers"
+      ng-class="{'toggle-selected': admin.sortOrder === 'lastName'}"
+      ng-click="admin.sortBy('lastName')">
+      Name <span class="sortorder" ng-show="(admin.sortOrder === 'lastName')" ng-class="{reverse: !admin.sortReverse}"></span>
+    </div>
+    <div
+      class="sort-volunteers"
+      ng-class="{'toggle-selected': admin.sortOrder === '-isActive'}"
+      ng-click="admin.sortBy('-isActive')">
+      Active
+      <span class="sortorder" ng-show="(admin.sortOrder === '-isActive')" ng-class="{reverse: !admin.sortReverse}"></span>
+    </div>
+    <div
+      class="sort-volunteers"
+      ng-class="{'toggle-selected': admin.sortOrder === '-isVolunteer'}"
+      ng-click="admin.sortBy('-isVolunteer')">
+      Volunteer/Trainee <span class="sortorder" ng-show="(admin.sortOrder === '-isVolunteer')" ng-class="{reverse: !admin.sortReverse}"></span>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <!-- <div class="col-xs-12" style="margin: 10px 0"> -->
+    <input class="col-xs-12" style="margin: 10px 0 0" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">
+  <!-- </div> -->
 </div>
 
 <!-- Start volunteer list -->
