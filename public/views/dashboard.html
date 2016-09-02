@@ -560,27 +560,75 @@
       cell-modifier="dash.modifyCell(calendarCell)">
       </mwl-calendar>
     </div>
+    <div class="col-xs-12">
+      <div class="Legend">
+        <div class="legend-color"  ng-if="main.currentUser.isAdmin">
+          <div class="legendBox"style="background-color:{{dash.eventColors.special.primary}}"></div> New
+        </div>
+        <div class="legend-color">
+          <div class="legendBox"style="background-color:{{dash.eventColors.important.primary}}"></div> High Priority
+        </div>
+        <div class="legend-color">
+          <div class="legendBox"style="background-color:{{dash.eventColors.warning.primary}}"></div> Open
+        </div>
+        <div class="legend-color"  ng-if="main.currentUser.isAdmin">
+          <div class="legendBox"style="background-color:{{dash.eventColors.success.primary}}"></div> Full
+        </div>
+        <div class="legend-color" ng-if="!main.currentUser.isAdmin">
+          <div class="legendBox"style="background-color:{{dash.eventColors.info.primary}}"></div> My Appointment
+        </div>
+      </div>
+    </div>
   </div>
   <div class="col-lg-4 sidebar">
     <h2 style="margin-bottom: 74px;"class="text-center">Upcoming</h2>
     <div class="panel panel-default" ng-if="!main.currentUser.isAdmin">
       <h5 class="text-muted text-uppercase profile-control-header">My Appointments</h5>
       <ul class="sidebar-list">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
         <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
       </ul>
     </div>
     <div class="panel panel-default">
       <h5 class="text-muted text-uppercase profile-control-header">High Priority</h5>
       <ul class="sidebar-list">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
         <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
       </ul>
+    </div>
+    <div class="panel panel-default" style="padding: 0 0 10px">
+      <h5 class="text-muted text-uppercase profile-control-header" style="padding: 0 0 10px;">Announcements</h5>
+      <div class="form-group">
+        <label class="col-xs-12">Title <span style="float: right;"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Edit</button></span></label>
+        <div class="col-xs-12">
+          <input type="text" class="form-control" ng-model="dash.Ann.title" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-xs-12">Message</label>
+        <div class="col-xs-12">
+          <textarea msd-elastic class="form-control" ng-model="dash.Ann.message" style="resize: none"/>
+          </textarea>
+        </div>
+      </div>
+      <div class="clear"></div>
     </div>
 
 
   </div>
 </div>
 
-<div class="col-xs-12">
+<button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAppointmentModal()" >Add Appointment</button>
+
+<!-- <div class="col-xs-12">
   <div class="Legend">
     <h5>Legend </h5>
     <div class="legend-color"  ng-if="main.currentUser.isAdmin">
@@ -599,10 +647,29 @@
       <div class="legendBox"style="background-color:{{dash.eventColors.info.primary}}"></div> My Appointment
     </div>
   </div>
+</div> -->
+<div class="clear"></div>
+<br>
+<div class="col-xs-6 col-xs-offset-3">
+  <!-- <div class="panel panel-default" style="padding: 0 0 10px">
+    <h5 class="text-muted text-uppercase profile-control-header" style="padding: 0 0 10px;">Announcements</h5>
+    <div class="form-group">
+      <label class="col-xs-12">Title <span style="float: right;"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Edit</button></span></label>
+      <div class="col-xs-12">
+        <input type="text" class="form-control" ng-model="dash.Ann.title" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12">Message</label>
+      <div class="col-xs-12">
+        <textarea msd-elastic class="form-control" ng-model="dash.Ann.message" style="resize: none"/>
+        </textarea>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div> -->
 </div>
-
-<button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAppointmentModal()" >Add Appointment</button>
-<div class="">
+<!-- <div class="">
   <h3>Announcements:</h3>
   <h4>Title</h4>
   <p ng-bind="dash.Ann.title">
@@ -618,5 +685,5 @@
     </pre>
   </p>
 
-</div>
-<button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAnnouncementModal()" >Add Announcement</button>
+</div> -->
+<!-- <button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAnnouncementModal()" >Add Announcement</button> -->
