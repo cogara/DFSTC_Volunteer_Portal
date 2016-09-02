@@ -575,61 +575,31 @@
         <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
       </ul>
     </div>
-    <!-- <uib-tabset class="admin-menu">
-      <uib-tab heading="Appointments Selected">
-        <ul class="sidebar-list">
-          <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
-        </ul>
-      </uib-tab>
-      <uib-tab heading="High Priority Appts">
-        <ul class="sidebar-list">
-          <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
-        </ul>
-      </uib-tab>
-    </uib-tabset>
-      <div class="Legend">
-         <strong>Color legend </strong>
-        <div class="">
-          <div class="legendBox"style="background-color:{{dash.eventColors.special.primary}}"></div> New Appointments
-        </div>
-        <div class="">
-          <div class="legendBox"style="background-color:{{dash.eventColors.important.primary}}"></div> High Priority Appointments
-        </div>
-        <div class="">
-          <div class="legendBox"style="background-color:{{dash.eventColors.warning.primary}}"></div> Open Appointments
-        </div>
-        <div class="">
-          <div class="legendBox"style="background-color:{{dash.eventColors.info.primary}}"></div> My Appointments
-        </div>
-        <div class="">
-          <div class="legendBox"style="background-color:{{dash.eventColors.success.primary}}"></div> Full Appointments
-        </div>
-
-    </uib-tabset> -->
 
 
-  <div class="Legend">
-     <strong>Color legend </strong>
-    <div class=""  ng-if="main.currentUser.isAdmin">
-      <div class="legendBox"style="background-color:{{dash.eventColors.special.primary}}"></div> New Appointments
-    </div>
-    <div class="">
-      <div class="legendBox"style="background-color:{{dash.eventColors.important.primary}}"></div> High Priority Appointments
-    </div>
-    <div class="">
-      <div class="legendBox"style="background-color:{{dash.eventColors.warning.primary}}"></div> Open Appointments
-    </div>
-    <div class="" ng-if="!main.currentUser.isAdmin">
-      <div class="legendBox"style="background-color:{{dash.eventColors.info.primary}}"></div> My Appointments
-    </div>
-    <div class=""  ng-if="main.currentUser.isAdmin">
-      <div class="legendBox"style="background-color:{{dash.eventColors.success.primary}}"></div> Full Appointments
-    </div>
-
-      </div>
   </div>
 </div>
 
+<div class="col-xs-12">
+  <div class="Legend">
+    <h5>Legend </h5>
+    <div class="legend-color"  ng-if="main.currentUser.isAdmin">
+      <div class="legendBox"style="background-color:{{dash.eventColors.special.primary}}"></div> New
+    </div>
+    <div class="legend-color">
+      <div class="legendBox"style="background-color:{{dash.eventColors.important.primary}}"></div> High Priority
+    </div>
+    <div class="legend-color">
+      <div class="legendBox"style="background-color:{{dash.eventColors.warning.primary}}"></div> Open
+    </div>
+    <div class="legend-color"  ng-if="main.currentUser.isAdmin">
+      <div class="legendBox"style="background-color:{{dash.eventColors.success.primary}}"></div> Full
+    </div>
+    <div class="legend-color" ng-if="!main.currentUser.isAdmin">
+      <div class="legendBox"style="background-color:{{dash.eventColors.info.primary}}"></div> My Appointment
+    </div>
+  </div>
+</div>
 
 <button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAppointmentModal()" >Add Appointment</button>
 <div class="">

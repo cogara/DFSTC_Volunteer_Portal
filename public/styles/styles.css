@@ -661,6 +661,12 @@ pre{
   border-radius: 10px;
   display: inline-block;
   background-color: black;
+}
+
+.legend-color {
+  display: inline-block;
+  margin-right: 10px;
+}
 
 .reports-list {
   list-style-type: none;
