@@ -654,6 +654,14 @@ pre{
   padding-bottom: 5px;
 }
 
+
+.legendBox{
+  width:10px;
+  height:10px;
+  border-radius: 10px;
+  display: inline-block;
+  background-color: black;
+
 .reports-list {
   list-style-type: none;
   margin: 5px 0;
@@ -715,6 +723,7 @@ pre{
 
 .reports-list .appointment-details > div {
   flex: 1 0;
+
 }
 
 .reports-list .appointment-details > ul {

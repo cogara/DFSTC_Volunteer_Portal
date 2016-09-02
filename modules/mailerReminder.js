@@ -35,6 +35,7 @@ var mailReminder = function(){
 function mailToUser (apmt){
 
     var volunteer = "default";
+    console.log(apmt);
     user.find( function(err, theVolenteer){
        volunteer = theVolenteer[0]
 
