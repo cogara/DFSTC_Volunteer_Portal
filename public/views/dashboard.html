@@ -604,7 +604,11 @@
         </button>
       </h5>
       <div class="announcement-message">
-        <textarea msd-elastic class="form-control" ng-model="dash.announcement" style="resize: none" ng-disabled="!dash.editAnnouncementToggle">
+        <textarea msd-elastic class="form-control"
+        ng-model="dash.announcement.announcement"
+        style="resize: none"
+        ng-disabled="!dash.editAnnouncementToggle"
+        placeholder="No Recent Announcements">
         </textarea>
       </div>
       <div class="clear"></div>
