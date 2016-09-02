@@ -84,6 +84,9 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
         },
         volunteerList: function(AdminService) {
           return AdminService.getVolunteers();
+        },
+        appointments: function(AdminService) {
+          return AdminService.getAppointments();
         }
       }
     })

@@ -653,10 +653,72 @@ pre{
   padding-bottom: 5px;
 }
 
+
 .legendBox{
   width:10px;
   height:10px;
   border-radius: 10px;
   display: inline-block;
   background-color: black;
+
+.reports-list {
+  list-style-type: none;
+  margin: 5px 0;
+  padding: 0;
+}
+
+.appointment-info {
+  border: 1px solid rgba(0,0,0,.3);
+  margin: 2px 0;
+}
+
+.reports-list .appointment-headings {
+  text-transform: uppercase;
+  background-color: rgb(150,150,150);
+  color: rgb(240,240,240);
+  text-align: center;
+  padding: 5px 0;
+}
+
+
+.reports-list .appointment-meta {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.reports-list .appointment-meta > div {
+  flex: 1 0;
+  /*border: 1px solid red;*/
+  background-color: rgb(200,200,200);
+  border-bottom: 1px solid rgba(0,0,0,.4);
+  padding: 3px 5px;
+}
+
+.reports-list .appointment-meta > div:last-child {
+  flex: 0 auto;
+  padding: 3px 10px;
+}
+
+.reports-list .appointment-meta > div:not(:last-child) {
+  border-right: 1px solid rgba(0,0,0,.4);
+}
+
+/*.reports-list .appointment-headings div:nth-child(1n+4),
+.reports-list .appointment-meta div:nth-child(1n+4) {
+  flex: 0 auto;
+  padding: 0 5px;
+  border: 1px solid blue;
+  text-align: center;
+}*/
+
+.reports-list .appointment-details {
+  /*border: 1px solid rgba(0,0,0,.3);*/
+  display: flex;
+  padding: 3px 5px;
+}
+
+.reports-list .appointment-details > div {
+  flex: 1 0;
+
 }
