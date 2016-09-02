@@ -201,7 +201,7 @@ router.get('/announcement',function(req, res){
 });
 
 router.post('/announcement', function(req,res){
-  console.log(req.body);
+  console.log(req.body,"Blah");
   Announcement.update(req.body, function(err){
     if(err){
       console.log(err);

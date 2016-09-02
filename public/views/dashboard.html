@@ -625,7 +625,7 @@
     <div class="">
       <div class="legendBox"style="background-color:{{dash.eventColors.warning.primary}}"></div> Open Appointments
     </div>
-    <div class="">
+    <div class="" ng-if="!main.currentUser.isAdmin">
       <div class="legendBox"style="background-color:{{dash.eventColors.info.primary}}"></div> My Appointments
     </div>
     <div class=""  ng-if="main.currentUser.isAdmin">
