@@ -150,14 +150,14 @@
     <button class="btn btn-primary btn-xs" ng-click="admin.approveMultipleTrainee()">Approve</button>
   </div>
 
-  <div style="float: left;">
+  <div style="float: left; margin-top: 5px">
     <div
       class="sort-volunteers"
       ng-class="{'toggle-selected': admin.sortOrder === 'lastName'}"
       ng-click="admin.sortBy('lastName')">
       Name <span class="sortorder" ng-show="(admin.sortOrder === 'lastName')" ng-class="{reverse: !admin.sortReverse}"></span>
     </div>
-    <div
+    <!-- <div
       class="sort-volunteers"
       ng-class="{'toggle-selected': admin.sortOrder === '-isActive'}"
       ng-click="admin.sortBy('-isActive')">
@@ -169,6 +169,18 @@
       ng-class="{'toggle-selected': admin.sortOrder === '-isVolunteer'}"
       ng-click="admin.sortBy('-isVolunteer')">
       Volunteer/Trainee <span class="sortorder" ng-show="(admin.sortOrder === '-isVolunteer')" ng-class="{reverse: !admin.sortReverse}"></span>
+    </div> -->
+    <div
+      class="sort-volunteers"
+      ng-class="{'toggle-selected': admin.sortOrder === 'totalHours'}"
+      ng-click="admin.sortBy('totalHours')">
+      Hours <span class="sortorder" ng-show="(admin.sortOrder === 'totalHours')" ng-class="{reverse: !admin.sortReverse}"></span>
+    </div>
+    <div
+      class="sort-volunteers"
+      ng-class="{'toggle-selected': admin.sortOrder === 'lastAppointment'}"
+      ng-click="admin.sortBy('lastAppointment')">
+      Last Appointment <span class="sortorder" ng-show="(admin.sortOrder === 'lastAppointment')" ng-class="{reverse: !admin.sortReverse}"></span>
     </div>
   </div>
   <div class="clear"></div>
@@ -210,6 +222,11 @@
           <span class="volunteer-meta__header">Phone:</span>
           {{volunteer.phoneNumber | PhoneFormat}}
         </div>
+        <div class="volunteer-meta">
+          <span class="volunteer-meta__header">Volunteer Hours:</span>
+          {{volunteer.totalHours}}
+        </div>
+      </div>
       </div>
       <div class="volunteer-action">
         <div class="volunteer-meta">
@@ -276,7 +293,7 @@
       <h5 class="volunteer-meta__header">Company:</h5>
       <span>{{volunteer.company}}</span>
       <h5 class="volunteer-meta__header">Last Appointment:</h5>
-      <span>*INSERT DATE*</span>
+      <span>{{volunteer.lastAppointment | date: 'MMMM dd, yyyy'}}</span>
       <h5 class="volunteer-meta__header">Opportunities:</h5>
       <span>
         <ul style="display: inline-block">
