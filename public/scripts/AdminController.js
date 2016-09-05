@@ -402,7 +402,6 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
         tempDate = parseInt(tempDate.split('-').join(''));
 
         if(tempStart <= tempDate && tempDate <= tempEnd) {
-          console.log('Filter Me!', volunteer.fullName);
           return true;
         } else {
           return false;
@@ -426,10 +425,15 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.dateEnd.opened = false;
   function dateEndOpen() {
     vm.dateEnd.opened = !vm.dateEnd.opened;
+    setMinDate();
   }
 
   vm.dateOptions = {
     maxDate: new Date()
+  }
+
+  function setMinDate() {
+    vm.dateOptions.minDate = vm.reportDateStart ? vm.reportDateStart : null;
   }
   //end report filters
 
