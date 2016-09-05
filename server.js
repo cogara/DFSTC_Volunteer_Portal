@@ -92,8 +92,8 @@ passport.deserializeUser(function(id, done) {
 // the reminders are sent out at midnight
 var dateF = new schedule.RecurrenceRule();
 dateF.second = 40;
-//dateF.minute = 00;
-//dateF.hour =00;
+dateF.minute = 00;
+dateF.hour =00;
 console.log(dateF);
 
 //TODO: add back in to send emails
