@@ -319,7 +319,7 @@
         </span>
       </p>
     </div>
-    <input type="text" class="col-md-6" ng-model="admin.filterCompanyInput" />
+    <input type="text" class="col-md-6" ng-model="admin.filterCompanyInput" placeholder="Search Companies" />
     <div class="clear"></div>
     <div style="float: right">
       <span ng-show="admin.filterCompanyInput.length > 0" style="text-transform: uppercase;">"{{admin.filterCompanyInput}}"</span>
@@ -330,11 +330,11 @@
     <ul class="reports-list">
       <li ng-repeat="volunteer in admin.volunteers | filter: admin.filterCompany | filter: admin.filterCompanyInput | filter: admin.reportFilterDate | orderBy: ['-displayHours', 'lastName']"
         ng-if="volunteer.displayHours > 0"
-        style="margin: 5px 0; border-bottom: 1px solid rgb(220,220,220);">
-        <div style="display: inline-block">{{volunteer.fullName}}</div>
-        <div style="display: inline-block">{{volunteer.email}}</div>
-        <div style="display: inline-block">{{volunteer.phoneNumber | PhoneFormat}}</div>
-        <div style="display: inline-block; float: right">
+        class="report-users">
+        <div>{{volunteer.fullName}}</div>
+        <div>{{volunteer.email}}</div>
+        <div>{{volunteer.phoneNumber | PhoneFormat}}</div>
+        <div style="text-align: right">
           <span ng-if="admin.filterCompanyInput.length > 0" style="text-transform: uppercase; color: rgb(170,170,170); font-size: .7em; margin-right: 5px">
             Matched "{{volunteer.matchedCompany}}"
           </span>{{volunteer.displayHours}} hours

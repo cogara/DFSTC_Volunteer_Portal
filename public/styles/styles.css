@@ -859,3 +859,13 @@ pre{
 .addButton {
   float: right;
 }
+
+.report-users {
+  margin: 5px 0;
+  border-bottom: 1px solid rgb(220,220,220);
+  display: flex;
+}
+
+.report-users div {
+  flex: 1 0;
+}
