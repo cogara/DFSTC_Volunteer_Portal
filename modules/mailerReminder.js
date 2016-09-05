@@ -9,7 +9,7 @@ var appointment = require('../models/appointment');
 
 
 var mailReminder = function(){
-  console.log("running");
+  console.log("running mailer");
   // sets the the times for midinght of the next day and and midnight of the day after
   var tomorrow  = new Date(new Date().setDate(new Date().getDate()+1));
   var nextDay  = new Date(new Date().setDate(new Date().getDate()+2));
@@ -18,12 +18,12 @@ var mailReminder = function(){
 
 
     // queries the server for apponitments between tomorrow and the next day for reminders
-    appointment.find({ "startsAt":{ $gte: tomorrow , $lt: nextDay} }, function(err,theAppointment){
+    appointment.find({ "startsAt":{ $gte: tomorrow , $lt: nextDay} }, function(err,theAppointments){
       if(err){
         console.log(err);
       }
-      console.log(theAppointment);
-      theAppointment.forEach(function(element){
+      //console.log(theAppointment);
+      theAppointments.forEach(function(element){
         //console.log(element.startTime +" Awesome!" );
         //TODO: fix up mail sender
         mailToUser(element);
@@ -34,9 +34,9 @@ var mailReminder = function(){
 
 function mailToUser (apmt){
 
-    var volunteer = "default";
-    user.find( function(err, theVolenteer){
-       volunteer = theVolenteer[0]
+    console.log(apmt.volunteers.length);
+    for(var i = 0; i < apmt.volunteers.length; i++){
+       console.log(apmt.volunteers[i]);
 
        var transporter = nodemailer.createTransport({
          service:'Gmail',
@@ -54,14 +54,14 @@ function mailToUser (apmt){
 
        var message = {
          // Comma separated list of recipients
-       to: '"'+volunteer.firstName +'" <zerofox16@gmail.com>',
+       to: '"'+apmt.volunteers[i].firstName +'" <'+apmt.volunteers[i].email+'>',
 
        // Subject of the message
        subject: 'Image Coaching Reminder ✔', //
 
        // HTML body
        html:'<p>' +
-       'Dear '+volunteer.firstName+';' +
+       'Dear '+apmt.volunteers[i].firstName+';' +
        '</p>' +
        '<p>' +
        '  Thank you for volunteering for an Image Coaching shift this week.' +
@@ -127,7 +127,7 @@ function mailToUser (apmt){
 
     //console.log(name.select('firstName'));
 
-    });
+    };
 }
 
 

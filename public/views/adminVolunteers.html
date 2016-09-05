@@ -1,4 +1,4 @@
-<div class="col-sm-6 hide-print">
+<div class="col-sm-12 hide-print">
   <div><h5 style="display: inline-block">Filter:</h5> <a href="#" ng-click="admin.resetSearch()"><h6 style="display: inline-block">Clear Search</h6></a></div>
   <div class="btn-group" uib-dropdown is-open="admin.oppDropdownOpen" auto-close="outsideClick">
     <button id="opportunity-search"
@@ -124,36 +124,69 @@
     </ul>
   </div>
 
-  <div class="clear"></div>
-</div>
-<div class="col-sm-6">
-  <h5>Sort:</h5>
-  <button ng-class="{'btn-default': !(admin.sortOrder === 'lastName'), 'btn-primary': (admin.sortOrder === 'lastName')}" class="btn" ng-click="admin.sortBy('lastName')">
-    Name <span class="sortorder" ng-show="(admin.sortOrder === 'lastName')" ng-class="{reverse: !admin.sortReverse}"></span>
-  </button>
-  <button ng-class="{'btn-default': !(admin.sortOrder === '-isActive'), 'btn-primary': (admin.sortOrder === '-isActive')}" class="btn" ng-click="admin.sortBy('-isActive')">
-    Active <span class="sortorder" ng-show="(admin.sortOrder === '-isActive')" ng-class="{reverse: !admin.sortReverse}"></span>
-  </button>
-  <button ng-class="{'btn-default': !(admin.sortOrder === '-isVolunteer'), 'btn-primary': (admin.sortOrder === '-isVolunteer')}" class="btn" ng-click="admin.sortBy('-isVolunteer')">
-    Volunteer/Trainee <span class="sortorder" ng-show="(admin.sortOrder === '-isVolunteer')" ng-class="{reverse: !admin.sortReverse}"></span>
-  </button>
-</div>
-<div class="col-xs-12" style="margin: 10px 0">
-  <input class="col-sm-12" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">
-</div>
-<div class="col-xs-12">
-  <div class="toggle-switch">
-    Show Detail <switch off="No" on="Yes" ng-model="admin.expandDownAll" class="green"></switch>
-  </div>
-  <div class="toggle-switch">
-    Show Availability <switch off="No" on="Yes" ng-model="admin.expandRightAll" class="green"></switch>
-  </div>
+
   <div class="print-list">
     <a href="#" ng-click="admin.printDiv('print-volunteers')"><i class="fa fa-print fa-lg"></i> Print</a>
   </div>
   <div class="print-list">
     <a href="#" ng-click="admin.exportToExcel('volunteerTable')"><i class="fa fa-table fa-lg" aria-hidden="true"></i> Export</a>
   </div>
+
+  <div class="clear"></div>
+</div>
+<!-- <div class="col-xs-12" style="margin: 10px 0">
+  <input class="col-xs-12" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">
+</div> -->
+<div class="col-xs-12">
+
+  <div class="toggle-switch">
+    Show Availability <switch off="No" on="Yes" ng-model="admin.expandRightAll" class="green"></switch>
+  </div>
+  <div class="toggle-switch">
+    Show Detail <switch off="No" on="Yes" ng-model="admin.expandDownAll" class="green"></switch>
+  </div>
+  <div class="toggle-switch" ng-if="admin.traineeSelectCheck">
+    Approve Selected Trainees:
+    <button class="btn btn-primary btn-xs" ng-click="admin.approveMultipleTrainee()">Approve</button>
+  </div>
+
+  <div style="float: left; margin-top: 5px">
+    <div
+      class="sort-volunteers"
+      ng-class="{'toggle-selected': admin.sortOrder === 'lastName'}"
+      ng-click="admin.sortBy('lastName')">
+      Name <span class="sortorder" ng-show="(admin.sortOrder === 'lastName')" ng-class="{reverse: !admin.sortReverse}"></span>
+    </div>
+    <!-- <div
+      class="sort-volunteers"
+      ng-class="{'toggle-selected': admin.sortOrder === '-isActive'}"
+      ng-click="admin.sortBy('-isActive')">
+      Active
+      <span class="sortorder" ng-show="(admin.sortOrder === '-isActive')" ng-class="{reverse: !admin.sortReverse}"></span>
+    </div>
+    <div
+      class="sort-volunteers"
+      ng-class="{'toggle-selected': admin.sortOrder === '-isVolunteer'}"
+      ng-click="admin.sortBy('-isVolunteer')">
+      Volunteer/Trainee <span class="sortorder" ng-show="(admin.sortOrder === '-isVolunteer')" ng-class="{reverse: !admin.sortReverse}"></span>
+    </div> -->
+    <div
+      class="sort-volunteers"
+      ng-class="{'toggle-selected': admin.sortOrder === 'totalHours'}"
+      ng-click="admin.sortBy('totalHours')">
+      Hours <span class="sortorder" ng-show="(admin.sortOrder === 'totalHours')" ng-class="{reverse: !admin.sortReverse}"></span>
+    </div>
+    <div
+      class="sort-volunteers"
+      ng-class="{'toggle-selected': admin.sortOrder === 'lastAppointment'}"
+      ng-click="admin.sortBy('lastAppointment')">
+      Last Appointment <span class="sortorder" ng-show="(admin.sortOrder === 'lastAppointment')" ng-class="{reverse: !admin.sortReverse}"></span>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <!-- <div class="col-xs-12" style="margin: 10px 0"> -->
+    <input class="col-xs-12" style="margin: 10px 0 0" type="text" ng-model="admin.search.input" placeholder="Search Volunteers">
+  <!-- </div> -->
 </div>
 
 <!-- Start volunteer list -->
@@ -165,13 +198,16 @@
     >
     <div class="volunteer-card">
       <div class="trainee-mark" ng-if="volunteer.isTrainee">
-        <i class="fa fa-asterisk" aria-hidden="true"></i>
+        <!-- <i class="fa fa-asterisk" aria-hidden="true"></i> -->
+        <button ng-click="admin.selectTrainee(volunteer)" class="btn btn-xs outline" ng-class="{'btn-primary': volunteer.traineeSelected, 'btn-default': !volunteer.traineeSelected, 'font-hidden': !volunteer.traineeSelected}">
+          <i class="fa fa-check"></i>
+        </button>
         <button class="btn btn-primary btn-xs" style="float: right" ng-click="admin.trainingComplete(volunteer)">Approve Trainee</button>
       </div>
-      <div class="volunteer-photo">
-        <img ng-if="volunteer.photo" ng-src="/photos/{{volunteer.photo}}"/>
-
-        <i ng-if="!volunteer.photo" class="fa fa-user icon-image" aria-hidden="true"></i>
+      <div ng-if="volunteer.photo"class="volunteer-photo" style="background-image: url('/photos/{{volunteer.photo}}')">
+      </div>
+      <div ng-if="!volunteer.photo" class="volunteer-photo">
+        <i class="fa fa-user icon-image" aria-hidden="true"></i>
       </div>
       <div class="volunteer-info">
         <div class="volunteer-meta">
@@ -185,6 +221,10 @@
         <div class="volunteer-meta">
           <span class="volunteer-meta__header">Phone:</span>
           {{volunteer.phoneNumber | PhoneFormat}}
+        </div>
+        <div class="volunteer-meta">
+          <span class="volunteer-meta__header">Volunteer Hours:</span>
+          {{volunteer.totalHours}}
         </div>
       </div>
       <div class="volunteer-action">
@@ -252,7 +292,7 @@
       <h5 class="volunteer-meta__header">Company:</h5>
       <span>{{volunteer.company}}</span>
       <h5 class="volunteer-meta__header">Last Appointment:</h5>
-      <span>*INSERT DATE*</span>
+      <span>{{volunteer.lastAppointment | date: 'MMMM dd, yyyy'}}</span>
       <h5 class="volunteer-meta__header">Opportunities:</h5>
       <span>
         <ul style="display: inline-block">
@@ -404,7 +444,7 @@
 <!-- END PRINT VIEW -->
 
 
-<button ng-click="admin.exportToExcel('volunteerTable')">Excel</button>
+<!-- Export to Excel -->
 <table id="volunteerTable" style="display: none">
   <tr>
     <th>Name</th>
@@ -421,3 +461,4 @@
     <td>{{volunteer.isTrainee}}</td>
   </tr>
 </table>
+<!-- End export to excel -->

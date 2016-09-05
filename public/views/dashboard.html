@@ -1,10 +1,4 @@
-<button ng-if="main.currentUser.isAdmin" class="btn btn-default" ui-sref="admin.volunteers">Administration</button>
 <span class="profile-control" ng-if="main.currentUser" style="float: right; margin-left: 5px;" >
-  <span class="profile-button" ng-click="dash.toggleProfile()">
-    <!-- <img class="profile-image" ng-if="main.currentUser.photo" ng-src="/photos/{{main.currentUser.photo}}"/> -->
-    <i class="fa fa-user fa-lg" aria-hidden="true"></i>
-    <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
-  </span>
   <div class="profile-menu" ng-class="{'hide': !dash.profileToggle}">
     <h6 class="profile-control-header">{{main.currentUser.firstName}} {{main.currentUser.lastName}}</h6>
     <div class="profile-image">
@@ -21,7 +15,7 @@
 <script type="text/ng-template" id="profileModal.html">
   <div class="modal-header">
     <button class="pull-right btn btn-primary" ng-click="prof.editProfile()">Edit Profile</button>
-      <h3 class="modal-title">Profile</h3>
+    <h3 class="modal-title">Profile</h3>
   </div>
   <div class="row">
     <div class="modal-body profile">
@@ -393,25 +387,6 @@
  </script>
 <!-- end add appt modal -->
 
-<!-- Add Announcement Modal -->
-<script type="text/ng-template" id="addAnnouncementModal.html">
-  <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
-    <h3 class="center-block">Add New Announcements</h3>
-    <label>Announcements Title:</label>
-    <input type="text" class="form-control" ng-model="dash.announcement.title" />
-
-
-    <label>Number of Volunteers Needed:</label>
-    <textarea msd-elastic="<br>"  class="form-control" ng-model="dash.announcement.message"  />
-
-    </textarea>
-
-  <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="$close(dash.addAnnouncement())" >Save Announcement</button>
-    <button class="btn btn-warning" type="button" ng-click="$close()">Cancel</button>
-  </div>
- </script>
-<!-- end Add Announcement Motal -->
 
 <!-- edit/delete and claim/leave appointment modal form -->
 
@@ -515,7 +490,7 @@
     </div>
   </div>
 
-<!-- volunteer claim/remove form -->
+  <!-- volunteer claim/remove form -->
   <div ng-if="!edit.currentUser.user.isAdmin">
     <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
       <h3 class="center-block">{{edit.editAppointment.event.title}} - {{edit.editAppointment.event.startsAt | date: "shortDate"}}</h3>
@@ -589,42 +564,61 @@
       cell-modifier="dash.modifyCell(calendarCell)">
       </mwl-calendar>
     </div>
+    <div class="col-xs-12">
+      <button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAppointmentModal()" >Add Appointment</button>
+      <br>
+      <div class="Legend">
+        <div class="legend-color"  ng-if="main.currentUser.isAdmin">
+          <div class="legendBox"style="background-color:{{dash.eventColors.special.primary}}"></div> New
+        </div>
+        <div class="legend-color">
+          <div class="legendBox"style="background-color:{{dash.eventColors.important.primary}}"></div> High Priority
+        </div>
+        <div class="legend-color">
+          <div class="legendBox"style="background-color:{{dash.eventColors.warning.primary}}"></div> Open
+        </div>
+        <div class="legend-color"  ng-if="main.currentUser.isAdmin">
+          <div class="legendBox"style="background-color:{{dash.eventColors.success.primary}}"></div> Full
+        </div>
+        <div class="legend-color" ng-if="!main.currentUser.isAdmin">
+          <div class="legendBox"style="background-color:{{dash.eventColors.info.primary}}"></div> My Appointment
+        </div>
+      </div>
+    </div>
   </div>
   <div class="col-lg-4 sidebar">
-    <h2 class="text-center">Sidebar</h2>
-    <uib-tabset class="admin-menu">
-      <uib-tab heading="Appointments Selected">
-        <ul class="sidebar-list">
-          <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
-        </ul>
-      </uib-tab>
-      <uib-tab heading="High Priority Appts">
-        <ul class="sidebar-list">
-          <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
-        </ul>
-      </uib-tab>
-    </uib-tabset>
-
+    <h2 style="margin-bottom: 74px;"class="text-center">Upcoming</h2>
+    <div class="panel panel-default" ng-if="!main.currentUser.isAdmin">
+      <h5 class="text-muted text-uppercase profile-control-header">My Appointments</h5>
+      <ul class="sidebar-list">
+        <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
+      </ul>
+    </div>
+    <div class="panel panel-default">
+      <h5 class="text-muted text-uppercase profile-control-header">High Priority</h5>
+      <ul class="sidebar-list">
+        <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
+      </ul>
+    </div>
+    <div ng-if="main.currentUser.isAdmin || (!main.currentUser.isAdmin && dash.announcement.announcement)" class="panel panel-default" style="padding: 0 0 10px">
+      <h5 class="text-muted text-uppercase profile-control-header">
+        Announcements
+        <button ng-if="main.currentUser.isAdmin" style="position: absolute; right: 5px;" class="btn btn-primary btn-xs" ng-click="dash.saveAnnouncement() && (dash.editAnnouncementToggle = !dash.editAnnouncementToggle)">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </h5>
+      <div class="announcement-message">
+        <textarea msd-elastic class="form-control"
+        ng-model="dash.announcement.announcement"
+        style="resize: none"
+        ng-disabled="!dash.editAnnouncementToggle"
+        placeholder="No Recent Announcements">
+        </textarea>
+      </div>
+      <div class="clear"></div>
+    </div>
   </div>
+  <div class="clear" style="padding: 10px"></div>
 </div>
 
-
-<button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAppointmentModal()" >Add Appointment</button>
-<div class="">
-  <h3>Announcements:</h3>
-  <h4>Title</h4>
-  <p ng-bind="dash.Ann.title">
-  </p>
-
-  <h4>Date:</h4>
-  <p ng-bind="dash.Ann.date"></p>
-
-  <h4>Message:</h4>
-  <p>
-    <pre>
-      {{dash.Ann.message}}
-    </pre>
-  </p>
-
-</div>
-<button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAnnouncementModal()" >Add Announcement</button>
+<div class="clear"></div>

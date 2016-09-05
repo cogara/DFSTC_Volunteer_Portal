@@ -4,7 +4,9 @@ function AnnouncementService($http){
 
   function addAnnouncement(announcement){
     console.log(announcement);
-    return $http.post('/api/announcement', announcement).then(successHandle, failureHandle);
+    var data = {};
+    data.announcement = announcement;
+    return $http.post('/api/announcement', data).then(successHandle, failureHandle);
 
     var successHandle = function(res){
       console.log('AnnouncementService success', response.data);

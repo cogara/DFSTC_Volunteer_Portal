@@ -1,6 +1,11 @@
-angular.module('DfstcSchedulingApp').controller('AdminController', AdminController).controller('ModalController', ModalController).filter('PhoneFormat', phoneFormat);
+angular
+  .module('DfstcSchedulingApp')
+  .controller('AdminController', AdminController)
+  .controller('ModalController', ModalController)
+  // .controller('RegisterClientController', RegisterClientController)
+  .filter('PhoneFormat', phoneFormat);
 
-function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList, Excel, $timeout) {
+function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList, appointments, Excel, $timeout) {
   var vm = this;
   vm.volunteers = volunteerList;
   vm.getVolunteers = getVolunteers;
@@ -19,17 +24,100 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   vm.statusFilter = statusFilter;
   vm.clearSearchOpp = clearSearchOpp;
   vm.clearSearchAvail = clearSearchAvail;
+  vm.selectTrainee = selectTrainee;
+  vm.approveMultipleTrainee = approveMultipleTrainee;
   vm.exportToExcel = exportToExcel;
   vm.printDiv = printDiv;
+  vm.appointments = appointments;
+  vm.todaysDate = new Date();
+  vm.toggleReportExpandVolunteers = toggleReportExpandVolunteers;
+  vm.toggleReportExpandClients = toggleReportExpandClients;
+  vm.toggleReportExpandAll = toggleReportExpandAll;
 
-  vm.addAdmin = addAdmin;
-
-  function addAdmin(admin) {
-    AdminService.addAdmin(admin).then(function(response) {
-      console.log('admin created');
-      vm.newAdmin = {};
-    });
+  function toggleReportExpandVolunteers() {
+    vm.reportExpandVolunteers = !vm.reportExpandVolunteers;
+    var boolean = vm.reportExpandVolunteers;
+    console.log(boolean);
+    closeToggleVolunteers(boolean);
+    checkToggleAll();
   }
+  function toggleReportExpandClients() {
+    vm.reportExpandClients = !vm.reportExpandClients;
+    var boolean = vm.reportExpandClients;
+    closeToggleClients(boolean);
+    checkToggleAll();
+  }
+  function toggleReportExpandAll() {
+    vm.reportExpandAll = !vm.reportExpandAll;
+    var boolean = vm.reportExpandAll;
+    vm.reportExpandVolunteers = boolean;
+    vm.reportExpandClients = boolean;
+    closeToggleVolunteers(boolean);
+    closeToggleClients(boolean);
+    checkToggleAll();
+  }
+
+  function checkToggleAll() {
+    vm.reportExpandAll = (vm.reportExpandClients && vm.reportExpandVolunteers) ? true:false;
+  }
+
+  function closeToggleVolunteers(boolean) {
+    for (var i = 0; i < vm.appointments.length; i++) {
+      vm.appointments[i].toggleVolunteers = boolean;
+    }
+  }
+
+  function closeToggleClients(boolean) {
+    for (var i = 0; i < vm.appointments.length; i++) {
+      vm.appointments[i].toggleClients = boolean;
+    }
+  }
+
+  // getAppointments();
+  // function getAppointments() {
+  //   AdminService.getAppointments().then(function(response) {
+  //     console.log(response.data);
+  //     if(!response.data.clients) {
+  //       response.data.clients = ['test'];
+  //     }
+  //     console.log('length', response.data.clients.length);
+  //     vm.appointments = response.data;
+  //   })
+  // }
+
+  function approveMultipleTrainee() {
+    if(confirm('Convert to Volunteers?')) {
+      for (var i = 0; i < vm.volunteers.length; i++) {
+        if(vm.volunteers[i].traineeSelected) {
+          vm.volunteers[i].isTrainee = false;
+          vm.volunteers[i].isVolunteer = true;
+          UserService.editProfile(vm.volunteers[i]);
+          vm.traineeSelectCheck = false;
+        }
+      }
+    }
+  }
+
+  function selectTrainee(trainee) {
+    vm.preventProfile = true;
+    console.log(trainee);
+    if(trainee.traineeSelected) {
+      trainee.traineeSelected = false;
+    } else {
+      trainee.traineeSelected = true;
+    }
+    // trainee.traineeSelected = (trainee.traineeSelected) ? false : true;
+    for (var i = 0; i < vm.volunteers.length; i++) {
+      console.log(vm.volunteers[i].traineeSelected);
+      if(vm.volunteers[i].traineeSelected) {
+        vm.traineeSelectCheck = true;
+        return;
+      } else {
+        vm.traineeSelectCheck = false;
+      }
+    }
+  }
+
 
 
   function expandProfile(volunteer, panel) {
@@ -76,7 +164,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   }
 
   function trainingComplete(volunteer) {
-    vm.preventProfile=true;
+    vm.preventProfile = true;
     var modalInstance = $uibModal.open({
       animation: true,
       templateUrl: 'trainingComplete.html',
@@ -137,24 +225,10 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.preventProfile = false;
   };
 
-  function clearSearchAvail() {
-    vm.search.avail = {};
-    vm.search.avail.monday = {};
-    vm.search.avail.tuesday = {};
-    vm.search.avail.wednesday = {};
-    vm.search.avail.thursday = {};
-    vm.search.avail.friday = {};
-    vm.search.avail.saturday = {};
-    vm.searchAvailActive = false;
-    console.log(vm.search.avail);
-    vm.availDropdownOpen = false;
-  }
+  vm.search = {};
 
-  // Search volunteer options and filters
-  function clearSearchOptions() {
-    vm.search = {};
-    vm.search.opportunity = {};
-    vm.search.opportunity.all = false;
+  vm.search.opportunity = {};
+  function clearSearchOpp() {
     vm.search.opportunity.imageCoach = false;
     vm.search.opportunity.careerCoach = false;
     vm.search.opportunity.clothingSorter = false;
@@ -169,31 +243,39 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     vm.search.opportunity.eventSetUp = false;
     vm.search.opportunity.photographer = false;
     vm.search.opportunity.graphicDesigner = false;
+    vm.oppDropdownOpen = false;
+  }
 
+  vm.search.avail = {};
+  function clearSearchAvail() {
 
-    vm.search.avail = {};
     vm.search.avail.monday = {};
     vm.search.avail.tuesday = {};
     vm.search.avail.wednesday = {};
     vm.search.avail.thursday = {};
     vm.search.avail.friday = {};
     vm.search.avail.saturday = {};
+    for(var day in vm.search.avail) {
+      vm.search.avail[day].monday = false;
+      vm.search.avail[day].morning = false;
+      vm.search.avail[day].evening = false;
+    }
+    vm.searchAvailActive = false;
+    vm.availDropdownOpen = false;
+  }
 
-
+  // Search volunteer options and filters
+  function clearSearchOptions() {
+    clearSearchOpp();
+    clearSearchAvail();
     vm.search.role = 'all';
     vm.search.status = 'all';
-    //
-    // vm.sortDefault = 'lastName';
-    // vm.sortLast = 'firstName';
-    // vm.sortOrder = 'lastName';
-    vm.searchAvailActive = false;
-    // vm.searchOpportunityActive = false;
+    vm.search.input = null;
   }
 
   function resetSearch() {
     clearSearchOptions();
   }
-
 
   vm.sortDefault = 'lastName';
   vm.sortLast = 'firstName';
@@ -206,22 +288,24 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   }
 
   function availableFilter(volunteer) {
+    var filterCheck;
     for (var day in vm.search.avail) {
       for (var time in vm.search.avail[day]) {
         if (vm.search.avail[day][time]) {
-          vm.searchAvailActive = true;
+          filterCheck = true;
           if(volunteer.isAvail && volunteer.isAvail[day]) {
             if(!volunteer.isAvail[day][time]) {
+              vm.searchAvailActive = filterCheck;
               return false;
             }
           } else {
+            vm.searchAvailActive = filterCheck;
             return false;
           }
-        } else {
-          vm.searchAvailActive = false;
         }
       }
     }
+    vm.searchAvailActive = filterCheck;
     return true;
   }
 
@@ -231,39 +315,14 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
       if (vm.search.opportunity[opp]) {
         check = true;
         if (!volunteer.volunteerOpportunities[opp]) {
+          vm.searchOpportunityActive = check;
           return false;
         }
       }
     }
-    if (check) {
-      vm.searchOpportunityActive = true;
-    } else {
-      vm.searchOpportunityActive = false;
-    }
+    vm.searchOpportunityActive = check;
     return true;
   }
-
-
-  //   var check = false;
-  //   for (var opp in vm.search.opportunity) {
-  //     if(vm.search.opportunity[opp]) {
-  //       check = true;
-  //     }
-  //     if(vm.search.opportunity[opp]) {
-  //       if(volunteer.volunteerOpportunities[opp] === vm.search.opportunity[opp]) {
-  //         return true;
-  //       }
-  //     }
-  //   }
-  //   if(check) {
-  //     vm.searchOpportunityActive = true;
-  //     return false;
-  //   } else {
-  //     vm.searchOpportunityActive = false;
-  //     return true;
-  //   }
-  // }
-
 
   function roleFilter(volunteer) {
     if(vm.search.role === 'isTrainee') {
@@ -305,12 +364,7 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     }
   }
 
-  function clearSearchOpp() {
-      for (var key in vm.search.opportunity) {
-        vm.search.opportunity[key] = false;
-      }
-    vm.oppDropdownOpen = false;
-  }
+
 
   clearSearchOptions();
   //end search filters

@@ -28,9 +28,31 @@ router.get('/volunteers', function(request, response) {
   })
 })
 
+router.get('/users', function(request, response) {
+  User.find({}, function(err, users) {
+    if(err) {
+      console.log(err);
+      return false
+    }
+    for (var i = 0; i < users.length; i++) {
+      users[i].password = null;
+    }
+    response.send(users);
+  })
+})
+
+router.delete('/users/:id', function(request, response) {
+  User.findByIdAndRemove(request.params.id, function(err, result){
+    response.sendStatus(200);
+  }, function() {
+    response.sendStatus(500);
+  })
+})
+
 router.put('/volunteer/:id', function(request, response) {
   var volunteer = request.body;
   var editVolunteer = {};
+  editVolunteer.fullName = volunteer.firstName + ' ' + volunteer.lastName;
   if(request.query.changepass) {
     User.findOne({_id: request.params.id}, function(err, user) {
       if(err) {
@@ -65,7 +87,7 @@ router.put('/volunteer/:id', function(request, response) {
   } else {
 
     for (var key in volunteer) {
-      if (!(key==='password')) {
+      if (!(key==='password' || key==='fullName')) {
         editVolunteer[key] = volunteer[key];
       }
     }
@@ -106,7 +128,6 @@ router.post('/appointment', function(request, response){
 });
 
 router.get('/appointment/:id', function(request, response){
-  console.log('one appointment get');
   Appointment.findById(request.params.id, function(err, appointment){
     if(err){
       response.sendStatus(500);
@@ -117,7 +138,6 @@ router.get('/appointment/:id', function(request, response){
 });
 
 router.get('/appointment', function(request, response){
-  console.log('appointment get');
   if(request.user.isAdmin){
     Appointment.find(function(err, appointments){
       if(err){
@@ -140,7 +160,6 @@ router.get('/appointment', function(request, response){
 });
 
 router.delete('/appointment/:id', function(request, response){
-  console.log('appointment delete');
   Appointment.findByIdAndRemove(request.params.id, function(err, appointment){
     if(err){
       response.sendStatus(500);
@@ -151,7 +170,6 @@ router.delete('/appointment/:id', function(request, response){
 });
 
 router.put('/appointment/:id', function(request, response){
-  console.log('appointment update');
   Appointment.findByIdAndUpdate({_id: request.params.id}, {$set: request.body}, function(err, appointment){
     if(err){
       response.sendStatus(500);
@@ -164,7 +182,6 @@ router.put('/appointment/:id', function(request, response){
 // announcements stuff
 //TODO:
 router.get('/announcement',function(req, res){
-  console.log(req.body);
   Announcement.find({}, function(err,announcement){
     if(err){
       console.log(err);
@@ -176,8 +193,7 @@ router.get('/announcement',function(req, res){
 });
 
 router.post('/announcement', function(req,res){
-  console.log(req.body);
-  Announcement.update(req.body, function(err){
+  Announcement.update(req.body._id, req.body.announcement, {upsert: true}, function(err){
     if(err){
       console.log(err);
       res.sendStatus(500);
@@ -186,5 +202,43 @@ router.post('/announcement', function(req,res){
     }
   });
 });
+
+router.get('/clients', function(request, response) {
+  var clientArray = [];
+  var clients = [];
+  if(!request.user.clients) {
+    response.send(clientArray);
+    return;
+  }
+  if(request.user.clients.length > 0) {
+    for (var i = 0; i < request.user.clients.length; i++) {
+      console.log(request.user.clients[i]);
+      clients.push(request.user.clients[i]);
+    }
+    User.find({_id: {$in: clients}}, function(err, clientList) {
+      if(err) {
+        console.log(err);
+        response.sendStatus(500);
+      } else {
+        response.send(clientList);
+      }
+    })
+  } else {
+    response.send(clientArray);
+  }
+});
+
+router.put('/caseWorkers/:id', function(request, response) {
+  var clientId = request.query.client;
+  User.findByIdAndUpdate(request.params.id, {$push: {clients: clientId}}, function(err, caseWorker) {
+    if(err) {
+      console.log(err, 'caseworker');
+
+      response.sendStatus(500);
+    } else {
+      response.sendStatus(200);
+    }
+  })
+})
 
 module.exports = router;

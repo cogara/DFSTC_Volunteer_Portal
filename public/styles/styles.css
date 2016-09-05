@@ -1,3 +1,6 @@
+.font{
+font-family: 'Oxygen', sans-serif;
+}
 .content {
   position: relative;
   width: 80%;
@@ -9,49 +12,54 @@
   line-height: 34px;
 }
 
-.page-header {
-  margin: 15px 0;
-  padding: 10px 0 10px;
-  border-bottom: 1px solid rgb(220,220,220);
-}
-
 .admin-content {
   border: 1px solid #ddd;
   border-top: none;
   padding: 5px 0 10px;
 }
 
-.profile-control {
+.menu-control {
   position: relative;
 }
 
-.profile-button {
+.menu-button {
   display: inline-block;
   overflow: hidden;
   cursor: pointer
 }
 
-.profile-menu {
+.user-menu {
   display: block;
   z-index: 5;
   padding: 5px 10px 10px;
   background-color: rgb(245,245,245);
   border: 1px solid rgba(100,100,100,.1);
-  box-shadow: 0 0 5px 0px rgba(0,0,0,.1);
+  -webkit-box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.22);
+  -moz-box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.22);
+  box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.22);
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 220px;
+  width: 250px;
   transform: translate(0, 100%);
 }
-.profile-menu button {
+.user-menu .btn-menu-main {
   display: block;
   clear: right;
   float: right;
   margin: 2px 0;
 }
 
-.profile-menu .profile-image {
+.user-menu .menu-action-bottom {
+  display: block;
+  clear: both;
+  border-top: 1px solid rgba(0,0,0,.2);
+  padding: 5px;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.user-menu .user-image {
   position: relative;
   box-shadow: 0 0 5px 0 rgba(0,0,0,.2);
   clear: both;
@@ -62,9 +70,12 @@
   overflow: hidden;
   text-align: center;
   line-height: 100px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
 }
 
-.profile-menu .profile-image img {
+/*.user-menu .user-image img {
   display: block;
   position: absolute;
   left: -1000%;
@@ -74,7 +85,7 @@
   margin: auto;
   min-height: 100%;
   min-width: 100%;
-}
+}*/
 
 .image-responsive {
   width: 100%;
@@ -90,10 +101,18 @@
 }
 
 .profile-control-header {
+  margin: 0;
+  padding: 5px 0;
+  line-height: 20px;
+  position: relative;
   text-transform: uppercase;
   text-align: center;
   border-bottom: 1px solid rgb(200,200,200);
-  padding: 0 0 5px;
+}
+
+.announcement-message {
+  margin: 10px 0 0;
+  padding: 0 5px;
 }
 
 .profile-menu .profile-image-default {
@@ -149,10 +168,11 @@
 }
 
 .toggle-switch {
+  float: right;
   display: inline-block;
-  padding: 7px 5px;
+  padding: 5px 10px;
+  margin: 0 5px 0 0;
   background-color: rgb(240,240,240);
-  border-radius: 5px;
 }
 
 .sortorder:after {
@@ -188,6 +208,7 @@
   border-color: transparent;
   background-color: transparent;
   box-shadow: none;
+  cursor: default;
 }
 
 .active-switch {
@@ -222,6 +243,8 @@
   cursor: pointer;
   box-shadow: 0 0 5px 1px rgba(0,0,200,.5);
 }
+
+
 
 .volunteer-card {
   position: relative;
@@ -308,23 +331,34 @@
   padding: 0 0 10px;
 }
 
-.volunteer-photo {
+.volunteer-photo,
+.user-image {
   position: relative;
   height: 150px;
   overflow: hidden;
   text-align: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
 }
 
-.volunteer-photo img {
-  display: block;
-  position: absolute;
-  left: -1000%;
-  right: -1000%;
-  top: -1000%;
-  bottom: -1000%;
-  margin: auto;
-  height: 150px;
-  min-width: 100%;
+.volunteer-photo {
+  opacity: .75;
+  -webkit-filter: grayscale(80%);
+    filter: grayscale(80%);
+    transition: all 0.5s ease;
+}
+
+.volunteer-photo i {
+  opacity: .75;
+}
+
+.volunteer:hover .volunteer-photo,
+.volunteer:hover .volunteer-photo i  {
+  opacity: 1;
+  -webkit-filter: none;
+  filter: none;
+  transition: all 0.5s ease;
 }
 
 .icon-image {
@@ -534,4 +568,261 @@
 pre{
   background-color: #FFFFFF;
   text-overflow: clip;
+}
+
+.nav {
+  text-align: center;
+}
+.nav-pills>li {
+  float: none;
+  display: inline-block;
+}
+
+.user-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.user-list__user,
+.user-list__headers {
+  display: flex;
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  padding: 1px 5px;
+}
+
+
+
+.user-list__headers {
+  text-transform: uppercase;
+  font-size: .85em;
+  color: rgb(240,240,240);
+  background-color: rgb(120,120,120);
+  padding: 5px 5px;
+}
+
+.user-list__user:nth-of-type(2n+1) {
+  background-color: rgb(240,240,240);
+}
+
+.user-list__user:hover {
+  background-color: rgb(220,220,220);
+  cursor: pointer;
+}
+
+.user-list__user span, .user-list__headers span {
+  display: block;
+  /*border: 1px solid red;*/
+  flex: 1 0;
+}
+
+.user-list__user span:last-child, .user-list__headers span:last-child {
+  flex: 0 100px;
+  text-align: center;
+}
+
+.admin-add {
+  width: 50%;
+  margin: 10px auto;
+  padding: 15px;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 5px;
+
+}
+
+.page-actions {
+  text-align: center;
+}
+
+.font-hidden i {
+  position: relative;;
+  top: -9999px;
+  left: -9999px;
+}
+
+.btn.outline {
+    background: none;
+    /*padding: 12px 22px;*/
+}
+.btn-primary.outline {
+    border: 1px solid #0099cc;
+    color: #0099cc;
+}
+.btn-primary.outline:hover, .btn-primary.outline:focus, .btn-primary.outline:active, .btn-primary.outline.active, .open > .dropdown-toggle.btn-primary {
+    color: #33a6cc;
+    border-color: #33a6cc;
+}
+.btn-primary.outline:active, .btn-primary.outline.active {
+    border-color: #007299;
+    color: #007299;
+    box-shadow: none;
+}
+
+.toggle-switch.approve {
+  padding-top: 9px;
+  padding-bottom: 5px;
+}
+
+
+.legendBox{
+  width:10px;
+  height:10px;
+  border-radius: 10px;
+  display: inline-block;
+  background-color: black;
+}
+
+.legend-color {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.reports-list {
+  list-style-type: none;
+  margin: 5px 0;
+  padding: 0;
+}
+
+.appointment-info {
+  border: 1px solid rgba(0,0,0,.2);
+  margin: 5px 0;
+  box-shadow: 1px 1px 2px 0 rgba(0,0,0,.1);
+}
+
+.reports-list .appointment-headings {
+  text-transform: uppercase;
+  background-color: rgb(150,150,150);
+  color: rgb(240,240,240);
+  text-align: center;
+  padding: 5px 0;
+}
+
+
+.reports-list .appointment-meta {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.reports-list .appointment-meta > div {
+  flex: 1 0;
+  /*border: 1px solid red;*/
+  background-color: rgb(200,200,200);
+  /*border-bottom: 1px solid rgba(0,0,0,.1);*/
+  padding: 5px;
+}
+
+.reports-list .appointment-meta > div:last-child {
+  flex: 0 auto;
+  padding: 5px 10px;
+}
+
+.reports-list .appointment-meta > div:not(:last-child) {
+  border-right: 1px solid rgba(0,0,0,.1);
+}
+
+.reports-list .appointment-details {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.appointment-details-heading {
+  border-bottom: 1px solid rgba(0,0,0,.5);
+  padding-bottom: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgb(180,180,180);
+  font-size: .8em;
+}
+
+.reports-list .appointment-details > div {
+  flex: 1 0;
+
+}
+
+.reports-list .appointment-details > ul {
+  flex: 1 0;
+  padding: 0;
+  list-style-position: inside;
+  max-width: 50%;
+  padding: 0 15px;
+}
+
+.reports-list .appointment-details > ul:nth-child(2) {
+  border-left: 1px solid rgba(0,0,0,.1);
+}
+
+@media (max-width: 1100px) {
+  .reports-list .appointment-details > ul {
+    flex: 0 100%;
+    max-width: 100%;
+  }
+  .reports-list .appointment-details {
+    flex-wrap: wrap;
+  }
+  .reports-list .appointment-details > ul:nth-child(2) {
+    border: none;
+  }
+}
+
+
+
+
+.reports-list .appointment-details > ul > li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reports-list .appointment-details > ul > li > span:not(:last-child) {
+  flex: 1 0;
+}
+
+.header-clickable {
+  cursor: pointer;
+}
+
+.reports-list .appointment-meta > .header-clickable:hover {
+  background-color: rgb(180,180,180);
+}
+
+.appointment-user:not(:last-child) {
+  border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.toggle-report-users,
+.sort-volunteers {
+  display: inline-block;
+  border-bottom: 1px solid rgb(100,20,20);
+  padding: 5px 10px;
+  cursor: pointer;
+  color: rgb(150,150,150);
+}
+
+.toggle-report-users {
+  float: right;
+}
+
+.sort-volunteers {
+  float: left;
+}
+
+.toggle-report-users:hover,
+.sort-volunteers:hover {
+  background-color: rgb(250,250,250);
+}
+
+.toggle-selected {
+  color: black;
+}
+
+.nav.nav-pills {
+  margin: 10px 0 0;
+}
+.panel {
+  -webkit-box-shadow: 5px 5px 5px -2px rgba(133,16,25,0.22);
+  -moz-box-shadow: 5px 5px 5px -2px rgba(133,16,25,0.22);
+  box-shadow: 5px 5px 5px -2px rgba(133,16,25,0.22);
+}
+.menu-control{
+
 }

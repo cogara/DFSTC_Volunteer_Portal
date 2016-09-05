@@ -27,7 +27,8 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
         userCheck: function(UserService, $state) {
           UserService.checkLoggedIn().then(function(response) {
             if(response) {
-              $state.go('dashboard')
+              console.log('going dashboard');
+              $state.go('dashboard');
             }
           })
         }
@@ -45,8 +46,11 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       resolve: {
         userCheck: function(UserService, $state) {
           UserService.checkLoggedIn().then(function(response) {
+            console.log('dash checking user,', response);
             if(!response) {
+              console.log('going login');
               $state.go('/');
+              return;
             }
           });
         }
@@ -64,6 +68,8 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
             if(!response) {
               //user not logged in, send to login
               $state.go('/');
+            } else if(response.isCaseWorker){
+              $state.go('caseWorker')
             } else if(!response.isAdmin) {
               //user not admin, send to dashboard
               $state.go('dashboard');
@@ -72,6 +78,9 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
         },
         volunteerList: function(AdminService) {
           return AdminService.getVolunteers();
+        },
+        appointments: function(AdminService) {
+          return AdminService.getAppointments();
         }
       }
     })
@@ -83,9 +92,40 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       url:'/reports',
       templateUrl: '../views/adminReports.html'
     })
-    .state('admin.admins', {
-      url:'/admins',
-      templateUrl: '../views/adminAdmins.html'
+    .state('admin.users', {
+      url:'/users',
+      templateUrl: '../views/adminUsers.html',
+      controller: 'SuperAdminController',
+      controllerAs: 'sa',
+      resolve: {
+        users: function(AdminService) {
+          return AdminService.getAllUsers();
+        }
+      }
+    })
+    .state('caseWorker', {
+      url:'/caseWorker',
+      templateUrl: '../views/caseWorker.html',
+      controller: 'CaseWorkerController',
+      controllerAs: 'cw',
+      resolve: {
+        userCheck: function(UserService, $state) {
+          UserService.checkLoggedIn().then(function(response) {
+            if(response) {
+              if(!response.isCaseWorker){
+                console.log('going index');
+                $state.go('/');
+              }
+            }
+          })
+        },
+        clients: function(UserService, $state) {
+          return UserService.caseWorkerClients().then(function(response) {
+            console.log(response);
+            return response;
+          });
+        }
+      }
     });
 
     $locationProvider.html5Mode(true);
