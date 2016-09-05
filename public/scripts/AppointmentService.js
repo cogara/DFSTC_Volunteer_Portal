@@ -25,8 +25,10 @@ function AppointmentService($http, calendarConfig, moment){
       //set high priority appointments
       for (var g = 0; g < response.data.length; g++) {
         if (response.data[g].clients > response.data[g].volunteers.length) {
-          response.data[g].color = calendarConfig.colorTypes.important;
-          highPriority.push(response.data[g]);
+          if (!(_.findWhere(highPriority, {_id: response.data[g]._id}))){
+            response.data[g].color = calendarConfig.colorTypes.important;
+            highPriority.push(response.data[g]);
+          }
           //set full appointments
         } else if (response.data[g].volunteers.length == response.data[g].volunteerSlots &&
            response.data[g].clientSlots == response.data[g].clients) {

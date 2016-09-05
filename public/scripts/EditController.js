@@ -93,7 +93,7 @@ function EditController($http, $state, $uibModal, $scope, UserService, Appointme
     info.volunteers.push(vm.currentUser.user);
     AppointmentService.updateAppointment(info._id, info);
     AppointmentService.appointments.appointments.splice(findIndex(AppointmentService.appointments.appointments, '_id', info._id), 1);
-    // AppointmentService.highPriority.splice(findIndex(AppointmentService.highPriority, '_id', info._id), 1);
+    AppointmentService.highPriority.splice(findIndex(AppointmentService.highPriority, '_id', info._id), 1);
 
 
     info.color = calendarConfig.colorTypes.info;

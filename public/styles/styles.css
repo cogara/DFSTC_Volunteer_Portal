@@ -826,3 +826,7 @@ pre{
 .menu-control{
 
 }
+
+.addButton {
+  float: right;
+}

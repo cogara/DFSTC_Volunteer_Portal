@@ -565,8 +565,6 @@
       </mwl-calendar>
     </div>
     <div class="col-xs-12">
-      <button class="center-block btn btn-default" ng-if="main.currentUser.isAdmin" ng-click="dash.addAppointmentModal()" >Add Appointment</button>
-      <br>
       <div class="Legend">
         <div class="legend-color"  ng-if="main.currentUser.isAdmin">
           <div class="legendBox"style="background-color:{{dash.eventColors.special.primary}}"></div> New
@@ -584,6 +582,8 @@
           <div class="legendBox"style="background-color:{{dash.eventColors.info.primary}}"></div> My Appointment
         </div>
       </div>
+      <button class="btn btn-primary addButton" ng-if="main.currentUser.isAdmin" ng-click="dash.addAppointmentModal()" >Add Appointment</button>
+
     </div>
   </div>
   <div class="col-lg-4 sidebar">
