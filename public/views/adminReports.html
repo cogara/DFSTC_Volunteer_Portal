@@ -1,10 +1,11 @@
 <div class="col-sm-2">
-  <div style="background-color: red" class="col-sm-12 col-xs-6">
-    <h5>Sections</h5>
-    <ul>
-      <li>Appointments</li>
-      <li>Volunteers</li>
-    </ul>
+  <div class="panel panel-default" style="margin: 10px 0; padding: 5px;">
+    <h6 ng-click="reportToggle = 'appointments'" style="text-transform: uppercase" class="report-section">
+      Appointments
+      <span style="float: right;" ng-show="(reportToggle === 'appointments') || (reportToggle === undefined)"> > </span></h6>
+    <h6 ng-click="reportToggle = 'volunteers'" style="text-transform: uppercase;">
+      Volunteers
+      <span style="float: right;" ng-show="reportToggle === 'volunteers'"> > </span></h6>
   </div>
   <!-- <div style="background-color: red" class="col-sm-12 col-xs-6">
     <h5>Volunteers</h5>
