@@ -17,10 +17,10 @@ angular
     });
 
 function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
-  $urlRouterProvider.otherwise('index');
+  $urlRouterProvider.otherwise('/');
 
   $stateProvider
-    .state('index', {
+    .state('/', {
       url: '/',
       templateUrl: '../views/landingPage.html',
       resolve: {
@@ -47,14 +47,9 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
         userCheck: function(UserService, $state) {
           UserService.checkLoggedIn().then(function(response) {
             console.log('dash checking user,', response);
-            // if(response.isCaseWorker) {
-            //   console.log('going caseworker');
-            //   $state.go('caseWorker');
-            //   return;
-            // }
             if(!response) {
               console.log('going login');
-              $state.go('index');
+              $state.go('/');
               return;
             }
           });
@@ -70,10 +65,9 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       resolve: {
         userCheck: function(UserService, $state) {
           UserService.checkLoggedIn().then(function(response) {
-            console.log(response);
             if(!response) {
               //user not logged in, send to login
-              $state.go('index');
+              $state.go('/');
             } else if(response.isCaseWorker){
               $state.go('caseWorker')
             } else if(!response.isAdmin) {
@@ -84,6 +78,9 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
         },
         volunteerList: function(AdminService) {
           return AdminService.getVolunteers();
+        },
+        appointments: function(AdminService) {
+          return AdminService.getAppointments();
         }
       }
     })
@@ -117,7 +114,7 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
             if(response) {
               if(!response.isCaseWorker){
                 console.log('going index');
-                $state.go('index');
+                $state.go('/');
               }
             }
           })

@@ -35,6 +35,9 @@ var UserSchema = new Schema(
     pastCompanies: Object,
     isAvail: Object,
     volunteerOpportunities: Object,
+    lastAppointment: Date,
+    hoursVolunteered: Object,
+    totalHours: Number,
 //client info
     altContactName: String,
     altContactPh: Number,

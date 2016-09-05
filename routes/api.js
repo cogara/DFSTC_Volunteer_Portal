@@ -37,15 +37,12 @@ router.get('/users', function(request, response) {
     for (var i = 0; i < users.length; i++) {
       users[i].password = null;
     }
-    console.log(users);
     response.send(users);
   })
 })
 
 router.delete('/users/:id', function(request, response) {
-  console.log(request.params.id);
   User.findByIdAndRemove(request.params.id, function(err, result){
-    console.log(result);
     response.sendStatus(200);
   }, function() {
     response.sendStatus(500);
@@ -131,7 +128,6 @@ router.post('/appointment', function(request, response){
 });
 
 router.get('/appointment/:id', function(request, response){
-  console.log('one appointment get');
   Appointment.findById(request.params.id, function(err, appointment){
     if(err){
       response.sendStatus(500);
@@ -142,7 +138,6 @@ router.get('/appointment/:id', function(request, response){
 });
 
 router.get('/appointment', function(request, response){
-  console.log('appointment get');
   if(request.user.isAdmin){
     Appointment.find(function(err, appointments){
       if(err){
@@ -165,7 +160,6 @@ router.get('/appointment', function(request, response){
 });
 
 router.delete('/appointment/:id', function(request, response){
-  console.log('appointment delete');
   Appointment.findByIdAndRemove(request.params.id, function(err, appointment){
     if(err){
       response.sendStatus(500);
@@ -176,7 +170,6 @@ router.delete('/appointment/:id', function(request, response){
 });
 
 router.put('/appointment/:id', function(request, response){
-  console.log('appointment update');
   Appointment.findByIdAndUpdate({_id: request.params.id}, {$set: request.body}, function(err, appointment){
     if(err){
       response.sendStatus(500);
@@ -189,7 +182,6 @@ router.put('/appointment/:id', function(request, response){
 // announcements stuff
 //TODO:
 router.get('/announcement',function(req, res){
-  console.log(req.body);
   Announcement.find({}, function(err,announcement){
     if(err){
       console.log(err);
@@ -201,8 +193,7 @@ router.get('/announcement',function(req, res){
 });
 
 router.post('/announcement', function(req,res){
-  console.log(req.body);
-  Announcement.update(req.body, function(err){
+  Announcement.update(req.body._id, req.body.announcement, {upsert: true}, function(err){
     if(err){
       console.log(err);
       res.sendStatus(500);
@@ -213,7 +204,6 @@ router.post('/announcement', function(req,res){
 });
 
 router.get('/clients', function(request, response) {
-  console.log(request.user);
   var clientArray = [];
   var clients = [];
   if(!request.user.clients) {
@@ -230,7 +220,6 @@ router.get('/clients', function(request, response) {
         console.log(err);
         response.sendStatus(500);
       } else {
-        console.log(clientList);
         response.send(clientList);
       }
     })
@@ -241,11 +230,10 @@ router.get('/clients', function(request, response) {
 
 router.put('/caseWorkers/:id', function(request, response) {
   var clientId = request.query.client;
-  console.log(clientId);
   User.findByIdAndUpdate(request.params.id, {$push: {clients: clientId}}, function(err, caseWorker) {
     if(err) {
-      console.log(err);
-      console.log('error in updating caseworker');
+      console.log(err, 'caseworker');
+
       response.sendStatus(500);
     } else {
       response.sendStatus(200);

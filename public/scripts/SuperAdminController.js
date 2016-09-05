@@ -7,7 +7,6 @@ angular
 function SuperAdminController($http, $uibModal, AdminService, UserService, users) {
   var vm = this;
   vm.users = users;
-  console.log(vm.users);
 
   vm.addAdmin = addAdmin;
   // vm.deleteUser = deleteUser;
