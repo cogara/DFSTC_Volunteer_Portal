@@ -362,16 +362,16 @@
   <br>
     <div>
       <label>Occurs: </label>
-        <input name="status" type="radio" ng-model="admin.search.status" value="once" checked="checked" /> Once
-        <input name="status" type="radio" ng-model="admin.search.status" value="weekly"/> Weekly
+        <input name="status" type="radio" ng-model="dash.occurs.often" value="once" checked="checked" /> Once
+        <input name="status" type="radio" ng-model="dash.occurs.often" value="weekly"/> Weekly
     </div>
   <br>
-    <p class="input-group" style="max-width: 250px">
+    <p class="input-group" style="max-width: 250px" ng-if="dash.occurs.often=='weekly'">
       <input type="text"
         class="form-control"
         uib-datepicker-popup="{{dash.format}}"
-        ng-model="dash.appointment.endsAt"
-        is-open="dash.popup2.opened"
+        ng-model="dash.occurs.until"
+        is-open="dash.popup3.opened"
         datepicker-options="dash.dateOptions"
         ng-required="true"
         close-text="Close"
@@ -380,7 +380,7 @@
       <span class="input-group-btn">
         <button type="button"
           class="btn btn-default"
-          ng-click="dash.open2()">
+          ng-click="dash.open3()">
           <i class="glyphicon glyphicon-calendar"></i>
         </button>
       </span>
@@ -507,10 +507,11 @@
       <label>Training Appointment?</label>
       <input type="checkbox" ng-model="edit.editAppointment.event.trainingAppointment" />
 
-    <button class="center-block btn btn-default" ng-click="$close(edit.deleteAppointment(edit.editAppointment.event))" >Delete Appointment</button>
-    <button class="center-block btn btn-default" ng-click="$close(edit.updateAppointment(edit.editAppointment.event))" >Save Changes</button>
-    <button class="center-block btn btn-default" ng-click="$close()" >Cancel</button>
-
+      <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="$close(edit.updateAppointment(edit.editAppointment.event))" >Save Changes</button>
+        <button class="btn btn-danger" ng-click="$close(edit.deleteAppointment(edit.editAppointment.event))" >Delete Appointment</button>
+        <button class="btn btn-warning"  ng-click="$close()" >Cancel</button>
+      </div>
     </div>
   </div>
 
@@ -523,11 +524,11 @@
       <br>
       Ends At: <h4>{{edit.editAppointment.event.endsAt | date: "shortTime"}}</h4>
 
-    <button class="center-block btn btn-default" ng-if="edit.editAppointment.event.color.primary!='#1e90ff'" ng-click="$close(edit.claimAppointment(edit.editAppointment.event))" >Claim Appointment</button>
-    <button class="center-block btn btn-default" ng-if="edit.editAppointment.event.color.primary=='#1e90ff'" ng-click="$close(edit.removeMe(edit.editAppointment.event))" >Delete Appointment</button>
-
-    <button class="center-block btn btn-default" ng-click="$close()" >Cancel</button>
-
+      <div class="modal-footer">
+        <button class="btn btn-primary" ng-if="edit.editAppointment.event.color.primary!='#1e90ff'" ng-click="$close(edit.claimAppointment(edit.editAppointment.event))" >Claim Appointment</button>
+        <button class="btn btn-danger" ng-if="edit.editAppointment.event.color.primary=='#1e90ff'" ng-click="$close(edit.removeMe(edit.editAppointment.event))" >Delete Appointment</button>
+        <button class="btn btn-warning" ng-click="$close()" >Cancel</button>
+      </div>
     </div>
   </div>
 
