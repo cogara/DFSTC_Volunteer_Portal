@@ -364,26 +364,6 @@
  </script>
 <!-- end add appt modal -->
 
-<!-- Add Announcement Modal -->
-<script type="text/ng-template" id="addAnnouncementModal.html">
-  <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
-    <h3 class="center-block">Add New Announcements</h3>
-    <label>Title:</label>
-    <input type="text" class="form-control" ng-model="dash.announcement.title" />
-
-
-    <label>Message:</label>
-    <textarea msd-elastic="<br>"  class="form-control" ng-model="dash.announcement.message"  />
-
-    </textarea>
-
-    <div class="modal-footer">
-      <button class="btn btn-primary" type="button" ng-click="$close(dash.addAnnouncement())" >Save Announcement</button>
-      <button class="btn btn-warning" type="button" ng-click="$close()">Cancel</button>
-    </div>
-  </div>
- </script>
-<!-- end Add Announcement Motal -->
 
 <!-- edit/delete and claim/leave appointment modal form -->
 
@@ -486,7 +466,7 @@
     </div>
   </div>
 
-<!-- volunteer claim/remove form -->
+  <!-- volunteer claim/remove form -->
   <div ng-if="!edit.currentUser.user.isAdmin">
     <div class="panel panel-default col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-3 p-a-3">
       <h3 class="center-block">{{edit.editAppointment.event.title}} - {{edit.editAppointment.event.startsAt | date: "shortDate"}}</h3>
@@ -596,15 +576,19 @@
         <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
       </ul>
     </div>
-    <div class="panel panel-default" style="padding: 0 0 10px">
+    <div ng-if="main.currentUser.isAdmin || (!main.currentUser.isAdmin && dash.announcement.announcement)" class="panel panel-default" style="padding: 0 0 10px">
       <h5 class="text-muted text-uppercase profile-control-header">
         Announcements
-        <button  style="position: absolute; right: 5px;" class="btn btn-primary btn-xs" ng-click="dash.saveAnnouncement() && (dash.editAnnouncementToggle = !dash.editAnnouncementToggle)">
+        <button ng-if="main.currentUser.isAdmin" style="position: absolute; right: 5px;" class="btn btn-primary btn-xs" ng-click="dash.saveAnnouncement() && (dash.editAnnouncementToggle = !dash.editAnnouncementToggle)">
           <i class="fa fa-pencil"></i>
         </button>
       </h5>
       <div class="announcement-message">
-        <textarea msd-elastic class="form-control" ng-model="dash.announcement" style="resize: none" ng-disabled="!dash.editAnnouncementToggle">
+        <textarea msd-elastic class="form-control"
+        ng-model="dash.announcement.announcement"
+        style="resize: none"
+        ng-disabled="!dash.editAnnouncementToggle"
+        placeholder="No Recent Announcements">
         </textarea>
       </div>
       <div class="clear"></div>

@@ -26,7 +26,7 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
     AnnouncementService.getAnnouncement().then(successHandle)
 
     function successHandle(res){
-      vm.announcement = res[0].announcement;
+      vm.announcement = res[0];
       console.log(res[0]);
     };
   }

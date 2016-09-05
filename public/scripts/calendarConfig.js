@@ -1,5 +1,4 @@
 angular.module('DfstcSchedulingApp').config(function(calendarConfig) {
-    console.log(calendarConfig);
     calendarConfig.dateFormatter = 'moment';
     moment.locale('en_US')
     calendarConfig.displayAllMonthEvents = true;
@@ -10,11 +9,11 @@ angular.module('DfstcSchedulingApp').config(function(calendarConfig) {
         secondary: '#d1e8ff'
       },
       important: {
-        primary: '#ad2121',
+        primary: '#FF2D85',
         secondary: '#fae3e3'
       },
       warning: {
-        primary: '#e3bc08',
+        primary: '#FFCF2D',
         secondary: '#fdf1ba'
       },
       inverse: {
@@ -26,7 +25,7 @@ angular.module('DfstcSchedulingApp').config(function(calendarConfig) {
         secondary: '#ffe6ff'
       },
       success: {
-        primary: '#006400',
+        primary: '#42DC00',
         secondary: '#caffca'
       }
     };

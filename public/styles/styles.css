@@ -1,3 +1,6 @@
+.font{
+font-family: 'Oxygen', sans-serif;
+}
 .content {
   position: relative;
   width: 80%;
@@ -31,7 +34,9 @@
   padding: 5px 10px 10px;
   background-color: rgb(245,245,245);
   border: 1px solid rgba(100,100,100,.1);
-  box-shadow: 0 0 5px 0px rgba(0,0,0,.1);
+  -webkit-box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.22);
+  -moz-box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.22);
+  box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.22);
   position: absolute;
   bottom: 0;
   right: 0;
@@ -812,4 +817,12 @@ pre{
 
 .nav.nav-pills {
   margin: 10px 0 0;
+}
+.panel {
+  -webkit-box-shadow: 5px 5px 5px -2px rgba(133,16,25,0.22);
+  -moz-box-shadow: 5px 5px 5px -2px rgba(133,16,25,0.22);
+  box-shadow: 5px 5px 5px -2px rgba(133,16,25,0.22);
+}
+.menu-control{
+
 }

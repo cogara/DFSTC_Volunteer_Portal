@@ -20,6 +20,7 @@ const register = require('./routes/register.js');
 const login = require('./routes/login.js');
 const api = require('./routes/api.js');
 const mailerR = require('./modules/mailerReminder');
+const LastAppointment = require('./modules/LastAppointmentScheduler');
 
 
 //DECLARE SERVER APP
@@ -94,10 +95,15 @@ var dateF = new schedule.RecurrenceRule();
 dateF.second = 40;
 dateF.minute = 00;
 dateF.hour =00;
-console.log(dateF);
 
+// var dateTest = new schedule.RecurrenceRule();
+// dateTest.second = [0, new schedule.Range(1,59)];
+// console.log(dateTest);
+
+//Scheduler Tasks
 //TODO: add back in to send emails
-schedule.scheduleJob(dateF,mailerR);
+schedule.scheduleJob(dateF, mailerR);
+schedule.scheduleJob(dateF, LastAppointment);
 
 app.use(passport.initialize());
 app.use(passport.session());
