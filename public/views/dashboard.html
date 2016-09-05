@@ -576,10 +576,10 @@
         <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
       </ul>
     </div>
-    <div class="panel panel-default" style="padding: 0 0 10px">
+    <div ng-if="main.currentUser.isAdmin || (!main.currentUser.isAdmin && dash.announcement.announcement)" class="panel panel-default" style="padding: 0 0 10px">
       <h5 class="text-muted text-uppercase profile-control-header">
         Announcements
-        <button  style="position: absolute; right: 5px;" class="btn btn-primary btn-xs" ng-click="dash.saveAnnouncement() && (dash.editAnnouncementToggle = !dash.editAnnouncementToggle)">
+        <button ng-if="main.currentUser.isAdmin" style="position: absolute; right: 5px;" class="btn btn-primary btn-xs" ng-click="dash.saveAnnouncement() && (dash.editAnnouncementToggle = !dash.editAnnouncementToggle)">
           <i class="fa fa-pencil"></i>
         </button>
       </h5>
