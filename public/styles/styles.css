@@ -34,9 +34,9 @@ font-family: 'Oxygen', sans-serif;
   padding: 5px 10px 10px;
   background-color: rgb(245,245,245);
   border: 1px solid rgba(100,100,100,.1);
-  -webkit-box-shadow: 8px 8px 5px -2px rgba(0,0,0,0.22);
-  -moz-box-shadow: 8px 8px 5px -2px rgba(0,0,0,0.22);
-  box-shadow: 8px 8px 5px -2px rgba(0,0,0,0.22);
+  -webkit-box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.22);
+  -moz-box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.22);
+  box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.22);
   position: absolute;
   bottom: 0;
   right: 0;
@@ -819,9 +819,9 @@ pre{
   margin: 10px 0 0;
 }
 .panel {
-  -webkit-box-shadow: 8px 8px 5px -2px rgba(133,16,25,0.22);
-  -moz-box-shadow: 8px 8px 5px -2px rgba(133,16,25,0.22);
-  box-shadow: 8px 8px 5px -2px rgba(133,16,25,0.22);
+  -webkit-box-shadow: 5px 5px 5px -2px rgba(133,16,25,0.22);
+  -moz-box-shadow: 5px 5px 5px -2px rgba(133,16,25,0.22);
+  box-shadow: 5px 5px 5px -2px rgba(133,16,25,0.22);
 }
 .menu-control{
 

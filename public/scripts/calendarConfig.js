@@ -6,11 +6,11 @@ angular.module('DfstcSchedulingApp').config(function(calendarConfig) {
     calendarConfig.allDateFormats.moment.date.time = 'hh:mm a';
     calendarConfig.colorTypes = {
       info: {
-        primary: '#FF2D85',
+        primary: '#1e90ff',
         secondary: '#d1e8ff'
       },
       important: {
-        primary: '#BE0022',
+        primary: '#FF2D85',
         secondary: '#fae3e3'
       },
       warning: {
