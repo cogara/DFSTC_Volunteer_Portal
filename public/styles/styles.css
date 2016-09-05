@@ -826,3 +826,33 @@ pre{
 .menu-control{
 
 }
+
+.report-section {
+  color: rgb(150,150,150);
+  text-transform: uppercase;
+  padding: 5px;
+  margin: 0;
+}
+
+.report-section:hover {
+
+}
+
+.report-option {
+  padding: 0;
+  margin: 0;
+  text-indent: 10px;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+.report-option span {
+  float: right;
+}
+.report-option:hover {
+  background-color: rgb(220,220,220);
+}
+
+.report-active {
+  color: rgb(51,122,183);
+}
