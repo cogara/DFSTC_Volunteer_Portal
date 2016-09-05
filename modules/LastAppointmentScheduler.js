@@ -42,6 +42,7 @@ function lastAppointment() {
                 hoursVolunteered: {
                   date: yesterday,
                   appointment: appointments[i]._id,
+                  company: appointments[i].volunteers[j].company,
                   hours: hours
                 }
               },
