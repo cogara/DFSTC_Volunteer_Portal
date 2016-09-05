@@ -83,16 +83,34 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
   }];
 
   vm.addAppointment = function(){
-    console.log(vm.appointment);
-    AppointmentService.addAppointment(vm.appointment).then(function(response){
-      vm.showAppointments.appointments.push(vm.appointment);
-      console.log('add appointment success', response.data);
-    }, function(response){
-      console.log('add appointment fail', response.data);
-    })
+    console.log(vm.occurs.until);
+    if (vm.occurs.often == 'once'){
+      AppointmentService.addAppointment(vm.appointment).then(function(response){
+        vm.showAppointments.appointments.push(vm.appointment);
+        console.log('add appointment success', response.data);
+      }, function(response){
+        console.log('add appointment fail', response.data);
+      })
+    } else {
+      var weeks = Math.ceil(((moment(vm.occurs.until).diff(vm.appointment.startsAt, 'days'))/7)+1);
+      console.log('weeks', weeks);
+      for (var i = 0; i <= weeks; i ++){
+        var sendAppointment = angular.copy(vm.appointment);
+        sendAppointment.startsAt = moment(vm.appointment.startsAt).add(i, 'week');
+        sendAppointment.endsAt = moment(vm.appointment.endsAt).add(i, 'week');
+        if (moment(sendAppointment.startsAt) <= moment(vm.occurs.until).add(1, 'days')){
+          vm.showAppointments.appointments.push(sendAppointment);
+          AppointmentService.addAppointment(sendAppointment).then(function(response){
+            console.log('add appointment success', i);
+          }, function(response){
+            console.log('add appointment fail', response.data);
+          })
+        }
+      }
+    }
   }
 
-  vm.appointment={
+  vm.appointment = {
     title: "Image Coach Appointment",
     color: calendarConfig.colorTypes.special,
     startsAt: '',
@@ -144,6 +162,11 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
     vm.popup2.opened = true;
   };
 
+  vm.open3 = function() {
+    console.log('Clicked open3');
+    vm.popup3.opened = true;
+  };
+
   vm.setDate = function(year, month, day) {
     vm.dt = new Date(year, month, day);
   };
@@ -158,6 +181,10 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
 
   vm.popup2 = {
     opened: false
+  }
+
+  vm.popup3 = {
+    opened: false
   }//end calendar and form settings
 
   vm.addAppointmentModal = function(){
@@ -169,6 +196,11 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
       size: 'lg'
     })
   }
+
+  vm.occurs = {
+    often: 'once',
+    until: ''
+  };
 
   vm.eventClicked = function(calendarEvent){
     console.log(calendarEvent);
@@ -188,6 +220,7 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
     });
   }
 
+  // Announcements functions
 
   // vm.addAnnouncementModal = function(){
   //   var modalInstance = $uibModal.open({

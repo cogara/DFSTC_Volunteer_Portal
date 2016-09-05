@@ -826,7 +826,6 @@ pre{
 .menu-control{
 
 }
-
 .report-section {
   color: rgb(150,150,150);
   text-transform: uppercase;
@@ -855,4 +854,8 @@ pre{
 
 .report-active {
   color: rgb(51,122,183);
+}
+
+.addButton {
+  float: right;
 }
