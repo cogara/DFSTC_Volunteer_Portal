@@ -51,18 +51,18 @@ router.post('/', upload, function(request, response) {
         if(err) {
           console.log(err);
         }
-        if(request.user.isCaseWorker) {
-          User.findOne({email: info.email}, function(err, client){
-            console.log('user id', request.user._id, client._id);
-            User.findByIdAndUpdate(request.user._id, {$push: {clients: client._id}}, function(err, caseWorker){
-              if(err) {
-                console.log(err);
-              } else {
-                console.log(caseWorker);
-              }
-            })
-          })
-        }
+        // if(request.user.isCaseWorker) {
+        //   User.findOne({email: info.email}, function(err, client){
+        //     console.log('user id', request.user._id, client._id);
+        //     User.findByIdAndUpdate(request.user._id, {$push: {clients: client._id}}, function(err, caseWorker){
+        //       if(err) {
+        //         console.log(err);
+        //       } else {
+        //         console.log(caseWorker);
+        //       }
+        //     })
+        //   })
+        // }
         response.send({message: 'User Created'});
       })
     }

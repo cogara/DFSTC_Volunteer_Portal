@@ -22,7 +22,7 @@ var mailReminder = function(){
       if(err){
         console.log(err);
       }
-      console.log(theAppointment);
+      //console.log(theAppointment);
       theAppointment.forEach(function(element){
         //console.log(element.startTime +" Awesome!" );
         //TODO: fix up mail sender
@@ -35,7 +35,7 @@ var mailReminder = function(){
 function mailToUser (apmt){
 
     var volunteer = "default";
-    console.log(apmt);
+    console.log(apmt.volunteers);
     user.find( function(err, theVolenteer){
        volunteer = theVolenteer[0]
 
