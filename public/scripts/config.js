@@ -65,7 +65,6 @@ function uiRouter($stateProvider, $urlRouterProvider, $locationProvider) {
       resolve: {
         userCheck: function(UserService, $state) {
           UserService.checkLoggedIn().then(function(response) {
-            console.log(response);
             if(!response) {
               //user not logged in, send to login
               $state.go('/');

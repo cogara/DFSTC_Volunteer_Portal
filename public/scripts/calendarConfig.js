@@ -1,5 +1,4 @@
 angular.module('DfstcSchedulingApp').config(function(calendarConfig) {
-    console.log(calendarConfig);
     calendarConfig.dateFormatter = 'moment';
     moment.locale('en_US')
     calendarConfig.displayAllMonthEvents = true;

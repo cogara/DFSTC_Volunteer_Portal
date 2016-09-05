@@ -63,7 +63,6 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
 
   function closeToggleVolunteers(boolean) {
     for (var i = 0; i < vm.appointments.length; i++) {
-      console.log(boolean);
       vm.appointments[i].toggleVolunteers = boolean;
     }
   }
@@ -261,7 +260,6 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
       vm.search.avail[day].morning = false;
       vm.search.avail[day].evening = false;
     }
-    console.log(vm.search.avail);
     vm.searchAvailActive = false;
     vm.availDropdownOpen = false;
   }
