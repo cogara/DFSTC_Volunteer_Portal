@@ -321,6 +321,7 @@
     </div>
     <input type="text" class="col-md-6" ng-model="admin.filterCompanyInput" />
     <div class="clear"></div>
+    <!-- <div ng-bind="admin.volunteers | sum"></div> -->
     <ul class="reports-list">
       <li ng-repeat="volunteer in admin.volunteers | filter: admin.filterCompany | filter: admin.filterCompanyInput | filter: admin.reportFilterDate"
         ng-if="volunteer.displayHours > 0"
@@ -329,10 +330,17 @@
         <div style="display: inline-block">{{volunteer.email}}</div>
         <div style="display: inline-block">{{volunteer.phoneNumber | PhoneFormat}}</div>
         <div style="display: inline-block; float: right">
-          <span ng-if="admin.filterCompanyInput.length > 0">Matched "{{volunteer.matchedCompany}}": </span>{{volunteer.displayHours}} hours
+          <span ng-if="admin.filterCompanyInput.length > 0" ng-init="admin.totalCompanyHours = admin.totalCompanyHours + volunteer.displayHours;">Matched "{{volunteer.matchedCompany}}": </span>{{volunteer.displayHours}} hours
         </div>
       </li>
     </ul>
+    <div style="float: right; font-weight: bold;">
+      Company Total (<span ng-show="admin.filterCompanyInput.length < 1 || admin.filterCompanyInput === undefined">All</span><span ng-show="admin.filterCompanyInput.length > 0">{{admin.filterCompanyInput}}</span>):
+      <span ng-bind="admin.volunteers | filter: admin.filterCompany | filter: admin.filterCompanyInput | filter: admin.reportFilterDate | sum "></span>
+    </div>
+    <!-- <span ng-repeat="volunteer in admin.volunteers" ng-bind="admin.volunteers | sum">
+      {{volunteer.displayHours}}
+    </span> -->
   </span>
   <!-- <uib-tabset type="pills">
       <uib-tab heading="All Appointments">

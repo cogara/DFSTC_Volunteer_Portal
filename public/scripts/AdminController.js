@@ -3,7 +3,10 @@ angular
   .controller('AdminController', AdminController)
   .controller('ModalController', ModalController)
   // .controller('RegisterClientController', RegisterClientController)
-  .filter('PhoneFormat', phoneFormat);
+  .filter('PhoneFormat', phoneFormat)
+  .filter('sum', sum);
+
+
 
 function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList, appointments, Excel, $timeout) {
   var vm = this;
@@ -368,8 +371,10 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
   //end search filters
 
   //report filters
+
   vm.filterCompany = filterCompany;
   function filterCompany(volunteer) {
+
     if(volunteer.hoursVolunteered && vm.filterCompanyInput) {
       volunteer.displayHours = 0;
       for (var i = 0; i < volunteer.hoursVolunteered.length; i++) {
@@ -494,4 +499,16 @@ function phoneFormat() {
   };
 
 
+}
+
+function sum() {
+  return function(volunteers) {
+    var sum = 0;
+    console.log(volunteers);
+    for (var i = 0; i < volunteers.length; i++) {
+      sum += volunteers[i].displayHours;
+    }
+    console.log(sum);
+    return sum;
+  }
 }
