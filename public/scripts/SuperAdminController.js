@@ -16,6 +16,8 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
   vm.openRegisterCaseWorker = openRegisterCaseWorker;
   vm.openDeleteUser = openDeleteUser;
 
+  
+
   function addAdminToggle() {
     vm.adminToggle = (vm.adminToggle) ? false : true;
     vm.toggleButtonText = (vm.adminToggle) ? 'Cancel' : 'Add Admin';
@@ -143,6 +145,10 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
     }
     console.log(id);
   }
+
+
+
+
 }
 
 function RegisterUserController($uibModalInstance, caseWorkers) {

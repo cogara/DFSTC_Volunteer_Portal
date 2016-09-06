@@ -1,25 +1,348 @@
 <div class="col-sm-2">
   <div class="panel panel-default" style="margin: 10px 0; padding: 5px;">
-    <h6 ng-click="reportToggle = 'appointments'" style="text-transform: uppercase" class="report-section">
+    <h6 class="report-section">
       Appointments
-      <span style="float: right;" ng-show="(reportToggle === 'appointments') || (reportToggle === undefined)"> > </span></h6>
-    <h6 ng-click="reportToggle = 'volunteers'" style="text-transform: uppercase;">
-      Volunteers
-      <span style="float: right;" ng-show="reportToggle === 'volunteers'"> > </span></h6>
-  </div>
-  <!-- <div style="background-color: red" class="col-sm-12 col-xs-6">
-    <h5>Volunteers</h5>
-    <ul class="report-menu-volunteers">
-      <li>All</li>
-      <li>Some</li>
-      <li>Most</li>
-      <li>None</li>
+    </h6>
+    <ul style="padding: 0" ng-click="reportType = 'appointments'">
+      <li class="report-option"
+         ng-click="reportToggle = 'allAppointments'"
+         ng-class="{'report-active': (reportToggle === 'allAppointments') || (reportToggle === undefined)}">
+        All
+        <span ng-show="(reportToggle === 'allAppointments') || (reportToggle === undefined)"> > </span>
+      </li>
+      <li class="report-option"
+         ng-click="reportToggle = 'fullAppointments'"
+         ng-class="{'report-active': (reportToggle === 'fullAppointments')}">
+        Full
+        <span ng-show="(reportToggle === 'fullAppointments')"> > </span>
+      </li>
+      <li class="report-option"
+         ng-click="reportToggle = 'balancedAppointments'"
+         ng-class="{'report-active': (reportToggle === 'balancedAppointments')}">
+        Balanced
+        <span ng-show="(reportToggle === 'balancedAppointments')"> > </span>
+      </li>
+      <li class="report-option"
+         ng-click="reportToggle = 'volunteerNeeded'"
+         ng-class="{'report-active': (reportToggle === 'volunteerNeeded')}">
+        Volunteer Needed
+        <span ng-show="(reportToggle === 'volunteerNeeded')"> > </span>
+      </li>
+      <li class="report-option"
+         ng-click="reportToggle = 'extraVolunteer'"
+         ng-class="{'report-active': (reportToggle === 'extraVolunteer')}">
+        Extra Volunteer
+        <span ng-show="(reportToggle === 'extraVolunteer')"> > </span>
+      </li>
     </ul>
-  </div> -->
+    <h6 class="report-section">
+      Volunteers
+    </h6>
+    <ul style="padding: 0" ng-click="reportType = 'volunteers'">
+      <li class="report-option"
+         ng-click="reportToggle = 'recentHoursVolunteer'"
+         ng-class="{'report-active': (reportToggle === 'recentHoursVolunteer')}">
+        Recent Hours
+        <span ng-show="(reportToggle === 'recentHoursVolunteer')"> > </span>
+      </li>
+      <!-- <li class="report-option"
+         ng-click="reportToggle = 'hoursCompany'"
+         ng-class="{'report-active': (reportToggle === 'hoursCompany')}">
+        Hours by Company
+        <span ng-show="(reportToggle === 'hoursCompany')"> > </span>
+      </li> -->
+    </ul>
+  </div>
 </div>
-<div class="col-sm-10">
 
-  <uib-tabset type="pills">
+<div class="col-sm-10">
+  <span ng-if="(reportType === 'appointments') || (reportType === undefined)">
+    <div
+      class="toggle-report-users"
+      ng-class="{'toggle-selected': admin.reportExpandAll}"
+      ng-click="admin.toggleReportExpandAll()">
+      <i class="fa fa-plus-square"
+      ng-if="!admin.reportExpandAll"></i>
+      <i class="fa fa-minus-square"
+      ng-if="admin.reportExpandAll"></i>
+      All</div>
+    <div
+      class="toggle-report-users"
+      ng-class="{'toggle-selected': (admin.reportExpandClients || admin.reportExpandAll)}"
+      ng-click="admin.toggleReportExpandClients()">
+      <i class="fa fa-plus-square"
+      ng-if="!admin.reportExpandClients"></i>
+      <i class="fa fa-minus-square"
+      ng-if="admin.reportExpandClients"></i>
+      All Clients
+    </div>
+    <div
+      class="toggle-report-users"
+      ng-class="{'toggle-selected': (admin.reportExpandVolunteers || admin.reportExpandAll)}"
+      ng-click="admin.toggleReportExpandVolunteers()">
+      <i class="fa fa-plus-square"
+      ng-if="!admin.reportExpandVolunteers"></i>
+      <i class="fa fa-minus-square"
+      ng-if="admin.reportExpandVolunteers"></i>
+      All Volunteers
+    </div>
+    <div class="clear"></div>
+    <ul ng-show="(reportToggle === 'allAppointments') || (reportToggle === undefined)" class="reports-list">
+      <li class="appointment-info" ng-repeat="appointment in admin.appointments | orderBy: 'startsAt'"
+      ng-if="(admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd')">
+        <div class="appointment-meta">
+          <div><i class="fa fa-tag"></i> {{appointment.title}}</div>
+          <div><i class="fa fa-calendar"></i> {{appointment.startsAt | date:'EEEE, MMM dd'}}</div>
+          <div class="header-clickable" ng-click="appointment.toggleVolunteers = !appointment.toggleVolunteers">
+            <i class="fa fa-plus-square"
+            ng-if="!appointment.toggleVolunteers"></i>
+            <i class="fa fa-minus-square"
+            ng-if="appointment.toggleVolunteers"></i>
+            <h5 style="display: inline">Volunteers ( {{appointment.volunteers.length}} / {{appointment.volunteerSlots}} )</h5>
+          </div>
+          <div class="header-clickable" ng-click="appointment.toggleClients = !appointment.toggleClients">
+            <i class="fa fa-plus-square"
+            ng-if="!appointment.toggleClients"></i>
+            <i class="fa fa-minus-square"
+            ng-if="appointment.toggleClients"></i>
+            <h5 style="display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+          </div>
+          <div><i class="fa fa-clock-o"></i> {{appointment.startsAt | date:'hh:mm a'}}</div>
+        </div>
+        <div class="appointment-details">
+          <ul ng-if="appointment.toggleVolunteers">
+            <h5 class="appointment-details-heading">Volunteers</h5>
+            <li class="appointment-user" ng-repeat="volunteer in appointment.volunteers">
+              <span>{{volunteer.fullName}}</span>
+              <span><i class="fa fa-envelope"></i> {{volunteer.email}}</span>
+              <span><i class="fa fa-phone"></i> {{volunteer.phoneNumber | PhoneFormat}}</span>
+            </li>
+          </ul>
+          <ul ng-if="appointment.toggleClients">
+            <h5 class="appointment-details-heading">Clients</h5>
+            <li class="appointment-user" ng-repeat="volunteer in appointment.volunteers">
+              <span>Client One</span>
+              <span><i class="fa fa-envelope"></i> asdf@gmail.com</span>
+              <span><i class="fa fa-phone"></i> {{2341235234 | PhoneFormat}}</span>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+    <ul ng-show="reportToggle === 'fullAppointments' "class="reports-list">
+      <li class="appointment-info" ng-repeat="appointment in admin.appointments"
+      ng-if="(appointment.clients === appointment.clientSlots) && (appointment.volunteers.length === appointment.volunteerSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
+        <div class="appointment-meta">
+          <div><i class="fa fa-tag"></i> {{appointment.title}}</div>
+          <div><i class="fa fa-calendar"></i> {{appointment.startsAt | date:'EEEE, MMM dd'}}</div>
+          <div><i class="fa fa-clock-o"></i> {{appointment.startsAt | date:'hh:mm a'}}</div>
+        </div>
+        <div class="appointment-details">
+          <div class="appointment-volunteers">
+            <i class="fa fa-plus-square"
+            ng-if="!appointment.toggleVolunteers"
+            ng-click="appointment.toggleVolunteers = !appointment.toggleVolunteers"
+            style="cursor: pointer"></i>
+            <i class="fa fa-minus-square"
+            ng-if="appointment.toggleVolunteers"
+            ng-click="appointment.toggleVolunteers = !appointment.toggleVolunteers"
+            style="cursor: pointer"></i>
+            <h5 style="text-decoration: underline; display: inline">Volunteers ( {{appointment.volunteers.length}} / {{appointment.volunteerSlots}} )</h5>
+            <ul ng-if="appointment.toggleVolunteers">
+              <li ng-repeat="volunteer in appointment.volunteers">{{volunteer.fullName}}</li>
+            </ul>
+          </div>
+          <div class="appointment-clients">
+            <i class="fa fa-plus-square"
+            ng-if="!appointment.toggleClients"
+            ng-click="appointment.toggleClients = !appointment.toggleClients"
+            style="cursor: pointer"></i>
+            <i class="fa fa-minus-square"
+            ng-if="appointment.toggleClients"
+            ng-click="appointment.toggleClients = !appointment.toggleClients"
+            style="cursor: pointer"></i>
+            <h5 style="text-decoration: underline; display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <ul ng-show="reportToggle === 'balancedAppointments'" class="reports-list">
+      <li class="appointment-info" ng-repeat="appointment in admin.appointments"
+      ng-if="(appointment.clients === appointment.volunteers.length) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
+        <div class="appointment-meta">
+          <div><i class="fa fa-tag"></i> {{appointment.title}}</div>
+          <div><i class="fa fa-calendar"></i> {{appointment.startsAt | date:'EEEE, MMM dd'}}</div>
+          <div class="header-clickable" ng-click="appointment.toggleVolunteers = !appointment.toggleVolunteers">
+            <i class="fa fa-plus-square"
+            ng-if="!appointment.toggleVolunteers"></i>
+            <i class="fa fa-minus-square"
+            ng-if="appointment.toggleVolunteers"></i>
+            <h5 style="display: inline">Volunteers ( {{appointment.volunteers.length}} / {{appointment.volunteerSlots}} )</h5>
+          </div>
+          <div class="header-clickable" ng-click="appointment.toggleClients = !appointment.toggleClients">
+            <i class="fa fa-plus-square"
+            ng-if="!appointment.toggleClients"></i>
+            <i class="fa fa-minus-square"
+            ng-if="appointment.toggleClients"></i>
+            <h5 style="display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+          </div>
+          <div><i class="fa fa-clock-o"></i> {{appointment.startsAt | date:'hh:mm a'}}</div>
+        </div>
+        <div class="appointment-details">
+          <ul ng-if="appointment.toggleVolunteers">
+            <h5 class="appointment-details-heading">Volunteers</h5>
+            <li class="appointment-user" ng-repeat="volunteer in appointment.volunteers">
+              <span>{{volunteer.fullName}}</span>
+              <span>{{volunteer.email}}</span>
+              <span>{{volunteer.phoneNumber | PhoneFormat}}</span>
+            </li>
+          </ul>
+          <ul ng-if="appointment.toggleClients">
+            <h5 class="appointment-details-heading">Clients</h5>
+            <li class="appointment-user" ng-repeat="volunteer in appointment.volunteers">
+              <span>{{volunteer.fullName}}</span>
+              <span>{{volunteer.email}}</span>
+              <span>{{volunteer.phoneNumber | PhoneFormat}}</span>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+    <ul ng-show="reportToggle === 'volunteerNeeded'" class="reports-list">
+      <li class="appointment-info" ng-repeat="appointment in admin.appointments"
+      ng-if="(appointment.clients > appointment.volunteers.length) && !(appointment.volunteers.length === appointment.volunteerSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
+        <div class="appointment-meta">
+          <div><i class="fa fa-tag"></i> {{appointment.title}}</div>
+          <div><i class="fa fa-calendar"></i> {{appointment.startsAt | date:'EEEE, MMM dd'}}</div>
+          <div class="header-clickable" ng-click="appointment.toggleVolunteers = !appointment.toggleVolunteers">
+            <i class="fa fa-plus-square"
+            ng-if="!appointment.toggleVolunteers"></i>
+            <i class="fa fa-minus-square"
+            ng-if="appointment.toggleVolunteers"></i>
+            <h5 style="display: inline">Volunteers ( {{appointment.volunteers.length}} / {{appointment.volunteerSlots}} )</h5>
+          </div>
+          <div class="header-clickable" ng-click="appointment.toggleClients = !appointment.toggleClients">
+            <i class="fa fa-plus-square"
+            ng-if="!appointment.toggleClients"></i>
+            <i class="fa fa-minus-square"
+            ng-if="appointment.toggleClients"></i>
+            <h5 style="display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+          </div>
+          <div><i class="fa fa-clock-o"></i> {{appointment.startsAt | date:'hh:mm a'}}</div>
+        </div>
+        <div class="appointment-details">
+          <ul ng-if="appointment.toggleVolunteers">
+            <h5 class="appointment-details-heading">Volunteers</h5>
+            <li class="appointment-user" ng-repeat="volunteer in appointment.volunteers">
+              <span>{{volunteer.fullName}}</span>
+              <span>{{volunteer.email}}</span>
+              <span>{{volunteer.phoneNumber | PhoneFormat}}</span>
+            </li>
+          </ul>
+          <ul ng-if="appointment.toggleClients">
+            <h5 class="appointment-details-heading">Clients</h5>
+            <li class="appointment-user" ng-repeat="volunteer in appointment.volunteers">
+              <span>{{volunteer.fullName}}</span>
+              <span>{{volunteer.email}}</span>
+              <span>{{volunteer.phoneNumber | PhoneFormat}}</span>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+    <ul ng-show="reportToggle === 'extraVolunteer'" class="reports-list">
+      <li class="appointment-info" ng-repeat="appointment in admin.appointments"
+      ng-if="(appointment.clients < appointment.volunteers.length) && !(appointment.clients === appointment.clientSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
+        <div class="appointment-meta">
+          <div><i class="fa fa-tag"></i> {{appointment.title}}</div>
+          <div><i class="fa fa-calendar"></i> {{appointment.startsAt | date:'EEEE, MMM dd'}}</div>
+          <div class="header-clickable" ng-click="appointment.toggleVolunteers = !appointment.toggleVolunteers">
+            <i class="fa fa-plus-square"
+            ng-if="!appointment.toggleVolunteers"></i>
+            <i class="fa fa-minus-square"
+            ng-if="appointment.toggleVolunteers"></i>
+            <h5 style="display: inline">Volunteers ( {{appointment.volunteers.length}} / {{appointment.volunteerSlots}} )</h5>
+          </div>
+          <div class="header-clickable" ng-click="appointment.toggleClients = !appointment.toggleClients">
+            <i class="fa fa-plus-square"
+            ng-if="!appointment.toggleClients"></i>
+            <i class="fa fa-minus-square"
+            ng-if="appointment.toggleClients"></i>
+            <h5 style="display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+          </div>
+          <div><i class="fa fa-clock-o"></i> {{appointment.startsAt | date:'hh:mm a'}}</div>
+        </div>
+        <div class="appointment-details">
+          <ul ng-if="appointment.toggleVolunteers">
+            <h5 class="appointment-details-heading">Volunteers</h5>
+            <li class="appointment-user" ng-repeat="volunteer in appointment.volunteers">
+              <span>{{volunteer.fullName}}</span>
+              <span>{{volunteer.email}}</span>
+              <span>{{volunteer.phoneNumber | PhoneFormat}}</span>
+            </li>
+          </ul>
+          <ul ng-if="appointment.toggleClients">
+            <h5 class="appointment-details-heading">Clients</h5>
+            <li class="appointment-user" ng-repeat="volunteer in appointment.volunteers">
+              <span>{{volunteer.fullName}}</span>
+              <span>{{volunteer.email}}</span>
+              <span>{{volunteer.phoneNumber | PhoneFormat}}</span>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </span>
+  <span ng-if="(reportType === 'volunteers')">
+    <div class="col-md-3">
+      <h5>From:</h5>
+    </div>
+    <div class="col-md-3">
+      <h5>To:</h5>
+    </div>
+    <div class="col-md-6">
+      <h5>Company:</h5>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup="{{admin.reportDateFormat}}" ng-model="admin.reportDateStart" is-open="admin.dateStart.opened" datepicker-options="admin.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="admin.dateStartOpen()"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup="{{admin.reportDateFormat}}" ng-model="admin.reportDateEnd" is-open="admin.dateEnd.opened" datepicker-options="admin.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="admin.dateEndOpen()"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+    </div>
+    <input type="text" class="col-md-6" ng-model="admin.filterCompanyInput" placeholder="Search Companies" />
+    <div class="clear"></div>
+    <div style="float: right">
+      <span ng-show="admin.filterCompanyInput.length > 0" style="text-transform: uppercase;">"{{admin.filterCompanyInput}}"</span>
+      Total: <span ng-bind="admin.volunteers | filter: admin.filterCompany | filter: admin.filterCompanyInput | filter: admin.reportFilterDate | sum "></span>
+    </div>
+    <div class="clear"></div>
+    <!-- <div ng-bind="admin.volunteers | sum"></div> -->
+    <ul class="reports-list">
+      <li ng-repeat="volunteer in admin.volunteers | filter: admin.filterCompany | filter: admin.filterCompanyInput | filter: admin.reportFilterDate | orderBy: ['-displayHours', 'lastName']"
+        ng-if="volunteer.displayHours > 0"
+        class="report-users">
+        <div>{{volunteer.fullName}}</div>
+        <div>{{volunteer.email}}</div>
+        <div>{{volunteer.phoneNumber | PhoneFormat}}</div>
+        <div style="text-align: right">
+          <span ng-if="admin.filterCompanyInput.length > 0" style="text-transform: uppercase; color: rgb(170,170,170); font-size: .7em; margin-right: 5px">
+            Matched "{{volunteer.matchedCompany}}"
+          </span>{{volunteer.displayHours}} hours
+        </div>
+      </li>
+    </ul>
+  </span>
+  <!-- <uib-tabset type="pills">
       <uib-tab heading="All Appointments">
         <div
           class="toggle-report-users"
@@ -386,6 +709,6 @@
         </ul>
       </uib-tab>
 
-  </uib-tabset>
+  </uib-tabset> -->
 </div>
 <div class="clear"></div>
