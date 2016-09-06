@@ -8,10 +8,10 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
   vm.editAppointment.event = AppointmentService.updateEvent.event;
   vm.currentUser = {};
   vm.currentUser.user = UserService.currentUser.user;
-  vm.myAppointments = {};//AppointmentService.myAppointments;
-  // vm.myAppointments.scheduled = [];
+  vm.myAppointments = {};
   vm.myAppointments.scheduled = AppointmentService.myAppointments.scheduled;
   vm.highPriority = AppointmentService.highPriority;
+  vm.hideContent = true;
 
   vm.saveAnnouncement = saveAnnouncement;
   function saveAnnouncement() {
@@ -83,17 +83,13 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
   }];
 
   vm.addAppointment = function(){
-    console.log(vm.occurs.until);
     if (vm.occurs.often == 'once'){
       AppointmentService.addAppointment(vm.appointment).then(function(response){
         vm.showAppointments.appointments.push(vm.appointment);
-        console.log('add appointment success', response.data);
       }, function(response){
-        console.log('add appointment fail', response.data);
       })
     } else {
       var weeks = Math.ceil(((moment(vm.occurs.until).diff(vm.appointment.startsAt, 'days'))/7)+1);
-      console.log('weeks', weeks);
       for (var i = 0; i <= weeks; i ++){
         var sendAppointment = angular.copy(vm.appointment);
         sendAppointment.startsAt = moment(vm.appointment.startsAt).add(i, 'week');
@@ -101,9 +97,7 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
         if (moment(sendAppointment.startsAt) <= moment(vm.occurs.until).add(1, 'days')){
           vm.showAppointments.appointments.push(sendAppointment);
           AppointmentService.addAppointment(sendAppointment).then(function(response){
-            console.log('add appointment success', i);
           }, function(response){
-            console.log('add appointment fail', response.data);
           })
         }
       }
@@ -152,18 +146,14 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
   vm.toggleMin();
 
   vm.open1 = function() {
-    console.log('Clicked open1');
     vm.popup1.opened = true;
-    console.log(vm.popup1);
   };
 
   vm.open2 = function() {
-    console.log('Clicked open2');
     vm.popup2.opened = true;
   };
 
   vm.open3 = function() {
-    console.log('Clicked open3');
     vm.popup3.opened = true;
   };
 
@@ -203,8 +193,6 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
   };
 
   vm.eventClicked = function(calendarEvent){
-    console.log(calendarEvent);
-    //AppointmentService.myAppointments.scheduled = [];
     AppointmentService.updateEvent.event = calendarEvent;
     var modalInstance = $uibModal.open({
       animation: true,
@@ -252,5 +240,9 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
   // }
   // getAnnouncement();
 
-  AppointmentService.getAppointments(UserService.currentUser.user);
+  vm.pageLoad = function(){
+    if (typeof vm.showAppointments.appointments === 'undefined'){
+      AppointmentService.getAppointments(UserService.currentUser.user);
+    }
+  }
 }; //end DashboardController

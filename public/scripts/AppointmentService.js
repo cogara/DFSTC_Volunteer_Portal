@@ -59,8 +59,11 @@ function AppointmentService($http, calendarConfig, moment){
               if (response.data[j].volunteers[k]._id == user._id){
                 response.data[j].color = calendarConfig.colorTypes.info;
                 myAppointments.scheduled.push(response.data[j]);
-                if(response.data[j].clients > response.data[j].volunteers.length){
-                  highPriority.splice(j, 1);
+                if (response.data[j].clients > response.data[j].volunteers.length){
+                  var index = _.findIndex(highPriority, {_id: response.data[j]._id});
+                  if (index != -1){
+                    highPriority.splice(index, 1);
+                  }
                 }
               }else if (response.data[j].volunteers.length >= response.data[j].clients){
                 response.data[j].color = calendarConfig.colorTypes.warning;

@@ -1,4 +1,4 @@
-<span class="profile-control" ng-if="main.currentUser" style="float: right; margin-left: 5px;" >
+<span class="profile-control" ng-if="main.currentUser" style="float: right; margin-left: 5px;" ng-init="dash.pageLoad()">
   <div class="profile-menu" ng-class="{'hide': !dash.profileToggle}">
     <h6 class="profile-control-header">{{main.currentUser.firstName}} {{main.currentUser.lastName}}</h6>
     <div class="profile-image">
@@ -591,13 +591,13 @@
     <div class="panel panel-default" ng-if="!main.currentUser.isAdmin">
       <h5 class="text-muted text-uppercase profile-control-header">My Appointments</h5>
       <ul class="sidebar-list">
-        <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
+        <li ng-repeat="appointment in dash.myAppointments.scheduled | orderBy: 'startsAt'" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "M/d"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
       </ul>
     </div>
     <div class="panel panel-default">
       <h5 class="text-muted text-uppercase profile-control-header">High Priority</h5>
       <ul class="sidebar-list">
-        <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
+        <li ng-repeat="appointment in dash.highPriority | orderBy: 'startsAt'" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "M/d"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
       </ul>
     </div>
     <div ng-if="main.currentUser.isAdmin || (!main.currentUser.isAdmin && dash.announcement.announcement)" class="panel panel-default" style="padding: 0 0 10px">
