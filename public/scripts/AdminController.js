@@ -3,7 +3,10 @@ angular
   .controller('AdminController', AdminController)
   .controller('ModalController', ModalController)
   // .controller('RegisterClientController', RegisterClientController)
-  .filter('PhoneFormat', phoneFormat);
+  .filter('PhoneFormat', phoneFormat)
+  .filter('sum', sum);
+
+
 
 function AdminController($http, $state, $uibModal, UserService, AdminService, volunteerList, appointments, Excel, $timeout) {
   var vm = this;
@@ -364,10 +367,80 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     }
   }
 
-
-
   clearSearchOptions();
   //end search filters
+
+  //report filters
+
+  vm.filterCompany = filterCompany;
+  function filterCompany(volunteer) {
+
+    if(volunteer.hoursVolunteered && vm.filterCompanyInput) {
+      volunteer.displayHours = 0;
+      for (var i = 0; i < volunteer.hoursVolunteered.length; i++) {
+        var tempCompany = volunteer.hoursVolunteered[i].company.slice(0,vm.filterCompanyInput.length).toLowerCase();
+        if((tempCompany) === (vm.filterCompanyInput.toLowerCase())) {
+          volunteer.displayHours += volunteer.hoursVolunteered[i].hours;
+          volunteer.matchedCompany = volunteer.hoursVolunteered[i].company;
+        }
+      }
+    } else if (vm.filterCompanyInput === '' || vm.filterCompanyInput === undefined){
+      volunteer.displayHours = 0;
+      if(volunteer.hoursVolunteered) {
+        for (var i = 0; i < volunteer.hoursVolunteered.length; i++) {
+          volunteer.displayHours += volunteer.hoursVolunteered[i].hours;
+        }
+      }
+    }
+    return true;
+  }
+
+  vm.reportFilterDate = reportFilterDate;
+  function reportFilterDate(volunteer) {
+    if(volunteer.hoursVolunteered && (vm.reportDateStart && vm.reportDateEnd)) {
+      for (var i = 0; i < volunteer.hoursVolunteered.length; i++) {
+        var tempStart = vm.reportDateStart.toISOString().slice(0,10);
+        var tempEnd = vm.reportDateEnd.toISOString().slice(0,10);
+        var tempDate = volunteer.hoursVolunteered[i].date.slice(0,10);
+        tempStart = parseInt(tempStart.split('-').join(''));
+        tempEnd = parseInt(tempEnd.split('-').join(''));
+        tempDate = parseInt(tempDate.split('-').join(''));
+
+        if(tempStart <= tempDate && tempDate <= tempEnd) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else {
+      return true;
+    }
+
+  }
+
+  vm.reportDateFormat = 'MMM dd, yyyy';
+  vm.dateStartOpen = dateStartOpen;
+  vm.dateStart = {};
+  vm.dateEnd = {};
+  vm.dateStart.opened = false;
+  function dateStartOpen() {
+    vm.dateStart.opened = !vm.dateStart.opened;
+  }
+  vm.dateEndOpen = dateEndOpen;
+  vm.dateEnd.opened = false;
+  function dateEndOpen() {
+    vm.dateEnd.opened = !vm.dateEnd.opened;
+    setMinDate();
+  }
+
+  vm.dateOptions = {
+    maxDate: new Date()
+  }
+
+  function setMinDate() {
+    vm.dateOptions.minDate = vm.reportDateStart ? vm.reportDateStart : null;
+  }
+  //end report filters
 
   function exportToExcel(volunteerTable) {
     vm.exportHref = Excel.tableToExcel(volunteerTable, 'volunteers');
@@ -426,4 +499,16 @@ function phoneFormat() {
   };
 
 
+}
+
+function sum() {
+  return function(volunteers) {
+    var sum = 0;
+    console.log(volunteers);
+    for (var i = 0; i < volunteers.length; i++) {
+      sum += volunteers[i].displayHours;
+    }
+    console.log(sum);
+    return sum;
+  }
 }
