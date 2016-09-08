@@ -82,8 +82,23 @@ function deleteAppointment(appointmentId){
 
 function updateAppointment(appointmentId, appointmentUpdate){
   $http.put('/api/appointment/' + appointmentId, appointmentUpdate).then(function(response){
+    console.log(appointmentUpdate);
   }, function(response){
   })
+}
+
+function notifyCancel(appointmentDate, user){
+  var fortyEightHourTill  = new Date(new Date().setDate(new Date().getDate()+2));
+
+  if(appointmentDate.startsAt <= fortyEightHourTill && appointmentDate.startsAt >= new Date()){
+  //  console.log(appointmentDate.startsAt <= fortyEightHrPrior);
+    console.log(appointmentDate.startsAt - new Date());
+  //  console.log(fortyEightHrPrior);
+    $http.put('/api/cancel/',{ appDate:appointmentDate, user:user}).then(function(res){
+      },function(res){
+      })
+  }
+
 }
 
   return {
@@ -92,6 +107,7 @@ function updateAppointment(appointmentId, appointmentUpdate){
     appointments: appointments,
     deleteAppointment: deleteAppointment,
     updateAppointment: updateAppointment,
+    notifyCancel: notifyCancel,
     updateEvent: updateEvent,
     myAppointments: myAppointments,
     highPriority: highPriority

@@ -2,6 +2,8 @@ const router = require('express').Router();
 const path = require('path');
 const User = require('../models/user.js');
 const mongoose = require('mongoose');
+const nodemailer = require('nodemailer');
+const moment = require('moment');
 const Appointment = require('../models/appointment');
 const Announcement = require('../models/announcement');
 
@@ -239,6 +241,48 @@ router.put('/caseWorkers/:id', function(request, response) {
       response.sendStatus(200);
     }
   })
+})
+
+router.put('/cancel', function(req, res){
+  var data = req.body;
+  var transporter = nodemailer.createTransport({
+    service:'Gmail',
+    //TODO: Change to an actual secret account and if gmail sett to less secure in security settings
+    auth:{
+      user:'dfstc016@gmail.com',
+      pass:'dressForSuccess'
+    },
+    logger:false,
+    debug:false
+  },{
+    // default message
+    from: 'Dress for Success Twin Cities <dfstc016@gmail.com>',
+  });
+  var message = {
+    // Comma separated list of recipients
+  to: 'Dress for Success Twin Cities <dfstc016@gmail.com>',
+  // Subject of the message
+  subject: 'Appointment Cancel Notifcation '+data.user.fullName, //
+  // HTML body
+  html:data.user.fullName + " has canceled their <strong>" + data.appDate.title +"</strong> session."
+  +"<p>  appointment is set at: </p>"+
+  '<p>' +
+  '  Date: '+moment(data.appDate.startsAt).format("dddd, MMMM Do YYYY")+
+  '</p>' +
+  '<p>' +
+  '  Start time: '+moment(data.appDate.startsAt).format('h:mm a')+
+  '</p>'
+  };
+  transporter.sendMail(message, function(err, info){
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    res.sendStatus(200);
+  //console.log('Message sent successfully!');
+  //console.log('Server responded with "%s"', info.response);
+ });
 })
 
 module.exports = router;

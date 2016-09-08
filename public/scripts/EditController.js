@@ -136,7 +136,11 @@ function EditController($http, $state, $uibModal, $scope, UserService, Appointme
       event.color = calendarConfig.colorTypes.warning;
     }
 
+    AppointmentService.notifyCancel(event, UserService.currentUser.user);
     AppointmentService.updateAppointment(event._id, event);
+
+    //add delete notifcation for email
+
 
     for (var j = AppointmentService.appointments.length-1; j >= 0; j--){
       if (AppointmentService.appointments[j]._id == event._id){
