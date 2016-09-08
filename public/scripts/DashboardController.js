@@ -117,7 +117,7 @@ function DashboardController($http, $state, $uibModal, $scope, UserService, Appo
     endsAt: '',
     volunteerSlots: 5,
     clientSlots: 5,
-    clients: 0,
+    clients: [],
     trainingAppointment: false,
     volunteers: [],
     incrementsBadgeTotal: false

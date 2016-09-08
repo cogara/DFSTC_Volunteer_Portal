@@ -89,8 +89,11 @@ function EditController($http, $state, $uibModal, $scope, UserService, Appointme
   }
 // volunteer adding themselves to appointment
   vm.claimAppointment = function(info){
-
-    info.volunteers.push(vm.currentUser.user);
+    if(!vm.currentUser.user.isClient) {
+      info.volunteers.push(vm.currentUser.user);
+    } else {
+      info.clients.push(vm.currentUser.user);
+    }
     AppointmentService.updateAppointment(info._id, info);
     AppointmentService.appointments.appointments.splice(findIndex(AppointmentService.appointments.appointments, '_id', info._id), 1);
     console.log('find', findIndex(AppointmentService.highPriority, '_id', info._id));
@@ -99,7 +102,6 @@ function EditController($http, $state, $uibModal, $scope, UserService, Appointme
         AppointmentService.highPriority.splice(i, 1);
       }
     }
-
 
     info.color = calendarConfig.colorTypes.info;
     console.log('scheduled', AppointmentService.myAppointments.scheduled);
@@ -129,17 +131,28 @@ function EditController($http, $state, $uibModal, $scope, UserService, Appointme
   }
 // volunteer removing self from appointment
   vm.removeMe = function(event){
-    for (var i = event.volunteers.length-1; i >= 0; i--){
-      if (event.volunteers[i]._id == UserService.currentUser.user._id){
-        event.volunteers.splice(i, 1);
+    if(UserService.currentUser.user.isClient) {
+      for (var i = event.clients.length-1; i >= 0; i--){
+        if (event.clients[i]._id == UserService.currentUser.user._id){
+          event.clients.splice(i, 1);
+          event.color = calendarConfig.colorTypes.warning;
+        }
+      }
+    } else {
+      for (var i = event.volunteers.length-1; i >= 0; i--){
+        if (event.volunteers[i]._id == UserService.currentUser.user._id){
+          event.volunteers.splice(i, 1);
+        }
+      }
+      if (event.volunteers.length < event.clients){
+        event.color = calendarConfig.colorTypes.important;
+        AppointmentService.highPriority.push(event);
+      }else{
+        event.color = calendarConfig.colorTypes.warning;
       }
     }
-    if (event.volunteers.length < event.clients){
-      event.color = calendarConfig.colorTypes.important;
-      AppointmentService.highPriority.push(event);
-    }else{
-      event.color = calendarConfig.colorTypes.warning;
-    }
+
+
 
     AppointmentService.updateAppointment(event._id, event);
 
