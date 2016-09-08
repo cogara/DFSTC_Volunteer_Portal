@@ -24,14 +24,14 @@ function AppointmentService($http, calendarConfig, moment){
       }
       //set high priority appointments
       for (var g = 0; g < response.data.length; g++) {
-        if (response.data[g].clients > response.data[g].volunteers.length) {
+        if (response.data[g].clients.length > response.data[g].volunteers.length) {
           if (!(_.findWhere(highPriority, {_id: response.data[g]._id}))){
             response.data[g].color = calendarConfig.colorTypes.important;
             highPriority.push(response.data[g]);
           }
           //set full appointments
         } else if (response.data[g].volunteers.length == response.data[g].volunteerSlots &&
-           response.data[g].clientSlots == response.data[g].clients) {
+          response.data[g].clientSlots == response.data[g].clients.length) {
           response.data[g].color = calendarConfig.colorTypes.success;
         } else {
           //set all other standard appointments
@@ -50,7 +50,7 @@ function AppointmentService($http, calendarConfig, moment){
         }
         for (var j = 0; j < response.data.length; j++){
           //sett appointments with no volunteers and no clients
-          if (response.data[j].volunteers.length == 0 && response.data[j].clients == 0){
+          if (response.data[j].volunteers.length == 0 && response.data[j].clients.length == 0){
             response.data[j].color = calendarConfig.colorTypes.warning;
           //if appointment has volunteers signed up
           } else if (response.data[j].volunteers.length > 0){
@@ -59,10 +59,10 @@ function AppointmentService($http, calendarConfig, moment){
               if (response.data[j].volunteers[k]._id == user._id){
                 response.data[j].color = calendarConfig.colorTypes.info;
                 myAppointments.scheduled.push(response.data[j]);
-                if(response.data[j].clients > response.data[j].volunteers.length){
+                if(response.data[j].clients.length > response.data[j].volunteers.length){
                   highPriority.splice(j, 1);
                 }
-              }else if (response.data[j].volunteers.length >= response.data[j].clients){
+              }else if (response.data[j].volunteers.length >= response.data[j].clients.length){
                 response.data[j].color = calendarConfig.colorTypes.warning;
               }
             }

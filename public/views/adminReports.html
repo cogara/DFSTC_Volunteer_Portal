@@ -105,7 +105,7 @@
             ng-if="!appointment.toggleClients"></i>
             <i class="fa fa-minus-square"
             ng-if="appointment.toggleClients"></i>
-            <h5 style="display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+            <h5 style="display: inline"># Clients: ( {{appointment.clients.length}} / {{appointment.clientSlots}} )</h5>
           </div>
           <div><i class="fa fa-clock-o"></i> {{appointment.startsAt | date:'hh:mm a'}}</div>
         </div>
@@ -120,10 +120,10 @@
           </ul>
           <ul ng-if="appointment.toggleClients">
             <h5 class="appointment-details-heading">Clients</h5>
-            <li class="appointment-user" ng-repeat="volunteer in appointment.volunteers">
-              <span>Client One</span>
-              <span><i class="fa fa-envelope"></i> asdf@gmail.com</span>
-              <span><i class="fa fa-phone"></i> {{2341235234 | PhoneFormat}}</span>
+            <li class="appointment-user" ng-repeat="client in appointment.clients">
+              <span>{{client.fullName}}</span>
+              <span><i class="fa fa-envelope"></i> {{client.email}}</span>
+              <span><i class="fa fa-phone"></i> {{client.phoneNumber | PhoneFormat}}</span>
             </li>
           </ul>
         </div>
@@ -131,7 +131,7 @@
     </ul>
     <ul ng-show="reportToggle === 'fullAppointments' "class="reports-list">
       <li class="appointment-info" ng-repeat="appointment in admin.appointments"
-      ng-if="(appointment.clients === appointment.clientSlots) && (appointment.volunteers.length === appointment.volunteerSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
+      ng-if="(appointment.clients.length === appointment.clientSlots) && (appointment.volunteers.length === appointment.volunteerSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
         <div class="appointment-meta">
           <div><i class="fa fa-tag"></i> {{appointment.title}}</div>
           <div><i class="fa fa-calendar"></i> {{appointment.startsAt | date:'EEEE, MMM dd'}}</div>
@@ -161,14 +161,14 @@
             ng-if="appointment.toggleClients"
             ng-click="appointment.toggleClients = !appointment.toggleClients"
             style="cursor: pointer"></i>
-            <h5 style="text-decoration: underline; display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+            <h5 style="text-decoration: underline; display: inline"># Clients: ( {{appointment.clients.length}} / {{appointment.clientSlots}} )</h5>
           </div>
         </div>
       </li>
     </ul>
     <ul ng-show="reportToggle === 'balancedAppointments'" class="reports-list">
       <li class="appointment-info" ng-repeat="appointment in admin.appointments"
-      ng-if="(appointment.clients === appointment.volunteers.length) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
+      ng-if="(appointment.clients.length === appointment.volunteers.length) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
         <div class="appointment-meta">
           <div><i class="fa fa-tag"></i> {{appointment.title}}</div>
           <div><i class="fa fa-calendar"></i> {{appointment.startsAt | date:'EEEE, MMM dd'}}</div>
@@ -184,7 +184,7 @@
             ng-if="!appointment.toggleClients"></i>
             <i class="fa fa-minus-square"
             ng-if="appointment.toggleClients"></i>
-            <h5 style="display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+            <h5 style="display: inline"># Clients: ( {{appointment.clients.length}} / {{appointment.clientSlots}} )</h5>
           </div>
           <div><i class="fa fa-clock-o"></i> {{appointment.startsAt | date:'hh:mm a'}}</div>
         </div>
@@ -199,10 +199,10 @@
           </ul>
           <ul ng-if="appointment.toggleClients">
             <h5 class="appointment-details-heading">Clients</h5>
-            <li class="appointment-user" ng-repeat="volunteer in appointment.volunteers">
-              <span>{{volunteer.fullName}}</span>
-              <span>{{volunteer.email}}</span>
-              <span>{{volunteer.phoneNumber | PhoneFormat}}</span>
+            <li class="appointment-user" ng-repeat="client in appointment.clients">
+              <span>{{client.fullName}}</span>
+              <span>{{client.email}}</span>
+              <span>{{client.phoneNumber | PhoneFormat}}</span>
             </li>
           </ul>
         </div>
@@ -210,7 +210,7 @@
     </ul>
     <ul ng-show="reportToggle === 'volunteerNeeded'" class="reports-list">
       <li class="appointment-info" ng-repeat="appointment in admin.appointments"
-      ng-if="(appointment.clients > appointment.volunteers.length) && !(appointment.volunteers.length === appointment.volunteerSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
+      ng-if="(appointment.clients.length > appointment.volunteers.length) && !(appointment.volunteers.length === appointment.volunteerSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
         <div class="appointment-meta">
           <div><i class="fa fa-tag"></i> {{appointment.title}}</div>
           <div><i class="fa fa-calendar"></i> {{appointment.startsAt | date:'EEEE, MMM dd'}}</div>
@@ -226,7 +226,7 @@
             ng-if="!appointment.toggleClients"></i>
             <i class="fa fa-minus-square"
             ng-if="appointment.toggleClients"></i>
-            <h5 style="display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+            <h5 style="display: inline"># Clients: ( {{appointment.clients.length}} / {{appointment.clientSlots}} )</h5>
           </div>
           <div><i class="fa fa-clock-o"></i> {{appointment.startsAt | date:'hh:mm a'}}</div>
         </div>
@@ -252,7 +252,7 @@
     </ul>
     <ul ng-show="reportToggle === 'extraVolunteer'" class="reports-list">
       <li class="appointment-info" ng-repeat="appointment in admin.appointments"
-      ng-if="(appointment.clients < appointment.volunteers.length) && !(appointment.clients === appointment.clientSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
+      ng-if="(appointment.clients.length < appointment.volunteers.length) && !(appointment.clients.length === appointment.clientSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
         <div class="appointment-meta">
           <div><i class="fa fa-tag"></i> {{appointment.title}}</div>
           <div><i class="fa fa-calendar"></i> {{appointment.startsAt | date:'EEEE, MMM dd'}}</div>
@@ -268,7 +268,7 @@
             ng-if="!appointment.toggleClients"></i>
             <i class="fa fa-minus-square"
             ng-if="appointment.toggleClients"></i>
-            <h5 style="display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+            <h5 style="display: inline"># Clients: ( {{appointment.clients.length}} / {{appointment.clientSlots}} )</h5>
           </div>
           <div><i class="fa fa-clock-o"></i> {{appointment.startsAt | date:'hh:mm a'}}</div>
         </div>
@@ -320,6 +320,7 @@
       </p>
     </div>
     <input type="text" class="col-md-6" ng-model="admin.filterCompanyInput" placeholder="Search Companies" />
+    <input type="checkbox" ng-model="admin.filterCompanyExact"> Match Exact
     <div class="clear"></div>
     <div style="float: right">
       <span ng-show="admin.filterCompanyInput.length > 0" style="text-transform: uppercase;">"{{admin.filterCompanyInput}}"</span>
@@ -392,7 +393,7 @@
                 ng-if="!appointment.toggleClients"></i>
                 <i class="fa fa-minus-square"
                 ng-if="appointment.toggleClients"></i>
-                <h5 style="display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+                <h5 style="display: inline"># Clients: ( {{appointment.clients.length}} / {{appointment.clientSlots}} )</h5>
               </div>
               <div><i class="fa fa-clock-o"></i> {{appointment.startsAt | date:'hh:mm a'}}</div>
             </div>
@@ -450,7 +451,7 @@
         <div class="clear"></div>
         <ul class="reports-list">
           <li class="appointment-info" ng-repeat="appointment in admin.appointments"
-          ng-if="(appointment.clients === appointment.clientSlots) && (appointment.volunteers.length === appointment.volunteerSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
+          ng-if="(appointment.clients.length === appointment.clientSlots) && (appointment.volunteers.length === appointment.volunteerSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
             <div class="appointment-meta">
               <div><i class="fa fa-tag"></i> {{appointment.title}}</div>
               <div><i class="fa fa-calendar"></i> {{appointment.startsAt | date:'EEEE, MMM dd'}}</div>
@@ -480,7 +481,7 @@
                 ng-if="appointment.toggleClients"
                 ng-click="appointment.toggleClients = !appointment.toggleClients"
                 style="cursor: pointer"></i>
-                <h5 style="text-decoration: underline; display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+                <h5 style="text-decoration: underline; display: inline"># Clients: ( {{appointment.clients.length}} / {{appointment.clientSlots}} )</h5>
               </div>
             </div>
           </li>
@@ -519,7 +520,7 @@
         <div class="clear"></div>
         <ul class="reports-list">
           <li class="appointment-info" ng-repeat="appointment in admin.appointments"
-          ng-if="(appointment.clients === appointment.volunteers.length) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
+          ng-if="(appointment.clients.length === appointment.volunteers.length) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
             <div class="appointment-meta">
               <div><i class="fa fa-tag"></i> {{appointment.title}}</div>
               <div><i class="fa fa-calendar"></i> {{appointment.startsAt | date:'EEEE, MMM dd'}}</div>
@@ -535,7 +536,7 @@
                 ng-if="!appointment.toggleClients"></i>
                 <i class="fa fa-minus-square"
                 ng-if="appointment.toggleClients"></i>
-                <h5 style="display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+                <h5 style="display: inline"># Clients: ( {{appointment.clients.length}} / {{appointment.clientSlots}} )</h5>
               </div>
               <div><i class="fa fa-clock-o"></i> {{appointment.startsAt | date:'hh:mm a'}}</div>
             </div>
@@ -593,7 +594,7 @@
         <div class="clear"></div>
         <ul class="reports-list">
           <li class="appointment-info" ng-repeat="appointment in admin.appointments"
-          ng-if="(appointment.clients > appointment.volunteers.length) && !(appointment.volunteers.length === appointment.volunteerSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
+          ng-if="(appointment.clients.length > appointment.volunteers.length) && !(appointment.volunteers.length === appointment.volunteerSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
             <div class="appointment-meta">
               <div><i class="fa fa-tag"></i> {{appointment.title}}</div>
               <div><i class="fa fa-calendar"></i> {{appointment.startsAt | date:'EEEE, MMM dd'}}</div>
@@ -609,7 +610,7 @@
                 ng-if="!appointment.toggleClients"></i>
                 <i class="fa fa-minus-square"
                 ng-if="appointment.toggleClients"></i>
-                <h5 style="display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+                <h5 style="display: inline"># Clients: ( {{appointment.clients.length}} / {{appointment.clientSlots}} )</h5>
               </div>
               <div><i class="fa fa-clock-o"></i> {{appointment.startsAt | date:'hh:mm a'}}</div>
             </div>
@@ -667,7 +668,7 @@
         <div class="clear"></div>
         <ul class="reports-list">
           <li class="appointment-info" ng-repeat="appointment in admin.appointments"
-          ng-if="(appointment.clients < appointment.volunteers.length) && !(appointment.clients === appointment.clientSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
+          ng-if="(appointment.clients.length < appointment.volunteers.length) && !(appointment.clients.length === appointment.clientSlots) && ((admin.todaysDate | date: 'yyMMdd') <= (appointment.startsAt | date:'yyMMdd'))">
             <div class="appointment-meta">
               <div><i class="fa fa-tag"></i> {{appointment.title}}</div>
               <div><i class="fa fa-calendar"></i> {{appointment.startsAt | date:'EEEE, MMM dd'}}</div>
@@ -683,7 +684,7 @@
                 ng-if="!appointment.toggleClients"></i>
                 <i class="fa fa-minus-square"
                 ng-if="appointment.toggleClients"></i>
-                <h5 style="display: inline"># Clients: ( {{appointment.clients}} / {{appointment.clientSlots}} )</h5>
+                <h5 style="display: inline"># Clients: ( {{appointment.clients.length}} / {{appointment.clientSlots}} )</h5>
               </div>
               <div><i class="fa fa-clock-o"></i> {{appointment.startsAt | date:'hh:mm a'}}</div>
             </div>

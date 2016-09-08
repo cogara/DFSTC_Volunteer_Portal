@@ -10,7 +10,7 @@ var appointmentSchema = new Schema(
     volunteerSlots: Number,
     volunteers: Object,
     clientSlots: Number,
-    clients: Number,
+    clients: Object,
     color: Object,
     incrementsBadgeTotal: Boolean,
 

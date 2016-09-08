@@ -378,10 +378,17 @@ function AdminController($http, $state, $uibModal, UserService, AdminService, vo
     if(volunteer.hoursVolunteered && vm.filterCompanyInput) {
       volunteer.displayHours = 0;
       for (var i = 0; i < volunteer.hoursVolunteered.length; i++) {
-        var tempCompany = volunteer.hoursVolunteered[i].company.slice(0,vm.filterCompanyInput.length).toLowerCase();
-        if((tempCompany) === (vm.filterCompanyInput.toLowerCase())) {
-          volunteer.displayHours += volunteer.hoursVolunteered[i].hours;
-          volunteer.matchedCompany = volunteer.hoursVolunteered[i].company;
+        if(vm.filterCompanyExact) {
+          if((volunteer.hoursVolunteered[i].company.toLowerCase()) === (vm.filterCompanyInput.toLowerCase())) {
+            volunteer.displayHours += volunteer.hoursVolunteered[i].hours;
+            volunteer.matchedCompany = volunteer.hoursVolunteered[i].company;
+          }
+        } else {
+          var tempCompany = volunteer.hoursVolunteered[i].company.slice(0,vm.filterCompanyInput.length).toLowerCase();
+          if((tempCompany) === (vm.filterCompanyInput.toLowerCase())) {
+            volunteer.displayHours += volunteer.hoursVolunteered[i].hours;
+            volunteer.matchedCompany = volunteer.hoursVolunteered[i].company;
+          }
         }
       }
     } else if (vm.filterCompanyInput === '' || vm.filterCompanyInput === undefined){
