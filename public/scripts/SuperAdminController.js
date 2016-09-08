@@ -16,7 +16,7 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
   vm.openRegisterCaseWorker = openRegisterCaseWorker;
   vm.openDeleteUser = openDeleteUser;
 
-  
+
 
   function addAdminToggle() {
     vm.adminToggle = (vm.adminToggle) ? false : true;
@@ -89,9 +89,7 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
 
   function registerClient(client, caseWorker) {
     client.isClient = true;
-    client.caseWorker = caseWorker.fullName;
-    console.log(caseWorker);
-    console.log(client);
+    client.caseWorker = (caseWorker) ? caseWorker.fullName : null;
     // UserService.assignClient(client, caseWorker);
     UserService.register(client).then(function(response) {
       AdminService.getAllUsers().then(function(response) {
@@ -99,7 +97,9 @@ function SuperAdminController($http, $uibModal, AdminService, UserService, users
         for (var i = 0; i < vm.users.length; i++) {
           if(vm.users[i].email === client.email) {
             console.log('found matching client');
-            UserService.assignClient(vm.users[i], caseWorker);
+            if(caseWorker) {
+              UserService.assignClient(vm.users[i], caseWorker);
+            }
           }
         }
       });
