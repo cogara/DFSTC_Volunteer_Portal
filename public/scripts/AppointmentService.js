@@ -22,48 +22,67 @@ function AppointmentService($http, calendarConfig, moment){
         response.data[h].startsAt = new Date(response.data[h].startsAt);
         response.data[h].endsAt = new Date(response.data[h].endsAt);
       }
-      //set high priority appointments
-      for (var g = 0; g < response.data.length; g++) {
-        if (response.data[g].clients.length > response.data[g].volunteers.length) {
-          if (!(_.findWhere(highPriority, {_id: response.data[g]._id}))){
-            response.data[g].color = calendarConfig.colorTypes.important;
-            highPriority.push(response.data[g]);
-          }
-          //set full appointments
-        } else if (response.data[g].volunteers.length == response.data[g].volunteerSlots &&
-          response.data[g].clientSlots == response.data[g].clients.length) {
-          response.data[g].color = calendarConfig.colorTypes.success;
-        } else {
-          //set all other standard appointments
-          response.data[g].color = calendarConfig.colorTypes.warning;
-        }
-      }
 
-      if (!user.isAdmin){
-
-        //removes full appointments that current user is not signed up to volunteer
-        for (var i = response.data.length-1; i >= 0; i--){
-          if (response.data[i].volunteers.length == response.data[i].volunteerSlots &&
-            !(_.findWhere(response.data[i].volunteers, {_id: user._id}))) {
-            response.data.splice(i, 1);
-          }
-        }
-        for (var j = 0; j < response.data.length; j++){
-          //sett appointments with no volunteers and no clients
-          if (response.data[j].volunteers.length == 0 && response.data[j].clients.length == 0){
-            response.data[j].color = calendarConfig.colorTypes.warning;
+      if (user.isClient) {
+        for (var f = 0; f < response.data.length; f++) {
+          //set appointments with no volunteers and no clients
+          if (response.data[f].volunteers.length == 0 && response.data[f].clients.length == 0){
+            response.data[f].color = calendarConfig.colorTypes.warning;
           //if appointment has volunteers signed up
-          } else if (response.data[j].volunteers.length > 0){
-            for (var k = response.data[j].volunteers.length-1; k >= 0; k--){
-              //finds appointment where current user is signed up as volunteer
-              if (response.data[j].volunteers[k]._id == user._id){
-                response.data[j].color = calendarConfig.colorTypes.info;
-                myAppointments.scheduled.push(response.data[j]);
-                if(response.data[j].clients.length > response.data[j].volunteers.length){
-                  highPriority.splice(j, 1);
+        } else if (response.data[f].clients.length > 0){
+            for (var e = response.data[f].clients.length-1; e >= 0; e--){
+              //finds appointment where current user is signed up as client
+              if (response.data[f].clients[e]._id == user._id){
+                response.data[f].color = calendarConfig.colorTypes.info;
+                myAppointments.scheduled.push(response.data[f]);
+              }
+            }
+          }
+        }
+      } else {
+        //set high priority appointments
+        for (var g = 0; g < response.data.length; g++) {
+          if (response.data[g].clients.length > response.data[g].volunteers.length) {
+            if (!(_.findWhere(highPriority, {_id: response.data[g]._id}))){
+              response.data[g].color = calendarConfig.colorTypes.important;
+              highPriority.push(response.data[g]);
+            }
+            //set full appointments
+          } else if (response.data[g].volunteers.length == response.data[g].volunteerSlots &&
+            response.data[g].clientSlots == response.data[g].clients.length) {
+            response.data[g].color = calendarConfig.colorTypes.success;
+          } else {
+            //set all other standard appointments
+            response.data[g].color = calendarConfig.colorTypes.warning;
+          }
+        }
+
+        if (!user.isAdmin){
+
+          //removes full appointments that current user is not signed up to volunteer
+          for (var i = response.data.length-1; i >= 0; i--){
+            if (response.data[i].volunteers.length == response.data[i].volunteerSlots &&
+              !(_.findWhere(response.data[i].volunteers, {_id: user._id}))) {
+              response.data.splice(i, 1);
+            }
+          }
+          for (var j = 0; j < response.data.length; j++){
+            //set appointments with no volunteers and no clients
+            if (response.data[j].volunteers.length == 0 && response.data[j].clients.length == 0){
+              response.data[j].color = calendarConfig.colorTypes.warning;
+            //if appointment has volunteers signed up
+            } else if (response.data[j].volunteers.length > 0){
+              for (var k = response.data[j].volunteers.length-1; k >= 0; k--){
+                //finds appointment where current user is signed up as volunteer
+                if (response.data[j].volunteers[k]._id == user._id){
+                  response.data[j].color = calendarConfig.colorTypes.info;
+                  myAppointments.scheduled.push(response.data[j]);
+                  if(response.data[j].clients.length > response.data[j].volunteers.length){
+                    highPriority.splice(j, 1);
+                  }
+                }else if (response.data[j].volunteers.length >= response.data[j].clients.length){
+                  response.data[j].color = calendarConfig.colorTypes.warning;
                 }
-              }else if (response.data[j].volunteers.length >= response.data[j].clients.length){
-                response.data[j].color = calendarConfig.colorTypes.warning;
               }
             }
           }

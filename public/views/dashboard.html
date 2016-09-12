@@ -594,7 +594,7 @@
         <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
       </ul>
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-default" ng-if="!main.currentUser.isClient">
       <h5 class="text-muted text-uppercase profile-control-header">High Priority</h5>
       <ul class="sidebar-list">
         <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
