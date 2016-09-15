@@ -501,8 +501,8 @@
 
       <div class="modal-footer">
         <button class="btn btn-primary" ng-if="edit.editAppointment.event.color.primary!='#1e90ff'" ng-click="$close(edit.claimAppointment(edit.editAppointment.event))" >Claim Appointment</button>
-        <button class="btn btn-danger" ng-if="edit.editAppointment.event.color.primary=='#1e90ff'" ng-click="$close(edit.removeMe(edit.editAppointment.event))" >Cancel Appointment</button>
-        <button class="btn btn-warning" ng-click="$close()" >Close</button>
+        <button class="btn btn-danger" ng-if="edit.editAppointment.event.color.primary=='#1e90ff'" ng-click="$close(edit.removeMe(edit.editAppointment.event))" >Delete Appointment</button>
+        <button class="btn btn-warning" ng-click="$close()" >Cancel</button>
       </div>
     </div>
   </div>
@@ -569,7 +569,7 @@
         <div class="legend-color"  ng-if="main.currentUser.isAdmin">
           <div class="legendBox"style="background-color:{{dash.eventColors.special.primary}}"></div> New
         </div>
-        <div class="legend-color">
+        <div class="legend-color" ng-if="!main.currentUser.isClient && !main.currentUser.isTrainee">
           <div class="legendBox"style="background-color:{{dash.eventColors.important.primary}}"></div> High Priority
         </div>
         <div class="legend-color">
@@ -594,13 +594,13 @@
         <li ng-repeat="appointment in dash.myAppointments.scheduled" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
       </ul>
     </div>
-    <div class="panel panel-default" ng-if="!main.currentUser.isClient">
+    <div class="panel panel-default" ng-if="!main.currentUser.isClient && !main.currentUser.isTrainee">
       <h5 class="text-muted text-uppercase profile-control-header">High Priority</h5>
       <ul class="sidebar-list">
         <li ng-repeat="appointment in dash.highPriority" ng-click="dash.eventClicked(appointment)"><a>{{appointment.startsAt | date: "shortDate"}} - {{appointment.title}}, {{appointment.startsAt | date: "shortTime"}}</a></li>
       </ul>
     </div>
-    <div ng-if="main.currentUser.isAdmin || (!main.currentUser.isAdmin && dash.announcement.announcement)" class="panel panel-default" style="padding: 0 0 10px">
+    <div ng-if=" !main.currentUser.isClient && (main.currentUser.isAdmin || (!main.currentUser.isAdmin && dash.announcement.announcement))" class="panel panel-default" style="padding: 0 0 10px">
       <h5 class="text-muted text-uppercase profile-control-header">
         Announcements
         <button ng-if="main.currentUser.isAdmin" style="position: absolute; right: 5px;" class="btn btn-primary btn-xs" ng-click="dash.saveAnnouncement() && (dash.editAnnouncementToggle = !dash.editAnnouncementToggle)">
